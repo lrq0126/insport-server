@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.warehouse.mapper.commerical.CommericalInvoiceDao">
+
+    <resultMap type="com.example.warehouse.entity.commerical.CommericalInvoice" id="CommericalInvoiceMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="orderNumber" column="order_number" jdbcType="VARCHAR"/>
+        <result property="agentNumber" column="agent_number" jdbcType="VARCHAR"/>
+        <result property="conCompanyName" column="con_company_name" jdbcType="VARCHAR"/>
+        <result property="conSenderName" column="con_sender_name" jdbcType="VARCHAR"/>
+        <result property="conContry" column="con_contry" jdbcType="VARCHAR"/>
+        <result property="conTel" column="con_tel" jdbcType="VARCHAR"/>
+        <result property="conAddress" column="con_address" jdbcType="VARCHAR"/>
+        <result property="conCode" column="con_code" jdbcType="VARCHAR"/>
+        <result property="recCompanyName" column="rec_company_name" jdbcType="VARCHAR"/>
+        <result property="recReceiverName" column="rec_receiver_name" jdbcType="VARCHAR"/>
+        <result property="recTel" column="rec_tel" jdbcType="VARCHAR"/>
+        <result property="recContry" column="rec_contry" jdbcType="VARCHAR"/>
+        <result property="recAddress" column="rec_address" jdbcType="VARCHAR"/>
+        <result property="recCode" column="rec_code" jdbcType="VARCHAR"/>
+        <result property="exportDate" column="export_date" jdbcType="TIMESTAMP"/>
+        <result property="usd" column="usd" jdbcType="OTHER"/>
+        <result property="totalCtns" column="total_ctns" jdbcType="INTEGER"/>
+        <result property="signature" column="signature" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="INTEGER"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="createId" column="create_id" jdbcType="INTEGER"/>
+        <result property="lastUpdateTime" column="last_update_time" jdbcType="TIMESTAMP"/>
+        <result property="lastUpdateId" column="last_update_id" jdbcType="INTEGER"/>
+        <result property="packId" column="pack_id" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <resultMap id="selectAll" extends="CommericalInvoiceMap" type="com.example.warehouse.entity.commerical.CommericalInvoice">
+        <collection property="commericalInvoiceItemsList" column="id" select="com.example.warehouse.mapper.commerical.CommericalInvoiceItemsDao.selectByParentId"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="CommericalInvoiceMap">
+        select
+          id, order_number, agent_number, con_company_name, con_sender_name, con_contry, con_tel, con_address, con_code, rec_company_name, rec_receiver_name, rec_tel, rec_contry, rec_address, rec_code, DATE_FORMAT(export_date,'%Y-%m-%d %k:%i:%s') as export_date, usd, total_ctns, signature, status, create_time, create_id, last_update_time, last_update_id
+        from commerical_invoice
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="CommericalInvoiceMap">
+        select
+          id, order_number, agent_number, con_company_name, con_sender_name, con_contry, con_tel, con_address, con_code, rec_company_name, rec_receiver_name, rec_tel, rec_contry, rec_address, rec_code,DATE_FORMAT(export_date,'%Y-%m-%d %k:%i:%s') as export_date, usd, total_ctns, signature, status, create_time, create_id, last_update_time, last_update_id
+        from commerical_invoice
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="CommericalInvoiceMap">
+        select
+        id, order_number, agent_number, con_company_name, con_sender_name, con_contry, con_tel, con_address, con_code,
+        rec_company_name,
+        rec_receiver_name, rec_tel, rec_contry, rec_address, rec_code, DATE_FORMAT(export_date,'%Y-%m-%d %k:%i:%s') as
+        export_date, usd, total_ctns, signature, status,
+        create_time, create_id, last_update_time, last_update_id
+        from commerical_invoice
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="orderNumber != null and orderNumber != ''">
+                and order_number = #{orderNumber}
+            </if>
+            <if test="agentNumber != null and agentNumber != ''">
+                and agent_number = #{agentNumber}
+            </if>
+            <if test="conCompanyName != null and conCompanyName != ''">
+                and con_company_name = #{conCompanyName}
+            </if>
+            <if test="conSenderName != null and conSenderName != ''">
+                and con_sender_name = #{conSenderName}
+            </if>
+            <if test="conContry != null and conContry != ''">
+                and con_contry = #{conContry}
+            </if>
+            <if test="conTel != null and conTel != ''">
+                and con_tel = #{conTel}
+            </if>
+            <if test="conAddress != null and conAddress != ''">
+                and con_address = #{conAddress}
+            </if>
+            <if test="conCode != null and conCode != ''">
+                and con_code = #{conCode}
+            </if>
+            <if test="recCompanyName != null and recCompanyName != ''">
+                and rec_company_name = #{recCompanyName}
+            </if>
+            <if test="recReceiverName != null and recReceiverName != ''">
+                and rec_receiver_name = #{recReceiverName}
+            </if>
+            <if test="recTel != null and recTel != ''">
+                and rec_tel = #{recTel}
+            </if>
+            <if test="recContry != null and recContry != ''">
+                and rec_contry = #{recContry}
+            </if>
+            <if test="recAddress != null and recAddress != ''">
+                and rec_address = #{recAddress}
+            </if>
+            <if test="recCode != null and recCode != ''">
+                and rec_code = #{recCode}
+            </if>
+            <if test="exportDate != null">
+                and export_date = #{exportDate}
+            </if>
+            <if test="usd != null">
+                and usd = #{usd}
+            </if>
+            <if test="totalCtns != null">
+                and total_ctns = #{totalCtns}
+            </if>
+            <if test="signature != null and signature != ''">
+                and signature = #{signature}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="createId != null">
+                and create_id = #{createId}
+            </if>
+            <if test="lastUpdateTime != null">
+                and last_update_time = #{lastUpdateTime}
+            </if>
+            <if test="lastUpdateId != null">
+                and last_update_id = #{lastUpdateId}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert">
+        insert into
+        commerical_invoice(
+        <if test="orderNumber != null and orderNumber != ''">
+            order_number,
+        </if>
+        <if test="agentNumber != null and agentNumber != ''">
+            agent_number,
+        </if>
+        <if test="conCompanyName != null and conCompanyName != ''">
+            con_company_name,
+        </if>
+        <if test="conSenderName != null and conSenderName != ''">
+            con_sender_name,
+        </if>
+        <if test="conContry != null and conContry != ''">
+            con_contry,
+        </if>
+        <if test="conTel != null and conTel != ''">
+            con_tel,
+        </if>
+        <if test="conAddress != null and conAddress != ''">
+            con_address,
+        </if>
+        <if test="conCode != null and conCode != ''">
+            con_code,
+        </if>
+        <if test="recCompanyName != null and recCompanyName != ''">
+            rec_company_name,
+        </if>
+        <if test="recReceiverName != null and recReceiverName != ''">
+            rec_receiver_name,
+        </if>
+        <if test="recTel != null and recTel != ''">
+            rec_tel,
+        </if>
+        <if test="recContry != null and recContry != ''">
+            rec_contry,
+        </if>
+        <if test="recAddress != null and recAddress != ''">
+            rec_address,
+        </if>
+        <if test="recCode != null and recCode != ''">
+            rec_code,
+        </if>
+        <if test="exportDate != null">
+            export_date,
+        </if>
+        <if test="usd != null">
+            usd,
+        </if>
+        <if test="totalCtns != null">
+            total_ctns,
+        </if>
+        <if test="signature != null and signature != ''">
+            signature,
+        </if>
+        pack_id,
+        status
+        )
+        values (
+        <if test="orderNumber != null and orderNumber != ''">
+            #{orderNumber},
+        </if>
+        <if test="agentNumber != null and agentNumber != ''">
+            #{agentNumber},
+        </if>
+        <if test="conCompanyName != null and conCompanyName != ''">
+            #{conCompanyName},
+        </if>
+        <if test="conSenderName != null and conSenderName != ''">
+            #{conSenderName},
+        </if>
+        <if test="conContry != null and conContry != ''">
+            #{conContry},
+        </if>
+        <if test="conTel != null and conTel != ''">
+            #{conTel},
+        </if>
+        <if test="conAddress != null and conAddress != ''">
+            #{conAddress},
+        </if>
+        <if test="conCode != null and conCode != ''">
+            #{conCode},
+        </if>
+        <if test="recCompanyName != null and recCompanyName != ''">
+            #{recCompanyName},
+        </if>
+        <if test="recReceiverName != null and recReceiverName != ''">
+            #{recReceiverName},
+        </if>
+        <if test="recTel != null and recTel != ''">
+            #{recTel},
+        </if>
+        <if test="recContry != null and recContry != ''">
+            #{recContry},
+        </if>
+        <if test="recAddress != null and recAddress != ''">
+            #{recAddress},
+        </if>
+        <if test="recCode != null and recCode != ''">
+            #{recCode},
+        </if>
+        <if test="exportDate != null">
+            #{exportDate},
+        </if>
+        <if test="usd != null">
+            #{usd},
+        </if>
+        <if test="totalCtns != null">
+            #{totalCtns},
+        </if>
+        <if test="signature != null and signature != ''">
+            #{signature},
+        </if>
+        #{packId},
+        1
+        )
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update commerical_invoice
+        <set>
+            <if test="orderNumber != null and orderNumber != ''">
+                order_number = #{orderNumber},
+            </if>
+            <if test="agentNumber != null and agentNumber != ''">
+                agent_number = #{agentNumber},
+            </if>
+            <if test="conCompanyName != null and conCompanyName != ''">
+                con_company_name = #{conCompanyName},
+            </if>
+            <if test="conSenderName != null and conSenderName != ''">
+                con_sender_name = #{conSenderName},
+            </if>
+            <if test="conContry != null and conContry != ''">
+                con_contry = #{conContry},
+            </if>
+            <if test="conTel != null and conTel != ''">
+                con_tel = #{conTel},
+            </if>
+            <if test="conAddress != null and conAddress != ''">
+                con_address = #{conAddress},
+            </if>
+            <if test="conCode != null and conCode != ''">
+                con_code = #{conCode},
+            </if>
+            <if test="recCompanyName != null and recCompanyName != ''">
+                rec_company_name = #{recCompanyName},
+            </if>
+            <if test="recReceiverName != null and recReceiverName != ''">
+                rec_receiver_name = #{recReceiverName},
+            </if>
+            <if test="recTel != null and recTel != ''">
+                rec_tel = #{recTel},
+            </if>
+            <if test="recContry != null and recContry != ''">
+                rec_contry = #{recContry},
+            </if>
+            <if test="recAddress != null and recAddress != ''">
+                rec_address = #{recAddress},
+            </if>
+            <if test="recCode != null and recCode != ''">
+                rec_code = #{recCode},
+            </if>
+            <if test="exportDate != null">
+                export_date = #{exportDate},
+            </if>
+            <if test="usd != null">
+                usd = #{usd},
+            </if>
+            <if test="totalCtns != null">
+                total_ctns = #{totalCtns},
+            </if>
+            <if test="signature != null and signature != ''">
+                signature = #{signature},
+            </if>
+            status = 1,
+            <if test="lastUpdateTime != null">
+                last_update_time = #{lastUpdateTime},
+            </if>
+            <if test="lastUpdateId != null">
+                last_update_id = #{lastUpdateId},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from commerical_invoice where id = #{id}
+    </delete>
+
+    <select id="selectByPackId" parameterType="java.lang.Integer"
+            resultType="com.example.warehouse.entity.commerical.CommericalInvoice">
+        SELECT
+	        cp.id as packId, cpra.addressee AS recReceiverName, cpra.phone_number AS recTel,
+	        cpra.receiver_address AS recAddress, cp.order_number AS orderNumber, cp.international_transshipment_no AS agentNumber
+        FROM
+	        customer_pack cp
+        LEFT JOIN customer_pack_receiver_address cpra ON cpra.customer_pack_id = cp.id
+        where cp.id = #{customerPackId}
+    </select>
+
+
+    <select id="selectOldInvoiceByPackId" parameterType="java.lang.Integer" resultMap="selectAll">
+        SELECT
+        t.id, t.order_number, t.agent_number, t.con_company_name, t.con_sender_name, t.con_contry, t.con_tel, t.con_address, t.con_code, t.rec_company_name,
+        t.rec_receiver_name, t.rec_tel, t.rec_contry, t.rec_address, t.rec_code, DATE_FORMAT(t.export_date,'%Y-%m-%d %k:%i:%s') as export_date, t.usd, t.total_ctns,
+        t.signature, t.status, t.create_time, t.create_id, t.last_update_time, t.last_update_id, pack_id
+        FROM
+        commerical_invoice t
+        where t.pack_id = #{customerPackId} and t.status = 1
+        order by t.create_time desc
+    </select>
+
+</mapper>

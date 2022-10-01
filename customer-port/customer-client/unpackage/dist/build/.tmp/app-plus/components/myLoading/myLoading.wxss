@@ -1,0 +1,96 @@
+
+.loader-17 .css-square { position: absolute; top: 50%; width: 40rpx; height: 12rpx; background: #ffffff;
+}
+.loader-17 .square1 { left: 180rpx; -webkit-animation: dominos 1s 0.125s ease infinite; animation: dominos 1s 0.125s ease infinite;
+}
+.loader-17 .square2 { left: 160rpx; -webkit-animation: dominos 1s 0.3s ease infinite;   animation: dominos 1s 0.3s ease infinite;
+}
+.loader-17 .square3 { left: 140rpx; -webkit-animation: dominos 1s 0.425s ease infinite; animation: dominos 1s 0.425s ease infinite;
+}
+.loader-17 .square4 { left: 120rpx; -webkit-animation: dominos 1s 0.540s ease infinite; animation: dominos 1s 0.540s ease infinite;
+}
+.loader-17 .square5 { left: 100rpx; -webkit-animation: dominos 1s 0.665s ease infinite; animation: dominos 1s 0.665s ease infinite;
+}
+.loader-17 .square6 { left: 80rpx; 	-webkit-animation: dominos 1s 0.79s ease infinite;  animation: dominos 1s 0.79s ease infinite;
+}
+.loader-17 .square7 { left: 60rpx; 	-webkit-animation: dominos 1s 0.9s ease infinite;   animation: dominos 1s 0.9s ease infinite;
+}
+.loader-17 .square8 { left: 40rpx; 	-webkit-animation: dominos 1s 1.01s ease infinite;  animation: dominos 1s 1.01s ease infinite;
+}
+.loader-17 .square9 { left: 20rpx; 	-webkit-animation: dominos 1s 1.10s ease infinite;  animation: dominos 1s 1.10s ease infinite;
+}
+@-webkit-keyframes dominos {
+50% {
+opacity: 0.7;
+}
+75% {
+-webkit-transform: rotate(90deg);
+transform: rotate(90deg);
+}
+80% {
+opacity: 1;
+}
+}
+@keyframes dominos {
+50% {
+opacity: 0.7;
+}
+75% {
+-webkit-transform: rotate(90deg);
+transform: rotate(90deg);
+}
+80% {
+opacity: 1;
+}
+}
+@-webkit-keyframes ball-turn {
+0% {
+ -webkit-transform: rotate(0deg);
+ transform: rotate(0deg);
+}
+100% {
+ -webkit-transform: rotate(360deg);
+ transform: rotate(360deg);
+}
+}
+@keyframes ball-turn {
+0% {
+ -webkit-transform: rotate(0deg);
+ transform: rotate(0deg);
+}
+100% {
+ -webkit-transform: rotate(360deg);
+ transform: rotate(360deg);
+}
+}
+.loading_box{
+	width: 100%;
+	height: 100%;
+	/* background-color: rgba(0,0,0,0.4); */
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: 10000;
+}
+.loading{
+	width: 250rpx;
+	height: 200rpx;
+	background-color: rgba(0,0,0,0.5);
+	color: #fff;
+	position: relative;
+	top: 50%;
+	left: 50%;
+	-webkit-transform: translate(-50%,-50%);
+	    -ms-transform: translate(-50%,-50%);
+	        transform: translate(-50%,-50%);
+	border-radius: 20rpx;
+}
+.loader{
+	display:inline-block;
+	width:100%;
+	height:200rpx;
+	overflow:hidden;
+	/* background-color:#ccc; */
+	position:relative;
+}
+

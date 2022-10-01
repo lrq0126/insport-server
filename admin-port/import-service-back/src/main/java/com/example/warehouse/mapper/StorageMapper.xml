@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.warehouse.mapper.StorageMapper">
+  <sql id="table">storage</sql>
+
+  <sql id="selectCols">t.id, t.storage_code, t.storage_name, t.storage_location, t.storage_area, t.storage_row, t.status, DATE_FORMAT(t.create_time,'%Y-%m-%d %k:%i:%s') as create_time, t.create_id, DATE_FORMAT(t.last_update_time,'%Y-%m-%d %k:%i:%s') as last_update_time, t.last_update_id</sql>
+
+  <resultMap id="beanMap" type="com.example.warehouse.entity.Storage">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="storage_code" jdbcType="VARCHAR" property="storageCode" />
+    <result column="storage_name" jdbcType="VARCHAR" property="storageName" />
+    <result column="storage_location" jdbcType="VARCHAR" property="storageLocation" />
+    <result column="storage_area" jdbcType="VARCHAR" property="storageArea" />
+    <result column="storage_row" jdbcType="VARCHAR" property="storageRow" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="create_id" jdbcType="INTEGER" property="createId" />
+    <result column="last_update_time" jdbcType="TIMESTAMP" property="lastUpdateTime" />
+    <result column="last_update_id" jdbcType="INTEGER" property="lastUpdateId" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from storage
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.example.warehouse.entity.Storage">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into storage (storage_code, storage_name, storage_location,
+    storage_area, storage_row, `status`,
+    create_time, create_id, last_update_time,
+    last_update_id)
+    values (#{storageCode,jdbcType=VARCHAR}, #{storageName,jdbcType=VARCHAR}, #{storageLocation,jdbcType=VARCHAR},
+    #{storageArea,jdbcType=VARCHAR}, #{storageRow,jdbcType=VARCHAR}, 1,
+    now(), #{createId,jdbcType=INTEGER}, #{lastUpdateTime,jdbcType=TIMESTAMP},
+    #{lastUpdateId,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.example.warehouse.entity.Storage">
+    update storage
+    set
+      storage_name = #{storageName,jdbcType=VARCHAR},
+      storage_location = #{storageLocation,jdbcType=VARCHAR},
+      storage_area = #{storageArea,jdbcType=VARCHAR},
+      storage_row = #{storageRow,jdbcType=VARCHAR},
+      create_id = #{createId,jdbcType=INTEGER},
+      last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+      last_update_id = #{lastUpdateId,jdbcType=INTEGER}
+    where storage_code = #{storageCode,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="beanMap">
+    select
+    <include refid="selectCols"/>
+    from
+    <include refid="table"/> t
+    where t.id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectAll" resultMap="beanMap" parameterType="java.util.Map">
+    select
+    <include refid="selectCols"/>
+    from
+    <include refid="table"/>t
+    <where>
+      <include refid="condition_sql"/>
+      and
+      t.status = 1
+    </where>
+    ORDER BY t.create_time desc
+    LIMIT #{pageNumber},#{pageSize}
+  </select>
+
+  <select id="countSelectAll" resultType="java.lang.Integer" parameterType="java.util.Map">
+    select
+    count(*) as count
+    from
+    <include refid="table"/>t
+    <where>
+      <include refid="condition_sql"/>
+      and
+      t.status = 1
+    </where>
+  </select>
+
+  <sql id="condition_sql">
+    <if test="storageCode!= null and storageCode!=''">and t.storage_code=#{storageCode}</if>
+    <if test="storageName!= null and storageName!=''">and t.storage_name like CONCAT('%',#{storageName},'%')</if>
+    <if test="storageLocation!= null and storageLocation!=''">and t.storage_location like CONCAT('%',#{storageLocation},'%')</if>
+    <if test="storageArea!= null and storageArea!=''">and t.storage_area=#{storageArea}</if>
+    <if test="storageRow!= null and storageRow!=''">and t.storage_row=#{storageRow}</if>
+    <if test="createId!= null and createId!=''">and t.create_id=#{createId}</if>
+    <if test="lastUpdateId!= null and lastUpdateId!=''">and t.last_update_id=#{lastUpdateId}</if>
+  </sql>
+
+  <update id="del">
+    update
+    <include refid="table"/>t
+    set
+    t.status = 0 ,
+    t.last_update_id = #{userId}
+    where
+    t.storage_code = #{storageNo}
+  </update>
+
+  <select id="find" parameterType="java.util.Map" resultMap="beanMap">
+    select
+    <include refid="selectCols"/>
+    from
+    <include refid="table"/>t
+    <where>
+      <include refid="condition_sql"/>
+      and t.status = 1
+    </where>
+  </select>
+
+  <select id="getWareLocations" resultMap="wareLocationsVo">
+    select storage_area, storage_row from storage where status = 1 group by storage_area, storage_row
+  </select>
+
+  <resultMap id="wareLocationsVo" type="com.example.warehouse.vo.storage.StorageLocationsRespVo">
+    <result column="storage_area" property="storageArea"/>
+    <result column="storage_row" property="storageRow"/>
+  </resultMap>
+
+</mapper>

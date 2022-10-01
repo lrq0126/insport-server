@@ -1,0 +1,58 @@
+.pay-center .example-header.data-v-2c3f685c {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-around;
+  -ms-flex-pack: justify;
+  justify-content: space-around;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  font-size: 16px;
+  color: #464e52;
+  padding: 20rpx 0;
+  margin-top: 10px;
+  position: relative;
+  background-color: #fdfdfd;
+  border-bottom: 1px #f5f5f5 solid;
+}
+.pay-center .example-header button.data-v-2c3f685c {
+  padding: 0 1.3em;
+  margin: 0;
+}
+.pay-center .example-body.data-v-2c3f685c {
+  background: #fff;
+}
+.pay-center .example-body .amount.data-v-2c3f685c {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-flow: column;
+      -ms-flex-flow: column;
+          flex-flow: column;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 80rpx 0;
+}
+.pay-center .example-body .uni-list.data-v-2c3f685c:before {
+  height: 0;
+}
+.pay-center .example-body .uni-list.data-v-2c3f685c:after {
+  height: 0;
+}
+.pay-center .example-body .uni-list-cell-pd.data-v-2c3f685c {
+  padding: 20rpx 80rpx;
+}
+.pay-center .example-body .uni-list-cell.data-v-2c3f685c:after {
+  left: 60rpx;
+  right: 60rpx;
+}
+

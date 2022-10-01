@@ -1,0 +1,397 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dwgj.mlxydedicatedline.mapper.CustomerAccountMapper">
+  <resultMap id="BaseResultMap" type="com.dwgj.mlxydedicatedline.entity.CustomerAccount">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="customer_no" jdbcType="VARCHAR" property="customerNo" />
+    <result column="customer_name" jdbcType="VARCHAR" property="customerName" />
+    <result column="business_number" jdbcType="VARCHAR" property="businessNumber" />
+    <result column="order_number" jdbcType="VARCHAR" property="orderNumber" />
+    <result column="goods_sum" jdbcType="INTEGER" property="goodsSum" />
+    <result column="route_name" jdbcType="VARCHAR" property="routeName" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="cost_type" jdbcType="VARCHAR" property="costType" />
+    <result column="amount" jdbcType="DECIMAL" property="amount" />
+    <result column="currency" jdbcType="VARCHAR" property="currency" />
+    <result column="channel" jdbcType="VARCHAR" property="channel" />
+    <result column="message" jdbcType="VARCHAR" property="message" />
+    <result column="version" jdbcType="VARCHAR" property="version" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="create_id" jdbcType="VARCHAR" property="createId" />
+    <result column="create_name" jdbcType="VARCHAR" property="createName" />
+    <result column="last_update_time" jdbcType="TIMESTAMP" property="lastUpdateTime" />
+    <result column="last_update_id" jdbcType="INTEGER" property="lastUpdateId" />
+    <result column="login_name" jdbcType="VARCHAR" property="loginName" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, customer_no, customer_name, business_number, order_number, goods_sum, route_name,
+    address, cost_type, amount, currency, channel, message, version, `status`,create_time,
+    create_id, create_name, last_update_time, last_update_id,login_name
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from customer_account
+    where id = #{id,jdbcType=INTEGER}
+    AND STATUS = 1
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    UPDATE customer_account SET SUTATS = 0
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.dwgj.mlxydedicatedline.entity.CustomerAccount">
+    insert into customer_account (id, customer_no, customer_name,
+      business_number, order_number, goods_sum,
+      route_name, address, cost_type,
+      amount, currency, channel,
+      message, version, `status`,
+      create_time, create_id, create_name,
+      last_update_time, last_update_id,login_name)
+    values (#{id,jdbcType=INTEGER}, #{customerNo,jdbcType=VARCHAR}, #{customerName,jdbcType=VARCHAR},
+      #{businessNumber,jdbcType=VARCHAR}, #{orderNumber,jdbcType=VARCHAR}, #{goodsSum,jdbcType=INTEGER},
+      #{routeName,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{costType,jdbcType=VARCHAR},
+      #{amount,jdbcType=DECIMAL}, #{currency,jdbcType=VARCHAR}, #{channel,jdbcType=VARCHAR},
+      #{message,jdbcType=VARCHAR}, #{version,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER},
+      #{createTime,jdbcType=TIMESTAMP}, #{createId,jdbcType=VARCHAR}, #{createName,jdbcType=VARCHAR},
+      #{lastUpdateTime,jdbcType=TIMESTAMP}, #{lastUpdateId,jdbcType=INTEGER},#{loginName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dwgj.mlxydedicatedline.entity.CustomerAccount">
+    insert into customer_account
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="customerNo != null">
+        customer_no,
+      </if>
+      <if test="customerName != null">
+        customer_name,
+      </if>
+      <if test="businessNumber != null">
+        business_number,
+      </if>
+      <if test="orderNumber != null">
+        order_number,
+      </if>
+      <if test="goodsSum != null">
+        goods_sum,
+      </if>
+      <if test="routeName != null">
+        route_name,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="costType != null">
+        cost_type,
+      </if>
+      <if test="amount != null">
+        amount,
+      </if>
+      <if test="currency != null">
+        currency,
+      </if>
+      <if test="channel != null">
+        channel,
+      </if>
+      <if test="message != null">
+        message,
+      </if>
+      <if test="version != null">
+        version,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="createId != null">
+        create_id,
+      </if>
+      <if test="createName != null">
+        create_name,
+      </if>
+      <if test="lastUpdateTime != null">
+        last_update_time,
+      </if>
+      <if test="lastUpdateId != null">
+        last_update_id,
+      </if>
+      <if test="loginName != null">
+        login_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="customerNo != null">
+        #{customerNo,jdbcType=VARCHAR},
+      </if>
+      <if test="customerName != null">
+        #{customerName,jdbcType=VARCHAR},
+      </if>
+      <if test="businessNumber != null">
+        #{businessNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNumber != null">
+        #{orderNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsSum != null">
+        #{goodsSum,jdbcType=INTEGER},
+      </if>
+      <if test="routeName != null">
+        #{routeName,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="costType != null">
+        #{costType,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null">
+        #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="currency != null">
+        #{currency,jdbcType=VARCHAR},
+      </if>
+      <if test="channel != null">
+        #{channel,jdbcType=VARCHAR},
+      </if>
+      <if test="message != null">
+        #{message,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createName != null">
+        #{createName,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateTime != null">
+        #{lastUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateId != null">
+        #{lastUpdateId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dwgj.mlxydedicatedline.entity.CustomerAccount">
+    update customer_account
+    <set>
+      <if test="customerNo != null">
+        customer_no = #{customerNo,jdbcType=VARCHAR},
+      </if>
+      <if test="customerName != null">
+        customer_name = #{customerName,jdbcType=VARCHAR},
+      </if>
+      <if test="businessNumber != null">
+        business_number = #{businessNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNumber != null">
+        order_number = #{orderNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsSum != null">
+        goods_sum = #{goodsSum,jdbcType=INTEGER},
+      </if>
+      <if test="routeName != null">
+        route_name = #{routeName,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="costType != null">
+        cost_type = #{costType,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null">
+        amount = #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="currency != null">
+        currency = #{currency,jdbcType=VARCHAR},
+      </if>
+      <if test="channel != null">
+        channel = #{channel,jdbcType=VARCHAR},
+      </if>
+      <if test="message != null">
+        message = #{message,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null">
+        version = #{version,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        create_id = #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createName != null">
+        create_name = #{createName,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateTime != null">
+        last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateId != null">
+        last_update_id = #{lastUpdateId,jdbcType=INTEGER},
+      </if>
+      <if test="loginName != null">
+        login_name = #{loginName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dwgj.mlxydedicatedline.entity.CustomerAccount">
+    update customer_account
+    set customer_no = #{customerNo,jdbcType=VARCHAR},
+      customer_name = #{customerName,jdbcType=VARCHAR},
+      business_number = #{businessNumber,jdbcType=VARCHAR},
+      order_number = #{orderNumber,jdbcType=VARCHAR},
+      goods_sum = #{goodsSum,jdbcType=INTEGER},
+      route_name = #{routeName,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      cost_type = #{costType,jdbcType=VARCHAR},
+      amount = #{amount,jdbcType=DECIMAL},
+      currency = #{currency,jdbcType=VARCHAR},
+      channel = #{channel,jdbcType=VARCHAR},
+      message = #{message,jdbcType=VARCHAR},
+      version = #{version,jdbcType=VARCHAR},
+      `status` = #{status,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      create_id = #{createId,jdbcType=VARCHAR},
+      create_name = #{createName,jdbcType=VARCHAR},
+      last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+      last_update_id = #{lastUpdateId,jdbcType=INTEGER},
+      login_name = #{loginName,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateCustomerId">
+    update customer_account
+    <set>
+      customer_no = #{customer.id},
+      customer_name = #{customer.customerName},
+      login_name = #{customer.loginName}
+    </set>
+    <where>
+      status = 1
+      and id in
+      <foreach collection="accountList" item="item" open="(" close=")" separator=",">
+          #{item.id}
+      </foreach>
+    </where>
+  </update>
+
+  <!-- 消费记录分页查询 -->
+  <select id="selectCustomerAccountList" parameterType="map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from customer_account
+    where customer_no = #{customerNo,jdbcType=VARCHAR}
+    AND status = 1
+    <if test="businessNumber != null and businessNumber != ''">
+      AND business_number like concat('%',#{businessNumber,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="orderNumber != null and orderNumber != ''">
+      AND order_number like concat('%',#{orderNumber,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="routeName != null and routeName != ''">
+      AND route_name = #{routeName,jdbcType=VARCHAR}
+    </if>
+    <if test="address != null and address != ''">
+      AND address like concat('%',#{address,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="costType != null and costType != ''">
+      AND cost_type = #{costType,jdbcType=VARCHAR}
+    </if>
+    <if test="channel != null and channel != ''">
+      AND channel = #{channel,jdbcType=VARCHAR}
+    </if>
+    <if test="loginName != null and loginName != ''">
+      AND login_name = #{loginName,jdbcType=VARCHAR}
+    </if>
+    order by create_time desc
+    LIMIT #{pageNumber},#{pageSize}
+  </select>
+
+  <select id="countSelectCustomerAccountList" parameterType="map" resultType="int">
+    select
+      count(*)
+    from customer_account
+    where customer_no = #{customerNo,jdbcType=VARCHAR}
+    AND status = 1
+    <if test="businessNumber != null and businessNumber != ''">
+      AND business_number like concat('%',#{businessNumber,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="orderNumber != null and orderNumber != ''">
+      AND order_number like concat('%',#{orderNumber,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="routeName != null and routeName != ''">
+      AND route_name = #{routeName,jdbcType=VARCHAR}
+    </if>
+    <if test="address != null and address != ''">
+      AND address like concat('%',#{address,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="costType != null and costType != ''">
+      AND cost_type = #{costType,jdbcType=VARCHAR}
+    </if>
+    <if test="channel != null and channel != ''">
+      AND channel = #{channel,jdbcType=VARCHAR}
+    </if>
+    <if test="loginName != null and loginName != ''">
+      AND login_name = #{loginName,jdbcType=VARCHAR}
+    </if>
+  </select>
+
+  <!-- 实时统计客户余额 -->
+  <select id="sumSingleCustomerYmt" parameterType="map" resultType="float">
+    SELECT
+      sum(amount)
+    FROM
+      customer_account
+    WHERE
+      customer_no = #{customerNo,jdbcType=VARCHAR}
+    AND STATUS = 1
+    <if test="businessNumber != null and businessNumber != ''">
+      AND business_number like concat('%',#{businessNumber,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="orderNumber != null and orderNumber != ''">
+      AND order_number like concat('%',#{orderNumber,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="routeName != null and routeName != ''">
+      AND route_name = #{routeName,jdbcType=VARCHAR}
+    </if>
+    <if test="address != null and address != ''">
+      AND address like concat('%',#{address,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="costType != null and costType != ''">
+      AND cost_type = #{costType,jdbcType=VARCHAR}
+    </if>
+    <if test="channel != null and channel != ''">
+      AND channel = #{channel,jdbcType=VARCHAR}
+    </if>
+    <if test="loginName != null and loginName != ''">
+      AND login_name = #{loginName,jdbcType=VARCHAR}
+    </if>
+  </select>
+
+  <select id="selectCustomerAccountByCustomerId" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/>
+    from customer_account
+    <where>
+      status = 1
+      and customer_no = #{customerId}
+    </where>
+  </select>
+</mapper>

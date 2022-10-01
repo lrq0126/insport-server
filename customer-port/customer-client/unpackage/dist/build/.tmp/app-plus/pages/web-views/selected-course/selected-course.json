@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "已选课程",
+  "usingComponents": {
+    "dn-icon": "/components/dn-icon/dn-icon"
+  }
+}

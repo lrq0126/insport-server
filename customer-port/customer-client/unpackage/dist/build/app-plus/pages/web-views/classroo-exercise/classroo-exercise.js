@@ -1,0 +1,2 @@
+setCssToHead([".",[1],"uni-list-cell.",[1],"data-v-124a913c:after { right: ",[0,24]," !important; }\n",],undefined,{path:"./pages/web-views/classroo-exercise/classroo-exercise.wxss"})();
+document.dispatchEvent(new CustomEvent("generateFuncReady", { detail: { generateFunc: $gwx('./pages/web-views/classroo-exercise/classroo-exercise.wxml') } }));

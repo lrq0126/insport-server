@@ -1,0 +1,1 @@
+ALTER table `route_price` add COLUMN `price_no` VARCHAR(50) DEFAULT null COMMENT '价格代码';

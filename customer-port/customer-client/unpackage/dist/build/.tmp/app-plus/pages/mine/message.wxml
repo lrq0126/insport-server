@@ -1,0 +1,1 @@
+<view class="message-list"><block wx:for="{{message}}" wx:for-item="item" wx:for-index="index" wx:key="index"><view class="message-item"><view class="message-header"><view class="message-title">{{item.title}}</view><view class="message-time">{{item.time}}</view></view><view class="message-text">{{item.text}}</view></view></block></view>

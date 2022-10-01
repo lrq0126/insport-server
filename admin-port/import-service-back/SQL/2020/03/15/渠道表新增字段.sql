@@ -1,0 +1,1 @@
+ALTER TABLE `transportation_route` ADD COLUMN `country_id` int(11) default null comment '所属国家';

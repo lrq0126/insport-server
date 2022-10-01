@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dwgj.mlxydedicatedline.mapper.user.UserMapper">
+    <sql id="table">`user`</sql>
+
+    <sql id="selectCols">
+    t.id, DATE_FORMAT(t.create_time,'%Y-%m-%d %k:%i:%s') as create_time,
+    DATE_FORMAT(t.last_update_time,'%Y-%m-%d %k:%i:%s') as last_update_time,
+    t.username,
+    t.`password`,
+    t.usercode,
+    DATE_FORMAT(t.last_login_time,'%Y-%m-%d %k:%i:%s')as last_login_time,
+     DATE_FORMAT(t.last_logout_time,'%Y-%m-%d %k:%i:%s') as last_logout_time,
+     t.login_count,
+      t.`status`,
+       t.create_id,
+       t.last_update_id,
+       t.`level`,
+       t.login_name,
+       t.role_id
+  </sql>
+
+    <resultMap id="beanMap" type="com.dwgj.mlxydedicatedline.entity.user.User">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="last_update_time" jdbcType="TIMESTAMP" property="lastUpdateTime"/>
+        <result column="username" jdbcType="VARCHAR" property="username"/>
+        <result column="password" jdbcType="VARCHAR" property="password"/>
+        <result column="usercode" jdbcType="VARCHAR" property="usercode"/>
+        <result column="last_login_time" jdbcType="TIMESTAMP" property="lastLoginTime"/>
+        <result column="last_logout_time" jdbcType="TIMESTAMP" property="lastLogoutTime"/>
+        <result column="login_count" jdbcType="VARCHAR" property="loginCount"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="create_id" jdbcType="INTEGER" property="createId"/>
+        <result column="last_update_id" jdbcType="INTEGER" property="lastUpdateId"/>
+        <result column="level" jdbcType="INTEGER" property="level"/>
+        <result column="login_name" jdbcType="VARCHAR" property="loginName"/>
+        <result column="pid" jdbcType="VARCHAR" property="pid"/>
+        <result column="employeeFlag" jdbcType="VARCHAR" property="employeeFlag"/>
+        <result column="role_id" jdbcType="INTEGER" property="roleId"/>
+    </resultMap>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from user
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.dwgj.mlxydedicatedline.entity.user.User">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            create_time, last_update_time,
+            <if test="username != null and username != ''">
+                username,
+            </if>
+            <if test="password != null and password != ''">
+                `password`,
+            </if>
+            <if test="usercode != null and usercode != ''">
+                usercode,
+            </if>
+                last_login_time,
+            <if test="lastLoginTime != null and lastLoginTime != ''">
+                last_logout_time,
+            </if>
+            <if test="loginCount != null and loginCount != ''">
+                login_count,
+            </if>
+                `status`,
+            <if test="createId != null and createId != ''">
+                create_id,
+            </if>
+            <if test="lastUpdateId != null and lastUpdateId != ''">
+                last_update_id,
+            </if>
+            <if test="level != null and level != ''">
+                `level`,
+            </if>
+            <if test="loginName != null and loginName != ''">
+                login_name,
+            </if>
+            <if test="pid != null and pid != ''">
+                pid,
+            </if>
+            <if test="employeeFlag != null and employeeFlag != ''">
+                employeeFlag,
+            </if>
+            role_id
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            now(), now(),
+            <if test="username != null and username != ''">
+                #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null and password != ''">
+                #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="usercode != null and usercode != ''">
+                #{usercode,jdbcType=VARCHAR},
+            </if>
+              now(),
+            <if test="lastLoginTime != null and lastLoginTime != ''">
+                #{lastLogoutTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="loginCount != null and loginCount != ''">
+                #{loginCount,jdbcType=VARCHAR},
+            </if>
+            1,
+            <if test="createId != null and createId != ''">
+                #{createId,jdbcType=INTEGER},
+            </if>
+            <if test="lastUpdateId != null and lastUpdateId != ''">
+                #{lastUpdateId,jdbcType=INTEGER},
+            </if>
+            <if test="level != null and level != ''">
+                #{level,jdbcType=INTEGER},
+            </if>
+            <if test="loginName != null and loginName != ''">
+                #{loginName},
+            </if>
+            <if test="pid != null and pid != ''">
+                #{pid,jdbcType=VARCHAR},
+            </if>
+            <if test="employeeFlag != null and employeeFlag != ''">
+                #{employeeFlag,jdbcType=VARCHAR},
+            </if>
+            3
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKey" parameterType="com.dwgj.mlxydedicatedline.entity.user.User">
+    update user
+    set create_time = #{createTime,jdbcType=TIMESTAMP},
+      last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+      username = #{username,jdbcType=VARCHAR},
+      `password` = #{password,jdbcType=VARCHAR},
+      last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
+      last_logout_time = #{lastLogoutTime,jdbcType=TIMESTAMP},
+      login_count = #{loginCount,jdbcType=VARCHAR},
+      create_id = #{createId,jdbcType=INTEGER},
+      last_update_id = #{lastUpdateId,jdbcType=INTEGER},
+      `level` = #{level,jdbcType=INTEGER},
+      login_name = #{loginName}
+    where usercode = #{usercode}
+  </update>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="beanMap">
+        select
+        <include refid="selectCols"/>
+        from
+        <include refid="table"/>
+        t
+        where t.id = #{id,jdbcType=INTEGER} and t.`status` = 1
+    </select>
+
+    <select id="selectByUserCode" parameterType="java.lang.String" resultMap="beanMap">
+        select
+            t.id,
+            DATE_FORMAT(t.create_time,'%Y-%m-%d %k:%i:%s') as create_time,
+            t.username,
+            t.`password`,
+            t.usercode,
+            DATE_FORMAT(t.last_login_time,'%Y-%m-%d %k:%i:%s')as last_login_time,
+            t.login_count,
+            t.`level`,
+            t.login_name,
+            t.role_id
+        from
+          <include refid="table"/> t
+        where t.usercode = #{usercode,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectAll" resultMap="beanMap" parameterType="java.util.Map">
+        select
+        <include refid="selectCols"/>
+        from
+        <include refid="table"/>
+        t
+        <where>
+            <include refid="condition_sql"/>
+            and
+            t.status = 1
+        </where>
+        ORDER BY t.create_time desc
+        LIMIT #{pageNumber},#{pageSize}
+    </select>
+
+    <select id="countSelectAll" resultType="java.lang.Integer" parameterType="java.util.Map">
+        select
+        count(*) as count
+        from
+        <include refid="table"/>
+        t
+        <where>
+            <include refid="condition_sql"/>
+            and
+            t.status = 1
+        </where>
+    </select>
+
+    <sql id="condition_sql">
+        <if test="id!= null and id!=''">and t.id=#{id}</if>
+        <if test="userName!= null and userName!=''">and t.username like CONCAT('%',#{userName},'%')</if>
+        <if test="userCode!= null and userCode!=''">and t.usercode=#{userCode}</if>
+        <if test="createId!= null and createId!=''">and t.create_id=#{createId}</if>
+        <if test="loginName != null and loginName!=''">and t.login_name like CONCAT('%',#{loginName},'%')</if>
+    </sql>
+
+    <update id="del" parameterType="java.lang.Integer">
+        update
+        <include refid="table"/>t
+        set t.status = 0
+        where t.id = #{userId}
+    </update>
+
+    <select id="login" parameterType="java.lang.String" resultMap="beanMap">
+        select
+        <include refid="selectCols"/>
+        from
+        <include refid="table"/>
+        t
+        <where>
+            t.login_name=#{loginName} and t.status = 1
+        </where>
+    </select>
+
+    <select id="find" parameterType="java.util.Map" resultMap="beanMap">
+        select
+        <include refid="selectCols"/>
+        from
+        <include refid="table"/>t
+        <where>
+            <include refid="condition_sql"/>
+            and t.status = 1
+        </where>
+    </select>
+
+    <select id="findByUserName" parameterType="java.lang.String" resultMap="beanMap">
+        select
+        <include refid="selectCols"/>
+        from
+        <include refid="table"/>
+        t
+        <where>
+            t.status = 1 and (t.username = #{username} or t.login_name = #{username})
+        </where>
+    </select>
+
+    <select id="findByCode" parameterType="java.lang.String" resultMap="beanMap">
+        select
+        <include refid="selectCols"/>
+        from
+        <include refid="table"/>
+        t
+        <where>
+            t.usercode=#{usercode} and t.status = 1
+        </where>
+    </select>
+
+    <update id="updateLastLoginTime" parameterType="com.dwgj.mlxydedicatedline.entity.user.User">
+        update
+        <include refid="table"/>t
+        set
+        t.last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+        t.last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
+        t.last_logout_time = #{lastLogoutTime,jdbcType=TIMESTAMP},
+        t.login_count = #{loginCount,jdbcType=VARCHAR}
+        where
+        t.usercode = #{usercode}
+    </update>
+    <!-- 获取函数，权限，2019年7月29日23:00:14  -->
+    <select id="getChild" parameterType="java.lang.String" resultMap="beanMap">
+		SELECT * FROM user WHERE FIND_IN_SET(id, getChild(#{id}) and status = 1
+	</select>
+
+    <select id="findRoleByUserId" parameterType="java.lang.Integer" resultType="java.lang.String">
+        select ur.role_name from<include refid="table"/>t
+        left join user_role ur on t.role_id = ur.id
+        where t.id = #{id}  and t.status = 1
+    </select>
+
+    <select id="findByUserId" parameterType="java.lang.Integer" resultType="java.lang.String">
+        select p.name from permission p
+        LEFT JOIN role_permission rp ON p.id = rp.p_id AND rp.`status` = 1
+        LEFT JOIN user_role ur ON rp.role_id = ur.id AND ur.`status` = 1
+        LEFT JOIN `user` t on ur.id = t.role_id AND t.`status` = 1
+        where t.id = #{id} and t.status = 1 and p.`level` = 3
+    </select>
+
+    <!--  变更用户角色  -->
+    <update id="setRole">
+        update
+        <include refid="table"/> t
+        set
+        t.last_update_time = now(),
+        t.role_id = #{roleId},
+        t.`level` = #{level}
+        where
+        t.id = #{userId}
+    </update>
+
+    <select id="findUserSelectList" resultMap="beanMap">
+        select id, username
+        from `user`
+        where status = 1
+    </select>
+</mapper>

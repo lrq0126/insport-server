@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.warehouse.mapper.activityReward.ActivityRewardMapper">
+    <resultMap id="BaseResultMap" type="com.example.warehouse.entity.activityReward.ActivityReward">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+    	
+	    <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="create_id" jdbcType="INTEGER" property="createId"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="update_id" jdbcType="INTEGER" property="updateId"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="version" jdbcType="INTEGER" property="version"/>
+        <result column="remarks" jdbcType="VARCHAR" property="remarks"/>
+        <result column="is_enable" jdbcType="INTEGER" property="isEnable"/>
+        <result column="activity_name" jdbcType="VARCHAR" property="activityName"/>
+        <result column="activity_type" jdbcType="VARCHAR" property="activityType"/>
+        <result column="activity_time_type" jdbcType="INTEGER" property="activityTimeType"/>
+        <result column="start_time" jdbcType="TIMESTAMP" property="startTime"/>
+        <result column="end_time" jdbcType="TIMESTAMP" property="endTime"/>
+        <result column="reward_type" jdbcType="VARCHAR" property="rewardType"/>
+        <result column="reward_content_id" jdbcType="INTEGER" property="rewardContentId"/>
+    		
+    </resultMap>
+	
+	<!-- 字段 -->
+	<sql id="Base_Column_List">
+		t.id, t.create_id, t.update_id, t.status, t.version, t.remarks,
+		t.is_enable, t.activity_name, t.activity_type, t.activity_time_type,
+		t.reward_type, t.reward_content_id,
+		DATE_FORMAT(t.create_time, '%y-%m-%d %k:%i:%s') as create_time,
+		DATE_FORMAT(t.update_time, '%y-%m-%d %k:%i:%s') as update_time,
+		DATE_FORMAT(t.start_time, '%y-%m-%d') as start_time,
+		DATE_FORMAT(t.end_time, '%y-%m-%d') as end_time
+	</sql>
+	
+	<!-- 插入字段实际数值 -->
+	<sql id="Insert_Column_Values">
+		#{createTime},#{createId},#{updateTime},#{updateId},#{status},#{version},#{remarks},
+		#{isEnable},#{activityName},#{activityType},#{activityTimeType},
+		#{startTime},#{endTime},#{rewardType},#{rewardContentId}
+	</sql>
+	
+	<!-- 插入字段（判空） -->
+	<sql id="Base_Column_List_NotNull">
+		<if test="createTime != null and createTime != ''">
+			create_time, 
+		</if>
+    	<if test="createId != null and createId != ''">
+			create_id, 
+		</if>
+    	<if test="updateTime != null and updateTime != ''">
+			update_time, 
+		</if>
+    	<if test="updateId != null and updateId != ''">
+			update_id, 
+		</if>
+    	<if test="status != null and status != ''">
+			status, 
+		</if>
+    	<if test="version != null and version != ''">
+			version, 
+		</if>
+    	<if test="remarks != null and remarks != ''">
+			remarks, 
+		</if>
+    	<if test="isEnable != null and isEnable != ''">
+			is_enable, 
+		</if>
+    	<if test="activityName != null and activityName != ''">
+			activity_name, 
+		</if>
+    	<if test="activityType != null and activityType != ''">
+			activity_type, 
+		</if>
+    	<if test="activityTimeType != null and activityTimeType != ''">
+			activity_time_type, 
+		</if>
+    	<if test="startTime != null and startTime != ''">
+			start_time, 
+		</if>
+    	<if test="endTime != null and endTime != ''">
+			end_time, 
+		</if>
+    	<if test="rewardType != null and rewardType != ''">
+			reward_type, 
+		</if>
+    	<if test="rewardContentId != null and rewardContentId != ''">
+			reward_content_id, 
+		</if>
+    	
+	</sql>
+	
+	<!-- 插入字段实际数值(判空) -->
+	<sql id="Insert_Column_Values_NotNull">
+		<if test="createTime != null and createTime != ''">
+			#{createTime},
+		</if>
+    	<if test="createId != null and createId != ''">
+			#{createId},
+		</if>
+    	<if test="updateTime != null and updateTime != ''">
+			#{updateTime},
+		</if>
+    	<if test="updateId != null and updateId != ''">
+			#{updateId},
+		</if>
+    	<if test="status != null and status != ''">
+			#{status},
+		</if>
+    	<if test="version != null and version != ''">
+			#{version},
+		</if>
+    	<if test="remarks != null and remarks != ''">
+			#{remarks},
+		</if>
+    	<if test="isEnable != null and isEnable != ''">
+			#{isEnable},
+		</if>
+    	<if test="activityName != null and activityName != ''">
+			#{activityName},
+		</if>
+    	<if test="activityType != null and activityType != ''">
+			#{activityType},
+		</if>
+    	<if test="activityTimeType != null and activityTimeType != ''">
+			#{activityTimeType},
+		</if>
+    	<if test="startTime != null and startTime != ''">
+			#{startTime},
+		</if>
+    	<if test="endTime != null and endTime != ''">
+			#{endTime},
+		</if>
+    	<if test="rewardType != null and rewardType != ''">
+			#{rewardType},
+		</if>
+    	<if test="rewardContentId != null and rewardContentId != ''">
+			#{rewardContentId},
+		</if>
+    	
+	</sql>
+	
+	<!-- 更新字段 -->
+	<sql id="Update_Column">
+    	update_time = #{updateTime},
+    	update_id = #{updateId},
+    	status = #{status},
+    	version = #{version},
+    	remarks = #{remarks},
+    	is_enable = #{isEnable},
+    	activity_name = #{activityName},
+    	activity_type = #{activityType},
+    	activity_time_type = #{activityTimeType},
+    	start_time = #{startTime},
+    	end_time = #{endTime},
+    	reward_type = #{rewardType},
+    	reward_content_id = #{rewardContentId},
+    	
+	</sql>
+	
+	<!-- 更新字段（判空） -->
+	<sql id="Update_Column_NotNull">
+		<if test="createTime != null and createTime != ''">
+			create_time = #{createTime},
+		</if>
+    	<if test="createId != null and createId != ''">
+			create_id = #{createId},
+		</if>
+    	<if test="updateTime != null and updateTime != ''">
+			update_time = #{updateTime},
+		</if>
+    	<if test="updateId != null and updateId != ''">
+			update_id = #{updateId},
+		</if>
+    	<if test="status != null and status != ''">
+			status = #{status},
+		</if>
+    	<if test="version != null and version != ''">
+			version = #{version},
+		</if>
+    	<if test="remarks != null and remarks != ''">
+			remarks = #{remarks},
+		</if>
+    	<if test="isEnable != null and isEnable != ''">
+			is_enable = #{isEnable},
+		</if>
+    	<if test="activityName != null and activityName != ''">
+			activity_name = #{activityName},
+		</if>
+    	<if test="activityType != null and activityType != ''">
+			activity_type = #{activityType},
+		</if>
+    	<if test="activityTimeType != null and activityTimeType != ''">
+			activity_time_type = #{activityTimeType},
+		</if>
+    	<if test="startTime != null and startTime != ''">
+			start_time = #{startTime},
+		</if>
+    	<if test="endTime != null and endTime != ''">
+			end_time = #{endTime},
+		</if>
+    	<if test="rewardType != null and rewardType != ''">
+			reward_type = #{rewardType},
+		</if>
+    	<if test="rewardContentId != null and rewardContentId != ''">
+			reward_content_id = #{rewardContentId},
+		</if>
+    	
+	</sql>
+
+	<select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+		<include refid="Base_Column_List"/>,
+		sysc.coupons_name as couponsName, cusir.integral_type as integralType
+        from activity_reward t
+		left join sys_coupons sysc on sysc.id = t.reward_content_id
+		left join customer_integral_rule cusir on cusir.id = t.reward_content_id
+        where t.id = #{id,jdbcType=INTEGER}
+    </select>
+	
+	<insert id="insert" parameterType="com.example.warehouse.entity.activityReward.ActivityReward">
+		insert into activity_reward
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			create_time, 
+			create_id, 
+			update_time, 
+			update_id, 
+			status, 
+			version, 
+			remarks, 
+			is_enable, 
+			activity_name, 
+			activity_type, 
+			activity_time_type, 
+			start_time, 
+			end_time, 
+			reward_type, 
+			reward_content_id, 
+					</trim>
+		values
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<include refid="Insert_Column_Values"/>
+		</trim>
+	</insert>
+	
+	<insert id="insertSelective" parameterType="com.example.warehouse.entity.activityReward.ActivityReward">
+		insert into activity_reward
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<include refid="Base_Column_List_NotNull"/>
+		</trim>
+		values
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<include refid="Insert_Column_Values_NotNull"/>
+		</trim>
+	</insert>
+	
+	<update id="updateByPrimaryKey" parameterType="com.example.warehouse.entity.activityReward.ActivityReward">
+		update activity_reward
+		<set>
+			<include refid="Update_Column"/>
+		</set>
+		<where>
+			id = #{id} and status = 1
+		</where>
+		
+	</update>
+	
+	<update id="updateByPrimaryKeySelective" parameterType="com.example.warehouse.entity.activityReward.ActivityReward">
+		update activity_reward
+		<set>
+			<include refid="Update_Column_NotNull"/>
+		</set>
+		<where>
+		id = #{id} and status = 1
+		</where>
+	</update>
+
+	<!-- 删除数据（逻辑删除） -->
+	<update id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		update  activity_reward
+		set `status` = 0
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	
+	<!-- 移除数据（物理删除） -->
+	<delete id="removeByPrimaryKey" parameterType="java.lang.Integer">
+		delete from activity_reward
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+
+	<select id="selectActivityRewardCount" resultType="java.lang.Integer">
+		select count(1)
+		from activity_reward
+		<where>
+			status = 1
+			<if test="activityName != null and activityName != ''">
+				and activity_name regexp #{activityName}
+			</if>
+			<if test="activityTimeType != null">
+				and activity_time_type = #{activityTimeType}
+			</if>
+			<if test="isEnable != null">
+				and is_enable = #{isEnable}
+			</if>
+		</where>
+	</select>
+
+	<select id="getActivityRewardList" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"/>,
+		cu.username as createName, uu.username as updateName
+		from activity_reward t
+		left join `user` cu on cu.id = t.create_id
+		left join `user` uu on uu.id = t.update_id
+		<where>
+			t.status = 1
+			<if test="activityName != null and activityName != ''">
+				and t.activity_name regexp #{activityName}
+			</if>
+			<if test="activityTimeType != null">
+				and t.activity_time_type = #{activityTimeType}
+			</if>
+			<if test="isEnable != null">
+				and t.is_enable = #{isEnable}
+			</if>
+		</where>
+		order by t.create_time desc
+		limit #{pageNumber}, #{pageSize}
+	</select>
+
+	<select id="selectByActivityType" resultMap="BaseResultMap">
+		select id, activity_name, activity_type, activity_time_type,
+		start_time, end_time, reward_type, reward_content_id
+		from activity_reward
+		<where>
+			status = 1
+			and is_enable = 1
+			and activity_type = #{activityType}
+		</where>
+	</select>
+
+	<select id="checkActivityName" resultType="java.lang.Integer">
+		select count(1)
+		from activity_reward
+		<where>
+			status = 1
+			and activity_name = #{activityName}
+			<if test="id != null and id != ''">
+				and id != #{id}
+			</if>
+		</where>
+	</select>
+
+	<select id="checkActivityReward" resultType="java.lang.Integer">
+		select count(1)
+		from activity_reward
+		<where>
+			status = 1
+			and activity_type = #{activityType}
+			and reward_type = #{rewardType}
+			and reward_content_id = #{rewardContentId}
+			<if test="id != null and id != ''">
+				and id != #{id}
+			</if>
+		</where>
+	</select>
+
+	<update id="enableActivityReward">
+		update activity_reward
+		set is_enable = #{enableType}
+		where id = #{id}
+	</update>
+	
+</mapper>

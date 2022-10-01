@@ -1,0 +1,51 @@
+{
+  "pages": [
+    "pages/home/index",
+    "pages/icon-list/index",
+    "pages/mine/index",
+    "pages/mine/personal/list",
+    "pages/mine/personal/change-name",
+    "pages/login/login",
+    "pages/login/forget",
+    "pages/login/register",
+    "pages/mine/set-password/set-password",
+    "pages/mine/application-settings/application-settings",
+    "pages/web-views/scan-code/scan-code",
+    "pages/web-views/scanCode-schoolOver/scanCode-schoolOver",
+    "pages/web-views/binding-student/binding-student",
+    "pages/web-views/add-child/add-child",
+    "pages/web-views/my-child/my-child",
+    "pages/web-views/school-over/school-over",
+    "pages/web-views/video-view/video-view",
+    "pages/web-views/notification-settings/notification-settings"
+  ],
+  "subPackages": [],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "",
+    "navigationBarBackgroundColor": "#fff",
+    "backgroundColor": "#fff"
+  },
+  "tabBar": {
+    "color": "#8a8396",
+    "selectedColor": "#2a4c7e",
+    "borderStyle": "black",
+    "backgroundColor": "#fff",
+    "list": [
+      {
+        "pagePath": "pages/home/index",
+        "iconPath": "static/home.png",
+        "selectedIconPath": "static/home-active.png",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/mine/index",
+        "iconPath": "static/mine.png",
+        "selectedIconPath": "static/mine-active.png",
+        "text": "我的"
+      }
+    ]
+  },
+  "usingComponents": {},
+  "sitemapLocation": "sitemap.json"
+}

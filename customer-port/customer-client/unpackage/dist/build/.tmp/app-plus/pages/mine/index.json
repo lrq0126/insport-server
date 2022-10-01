@@ -1,0 +1,6 @@
+{
+  "titleNView": false,
+  "usingComponents": {
+    "uni-icon": "/components/uni-icon"
+  }
+}

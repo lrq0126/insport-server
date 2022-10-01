@@ -1,0 +1,1 @@
+<view data-event-opts="{{[['tap',[['handleClick',['$event']]]]]}}" class="cc-btn data-v-22175a42" bindtap="__e"><view class="cc-btn__jia data-v-22175a42"></view><view class="cc-btn__txt data-v-22175a42"><slot></slot></view></view>

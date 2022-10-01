@@ -1,0 +1,12 @@
+{
+  "navigationBarTitleText": "修改地址",
+  "titleNView": {
+    "buttons": [
+      {
+        "text": "",
+        "fontSrc": "/static/uni.ttf"
+      }
+    ]
+  },
+  "usingComponents": {}
+}

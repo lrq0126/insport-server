@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.warehouse.mapper.OperatorMapper">
+  <sql id="table">operator</sql>
+
+  <sql id="selectCols">t.id, t.operator_code, t.operator_name, t.status, t.create_time, t.create_id, t.last_update_time, t.last_update_id</sql>
+  
+  <resultMap id="beanMap" type="com.example.warehouse.entity.Operator">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="operator_code" jdbcType="VARCHAR" property="operatorCode" />
+    <result column="operator_name" jdbcType="VARCHAR" property="operatorName" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="create_id" jdbcType="INTEGER" property="createId" />
+    <result column="last_update_time" jdbcType="TIMESTAMP" property="lastUpdateTime" />
+    <result column="last_update_id" jdbcType="INTEGER" property="lastUpdateId" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from operator
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.example.warehouse.entity.Operator">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into operator (operator_code, operator_name, `status`,
+    create_time, create_id, last_update_time,
+    last_update_id)
+    values (#{operatorCode,jdbcType=VARCHAR}, #{operatorName,jdbcType=VARCHAR}, 1,
+    #{createTime,jdbcType=TIMESTAMP}, #{createId,jdbcType=INTEGER}, #{lastUpdateTime,jdbcType=TIMESTAMP},
+    #{lastUpdateId,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.example.warehouse.entity.Operator">
+    update operator
+    set
+      operator_name = #{operatorName,jdbcType=VARCHAR},
+      create_id = #{createId,jdbcType=INTEGER},
+      last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+      last_update_id = #{lastUpdateId,jdbcType=INTEGER}
+    where operator_code = #{operatorCode,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="beanMap">
+    select
+    <include refid="selectCols"/>
+    from
+    <include refid="table"/> t
+    where t.id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectAll" resultMap="beanMap">
+    select
+    <include refid="selectCols"/>
+    from
+    <include refid="table"/>t
+    <where>
+      t.status = 1
+    </where>
+  </select>
+
+  <sql id="condition_sql">
+    <if test="operatorCode!= null and operatorCode!=''">and t.operator_code=#{operatorCode}</if>
+    <if test="operatorName!= null and operatorName!=''">and t.operator_name like CONCAT('%',#{operatorName},'%')</if>
+    <if test="createId!= null and createId!=''">and t.create_id=#{createId}</if>
+    <if test="lastUpdateId!= null and lastUpdateId!=''">and t.last_update_id=#{lastUpdateId}</if>
+  </sql>
+
+  <update id="del">
+    update 
+    <include refid="table"/>t
+    set 
+    t.status = 0 ,
+    t.last_update_id = #{userId}
+    where 
+    t.operator_code = #{operatorCode}
+  </update>
+  
+  <select id="find" parameterType="java.util.Map" resultMap="beanMap">
+    select
+    <include refid="selectCols"/>
+    from
+    <include refid="table"/>t
+    <where>
+      <include refid="condition_sql"/>
+      and t.status = 1
+    </where>
+  </select>
+
+  <select id="findByName" parameterType="java.lang.String" resultMap="beanMap">
+    select
+    <include refid="selectCols"/>
+    from
+    <include refid="table"/>t
+    <where>
+      t.operator_name = #{operatorName}
+      and t.status = 1
+    </where>
+  </select>
+</mapper>

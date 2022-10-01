@@ -1,0 +1,4 @@
+
+.text{padding: 40rpx;}
+.text-p{font-size: 32rpx;margin-bottom: 30rpx;}
+

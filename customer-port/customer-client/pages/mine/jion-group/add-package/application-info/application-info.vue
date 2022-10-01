@@ -1,0 +1,739 @@
+<template>
+    <view class="application-info">
+        <!-- 搜索 -->
+        <!-- <view class="package_stock">
+            <form method="post" action="users.php?act=order_list&amp;mark=1" name="searchForm" id="searchForm_id">
+            <select name="cid" v-model="pageInfo.deliveryName" class="package_stock_se">
+          <option value="">请选择快递公司</option>
+          <option
+            v-for="(item, index) in deliveryCompanyData"
+            :key="index"
+            :value="item.deliveryName"
+          >{{item.deliveryName}}</option>
+        </select>
+            <input placeholder="请输入快递单号/唛头" name="keyword" type="text" v-model="pageInfo.deliveryOrderNo" id="keyword" class="package_stock_in" />
+            <button class="package_stock_bu" @click="handleQuerying">查 询</button>
+        </form>
+        </view> -->
+        <!-- 合计 -->
+        <view class="statistics sqdb">打包包裹合计：<text>{{orderTable.length}}</text>&nbsp;件
+            <view>注意：打包时重量会有所增加，实际重量以出货为准</view>
+        </view>
+        <!-- 列表 -->
+        <view class="wrap order_list">
+            <view class="order_box">
+                <table width="100%"
+                       border="0"
+                       cellpadding="5"
+                       cellspacing="0"
+                       v-for="(item, index) in orderTable"
+                       :key="index">
+                    <tbody>
+                        <tr>
+                            <td class="order_status"
+                                style="padding:0px; margin:0px; height:1px;"></td>
+                        </tr>
+                        <tr>
+                            <td class="order_content">
+                                <view class="package_C">
+                                    <view class="package_C_T">
+                                        <!-- <checkbox-group>
+                                            <label>
+                                                <checkbox value="cb"
+                                                          checked="true" />快递单号/唛头：{{item.deliveryOrderNo}}
+                                            </label>
+                                        </checkbox-group> -->
+                                        快递单号/唛头：{{item.deliveryOrderNo}}
+                                    </view>
+                                    <view class="package_C_C">
+                                        <p>
+                                            <text class="package_C_C_T">货物名称：</text> {{item.goodsName}}
+                                        </p>
+                                        <p class="package_C_C_P">
+                                            <text>
+                                                <text class="package_C_C_T">货物重量：</text> {{item.kg}} KG
+                                            </text>
+                                            <text>货物体积： {{item.vol}} m³</text>
+                                        </p>
+                                    </view>
+                                    <!-- <view class="package_C_B">
+                                        <view class="rejection">单独打包</view>
+                                        <view class="look">查看详情</view>
+                                    </view> -->
+                                </view>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </view>
+
+            <!-- 收货地址模块 -->
+            <table width="100%"
+                   border="0"
+                   cellpadding="5"
+                   cellspacing="0">
+                <tbody>
+                    <tr>
+                        <td class="order_status"
+                            style="padding:0px; margin:0px; height:1px;"></td>
+                    </tr>
+                    <tr>
+                        <td class="order_content">
+                            <view class="package_C">
+                                <view class="package_C_C">
+                                    <p>
+                                        <text class="package_C_C_T">收件人：</text> {{addressInfo.addressee}}
+                                    </p>
+                                    <p>
+                                        <text class="package_C_C_T">联系电话：</text> {{addressInfo.phoneNumber}}
+                                    </p>
+                                    <p>
+                                        <text class="package_C_C_T">收货地址：</text> {{addressInfo.receiverAddress}}
+                                    </p>
+                                </view>
+                            </view>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <view class="aui-content aui-margin-t-10 aui-margin-b-10"
+                  @click="handleGo('../../shipping-address/shipping-address')">
+                <view class="aui-list aui-list-in">
+                    <view class="aui-list-item"
+                          id="addgoods">
+                        <view class="aui-list-item-label-icon">
+                            <text class="aui-iconfont aui-icon-plus aui-active">
+                                <img src="@/static/edit.png"
+                                     alt=""
+                                     style="width: 20px;height: 19px;position: relative;top: -1px;">
+                            </text>
+                        </view>
+                        <view class="aui-list-item-inner">
+                            修改收货地址
+                        </view>
+                    </view>
+
+                </view>
+            </view>
+
+            <!-- 运输渠道模块 -->
+            <table width="100%"
+                   border="0"
+                   cellpadding="5"
+                   cellspacing="0"
+                   v-if="transportChannelsInfo.bool">
+                <tbody>
+                    <tr>
+                        <td class="order_status"
+                            style="padding:0px; margin:0px; height:1px;"></td>
+                    </tr>
+                    <tr>
+                        <td class="order_content">
+                            <view class="package_C">
+                                <view class="package_C_T">
+                                    <p class="package_C_T_P">
+                                        <text>
+                                            <text>渠道名称：</text> {{transportChannelsInfo.routeName}}
+                                        </text>
+                                    </p>
+                                </view>
+                                <view class="package_C_C">
+                                    <p class="package_C_C_P">
+                                        <text>
+                                            <text>运送类型：</text><text style="color: red;font-weight: bold;">{{transportChannelsInfo.routeType}}</text>
+                                        </text>
+                                        <text>预报价： <text style="color: red;font-weight: bold;">￥{{transportChannelsInfo.price}}</text></text>
+                                    </p>
+                                    <p>
+                                        <text class="package_C_C_T">始发仓库：</text> {{transportChannelsInfo.originatingPlace}}
+                                    </p>
+                                    <p>
+                                        <text class="package_C_C_T">目的地：</text> {{transportChannelsInfo.destination}}
+                                    </p>
+                                    <p>
+                                        <text class="package_C_C_T">体积段：</text> {{transportChannelsInfo.vol ? transportChannelsInfo.vol : 0}} m³
+                                    </p>
+                                    <p class="package_C_C_P">
+                                        <text>
+                                            <text class="package_C_C_T">实际体积：</text> {{transportChannelsInfo.actualVol ? transportChannelsInfo.actualVol : 0}} m³
+                                        </text>
+                                        <text>结算体积： {{transportChannelsInfo.settleVol ? transportChannelsInfo.settleVol : 0}} m³</text>
+                                    </p>
+                                    <p>
+                                        <text class="package_C_C_T">重量段：</text> {{transportChannelsInfo.weight ? transportChannelsInfo.weight : 0}} KG
+                                    </p>
+                                    <p class="package_C_C_P">
+                                        <text>
+                                            <text class="package_C_C_T">实际重量：</text> {{transportChannelsInfo.actualWeight ? transportChannelsInfo.actualWeight : 0}} KG
+                                        </text>
+                                        <text>结算重量： {{transportChannelsInfo.settleWeight ? transportChannelsInfo.settleWeight : 0}} KG</text>
+                                    </p>
+                                    <p class="package_C_C_P">
+                                        <text>
+                                            <text class="package_C_C_T">币别：</text> {{transportChannelsInfo.noteType}}
+                                        </text>
+                                        <text>单价： <text style="color: red;font-weight: bold;">￥{{transportChannelsInfo.unitPrice}}</text></text>
+                                    </p>
+                                    <p>
+                                        <text class="package_C_C_T"
+                                              style="width: 100px;">预计送达时间：</text> {{transportChannelsInfo.transportationTime}}
+                                    </p>
+                                    <p>
+                                        <text class="package_C_C_T">备注信息：</text><text style="color: red;">{{transportChannelsInfo.remarks}}</text>
+                                    </p>
+                                </view>
+                            </view>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <view class="aui-content aui-margin-t-10 aui-margin-b-10"
+                  @click="handleGo('../../transport-channels/transport-channels',orderTable)">
+                <view class="aui-list aui-list-in">
+                    <view class="aui-list-item"
+                          id="addgoods">
+                        <view class="aui-list-item-label-icon">
+                            <text class="aui-iconfont aui-icon-plus aui-active">+</text>
+                        </view>
+                        <view class="aui-list-item-inner">
+                            选择运输渠道
+                        </view>
+                    </view>
+
+                </view>
+            </view>
+
+            <!-- 页码模块 -->
+            <!-- <view class="example-body" style="margin-top: 10upx;background: #fff;padding-top: 10upx;">
+                <uni-pagination :current="pageInfo.page" :total="pageInfo.total" title="标题文字" :show-icon="true" @change="pageChange" />
+            </view>
+            <view class="btn-view" style="text-align: center;padding: 10upx 0;background: #fff;">
+                <view>
+                    <text class="example-info">当前第：{{ pageInfo.page }}页，总数量：{{ pageInfo.total }}条，每页展示：{{ pageInfo.limit }}条</text>
+                </view>
+            </view> -->
+
+            <!-- 加载模块 -->
+            <view class="more_loader_spinner"
+                  style="display: none;">
+                <view style="text-align:center; margin:20upx;margin-top:300upx;"><img src="http://906.kjwlxt.com/mobile/themes/default/images/loader.gif"></view>
+            </view>
+        </view>
+
+        <!-- 申请打包 -->
+        <view class="Perfect_butt">
+            <view class="Perfect_butt_a"
+                  @click="handlePackageSubmit">确认打包</view>
+        </view>
+    </view>
+</template>
+
+<script>
+import uniPagination from '@/components/uni-pagination/uni-pagination.vue'
+import { applicationPackageList, deleteapplicationPackage, comfirmPackageCargoList } from "@/api/mine/application-package";
+import { shippingaaAddressList } from "@/api/mine/shipping-address"
+import { getDeliveryCompany } from "@/api/mine/add-package";
+
+export default {
+    components: {
+        uniPagination
+    },
+    data () {
+        return {
+            addressObj: {
+                id: '',
+                addressee: '',
+                phoneNumber: '',
+                receiverAddress: '',
+            },
+            addressInfo: {
+                id: '',
+                addressee: '',
+                phoneNumber: '',
+                receiverAddress: '',
+            },  // 默认地址
+            transportChannelsInfo: {
+                bool: false,
+                routeId: '',
+                routeName: '',
+                price: '',
+                routeType: '',
+                originatingPlace: '',
+                destination: '',
+                vol: '',
+                actualVol: '',
+                settleVol: '',
+                weight: '',
+                actualWeight: '',
+                settleWeight: '',
+                noteType: '',
+                unitPrice: '',
+                transportationTime: '',
+                remarks: '',
+            }, // 渠道信息
+            channelsInfo: {
+
+            }, // 运输渠道
+            orderTable: [],
+            tableData: [],
+            pageInfo: {
+                total: 0,
+                page: 1, // 当前页码
+                limit: 10, // 每页条数
+                addressee: ''
+            }, // 页码传参数
+            formItem: {
+                goodsNos: [],
+                packType: '',
+                TransportationRouteId: '',
+                addressId: '',
+                price: ''
+            },  // 打包参数
+            btnBool: true
+        };
+    },
+    onLoad (option) {
+        this.orderTable = (JSON.parse(uni.getStorageSync('orderArray')))
+        // this.orderTable = (JSON.parse(option.obj))
+
+        this.formItem.packType = Number(option.packType)  // 1是单独打包，2是合并打包
+        this.formItem.goodsNos = []  // 初始化
+        this.orderTable.forEach(ele => {
+            this.formItem.goodsNos.push(ele.goodsNo)
+        });  // 获取打包goodsNos
+    },
+    onShow (option) {
+        let transportValue = uni.getStorageSync('transportChannels')
+        let addressValue = uni.getStorageSync('addressInfoData')
+        if (addressValue) {
+            this.addressInfo.id = addressValue.id
+            this.addressInfo.addressee = addressValue.addressee
+            this.addressInfo.phoneNumber = addressValue.phoneNumber
+            this.addressInfo.receiverAddress = addressValue.receiverAddress
+        }
+        if (transportValue) {
+            this.transportChannelsInfo.bool = true
+            this.transportChannelsInfo.routeId = transportValue.routeId
+            this.transportChannelsInfo.routeName = transportValue.routeName
+            this.transportChannelsInfo.price = transportValue.price
+            this.transportChannelsInfo.routeType = transportValue.routeType
+            this.transportChannelsInfo.originatingPlace = transportValue.originatingPlace
+            this.transportChannelsInfo.destination = transportValue.destination
+            this.transportChannelsInfo.vol = transportValue.vol
+            this.transportChannelsInfo.actualVol = transportValue.actualVol
+            this.transportChannelsInfo.settleVol = transportValue.settleVol
+            this.transportChannelsInfo.weight = transportValue.weight
+            this.transportChannelsInfo.actualWeight = transportValue.actualWeight
+            this.transportChannelsInfo.settleWeight = transportValue.settleWeight
+            this.transportChannelsInfo.noteType = transportValue.noteType
+            this.transportChannelsInfo.unitPrice = transportValue.unitPrice
+            this.transportChannelsInfo.transportationTime = transportValue.transportationTime
+            this.transportChannelsInfo.remarks = transportValue.remarks
+        }
+    },
+    onUnload () {
+        // 清除本地存储
+        uni.removeStorageSync('addressInfoData');
+        uni.removeStorageSync('transportChannels');
+        uni.removeStorageSync('orderArray');
+        this.transportChannelsInfo.bool = false
+    },
+    methods: {
+        /**
+        * 菊花
+        * @return {type} {description}
+        */
+        showloading () {
+            uni.showLoading({
+                title: '页面加载中...',
+                mask: true,
+                success () {
+                    setTimeout(() => {
+                        uni.hideLoading()
+                    }, 1000)
+                }
+            })
+        },
+
+        /**
+         * 获取列表数据
+         * @return {type} {description}
+         */
+        handleSearch () {
+            this.showloading()
+            const p1 = shippingaaAddressList(this.pageInfo);
+            Promise.all([p1]).then(res => {
+                if (res[0][1].data.code == 200) {
+                    this.addressInfo = res[0][1].data.content.customerAddress.filter(ele => {
+                        return ele.defaultFlag == '1'
+                    }).length > 0 ? res[0][1].data.content.customerAddress.filter(ele => {
+                        return ele.defaultFlag == '1'
+                    })[0] : this.addressObj;
+                } else if (res[0][1].data.code == 401) {
+                    uni.showToast({
+                        icon: 'none',
+                        title: res[0][1].data.message,
+                        duration: 1500
+                    });
+                    setTimeout(() => {
+                        uni.navigateTo({
+                            url: '/pages/login/login'
+                        })
+                    }, 1500)
+                }
+                // this.pageInfo.total = res[0][1].data.content.page.total;
+                // this.pageInfo.page = res[0][1].data.content.page.number;
+                // this.pageInfo.limit = res[0][1].data.content.page.pageSize;
+            });
+        },
+
+        /**
+         * 查询
+         * @return {type} {description}
+         */
+        handleQuerying () {
+            applicationPackageList(this.pageInfo)
+                .then(res => {
+                    if (res[1].data.code == 200) {
+                        this.tableData = res[1].data.content.goods;
+                        // 页码
+                        this.pageInfo.total = res[1].data.content.page.total;
+                        this.pageInfo.page = res[1].data.content.page.number;
+                        this.pageInfo.limit = res[1].data.content.page.pageSize;
+                    } else if (res[1].data.code == 401) {
+                        uni.showToast({
+                            icon: 'none',
+                            title: res[1].data.message,
+                            duration: 1500
+                        });
+                        setTimeout(() => {
+                            uni.navigateTo({
+                                url: '/pages/login/login'
+                            })
+                        }, 1500)
+                    }
+                })
+        },
+
+        /**
+        * 页码
+        * @return {type} {description}
+        */
+        pageChange (e) {
+            this.pageInfo.page = e.current
+            this.handleQuerying()
+        },
+
+        /**
+         * 确认打包
+         * @param  {type}  {description}
+         */
+        handlePackageSubmit () {
+            this.formItem.addressId = this.addressInfo.id
+            this.formItem.TransportationRouteId = this.transportChannelsInfo.routeId
+            this.formItem.price = Number(this.transportChannelsInfo.price)
+            let _this = this
+            if (_this.transportChannelsInfo.bool) {
+                uni.showLoading({
+                    title: '正在提交...',
+                    mask: true,
+                })
+                if (_this.btnBool) {
+                    _this.btnBool = false
+                    comfirmPackageCargoList(_this.formItem).then(res => {
+                        if (res[1].data.code == 200) {
+                            setTimeout(() => {
+                                uni.hideLoading()
+                                uni.showToast({
+                                    icon: "success",
+                                    title: '打包成功',
+                                    duration: 1000,
+                                    success () {
+                                        uni.removeStorageSync('orderArray');  // 清除本地存储
+                                        setTimeout(() => {
+                                            uni.navigateBack({
+                                                delta: 1  // 上一页
+                                            })
+                                            _this.btnBool = true
+                                        }, 1000)
+                                    }
+                                });
+                            }, 1000)
+
+                        } else if (res[1].data.code == 401) {
+                            uni.showToast({
+                                icon: 'none',
+                                title: res[1].data.message,
+                                duration: 1500
+                            });
+                            setTimeout(() => {
+                                uni.navigateTo({
+                                    url: '/pages/login/login'
+                                })
+                            }, 1500)
+                        } else {
+                            uni.showToast({
+                                icon: "none",
+                                title: res[1].data.message,
+                                duration: 3000,
+                            });
+                        }
+                    })
+                }
+            } else {
+                uni.showToast({
+                    icon: 'none',
+                    title: '请选择一条运输渠道'
+                });
+            }
+        },
+
+        /**
+         * 路由跳转
+         * @return {type} {description}
+         */
+        handleGo (url, data) {
+            uni.navigateTo({
+                url: url + '?goodsNos=' + JSON.stringify(data) + '&logo="true"'
+            });
+        }
+    },
+    mounted () {
+        this.handleSearch();
+    }
+}
+</script>
+
+<style lang="scss" scoped>
+.application-info {
+    .package_stock {
+        max-width: 1440upx;
+        width: 100%;
+        padding: 18upx 36upx 18upx 36upx;
+        box-sizing: border-box;
+        position: fixed;
+        background: #fff;
+        z-index: 10;
+        .package_stock_se {
+            width: 35%;
+            height: 56upx;
+            border: 1px solid #ccc;
+            float: left;
+            font-size: 24upx;
+            border-radius: 8upx;
+        }
+        .package_stock_in {
+            width: 40%;
+            margin-left: 18upx;
+            padding-left: 10upx;
+            border-radius: 8upx 0 0 8upx;
+            height: 52upx;
+            border: 1px solid #ccc;
+            float: left;
+            font-size: 24upx;
+        }
+        .package_stock_bu {
+            text-align: center;
+            width: 20%;
+            height: 56upx;
+            background: #0099ff;
+            color: #fff;
+            border: none;
+            border-radius: 0px 8upx 8upx 0;
+            box-sizing: border-box;
+            float: left;
+            cursor: pointer;
+            font-size: 24upx;
+        }
+    }
+    // 合计
+    .statistics {
+        max-width: 1440upx;
+        width: 100%;
+        height: 70upx;
+        line-height: 70upx;
+        padding: 0 36upx;
+        background: #fff;
+        box-sizing: border-box;
+        position: fixed;
+        top: 92upx;
+        border-top: 1px dotted #dedede;
+        color: #f00;
+        font-weight: bold;
+        z-index: 10;
+    }
+    .sqdb {
+        height: 170upx;
+        line-height: 90upx;
+    }
+    // 列表
+    .order_list {
+        max-width: 1440upx;
+        margin: 0 auto;
+        // min-height: 980px;
+        padding-top: 164upx;
+        margin-bottom: 120upx;
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
+            td,
+            th {
+                padding: 0;
+            }
+            .package_C {
+                overflow: hidden;
+                background: #fff;
+                margin-top: 18upx;
+                .package_C_T {
+                    padding-left: 36upx;
+                    padding-right: 36upx;
+                    height: 76upx;
+                    line-height: 76upx;
+                    .package_C_T_P {
+                        display: flex;
+                        justify-content: space-between;
+                    }
+                }
+                .package_C_C {
+                    border-top: 1px solid #f2f2f2;
+                    border-bottom: 1px solid #f2f2f2;
+                    padding: 18upx 36upx;
+                    line-height: 40upx;
+                    margin-top: -1px;
+                    overflow: hidden;
+                    .package_C_C_P {
+                        display: flex;
+                        justify-content: space-between;
+                    }
+                    .package_C_C_T {
+                        width: 142upx;
+                        display: inline-block;
+                        text-align: right;
+                        margin-right: 6upx;
+                    }
+                }
+                .package_C_B {
+                    height: 94upx;
+                    line-height: 94upx;
+                    padding: 0 36upx;
+                    .delete {
+                        width: 20%;
+                        height: 54upx;
+                        border: 1px solid #dd4f4a;
+                        color: #dd4f4a;
+                        display: inline-block;
+                        text-align: center;
+                        line-height: 54upx;
+                        margin-right: 10upx;
+                    }
+                    .rejection {
+                        width: 20%;
+                        height: 54upx;
+                        border: 1px solid #0099ff;
+                        color: #0099ff;
+                        display: inline-block;
+                        text-align: center;
+                        line-height: 54upx;
+                    }
+                    .look {
+                        float: right;
+                        display: block;
+                        height: 54upx;
+                        line-height: 54upx;
+                        padding: 0 0.625rem;
+                        background: #0099ff;
+                        color: #fff;
+                        border-radius: 10upx;
+                        margin-top: 18upx;
+                        margin-left: 18upx;
+                    }
+                }
+            }
+        }
+        // 收获地址
+        .aui-margin-b-10 {
+            margin-top: 20upx !important;
+            .aui-list {
+                border-color: #f5f5f5;
+                background: #ffff;
+                .aui-list-item {
+                    list-style: none;
+                    margin: 0;
+                    padding: 0;
+                    padding-left: 30upx;
+                    color: #212121;
+                    border-bottom: 1px solid #dddddd;
+                    position: relative;
+                    min-height: 90upx;
+                    -webkit-box-sizing: border-box;
+                    box-sizing: border-box;
+                    display: -webkit-box;
+                    display: -webkit-flex;
+                    display: flex;
+                    -webkit-box-pack: justify;
+                    -webkit-justify-content: space-between;
+                    justify-content: space-between;
+                }
+                .aui-list-item-label-icon {
+                    width: auto;
+                    padding-right: 20upx;
+                    .aui-iconfont {
+                        -webkit-align-self: center;
+                        align-self: center;
+                        font-size: 60upx;
+                        color: #e16166;
+                        line-height: 1.4 !important;
+                        margin-left: 30upx;
+                    }
+                }
+                .aui-list-item-inner {
+                    position: relative;
+                    min-height: 90upx;
+                    padding-right: 30upx;
+                    width: 100%;
+                    -webkit-box-sizing: border-box;
+                    box-sizing: border-box;
+                    display: -webkit-box;
+                    display: -webkit-flex;
+                    display: flex;
+                    -webkit-box-flex: 1;
+                    -webkit-box-pack: justify;
+                    -webkit-justify-content: space-between;
+                    justify-content: space-between;
+                    -webkit-box-align: center;
+                    -webkit-align-items: center;
+                    align-items: center;
+                }
+            }
+        }
+    }
+    // 确认打包
+    .Perfect_butt {
+        max-width: 1440upx;
+        width: 100%;
+        height: 100upx;
+        background: #fff;
+        border-top: 1px solid #ccc;
+        position: absolute;
+        /* left: 0; */
+        bottom: 0;
+        position: fixed;
+        line-height: 100upx;
+        box-sizing: border-box;
+        display: flex;
+        justify-content: space-between;
+        .Perfect_butt_a {
+            display: block;
+            float: right;
+            width: 100%;
+            height: 100upx;
+            background: #dd4f4a;
+            text-align: center;
+            line-height: 100upx;
+            color: #fff;
+            font-size: 36upx;
+        }
+    }
+}
+</style>
+

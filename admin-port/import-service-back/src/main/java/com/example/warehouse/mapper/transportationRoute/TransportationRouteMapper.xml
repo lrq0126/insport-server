@@ -1,0 +1,764 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.warehouse.mapper.transportationRoute.TransportationRouteMapper">
+    <resultMap id="BaseResultMap" type="com.example.warehouse.entity.TransportationRoute">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="is_available" jdbcType="INTEGER" property="isAvailable"/>
+        <result column="version" jdbcType="INTEGER" property="version"/>
+        <result column="route_name" jdbcType="VARCHAR" property="routeName"/>
+        <result column="operation_id" jdbcType="INTEGER" property="operationId"/>
+        <result column="route_type" jdbcType="INTEGER" property="routeType"/>
+        <result column="originating_place" jdbcType="VARCHAR" property="originatingPlace"/>
+        <result column="destination" jdbcType="VARCHAR" property="destination"/>
+        <result column="english_name" jdbcType="VARCHAR" property="englishName"/>
+        <result column="note_type" jdbcType="VARCHAR" property="noteType"/>
+        <result column="transportation_time" jdbcType="VARCHAR" property="transportationTime"/>
+        <result column="remote_fee" jdbcType="DOUBLE" property="remoteFee"/>
+        <result column="remarks" jdbcType="VARCHAR" property="remarks"/>
+        <result column="transport_type" jdbcType="INTEGER" property="transportType"/>
+        <result column="country_id" jdbcType="INTEGER" property="countryId"/>
+        <result column="pack_attention" jdbcType="VARCHAR" property="packAttention"/>
+
+        <result column="is_per_ticket_pack" jdbcType="INTEGER" property="isPerTicketPack"/>
+        <result column="currency" jdbcType="VARCHAR" property="currency"/>
+
+
+        <result column="is_pin" jdbcType="INTEGER" property="isPin"/>
+        <result column="side_length_limit" jdbcType="DOUBLE" property="sideLengthLimit"/>
+        <result column="upper_limit_weight" jdbcType="DOUBLE" property="upperLimitWeight"/>
+        <result column="first_length" jdbcType="DOUBLE" property="firstLength"/>
+        <result column="second_length" jdbcType="DOUBLE" property="secondLength"/>
+        <result column="sensitive_price" jdbcType="DECIMAL" property="sensitivePrice"/>
+        <result column="greater_weight" jdbcType="DOUBLE" property="greaterWeight"/>
+        <result column="forklift_fee" jdbcType="DECIMAL" property="forkliftFee"/>
+        <result column="before_weight_carry" jdbcType="DOUBLE" property="beforeWeightCarry"/>
+        <result column="before_weight_carry_type" jdbcType="INTEGER" property="beforeWeightCarryType"/>
+        <result column="after_weight_carry" jdbcType="DOUBLE" property="afterWeightCarry"/>
+        <result column="after_weight_carry_type" jdbcType="INTEGER" property="afterWeightCarryType"/>
+        <result column="cube_upper" jdbcType="DOUBLE" property="cubeUpper"/>
+        <result column="vol_conversion" jdbcType="DOUBLE" property="volConversion"/>
+        <result column="customer_requirements" jdbcType="VARCHAR" property="customerRequirements"/>
+
+        <result column="is_tariffs" jdbcType="DOUBLE" property="isTariffs"/>
+        <result column="tariffs" jdbcType="DOUBLE" property="tariffs"/>
+        <result column="is_insurance" jdbcType="DOUBLE" property="isInsurance"/>
+        <result column="insurance_id" jdbcType="DOUBLE" property="insuranceId"/>
+
+    </resultMap>
+    <sql id="Base_Column_List">
+    t.id,  DATE_FORMAT(t.create_time,'%Y-%m-%d %k:%i:%s') as create_time,
+    DATE_FORMAT(t.update_time,'%Y-%m-%d %k:%i:%s') as update_time,
+    t.`status`, t.is_available, t.version, t.route_name, t.operation_id,
+    t.route_type, t.originating_place, t.destination, t.english_name, t.note_type, t.transportation_time,
+    t.remote_fee, t.remarks, t.transport_type, t.country_id, t.pack_attention,
+    t.is_per_ticket_pack, t.currency, t.is_pin, t.side_length_limit,
+    t.upper_limit_weight, t.first_length, t.second_length,
+    t.sensitive_price, t.greater_weight, t.forklift_fee,
+    t.before_weight_carry, t.before_weight_carry_type, t.after_weight_carry,
+    t.after_weight_carry_type, t.cube_upper, t.vol_conversion,
+    t.customer_requirements, t.is_tariffs, t.tariffs, t.is_insurance, t.insurance_id
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from transportation_route t
+        where t.id = #{id,jdbcType=INTEGER} and t.`status` = 1
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from transportation_route
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.example.warehouse.entity.TransportationRoute"
+            useGeneratedKeys="true">
+    insert into transportation_route (
+    create_time, update_time, `status`,
+      is_available, version, route_name,
+      operation_id, route_type, originating_place,
+      destination, english_name, note_type,
+      transportation_time, remote_fee, remarks,
+      transport_type, country_id,pack_attention,
+      is_per_ticket_pack, currency, is_pin, side_length_limit,
+      upper_limit_weight, first_length, second_length,
+      sensitive_price, greater_weight, forklift_fee,
+      before_weight_carry, before_weight_carry_type, after_weight_carry,
+      after_weight_carry_type, cube_upper, vol_conversion,
+      customer_requirements, is_tariffs, tariffs, is_insurance, insurance_id
+      )
+    values (
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER},
+      #{isAvailable,jdbcType=INTEGER}, #{version,jdbcType=INTEGER}, #{routeName,jdbcType=VARCHAR},
+      #{operationId,jdbcType=INTEGER}, #{routeType,jdbcType=INTEGER}, #{originatingPlace,jdbcType=VARCHAR},
+      #{destination,jdbcType=VARCHAR}, #{englishName,jdbcType=VARCHAR}, #{noteType,jdbcType=VARCHAR},
+      #{transportationTime,jdbcType=VARCHAR}, #{remoteFee,jdbcType=DOUBLE}, #{remarks,jdbcType=VARCHAR}, #{transportType},
+      #{countryId}, #{packAttention}, #{isPerTicketPack}, #{currency},
+      #{isPin},#{sideLengthLimit},#{upperLimitWeight},
+      #{firstLength},#{secondLength},#{sensitivePrice},
+      #{greaterWeight},#{forkliftFee},#{beforeWeightCarry},
+      #{beforeWeightCarryType},#{afterWeightCarry},#{afterWeightCarryType},
+      #{cubeUpper},#{volConversion},#{customerRequirements},
+      #{isTariffs}, #{tariffs}, #{isInsurance}, #{insuranceId}
+      )
+  </insert>
+    <insert id="insertSelective" keyColumn="id" keyProperty="id"
+            parameterType="com.example.warehouse.entity.TransportationRoute" useGeneratedKeys="true">
+        insert into transportation_route
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            create_time,
+            <if test="updateTime != null and updateTime != ''">
+                update_time,
+            </if>
+            `status`,
+            is_available,
+            version,
+            <if test="routeName != null and routeName != ''">
+                route_name,
+            </if>
+            <if test="operationId != null and operationId != ''">
+                operation_id,
+            </if>
+            <if test="routeType != null and routeType != ''">
+                route_type,
+            </if>
+            <if test="originatingPlace != null and originatingPlace != ''">
+                originating_place,
+            </if>
+            <if test="destination != null and destination != ''">
+                destination,
+            </if>
+            <if test="englishName != null and englishName != ''">
+                english_name,
+            </if>
+            <if test="noteType != null and noteType != ''">
+                note_type,
+            </if>
+            <if test="transportationTime != null and transportationTime != ''">
+                transportation_time,
+            </if>
+            <if test="remoteFee != null and remoteFee != ''">
+                remote_fee,
+            </if>
+            <if test="remarks != null and remarks != ''">
+                remarks,
+            </if>
+            <if test="transportType != null and transportType != ''">
+                transport_type,
+            </if>
+            <if test="countryId != null and countryId != ''">
+                country_id,
+            </if>
+            <if test="packAttention != null and packAttention != ''">
+                pack_attention,
+            </if>
+
+            <if test="isPerTicketPack != null">
+                is_per_ticket_pack,
+            </if>
+            <if test="currency != null and currency != ''">
+                currency,
+            </if>
+            <if test="isPin != null">
+                is_pin,
+            </if>
+            <if test="sideLengthLimit != null">
+                side_length_limit,
+            </if>
+            <if test="upperLimitWeight != null">
+                upper_limit_weight,
+            </if>
+            <if test="firstLength != null">
+                first_length,
+            </if>
+            <if test="secondLength != null">
+                second_length,
+            </if>
+            <if test="sensitivePrice != null">
+                sensitive_price,
+            </if>
+            <if test="greaterWeight != null">
+                greater_weight,
+            </if>
+            <if test="forkliftFee != null">
+                forklift_fee,
+            </if>
+            <if test="beforeWeightCarry != null">
+                before_weight_carry,
+            </if>
+            <if test="beforeWeightCarryType != null">
+                before_weight_carry_type,
+            </if>
+            <if test="afterWeightCarry != null">
+                after_weight_carry,
+            </if>
+            <if test="afterWeightCarryType != null">
+                after_weight_carry_type,
+            </if>
+            <if test="cubeUpper != null">
+                cube_upper,
+            </if>
+            <if test="volConversion != null">
+                vol_conversion,
+            </if>
+            <if test="customerRequirements != null and customerRequirements != ''">
+                customer_requirements,
+            </if>
+
+            <if test="isTariffs != null">
+                is_tariffs,
+            </if>
+            <if test="tariffs != null">
+                tariffs,
+            </if>
+            <if test="isInsurance != null">
+                is_insurance,
+            </if>
+            <if test="insuranceId != null">
+                insurance_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            now(),
+            <if test="updateTime != null and updateTime != ''">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            1,
+            1,
+            1,
+            <if test="routeName != null and routeName != ''">
+                #{routeName,jdbcType=VARCHAR},
+            </if>
+            <if test="operationId != null and operationId != ''">
+                #{operationId,jdbcType=INTEGER},
+            </if>
+            <if test="routeType != null and routeType != ''">
+                #{routeType,jdbcType=INTEGER},
+            </if>
+            <if test="originatingPlace != null and originatingPlace != ''">
+                #{originatingPlace,jdbcType=VARCHAR},
+            </if>
+            <if test="destination != null and destination != ''">
+                #{destination,jdbcType=VARCHAR},
+            </if>
+            <if test="englishName != null and englishName != ''">
+                #{englishName,jdbcType=VARCHAR},
+            </if>
+            <if test="noteType != null and noteType != ''">
+                #{noteType,jdbcType=VARCHAR},
+            </if>
+            <if test="transportationTime != null and transportationTime != ''">
+                #{transportationTime,jdbcType=VARCHAR},
+            </if>
+            <if test="remoteFee != null and remoteFee != ''">
+                #{remoteFee,jdbcType=DOUBLE},
+            </if>
+            <if test="remarks != null and remarks != ''">
+                #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="transportType != null and transportType != ''">
+                #{transportType},
+            </if>
+            <if test="countryId != null and countryId != ''">
+                #{countryId},
+            </if>
+            <if test="packAttention != null and packAttention != ''">
+                #{packAttention},
+            </if>
+
+            <if test="isPerTicketPack != null">
+                #{isPerTicketPack},
+            </if>
+            <if test="currency != null and currency != ''">
+                #{currency},
+            </if>
+            <if test="isPin != null">
+                #{isPin},
+            </if>
+            <if test="sideLengthLimit != null">
+                #{sideLengthLimit},
+            </if>
+            <if test="upperLimitWeight != null">
+                #{upperLimitWeight},
+            </if>
+            <if test="firstLength != null">
+                #{firstLength},
+            </if>
+            <if test="secondLength != null">
+                #{secondLength},
+            </if>
+            <if test="sensitivePrice != null">
+                #{sensitivePrice},
+            </if>
+            <if test="greaterWeight != null">
+                #{greaterWeight},
+            </if>
+            <if test="forkliftFee != null">
+                #{forkliftFee},
+            </if>
+            <if test="beforeWeightCarry != null">
+                #{beforeWeightCarry},
+            </if>
+            <if test="beforeWeightCarryType != null">
+                #{beforeWeightCarryType},
+            </if>
+            <if test="afterWeightCarry != null">
+                #{afterWeightCarry},
+            </if>
+            <if test="afterWeightCarryType != null">
+                #{afterWeightCarryType},
+            </if>
+            <if test="cubeUpper != null">
+                #{cubeUpper},
+            </if>
+            <if test="volConversion != null">
+                #{volConversion},
+            </if>
+            <if test="customerRequirements != null and customerRequirements != ''">
+                #{customerRequirements},
+            </if>
+
+            <if test="isTariffs != null">
+                #{isTariffs},
+            </if>
+            <if test="tariffs != null">
+                #{tariffs},
+            </if>
+            <if test="isInsurance != null">
+                #{isInsurance},
+            </if>
+            <if test="insuranceId != null">
+                #{insuranceId},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.example.warehouse.entity.TransportationRoute">
+        update transportation_route
+        <set>
+            <if test="createTime != null and createTime != ''">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            update_time = now(),
+            <if test="status != null and status != ''">
+                `status` = #{status},
+            </if>
+            <if test="isAvailable != null and isAvailable != ''">
+                is_available = #{isAvailable},
+            </if>
+            version = #{version} + 1,
+            <if test="routeName != null and routeName != ''">
+                route_name = #{routeName,jdbcType=VARCHAR},
+            </if>
+            <if test="operationId != null and operationId != ''">
+                operation_id = #{operationId,jdbcType=INTEGER},
+            </if>
+            <if test="routeType != null and routeType != ''">
+                route_type = #{routeType,jdbcType=INTEGER},
+            </if>
+            <if test="originatingPlace != null and originatingPlace != ''">
+                originating_place = #{originatingPlace,jdbcType=VARCHAR},
+            </if>
+            <if test="destination != null and destination != ''">
+                destination = #{destination,jdbcType=VARCHAR},
+            </if>
+            <if test="englishName != null and englishName != ''">
+                english_name = #{englishName,jdbcType=VARCHAR},
+            </if>
+            <if test="noteType != null and noteType != ''">
+                note_type = #{noteType,jdbcType=VARCHAR},
+            </if>
+            <if test="transportationTime != null and transportationTime != ''">
+                transportation_time = #{transportationTime,jdbcType=VARCHAR},
+            </if>
+            <if test="remoteFee != null and remoteFee != ''">
+                remote_fee = #{remoteFee,jdbcType=DOUBLE},
+            </if>
+            <if test="remarks != null and remarks != ''">
+                remarks = #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="transportType != null and transportType != ''">
+                transport_type = #{transportType,jdbcType=VARCHAR},
+            </if>
+            <if test="countryId != null and countryId != ''">
+                country_id = #{countryId,jdbcType=VARCHAR},
+            </if>
+            <if test="packAttention != null and packAttention != ''">
+                pack_attention = #{packAttention,jdbcType=VARCHAR},
+            </if>
+
+            <if test="isPerTicketPack != null">
+                is_per_ticket_pack = #{isPerTicketPack},
+            </if>
+            <if test="currency != null and currency != ''">
+                currency = #{currency},
+            </if>
+            <if test="isPin != null">
+                is_pin = #{isPin},
+            </if>
+            <if test="sideLengthLimit != null">
+                side_length_limit = #{sideLengthLimit},
+            </if>
+            <if test="upperLimitWeight != null">
+                upper_limit_weight = #{upperLimitWeight},
+            </if>
+                first_length = #{firstLength},
+                second_length = #{secondLength},
+            <if test="sensitivePrice != null">
+                sensitive_price = #{sensitivePrice},
+            </if>
+            <if test="greaterWeight != null">
+                greater_weight = #{greaterWeight},
+            </if>
+            <if test="forkliftFee != null">
+                forklift_fee = #{forkliftFee},
+            </if>
+            <if test="beforeWeightCarry != null">
+                before_weight_carry = #{beforeWeightCarry},
+            </if>
+            <if test="beforeWeightCarryType != null">
+                before_weight_carry_type = #{beforeWeightCarryType},
+            </if>
+            <if test="afterWeightCarry != null">
+                after_weight_carry = #{afterWeightCarry},
+            </if>
+            <if test="afterWeightCarryType != null">
+                after_weight_carry_type = #{afterWeightCarryType},
+            </if>
+            <if test="cubeUpper != null">
+                cube_upper = #{cubeUpper},
+            </if>
+            <if test="volConversion != null">
+                vol_conversion = #{volConversion},
+            </if>
+            <if test="customerRequirements != null and customerRequirements != ''">
+                customer_requirements = #{customerRequirements},
+            </if>
+
+            <if test="isTariffs != null">
+                is_tariffs = #{isTariffs},
+            </if>
+            <if test="tariffs != null">
+                tariffs = #{tariffs},
+            </if>
+            <if test="isInsurance != null">
+                is_insurance = #{isInsurance},
+            </if>
+            <if test="insuranceId != null">
+                insurance_id = #{insuranceId},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER} and version = #{version}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.example.warehouse.entity.TransportationRoute">
+    update transportation_route
+    set create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      `status` = #{status,jdbcType=INTEGER},
+      is_available = #{isAvailable,jdbcType=INTEGER},
+      version = #{version,jdbcType=INTEGER},
+      route_name = #{routeName,jdbcType=VARCHAR},
+      operation_id = #{operationId,jdbcType=INTEGER},
+      route_type = #{routeType,jdbcType=INTEGER},
+      originating_place = #{originatingPlace,jdbcType=VARCHAR},
+      destination = #{destination,jdbcType=VARCHAR},
+      english_name = #{englishName,jdbcType=VARCHAR},
+      note_type = #{noteType,jdbcType=VARCHAR},
+      transportation_time = #{transportationTime,jdbcType=VARCHAR},
+      remote_fee = #{remoteFee,jdbcType=DOUBLE},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      transport_type = #{transportType,jdbcType=INTEGER},
+      country_id = #{countryId,jdbcType=INTEGER},
+      pack_attention = #{packAttention,jdbcType=VARCHAR},
+
+      is_per_ticket_pack = #{isPerTicketPack},
+      currency = #{currency},
+      is_pin = #{isPin},
+      side_length_limit = #{sideLengthLimit},
+      upper_limit_weight = #{upperLimitWeight},
+      first_length = #{firstLength},
+      second_length = #{secondLength},
+      sensitive_price = #{sensitivePrice},
+      greater_weight = #{greaterWeight},
+      forklift_fee = #{forkliftFee},
+      before_weight_carry = #{beforeWeightCarry},
+      before_weight_carry_type = #{beforeWeightCarryType},
+      after_weight_carry = #{afterWeightCarry},
+      after_weight_carry_type = #{afterWeightCarryType},
+      cube_upper = #{cubeUpper},
+      vol_conversion = #{volConversion},
+      customer_requirements = #{customerRequirements},
+      is_tariffs = #{isTariffs},
+      tariffs = #{tariffs},
+      is_insurance = #{isInsurance},
+      insurance_id = #{insuranceId}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+    <select id="findAll" parameterType="java.util.Map" resultType="com.example.warehouse.vo.route.RouteVo">
+        select
+        <include refid="VoSelectCols"/>
+        from
+        <include refid="table"/> t
+        left join sys_dict_detail sdd on sdd.id = t.country_id
+        <where>
+            t.`status` = 1
+            <if test="routeType != null and routeType != ''">
+                and t.route_type = #{routeType}
+            </if>
+            <if test="originatingPlace != null and originatingPlace != ''">
+                and t.originating_place = #{originatingPlace}
+            </if>
+            <if test="destination != null and destination != ''">
+                and t.destination = #{destination}
+            </if>
+            <if test="routeName != null and routeName != ''">
+                and t.route_name regexp #{routeName}
+            </if>
+            <if test="englishName != null and englishName != ''">
+                and t.english_name regexp #{englishName}
+            </if>
+            <if test="transportType != null and transportType != ''">
+                and t.transport_type = #{transportType}
+            </if>
+            <if test="countryId != null and countryId != ''">
+                and t.country_id = #{countryId}
+            </if>
+        </where>
+        order by t.create_time desc
+        limit #{pageNumber},#{pageSize}
+    </select>
+
+
+    <select id="getAll" parameterType="com.example.warehouse.vo.route.RouteRequestVo" resultMap="routeVo">
+        select
+        <include refid="VoColumns"/>
+        from
+        <include refid="table"/> t
+        left join sys_dict_detail sdd on sdd.id = t.country_id
+        left join insurance ins on ins.id = t.insurance_id
+        left join `user` u on u.id = t.operation_id and u.status = 1
+        <where>
+            t.`status` = 1
+            <if test="commercialAreaId!= null">
+                and u.commercial_area_id = #{commercialAreaId}
+            </if>
+            <if test="routeType != null and routeType != ''">
+                and t.route_type = #{routeType}
+            </if>
+            <if test="originatingPlace != null and originatingPlace != ''">
+                and t.originating_place = #{originatingPlace}
+            </if>
+            <if test="destination != null and destination != ''">
+                and t.destination = #{destination}
+            </if>
+            <if test="routeName != null and routeName != ''">
+                and t.route_name regexp #{routeName}
+            </if>
+            <if test="englishName != null and englishName != ''">
+                and t.english_name regexp #{englishName}
+            </if>
+            <if test="routeType != null and routeType != ''">
+                and t.transport_type = #{routeType}
+            </if>
+            <if test="countryId != null and countryId != ''">
+                and t.country_id = #{countryId}
+            </if>
+            <if test="country!= null and country != ''">
+                and sdd.sdd_name = #{country}
+            </if>
+        </where>
+        order by t.create_time desc
+    </select>
+
+
+    <select id="countSelectAll" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select
+        count(t.id) as count
+        from
+        <include refid="table"/>
+        t
+        <where>
+            t.`status` = 1
+            <if test="routeType != null and routeType != ''">
+                and t.route_type = #{routeType}
+            </if>
+            <if test="originatingPlace != null and originatingPlace != ''">
+                and t.originating_place = #{originatingPlace}
+            </if>
+            <if test="destination != null and destination != ''">
+                and t.destination = #{destination}
+            </if>
+            <if test="routeName != null and routeName != ''">
+                and t.route_name regexp #{routeName}
+            </if>
+            <if test="englishName != null and englishName != ''">
+                and t.english_name regexp #{englishName}
+            </if>
+            <if test="transportType != null and transportType != ''">
+                and t.transport_type = #{transportType}
+            </if>
+            <if test="countryId != null and countryId != ''">
+                and t.country_id = #{countryId}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectRouteCount" resultType="java.lang.Integer">
+        select
+          count(t.id)
+        from
+        <include refid="table"/> t
+        left join `user` u on u.id = t.operation_id and u.status = 1
+        <where>
+            t.`status` = 1
+            <if test="commercialAreaId!= null">
+                and u.commercial_area_id = #{commercialAreaId}
+            </if>
+            <if test="routeType != null and routeType != ''">
+                and t.route_type = #{routeType}
+            </if>
+            <if test="originatingPlace != null and originatingPlace != ''">
+                and t.originating_place = #{originatingPlace}
+            </if>
+            <if test="destination != null and destination != ''">
+                and t.destination = #{destination}
+            </if>
+            <if test="routeName != null and routeName != ''">
+                and t.route_name regexp #{routeName}
+            </if>
+            <if test="englishName != null and englishName != ''">
+                and t.english_name regexp #{englishName}
+            </if>
+            <if test="transportType != null and transportType != ''">
+                and t.transport_type = #{transportType}
+            </if>
+            <if test="countryId != null and countryId != ''">
+                and t.country_id = #{countryId}
+            </if>
+        </where>
+    </select>
+
+    <select id="findById" parameterType="java.lang.Integer" resultMap="routeVoAll">
+        select
+        t.id, t.is_available, t.route_name, t.operation_id,
+        t.route_type, t.originating_place, t.destination, t.english_name,
+        t.note_type, t.transportation_time,t.remote_fee, t.remarks,
+        t.transport_type, t.country_id, t.pack_attention,
+        t.is_per_ticket_pack, t.currency, t.is_pin, t.side_length_limit,
+        t.upper_limit_weight, t.first_length, t.second_length,
+        t.sensitive_price, t.greater_weight, t.forklift_fee,
+        t.before_weight_carry, t.before_weight_carry_type, t.after_weight_carry,
+        t.after_weight_carry_type, t.cube_upper, t.vol_conversion,
+        t.customer_requirements, t.is_tariffs, t.tariffs, t.is_insurance, t.insurance_id,
+        sdd.sdd_name, sdd.sdd_remark,
+        ins.insurance_name
+        from
+        <include refid="table"/> t
+        left join sys_dict_detail sdd on sdd.id = t.country_id
+        left join insurance ins on ins.id = t.insurance_id
+        where
+        t.`status` = 1 and t.id = #{id}
+    </select>
+
+    <select id="selectAllRoute" parameterType="java.util.Map" resultType="com.example.warehouse.vo.route.RouteVo">
+        select
+        <include refid="VoSelectCols"/>
+        from
+        <include refid="table"/> t
+        left join `user` u on u.id = t.operation_id and u.status = 1
+        left join sys_dict_detail sdd on sdd.id = t.country_id
+        <where>
+            t.`status` = 1
+            <if test="commercialAreaId!= null">
+                and u.commercial_area_id = #{commercialAreaId}
+            </if>
+            <if test="routeType != null and routeType != ''">
+                and t.route_type = #{routeType}
+            </if>
+            <if test="originatingPlace != null and originatingPlace != ''">
+                and t.originating_place = #{originatingPlace}
+            </if>
+            <if test="destination != null and destination != ''">
+                and t.destination = #{destination}
+            </if>
+            <if test="routeName != null and routeName != ''">
+                and t.route_name regexp #{routeName}
+            </if>
+            <if test="englishName != null and englishName != ''">
+                and t.english_name regexp #{englishName}
+            </if>
+            <if test="transportType != null and transportType != ''">
+                and t.transport_type = #{transportType}
+            </if>
+            <if test="countryId != null and countryId != ''">
+                and t.country_id = #{countryId}
+            </if>
+        </where>
+        order by t.create_time desc
+        limit #{pageNumber},#{pageSize}
+    </select>
+
+
+    <update id="deleteByIds">
+        update <include refid="table"/> t
+        set t.`status` = 0
+        where
+        t.id in
+        <foreach collection="ids" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </update>
+
+    <update id="enableRoute" parameterType="java.lang.Integer">
+        update <include refid="table"/> t
+        set t.is_available = 1
+        where t.id = #{id}
+    </update>
+
+    <update id="prohibitRoute" parameterType="java.lang.Integer">
+        update <include refid="table"/> t
+        set t.is_available = 0
+        where t.id = #{id}
+    </update>
+
+   <sql id="VoSelectCols">
+    t.id as id, DATE_FORMAT(t.create_time,'%Y-%m-%d %k:%i:%s') as createTime, DATE_FORMAT(t.update_time,'%Y-%m-%d %k:%i:%s') as updateTime,
+    t.`status`, t.is_available as isAvailable, t.version, t.route_name as routeName, t.operation_id as operationId,
+    t.route_type as routeType, t.originating_place as originatingPlace, t.destination, t.english_name as englishName,
+    t.note_type as noteType, t.transportation_time as transportationTime,t.remote_fee as remoteFee, t.remarks, t.is_pin as isPin,
+    t.transport_type as transportType, t.country_id as countryId, sdd.sdd_name as country,t.pack_attention as packAttention,
+    t.is_tariffs as isTariffs, t.tariffs, t.is_insurance as isInsurance, t.insurance_id as insuranceId
+    </sql>
+
+    <sql id="VoColumns">
+    t.id,
+    DATE_FORMAT(t.create_time,'%Y-%m-%d %k:%i:%s') as create_time,
+    DATE_FORMAT(t.update_time,'%Y-%m-%d %k:%i:%s') as update_time,
+    t.`status`, t.is_available, t.version, t.route_name, t.operation_id,
+    t.route_type, t.originating_place, t.destination, t.english_name,
+    t.note_type, t.transportation_time,t.remote_fee, t.remarks,
+    t.transport_type, t.country_id, sdd.sdd_name, t.pack_attention,
+    t.is_per_ticket_pack, t.currency, t.is_pin, t.side_length_limit,
+    t.upper_limit_weight, t.first_length, t.second_length,
+    t.sensitive_price, t.greater_weight, t.forklift_fee,
+    t.before_weight_carry, t.before_weight_carry_type, t.after_weight_carry,
+    t.after_weight_carry_type, t.cube_upper, t.vol_conversion,
+    t.customer_requirements, t.is_tariffs, t.tariffs, t.is_insurance, t.insurance_id,
+    ins.insurance_name
+    </sql>
+
+    <resultMap id="routeVo" extends="BaseResultMap" type="com.example.warehouse.vo.route.RouteVo">
+        <result column="sdd_name" property="country"/>
+        <result column="sdd_remark" property="countryCode"/>
+        <result column="insurance_name" property="insuranceName"/>
+    </resultMap>
+
+    <resultMap id="routeVoAll" extends="routeVo" type="com.example.warehouse.vo.route.RouteVo">
+        <collection property="routePrices" column="{routeId=id, routeType=route_type}"
+                    select="com.example.warehouse.mapper.routePrice.RoutePriceMapper.findByRouteId"/>
+        <collection property="currencyData" column="currency" select="com.example.warehouse.mapper.SysDictDetailMapper.selectDictBySddCode"/>
+    </resultMap>
+
+    <sql id="table">transportation_route</sql>
+</mapper>

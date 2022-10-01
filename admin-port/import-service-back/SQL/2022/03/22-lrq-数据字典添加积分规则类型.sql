@@ -1,0 +1,1 @@
+insert into sys_dict_detail (sdm_code, sdd_code, sdd_name, sdd_remark, status, is_enable) values('integral_type', 'ITGTYPE0000000004', '成员下单', 'childOrder', 1, 1);

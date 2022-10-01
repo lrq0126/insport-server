@@ -1,0 +1,2072 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.warehouse.mapper.customerPack.CustomerPackMapper">
+    <resultMap id="BaseResultMap" type="com.example.warehouse.entity.CustomerPack">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="version" jdbcType="INTEGER" property="version"/>
+        <result column="business_number" jdbcType="VARCHAR" property="businessNumber"/>
+        <result column="order_number" jdbcType="VARCHAR" property="orderNumber"/>
+        <result column="user_id" jdbcType="INTEGER" property="userId"/>
+        <result column="customer_id" jdbcType="INTEGER" property="customerId"/>
+        <result column="pack_type" jdbcType="INTEGER" property="packType"/>
+        <result column="goods_sum" jdbcType="INTEGER" property="goodsSum"/>
+        <result column="unpacking" jdbcType="INTEGER" property="unpacking"/>
+        <result column="goods_no" jdbcType="VARCHAR" property="goodsNo"/>
+        <result column="route_type" jdbcType="INTEGER" property="routeType"/>
+        <result column="transportation_route_id" jdbcType="INTEGER" property="transportationRouteId"/>
+        <result column="pre_quoted_price" jdbcType="DOUBLE" property="preQuotedPrice"/>
+        <result column="length" jdbcType="DOUBLE" property="length"/>
+        <result column="width" jdbcType="DOUBLE" property="width"/>
+        <result column="height" jdbcType="DOUBLE" property="height"/>
+        <result column="actual_weight" jdbcType="DOUBLE" property="actualWeight"/>
+        <result column="actual_vol" jdbcType="DOUBLE" property="actualVol"/>
+        <result column="settlement_weight" jdbcType="DOUBLE" property="settlementWeight"/>
+        <result column="settlement_vol" jdbcType="DOUBLE" property="settlementVol"/>
+        <result column="actual_price" jdbcType="DOUBLE" property="actualPrice"/>
+        <result column="address_id" jdbcType="INTEGER" property="addressId"/>
+        <result column="commercial_area_id" jdbcType="INTEGER" property="commercialAreaId"/>
+        <result column="commercial_area_name" jdbcType="VARCHAR" property="commercialAreaName"/>
+        <result column="pack_num" jdbcType="INTEGER" property="packNum"/>
+        <result column="out_storage_time" jdbcType="TIMESTAMP" property="outStorageTime"/>
+        <result column="pack_time" jdbcType="TIMESTAMP" property="packTime"/>
+        <result column="remarks" jdbcType="VARCHAR" property="remarks"/>
+        <result column="incidental" jdbcType="DOUBLE" property="incidental"/>
+        <result column="international_transshipment_no" jdbcType="VARCHAR" property="internationalTransshipmentNo"/>
+        <result column="discount" jdbcType="DECIMAL" property="discount"/>
+        <result column="payment_time" jdbcType="TIMESTAMP" property="paymentTime"/>
+        <result column="receipt_time" jdbcType="TIMESTAMP" property="receiptTime"/>
+        <result column="print_time" jdbcType="VARCHAR" property="printTime"/>
+        <result column="print_oper" jdbcType="VARCHAR" property="printOper"/>
+        <result column="print_count" jdbcType="INTEGER" property="printCount"/>
+        <result column="inside_message" jdbcType="VARCHAR" property="insideMessage"/>
+        <result column="accepted" jdbcType="INTEGER" property="accepted"/>
+        <result column="accepted_time" jdbcType="TIMESTAMP" property="acceptedTime"/>
+        <result column="picked_time" jdbcType="TIMESTAMP" property="pickedTime"/>
+        <result column="is_sensitive" jdbcType="INTEGER" property="isSensitive"/>
+        <result column="tariffs_price" jdbcType="DECIMAL" property="tariffsPrice"/>
+        <result column="insurance_price" jdbcType="DECIMAL" property="insurancePrice"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, create_time, update_time, `status`, version, business_number, order_number, user_id, customer_id, pack_type,
+        goods_sum, unpacking, goods_no, route_type, transportation_route_id,pre_quoted_price, `length`, width, height,
+        actual_weight, actual_vol, actual_price, address_id, commercial_area_id, commercial_area_name,
+        out_storage_time, pack_time, settlement_weight,
+        settlement_vol, pack_num, remarks, incidental, international_transshipment_no, discount, payment_time, receipt_time
+        print_time,print_oper,print_count,inside_message,accepted,accepted_time,picked_time, is_sensitive, tariffs_price,
+        insurance_price
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from customer_pack
+        where id = #{id,jdbcType=INTEGER} and `status` = 1
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from customer_pack
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.example.warehouse.entity.CustomerPack"
+            useGeneratedKeys="true">
+        insert into customer_pack (create_time, update_time, `status`,version, business_number, order_number,
+        user_id, customer_id, pack_type, goods_sum, unpacking, goods_no, route_type, transportation_route_id,
+        pre_quoted_price, `length`, width, height, actual_weight, actual_vol, actual_price,
+        address_id, commercial_area_id, commercial_area_name, out_storage_time,
+        pack_time, settlement_weight, settlement_vol, pack_num, remarks, incidental, international_transshipment_no,
+        discount, payment_time, receipt_time, inside_message,accepted,accepted_time,picked_time,is_sensitive,
+        tariffs_price, insurance_price)
+        values (#{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER},
+        #{version,jdbcType=INTEGER}, #{businessNumber,jdbcType=VARCHAR}, #{orderNumber,jdbcType=VARCHAR},
+        #{userId,jdbcType=INTEGER}, #{customerId,jdbcType=INTEGER}, #{packType,jdbcType=INTEGER},
+        #{goodsSum,jdbcType=INTEGER}, #{unpacking,jdbcType=INTEGER}, #{goodsNo,jdbcType=VARCHAR},
+        #{routeType,jdbcType=INTEGER}, #{transportationRouteId,jdbcType=INTEGER}, #{preQuotedPrice,jdbcType=DOUBLE},
+        #{length}, #{width}, #{height},#{actualWeight,jdbcType=DOUBLE}, #{actualVol,jdbcType=DOUBLE},
+        #{actualPrice,jdbcType=DOUBLE},#{addressId,jdbcType=INTEGER},
+        #{commercialAreaId,jdbcType=INTEGER}, #{commercialAreaName,jdbcType=VARCHAR}, #{outStorageTime,jdbcType=TIMESTAMP},
+        #{packTime,jdbcType=TIMESTAMP}, #{settlementWeight},#{settlementVol},#{packNum}, #{remarks}, #{incidental},
+        #{internationalTransshipmentNo}, #{discount}, #{paymentTime}, #{receiptTime},
+        #{insideMessage},#{accepted},#{acceptedTime},#{pickedTime}, #{isSensitive},
+        #{tariffsPrice}, #{insurancePrice})
+    </insert>
+    <insert id="insertSelective" keyColumn="id" keyProperty="id"
+            parameterType="com.example.warehouse.entity.CustomerPack" useGeneratedKeys="true">
+        insert into customer_pack
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="status != null and status != ''">
+                `status`,
+            </if>
+            <if test="version != null and version != ''">
+                version,
+            </if>
+            <if test="businessNumber != null and businessNumber != ''">
+                business_number,
+            </if>
+            <if test="orderNumber != null and orderNumber != ''">
+                order_number,
+            </if>
+            <if test="userId != null and userId != ''">
+                user_id,
+            </if>
+            <if test="customerId != null and customerId != ''">
+                customer_id,
+            </if>
+            <if test="packType != null and packType != ''">
+                pack_type,
+            </if>
+            <if test="goodsSum != null and goodsSum != ''">
+                goods_sum,
+            </if>
+            <if test="unpacking != null and unpacking != ''">
+                unpacking,
+            </if>
+            <if test="goodsNo != null and goodsNo != ''">
+                goods_no,
+            </if>
+            <if test="routeType != null and routeType != ''">
+                route_type,
+            </if>
+            <if test="transportationRouteId != null and transportationRouteId != ''">
+                transportation_route_id,
+            </if>
+            <if test="preQuotedPrice != null and preQuotedPrice != ''">
+                pre_quoted_price,
+            </if>
+            <if test="length != null">
+                `length`,
+            </if>
+            <if test="width != null">
+                width,
+            </if>
+            <if test="height != null">
+                height,
+            </if>
+            <if test="actualWeight != null and actualWeight != ''">
+                actual_weight,
+            </if>
+            <if test="actualVol != null and actualVol != ''">
+                actual_vol,
+            </if>
+            <if test="actualPrice != null">
+                actual_price,
+            </if>
+            <if test="addressId != null and addressId != ''">
+                address_id,
+            </if>
+            <if test="commercialAreaId != null and commercialAreaId != ''">
+                commercial_area_id,
+            </if>
+            <if test="commercialAreaName != null and commercialAreaName != ''">
+                commercial_area_name,
+            </if>
+            <if test="outStorageTime != null">
+                out_storage_time,
+            </if>
+            <if test="packTime != null">
+                pack_time,
+            </if>
+            <if test="settlementWeight != null and settlementWeight != ''">
+                settlement_weight,
+            </if>
+            <if test="settlementVol != null and settlementVol != ''">
+                settlement_vol,
+            </if>
+            <if test="packNum != null and packNum != ''">
+                pack_num,
+            </if>
+            <if test="remarks != null and remarks != ''">
+                remarks,
+            </if>
+            <if test="incidental != null and incidental != ''">
+                incidental,
+            </if>
+            <if test="internationalTransshipmentNo != null and internationalTransshipmentNo != ''">
+                international_transshipment_no,
+            </if>
+            <if test="discount != null and discount != ''">
+                discount,
+            </if>
+            <if test="insideMessage != null and insideMessage != ''">
+                inside_message,
+            </if>
+            <if test="accepted != null and accepted != ''">
+                accepted,
+            </if>
+            <if test="acceptedTime != null">
+                accepted_time,
+            </if>
+            <if test="pickedTime != null">
+                picked_time,
+            </if>
+            <if test="paymentTime != null">
+                payment_time,
+            </if>
+            <if test="isSensitive != null and isSensitive != ''">
+                is_sensitive,
+            </if>
+
+            <if test="tariffsPrice != null">
+                tariffs_price,
+            </if>
+            <if test="insurancePrice != null">
+                insurance_price,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="status != null and status != ''">
+                #{status,jdbcType=INTEGER},
+            </if>
+            <if test="version != null and version != ''">
+                #{version,jdbcType=INTEGER},
+            </if>
+            <if test="businessNumber != null and businessNumber != ''">
+                #{businessNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="orderNumber != null and orderNumber != ''">
+                #{orderNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null and userId != ''">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="customerId != null and customerId != ''">
+                #{customerId,jdbcType=INTEGER},
+            </if>
+            <if test="packType != null and packType != ''">
+                #{packType,jdbcType=INTEGER},
+            </if>
+            <if test="goodsSum != null and goodsSum != ''">
+                #{goodsSum,jdbcType=INTEGER},
+            </if>
+            <if test="unpacking != null and unpacking != ''">
+                #{unpacking,jdbcType=INTEGER},
+            </if>
+            <if test="goodsNo != null and goodsNo != ''">
+                #{goodsNo,jdbcType=VARCHAR},
+            </if>
+            <if test="routeType != null and routeType != ''">
+                #{routeType,jdbcType=INTEGER},
+            </if>
+            <if test="transportationRouteId != null and transportationRouteId != ''">
+                #{transportationRouteId,jdbcType=INTEGER},
+            </if>
+            <if test="preQuotedPrice != null and preQuotedPrice != ''">
+                #{preQuotedPrice,jdbcType=DOUBLE},
+            </if>
+            <if test="length != null">
+                #{length},
+            </if>
+            <if test="width != null">
+                #{width},
+            </if>
+            <if test="height != null">
+                #{height},
+            </if>
+            <if test="actualWeight != null and actualWeight != ''">
+                #{actualWeight,jdbcType=DOUBLE},
+            </if>
+            <if test="actualVol != null and actualVol != ''">
+                #{actualVol,jdbcType=DOUBLE},
+            </if>
+            <if test="actualPrice != null">
+                #{actualPrice,jdbcType=DOUBLE},
+            </if>
+            <if test="addressId != null and addressId != ''">
+                #{addressId,jdbcType=INTEGER},
+            </if>
+            <if test="commercialAreaId != null and commercialAreaId != ''">
+                #{commercialAreaId,jdbcType=INTEGER},
+            </if>
+            <if test="commercialAreaName != null and commercialAreaName != ''">
+                #{commercialAreaName,jdbcType=INTEGER},
+            </if>
+            <if test="outStorageTime != null">
+                #{outStorageTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="packTime != null">
+                #{packTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="settlementWeight != null and settlementWeight != ''">
+                #{settlementWeight},
+            </if>
+            <if test="settlementVol != null and settlementVol != ''">
+                #{settlementVol},
+            </if>
+            <if test="packNum != null and packNum != ''">
+                #{packNum},
+            </if>
+            <if test="remarks != null and remarks != ''">
+                #{remarks},
+            </if>
+            <if test="incidental != null and incidental != ''">
+                #{incidental},
+            </if>
+            <if test="internationalTransshipmentNo != null and internationalTransshipmentNo != ''">
+                #{internationalTransshipmentNo},
+            </if>
+            <if test="discount != null and discount != ''">
+                #{discount},
+            </if>
+            <if test="insideMessage != null and insideMessage != ''">
+                #{insideMessage},
+            </if>
+            <if test="accepted != null and accepted != ''">
+                #{accepted},
+            </if>
+            <if test="acceptedTime != null">
+                #{acceptedTime},
+            </if>
+            <if test="pickedTime != null">
+                #{pickedTime},
+            </if>
+            <if test="paymentTime != null">
+                #{paymentTime},
+            </if>
+            <if test="isSensitive != null and isSensitive != ''">
+                #{isSensitive},
+            </if>
+
+            <if test="tariffsPrice != null">
+                #{tariffsPrice},
+            </if>
+            <if test="insurancePrice != null">
+                #{insurancePrice},
+            </if>
+
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.example.warehouse.entity.CustomerPack">
+        update customer_pack
+        <set>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="status != null and status != ''">
+                `status` = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="version != null and version != ''">
+                version = #{version,jdbcType=INTEGER} + 1,
+            </if>
+            <if test="businessNumber != null and businessNumber != ''">
+                business_number = #{businessNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="orderNumber != null and orderNumber != ''">
+                order_number = #{orderNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null and userId != ''">
+                user_id = #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="customerId != null and customerId != ''">
+                customer_id = #{customerId,jdbcType=INTEGER},
+            </if>
+            <if test="packType != null and packType != ''">
+                pack_type = #{packType,jdbcType=INTEGER},
+            </if>
+            <if test="goodsSum != null and goodsSum != ''">
+                goods_sum = #{goodsSum,jdbcType=INTEGER},
+            </if>
+            <if test="unpacking != null and unpacking != ''">
+                unpacking = #{unpacking,jdbcType=INTEGER},
+            </if>
+            <if test="goodsNo != null and goodsNo != ''">
+                goods_no = #{goodsNo,jdbcType=VARCHAR},
+            </if>
+            <if test="routeType != null and routeType != ''">
+                route_type = #{routeType,jdbcType=INTEGER},
+            </if>
+            <if test="transportationRouteId != null and transportationRouteId != ''">
+                transportation_route_id = #{transportationRouteId,jdbcType=INTEGER},
+            </if>
+            <if test="preQuotedPrice != null and preQuotedPrice != ''">
+                pre_quoted_price = #{preQuotedPrice,jdbcType=DOUBLE},
+            </if>
+            <if test="length != null">
+                `length` = #{length},
+            </if>
+            <if test="width != null">
+                width = #{width},
+            </if>
+            <if test="height != null">
+                height = #{height},
+            </if>
+            <if test="actualWeight != null and actualWeight != ''">
+                actual_weight = #{actualWeight,jdbcType=DOUBLE},
+            </if>
+            <if test="actualVol != null and actualVol != ''">
+                actual_vol = #{actualVol,jdbcType=DOUBLE},
+            </if>
+            <if test="actualPrice != null and actualPrice != ''">
+                actual_price = #{actualPrice,jdbcType=DOUBLE},
+            </if>
+            <if test="addressId != null and addressId != ''">
+                address_id = #{addressId,jdbcType=INTEGER},
+            </if>
+            <if test="commercialAreaId != null and commercialAreaId != ''">
+                commercial_area_id = #{commercialAreaId,jdbcType=INTEGER},
+            </if>
+            <if test="commercialAreaName != null and commercialAreaName != ''">
+                commercial_area_name = #{commercialAreaName,jdbcType=INTEGER},
+            </if>
+            <if test="outStorageTime != null">
+                out_storage_time = #{outStorageTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="packTime != null">
+                pack_time = #{packTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="settlementWeight != null and settlementWeight != ''">
+                settlement_weight = #{settlementWeight},
+            </if>
+            <if test="settlementVol != null and settlementVol != ''">
+                settlement_vol = #{settlementVol},
+            </if>
+            <if test="packNum != null and packNum != ''">
+                pack_num = #{packNum},
+            </if>
+            <if test="remarks != null and remarks != ''">
+                remarks = #{remarks},
+            </if>
+            <if test="incidental != null and incidental != ''">
+                incidental = #{incidental},
+            </if>
+            <if test="internationalTransshipmentNo != null and internationalTransshipmentNo != ''">
+                international_transshipment_no = #{internationalTransshipmentNo},
+            </if>
+            <if test="discount != null and discount != ''">
+                discount = #{discount},
+            </if>
+            <if test="insideMessage != null and insideMessage != ''">
+                inside_message = #{insideMessage},
+            </if>
+            <if test="accepted != null and accepted != ''">
+                accepted = #{accepted},
+            </if>
+            <if test="acceptedTime != null">
+                accepted_time = #{acceptedTime},
+            </if>
+            <if test="pickedTime != null">
+                picked_time = #{pickedTime},
+            </if>
+            <if test="isSensitive != null and isSensitive != ''">
+                is_sensitive = #{isSensitive},
+            </if>
+
+            <if test="tariffsPrice != null">
+                tariffs_price = #{tariffsPrice},
+            </if>
+            <if test="insurancePrice != null">
+                insurance_price = #{insurancePrice},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.example.warehouse.entity.CustomerPack">
+        update customer_pack
+        set create_time = #{createTime,jdbcType=TIMESTAMP},
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+        `status` = #{status,jdbcType=INTEGER},
+        version = #{version,jdbcType=INTEGER},
+        business_number = #{businessNumber,jdbcType=VARCHAR},
+        order_number = #{orderNumber,jdbcType=VARCHAR},
+        user_id = #{userId,jdbcType=INTEGER},
+        customer_id = #{customerId,jdbcType=INTEGER},
+        pack_type = #{packType,jdbcType=INTEGER},
+        goods_sum = #{goodsSum,jdbcType=INTEGER},
+        unpacking = #{unpacking,jdbcType=INTEGER},
+        goods_no = #{goodsNo,jdbcType=VARCHAR},
+        route_type = #{routeType,jdbcType=INTEGER},
+        transportation_route_id = #{transportationRouteId,jdbcType=INTEGER},
+        pre_quoted_price = #{preQuotedPrice,jdbcType=DOUBLE},
+        `length` = #{length},
+        width = #{width},
+        height = #{height},
+        actual_weight = #{actualWeight,jdbcType=DOUBLE},
+        actual_vol = #{actualVol,jdbcType=DOUBLE},
+        actual_price = #{actualPrice,jdbcType=DOUBLE},
+        address_id = #{addressId,jdbcType=INTEGER},
+        commercial_area_id = #{commercialAreaId,jdbcType=INTEGER},
+        commercial_area_name = #{commercialAreaName,jdbcType=VARCHAR},
+        out_storage_time = #{outStorageTime,jdbcType=TIMESTAMP},
+        pack_time = #{packTime,jdbcType=TIMESTAMP},
+        settlement_weight = #{settlementWeight},
+        settlement_vol = #{settlementVol},
+        pack_num = #{packNum},
+        remarks = #{remarks},
+        incidental = #{incidental},
+        discount = #{discount},
+        inside_message = #{insideMessage},
+        accepted = #{accepted},
+        accepted_time = #{acceptedTime},
+        picked_time = #{pickedTime},
+        is_sensitive = #{isSensitive},
+        tariffs_price = #{tariffsPrice},
+        insurance_price = #{insurancePrice}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <update id="cancelPackDelivery">
+        update customer_pack
+        <set>
+            pack_type = #{packType},
+            out_storage_time = null
+        </set>
+        <where>
+            id = #{packId}
+        </where>
+    </update>
+
+    <select id="selectById" resultMap="BaseResultMap">
+        select * from
+        <include refid="table"/>
+        t
+        where id = #{id} and status = 1
+    </select>
+
+    <select id="countSelectAll" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select
+        count(*) as count
+        from
+        <include refid="table"/>
+        t
+        left join customer_pack_receiver_address cuta on t.id = cuta.customer_pack_id
+        left join customer cus on t.customer_id = cus.id
+        where
+        t.`status` = 1 and t.pack_type = #{packType}
+        <if test="customerName != null and customerName != ''">
+            and cus.customer_name like concat('%',#{customerName},'%')
+        </if>
+        <if test="startTime != null and startTime != ''">
+            and DATE_FORMAT(t.create_time,'%Y-%m-%d') &gt;= #{startTime}
+        </if>
+        <if test="endTime != null and endTime != ''">
+            and DATE_FORMAT(t.create_time,'%Y-%m-%d') &lt;= #{endTime}
+        </if>
+        <if test="routeType != null and routeType != ''">
+            and t.route_type = #{routeType}
+        </if>
+        <if test="unpacking != null and unpacking != ''">
+            and t.unpacking = #{unpacking}
+        </if>
+        <if test="internationalTransshipmentNo != null and internationalTransshipmentNo != ''">
+            and t.international_transshipment_no like concat('%',#{internationalTransshipmentNo},'%')
+        </if>
+    </select>
+
+    <select id="countSelectByPackType" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select
+        count(t.id) as count
+        from
+        <include refid="table"/>
+        t
+        left join customer_pack_receiver_address cuta on t.id = cuta.customer_pack_id and cuta.status = 1
+        left join transportation_route tr on tr.id = t.transportation_route_id
+        left join sys_dict_detail sd on sd.id = tr.country_id
+        left join customer cus on t.customer_id = cus.id
+        where
+        t.`status` = 1
+        and pack_type in
+        <foreach collection="packTypes" open="(" close=")" item="packType" separator=",">
+            #{packType}
+        </foreach>
+        <if test="commercialAreaId!= null">
+            and t.commercial_area_id = #{commercialAreaId}
+        </if>
+        <if test="businessNumber != null and businessNumber != ''">
+            and t.business_number like concat('%',#{businessNumber},'%')
+        </if>
+        <if test="orderNumber != null and orderNumber != ''">
+            and t.order_number like concat('%',#{orderNumber},'%')
+        </if>
+        <if test="customerName != null and customerName != ''">
+            and cus.customer_name like concat('%',#{customerName},'%')
+        </if>
+        <if test="loginName != null and loginName != ''">
+            and cus.login_name like concat('%',#{loginName},'%')
+        </if>
+        <if test="destination != null and destination != ''">
+            and sd.sdd_name like concat('%',#{destination},'%')
+        </if>
+        <if test="startTime != null and startTime != ''">
+            and DATE_FORMAT(t.create_time,'%Y-%m-%d') &gt;= #{startTime}
+        </if>
+        <if test="endTime != null and endTime != ''">
+            and DATE_FORMAT(t.create_time,'%Y-%m-%d') &lt;= #{endTime}
+        </if>
+        <if test="routeType != null and routeType != ''">
+            and tr.transport_type = #{routeType}
+        </if>
+        <if test="routeName != null and routeName != ''">
+            and tr.route_name like concat('%',#{routeName},'%')
+        </if>
+        <if test="accepted != null and accepted != ''">
+            and tr.accepted = #{accepted}
+        </if>
+        <if test="internationalTransshipmentNo != null and internationalTransshipmentNo != ''">
+            and t.international_transshipment_no regexp #{internationalTransshipmentNo}
+        </if>
+        <if test="isSensitive != null and isSensitive != ''">
+            and is_sensitive = #{isSensitive}
+        </if>
+        <if test="address != null and address != ''">
+            and cuta.receiver_address regexp #{address}
+        </if>
+        <if test="deliveryOrderNo != null and deliveryOrderNo != ''">
+            AND t.goods_no like concat ('%',
+            (select goods_no from goods g where g.delivery_order_no like concat('%',#{deliveryOrderNo},'%')),
+            '%')
+        </if>
+    </select>
+
+    <!--(select count(pmo.id) from ping_main_order pmo where pmo.status = 1 and pmo.order_number = t.order_number) as is_pin,-->
+    <select id="findByPackType" parameterType="java.util.Map" resultMap="CustomerPackVoNotSonList">
+        select
+        <include refid="VoSelectCols"/>,
+        (select IFNULL(cc.coupons_amount, 0) from customer_coupons cc where cc.used_order = t.order_number and cc.status = 1 and cc.coupons_status = 1) as coupons_amount
+        from
+        <include refid="table"/>
+        t
+        left join customer_pack_receiver_address cuta on t.id = cuta.customer_pack_id  and cuta.status = 1
+        left join transportation_route tr on tr.id = t.transportation_route_id
+        left join sys_dict_detail sd on sd.id = tr.country_id
+        left join customer cus on t.customer_id = cus.id
+        where
+        t.`status` = 1 and pack_type in
+        <foreach collection="packTypes" open="(" close=")" item="packType" separator=",">
+            #{packType}
+        </foreach>
+        <if test="commercialAreaId!= null">
+            and t.commercial_area_id = #{commercialAreaId}
+        </if>
+        <if test="businessNumber != null and businessNumber != ''">
+            and t.business_number like concat('%',#{businessNumber},'%')
+        </if>
+        <if test="orderNumber != null and orderNumber != ''">
+            and t.order_number like concat('%',#{orderNumber},'%')
+        </if>
+        <if test="customerName != null and customerName != ''">
+            and cus.customer_name like concat('%',#{customerName},'%')
+        </if>
+        <if test="loginName != null and loginName != ''">
+            and cus.login_name like concat('%',#{loginName},'%')
+        </if>
+        <if test="destination != null and destination != ''">
+            and sd.sdd_name like concat('%',#{destination},'%')
+        </if>
+        <if test="startTime != null and startTime != ''">
+            and DATE_FORMAT(t.create_time,'%Y-%m-%d') &gt;= #{startTime}
+        </if>
+        <if test="endTime != null and endTime != ''">
+            and DATE_FORMAT(t.create_time,'%Y-%m-%d') &lt;= #{endTime}
+        </if>
+        <if test="routeType != null and routeType != ''">
+            and tr.transport_type = #{routeType}
+        </if>
+        <if test="routeName != null and routeName != ''">
+            and tr.route_name like concat('%',#{routeName},'%')
+        </if>
+        <if test="accepted != null and accepted != ''">
+            and tr.accepted = #{accepted}
+        </if>
+        <if test="isSensitive != null and isSensitive != ''">
+            and tr.is_sensitive = #{isSensitive}
+        </if>
+        <if test="internationalTransshipmentNo != null and internationalTransshipmentNo != ''">
+            and t.international_transshipment_no regexp #{internationalTransshipmentNo}
+        </if>
+        <if test="address != null and address != ''">
+            and cuta.receiver_address regexp #{address}
+        </if>
+        <if test="deliveryOrderNo != null and deliveryOrderNo != ''">
+            and t.goods_no like concat
+            ('%',
+            (select goods_no from goods g where g.delivery_order_no like concat('%',#{deliveryOrderNo},'%'))
+            ,'%')
+        </if>
+        <choose>
+            <when test="havePacked != null and havePacked != ''">
+                order by t.pack_time desc
+            </when>
+            <otherwise>
+                order by t.create_time asc
+            </otherwise>
+        </choose>
+        limit #{pageNumber},#{pageSize}
+    </select>
+
+    <!--(select count(pmo.id) from ping_main_order pmo where pmo.status = 1 and pmo.order_number = t.order_number) as is_pin-->
+    <!-- 已发货列表数据-->
+    <select id="findOutStorageList" parameterType="java.util.Map" resultMap="CustomerPackVoNotSonList">
+        select
+        <include refid="VoSelectCols"/>
+        from
+        <include refid="table"/>
+        t
+        left join customer_pack_receiver_address cuta on t.id = cuta.customer_pack_id and cuta.status = 1
+        left join transportation_route tr on tr.id = t.transportation_route_id
+        left join sys_dict_detail sd on sd.id = tr.country_id
+        left join customer cus on t.customer_id = cus.id
+        where
+        t.`status` = 1
+        and (pack_type = 4 or pack_type = 9)
+        <if test="commercialAreaId!= null">
+            and t.commercial_area_id = #{commercialAreaId}
+        </if>
+        <if test="businessNumber != null and businessNumber != ''">
+            and t.business_number regexp #{businessNumber}
+        </if>
+        <if test="insideMessage != null and insideMessage != ''">
+            and t.inside_message regexp #{insideMessage}
+        </if>
+        <if test="orderNumber != null and orderNumber != ''">
+            and t.order_number regexp #{orderNumber}
+        </if>
+        <choose>
+            <when test="orderNumberType != null and orderNumberType == 1">
+                and (t.international_transshipment_no is null or t.international_transshipment_no = '')
+            </when>
+            <when test="orderNumberType != null and orderNumberType == 2">
+                and t.international_transshipment_no is not null
+            </when>
+            <otherwise>
+
+            </otherwise>
+        </choose>
+        <if test="customerName != null and customerName != ''">
+            and cus.customer_name like concat('%', #{customerName}, '%')
+        </if>
+        <if test="loginName != null and loginName != ''">
+            and cus.login_name regexp #{loginName}
+        </if>
+        <if test="destination != null and destination != ''">
+            and sd.sdd_name regexp #{destination}
+        </if>
+        <if test="startTime != null and startTime != ''">
+            and DATE_FORMAT(t.create_time,'%Y-%m-%d') &gt;= #{startTime}
+        </if>
+        <if test="endTime != null and endTime != ''">
+            and DATE_FORMAT(t.create_time,'%Y-%m-%d') &lt;= #{endTime}
+        </if>
+        <if test="startTime2 != null and startTime2 != ''">
+            and DATE_FORMAT(t.out_storage_time,'%Y-%m-%d') &gt;= #{startTime2}
+        </if>
+        <if test="endTime2 != null and endTime2 != ''">
+            and DATE_FORMAT(t.out_storage_time,'%Y-%m-%d') &lt;= #{endTime2}
+        </if>
+        <if test="routeType != null and routeType != ''">
+            and tr.transport_type = #{routeType}
+        </if>
+        <if test="isSensitive != null and isSensitive != ''">
+            and tr.is_sensitive = #{isSensitive}
+        </if>
+        <if test="routeName != null and routeName != ''">
+            and tr.route_name regexp #{routeName}
+        </if>
+        <if test="remarks != null and remarks != ''">
+            and t.remarks regexp #{remarks}
+        </if>
+        <if test="insideMessage != null and insideMessage != ''">
+            and t.inside_message regexp #{insideMessage}
+        </if>
+        <if test="internationalTransshipmentNo != null and internationalTransshipmentNo != ''">
+            and t.international_transshipment_no regexp #{internationalTransshipmentNo}
+        </if>
+        <if test="address != null and address != ''">
+            and cuta.receiver_address regexp #{address}
+        </if>
+        <if test="deliveryOrderNo != null and deliveryOrderNo != ''">
+            and t.id in (
+            select pack_id from goods2pack
+            where `status` = 1
+            and goods_id in (
+                  select id from goods where delivery_order_no regexp #{deliveryOrderNo}
+                )
+            )
+        </if>
+        <!--<if test="deliveryOrderNo != null and deliveryOrderNo != ''">-->
+        <!--AND t.goods_no like concat ('%',-->
+        <!--(select goods_no from goods g where g.delivery_order_no like concat('%',#{deliveryOrderNo},'%')),-->
+        <!--'%')-->
+        <!--</if>-->
+        order by t.out_storage_time desc
+        limit #{pageNumber},#{pageSize}
+    </select>
+
+    <!-- 已发货总数查询 -->
+    <select id="countOutStorageList" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select
+        count(*) as count
+        from
+        <include refid="table"/>
+        t
+        left join customer_pack_receiver_address cuta on t.id = cuta.customer_pack_id and cuta.status = 1
+        left join transportation_route tr on tr.id = t.transportation_route_id
+        left join sys_dict_detail sd on sd.id = tr.country_id
+        left join customer cus on t.customer_id = cus.id
+        where
+        t.`status` = 1
+        and (pack_type = 4 or pack_type = 9)
+        <if test="commercialAreaId!= null">
+            and t.commercial_area_id = #{commercialAreaId}
+        </if>
+        <if test="businessNumber != null and businessNumber != ''">
+            and t.business_number regexp #{businessNumber}
+        </if>
+        <if test="orderNumber != null and orderNumber != ''">
+            and t.order_number regexp #{orderNumber}
+        </if>
+        <choose>
+            <when test="orderNumberType != null and orderNumberType == 1">
+                and (t.international_transshipment_no is null or t.international_transshipment_no = '')
+            </when>
+            <when test="orderNumberType != null and orderNumberType == 2">
+                and t.international_transshipment_no is not null
+            </when>
+            <otherwise>
+
+            </otherwise>
+        </choose>
+        <if test="insideMessage != null and insideMessage != ''">
+            and t.inside_message regexp #{insideMessage}
+        </if>
+        <if test="customerName != null and customerName != ''">
+            and cus.customer_name like concat('%', #{customerName}, '%')
+        </if>
+        <if test="loginName != null and loginName != ''">
+            and cus.login_name regexp #{loginName}
+        </if>
+        <if test="destination != null and destination != ''">
+            and sd.sdd_name regexp #{destination}
+        </if>
+        <if test="startTime != null and startTime != ''">
+            and DATE_FORMAT(t.create_time,'%Y-%m-%d') &gt;= #{startTime}
+        </if>
+        <if test="endTime != null and endTime != ''">
+            and DATE_FORMAT(t.create_time,'%Y-%m-%d') &lt;= #{endTime}
+        </if>
+        <if test="startTime2 != null and startTime2 != ''">
+            and DATE_FORMAT(t.out_storage_time,'%Y-%m-%d') &gt;= #{startTime2}
+        </if>
+        <if test="endTime2 != null and endTime2 != ''">
+            and DATE_FORMAT(t.out_storage_time,'%Y-%m-%d') &lt;= #{endTime2}
+        </if>
+        <if test="routeType != null and routeType != ''">
+            and tr.transport_type = #{routeType}
+        </if>
+        <if test="isSensitive != null and isSensitive != ''">
+            and tr.is_sensitive = #{isSensitive}
+        </if>
+        <if test="routeName != null and routeName != ''">
+            and tr.route_name regexp #{routeName}
+        </if>
+        <if test="remarks != null and remarks != ''">
+            and t.remarks regexp #{remarks}
+        </if>
+        <if test="insideMessage != null and insideMessage != ''">
+            and t.inside_message regexp #{insideMessage}
+        </if>
+        <if test="internationalTransshipmentNo != null and internationalTransshipmentNo != ''">
+            and t.international_transshipment_no regexp #{internationalTransshipmentNo}
+        </if>
+        <if test="address != null and address != ''">
+            and cuta.receiver_address regexp #{address}
+        </if>
+        <if test="deliveryOrderNo != null and deliveryOrderNo != ''">
+            and t.id in (
+            select pack_id from goods2pack
+            where `status` = 1
+            and goods_id in (
+            select id from goods where delivery_order_no regexp #{deliveryOrderNo}
+            )
+            )
+        </if>
+        <!--<if test="deliveryOrderNo != null and deliveryOrderNo != ''">-->
+            <!--AND t.goods_no like concat ('%',-->
+            <!--(select goods_no from goods g where g.delivery_order_no like concat('%',#{deliveryOrderNo},'%')),-->
+            <!--'%')-->
+        <!--</if>-->
+    </select>
+
+    <!--  查询待确认 和 待发货 的包裹 -->
+    <select id="findToBeShipped" parameterType="java.util.Map"
+            resultMap="CustomerPackVoNotSonList">
+        select
+        <include refid="VoSelectCols"/>,
+        (select count(pmo.id) from ping_main_order pmo where pmo.status = 1 and pmo.order_number = t.order_number) as is_pin,
+        from
+        <include refid="table"/>
+        t
+        left join customer_pack_receiver_address cuta on t.id = cuta.customer_pack_id and cuta.status = 1
+        left join transportation_route tr on tr.id = t.transportation_route_id
+        left join customer cus on t.customer_id = cus.id
+        left join sys_dict_detail sd on sd.id = tr.country_id
+        left join goods g on t.goods_no like concat('%',g.goods_no,'%')
+        where
+        t.`status` = 1
+        and pack_type in
+        <foreach collection="packTypes" item="packType" open="(" close=")" separator=",">
+            #{packType}
+        </foreach>
+        <if test="customerName != null and customerName != ''">
+            and cus.customer_name like concat('%',#{customerName},'%')
+        </if>
+        <if test="startTime != null and startTime != ''">
+            and DATE_FORMAT(t.create_time,'%Y-%m-%d') &gt;= #{startTime}
+        </if>
+        <if test="endTime != null and endTime != ''">
+            and DATE_FORMAT(t.create_time,'%Y-%m-%d') &lt;= #{endTime}
+        </if>
+        <if test="deliveryOrderNo != null and deliveryOrderNo != ''">
+            and g.delivery_order_no like concat('%',#{deliveryOrderNo},'%')
+        </if>
+        <if test="internationalTransshipmentNo != null and internationalTransshipmentNo != ''">
+            and t.international_transshipment_no like concat('%',#{internationalTransshipmentNo},'%')
+        </if>
+        <if test="isSensitive != null and isSensitive != ''">
+            and t.is_sensitive = #{isSensitive}
+        </if>
+        order by t.create_time desc
+        limit #{pageNumber},#{pageSize}
+    </select>
+
+
+    <select id="findByBusinessNumber" parameterType="java.lang.String"
+            resultMap="CustomerPackVoAll">
+        select
+        <include refid="VoSelectCols"/>
+        from
+        <include refid="table"/>
+        t
+        left join customer_pack_receiver_address cuta on t.id = cuta.customer_pack_id and cuta.status = 1
+        left join transportation_route tr on tr.id = t.transportation_route_id
+        left join customer cus on t.customer_id = cus.id
+        left join sys_dict_detail sd on sd.id = tr.country_id
+        where
+        t.`status` = 1 and t.business_number = #{businessNumber}
+    </select>
+
+    <select id="findByOrderNumber" parameterType="java.lang.String"
+            resultMap="CustomerPackVoAll">
+        select
+        <include refid="VoSelectCols"/>
+        from
+        <include refid="table"/>
+        t
+        left join customer_pack_receiver_address cuta on t.id = cuta.customer_pack_id and cuta.status = 1
+        left join transportation_route tr on tr.id = t.transportation_route_id
+        left join customer cus on t.customer_id = cus.id
+        left join sys_dict_detail sd on sd.id = tr.country_id
+        where
+        t.`status` = 1 and t.order_number = #{orderNumber}
+    </select>
+
+    <select id="selectByTransshipmentNo" resultMap="CustomerPackVoAll">
+        select
+        <include refid="VoSelectCols"/>
+        from
+        <include refid="table"/>
+        t
+        left join customer_pack_receiver_address cuta on t.id = cuta.customer_pack_id and cuta.status = 1
+        left join transportation_route tr on tr.id = t.transportation_route_id
+        left join customer cus on t.customer_id = cus.id
+        left join sys_dict_detail sd on sd.id = tr.country_id
+        where
+        t.`status` = 1 and t.international_transshipment_no = #{orderNumber}
+    </select>
+
+    <update id="updatePacking" parameterType="com.example.warehouse.entity.CustomerPack">
+        update customer_pack
+        <set>
+            update_time = now(),
+            <if test="status != null and status != ''">
+                `status` = #{status,jdbcType=INTEGER},
+            </if>
+            version = #{version,jdbcType=INTEGER} + 1,
+            <if test="orderNumber != null and orderNumber != ''">
+                order_number = #{orderNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null and userId != ''">
+                user_id = #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="customerId != null and customerId != ''">
+                customer_id = #{customerId,jdbcType=INTEGER},
+            </if>
+            <if test="packType != null and packType != ''">
+                pack_type = #{packType,jdbcType=INTEGER},
+            </if>
+            <if test="goodsSum != null and goodsSum != ''">
+                goods_sum = #{goodsSum,jdbcType=INTEGER},
+            </if>
+            <if test="unpacking != null and unpacking != ''">
+                unpacking = #{unpacking,jdbcType=INTEGER},
+            </if>
+            <if test="goodsNo != null and goodsNo != ''">
+                goods_no = #{goodsNo,jdbcType=VARCHAR},
+            </if>
+            <if test="routeType != null and routeType != ''">
+                route_type = #{routeType,jdbcType=INTEGER},
+            </if>
+            <if test="transportationRouteId != null and transportationRouteId != ''">
+                transportation_route_id = #{transportationRouteId,jdbcType=INTEGER},
+            </if>
+            <if test="preQuotedPrice != null and preQuotedPrice != ''">
+                pre_quoted_price = #{preQuotedPrice,jdbcType=DOUBLE},
+            </if>
+            <if test="length != null and length != ''">
+                `length` = #{length},
+            </if>
+            <if test="width != null and width != ''">
+                width = #{width},
+            </if>
+            <if test="height != null and height != ''">
+                height = #{height},
+            </if>
+            <if test="actualWeight != null and actualWeight != ''">
+                actual_weight = #{actualWeight,jdbcType=DOUBLE},
+            </if>
+            <if test="actualVol != null and actualVol != ''">
+                actual_vol = #{actualVol,jdbcType=DOUBLE},
+            </if>
+            <if test="actualPrice != null and actualPrice != ''">
+                actual_price = #{actualPrice,jdbcType=DOUBLE},
+            </if>
+            <if test="addressId != null and addressId != ''">
+                address_id = #{addressId,jdbcType=INTEGER},
+            </if>
+            <if test="commercialAreaId != null and commercialAreaId != ''">
+                commercial_area_id = #{commercialAreaId,jdbcType=INTEGER},
+            </if>
+            <if test="commercialAreaName != null and commercialAreaName != ''">
+                commercial_area_name = #{commercialAreaName,jdbcType=INTEGER},
+            </if>
+            <if test="outStorageTime != null">
+                out_storage_time = #{outStorageTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="packTime != null">
+                pack_time = #{packTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="settlementWeight != null and settlementWeight != ''">
+                settlement_weight = #{settlementWeight},
+            </if>
+            <if test="settlementVol != null and settlementVol != ''">
+                settlement_vol = #{settlementVol},
+            </if>
+            <if test="packNum != null and packNum != ''">
+                pack_num = #{packNum},
+            </if>
+            <if test="remarks != null">
+                remarks = #{remarks},
+            </if>
+            <if test="insideMessage != null and insideMessage != ''">
+                inside_message = #{insideMessage},
+            </if>
+            <if test="incidental != null">
+                incidental = #{incidental},
+            </if>
+            <if test="internationalTransshipmentNo != null and internationalTransshipmentNo != ''">
+                international_transshipment_no = #{internationalTransshipmentNo},
+            </if>
+            <if test="printTime != null">
+                print_time = #{printTime},
+            </if>
+            <if test="printCount != null and printCount != ''">
+                print_count = #{printCount},
+            </if>
+            <if test="printOper != null and printOper != ''">
+                print_oper = #{printOper},
+            </if>
+            <if test="isSensitive != null">
+                is_sensitive = #{isSensitive},
+            </if>
+            <if test="discount != null">
+                discount = #{discount},
+            </if>
+
+            <if test="tariffsPrice != null">
+                tariffs_price = #{tariffsPrice},
+            </if>
+            <if test="insurancePrice != null">
+                insurance_price = #{insurancePrice},
+            </if>
+
+        </set>
+        where
+        business_number = #{businessNumber,jdbcType=VARCHAR} and version = #{version}
+    </update>
+
+    <update id="updateDeliver" parameterType="java.util.List">
+        update
+        <include refid="table"/>
+        <set>
+            <if test="transitNumber != null and transitNumber != ''">
+                international_transshipment_no = #{transitNumber},
+            </if>
+            update_time = now(),
+            pack_type = 4,
+            out_storage_time = now()
+        </set>
+        where
+        id= #{id}
+    </update>
+
+    <update id="updateDeliverBatch">
+        update
+        <include refid="table"/>
+        set update_time = now(),
+            pack_type = 4,
+            out_storage_time = now(),
+            user_id = #{userId}
+        where
+        id in
+        <foreach collection="ids" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </update>
+
+    <update id="delete" parameterType="java.lang.Integer">
+        update
+        <include refid="table"/>
+        set `status` = 0
+        where id = #{id}
+    </update>
+
+    <select id="selectByPrimaryKeyList" parameterType="java.util.List" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from customer_pack
+        where `status` = 1 and id in
+        <foreach collection="ids" item="id" open="(" close=")" separator=",">
+            #{id,jdbcType=INTEGER}
+        </foreach>
+    </select>
+
+    <update id="updateCustomerPackMessage" parameterType="com.example.warehouse.entity.CustomerPack">
+        update
+        <include refid="table"/>
+        <set>
+            update_time = now(),
+            version = #{version} + 1,
+            <if test="incidental != null">
+                incidental = #{incidental},
+            </if>
+            <if test="internationalTransshipmentNo != null and internationalTransshipmentNo != ''">
+                international_transshipment_no = #{internationalTransshipmentNo},
+            </if>
+            <if test="discount != null">
+                discount = #{discount},
+            </if>
+            <if test="remarks != null">
+                remarks = #{remarks},
+            </if>
+            <if test="actualPrice != null and actualPrice != ''">
+                actual_price = #{actualPrice},
+            </if>
+            <if test="length != null">
+                `length` = #{length},
+            </if>
+            <if test="width != null">
+                width = #{width},
+            </if>
+            <if test="height != null">
+                height = #{height},
+            </if>
+            <if test="actualWeight != null and actualWeight != ''">
+                actual_weight = #{actualWeight,jdbcType=DOUBLE},
+            </if>
+            <if test="actualVol != null and actualVol != ''">
+                actual_vol = #{actualVol,jdbcType=DOUBLE},
+            </if>
+            <if test="settlementWeight != null and settlementWeight != ''">
+                settlement_weight = #{settlementWeight},
+            </if>
+            <if test="settlementVol != null and settlementVol != ''">
+                settlement_vol = #{settlementVol},
+            </if>
+            <if test="packNum != null and packNum != ''">
+                pack_num = #{packNum},
+            </if>
+            <if test="insideMessage != null and insideMessage != ''">
+                inside_message = #{insideMessage},
+            </if>
+            <if test="accepted != null and accepted != ''">
+                accepted = #{accepted},
+            </if>
+            <if test="acceptedTime != null">
+                accepted_time = #{acceptedTime},
+            </if>
+            <if test="pickedTime != null">
+                picked_time = #{pickedTime},
+            </if>
+            <if test="isSensitive != null and isSensitive != ''">
+                is_sensitive = #{isSensitive},
+            </if>
+
+            <if test="tariffsPrice != null">
+                tariffs_price = #{tariffsPrice},
+            </if>
+            <if test="insurancePrice != null">
+                insurance_price = #{insurancePrice},
+            </if>
+        </set>
+        <where>
+            id = #{id} and version = #{version}
+        </where>
+    </update>
+
+    <update id="unpacked">
+        update
+        <include refid="table"/>
+        <set>
+            pack_type = 8,
+            version = #{version}+1
+        </set>
+        <where>
+            id = #{packId} and version = #{version}
+        </where>
+    </update>
+
+    <sql id="table">customer_pack</sql>
+
+    <update id="updateAgentNumber" parameterType="map">
+        update
+            customer_pack
+        set
+            international_transshipment_no = #{agentNumber,jdbcType=VARCHAR},
+            update_time=now(),
+            inside_message = #{insideMessage,jdbcType=VARCHAR}
+        where
+            order_number = #{orderNumber,jdbcType=VARCHAR}
+    </update>
+
+    <update id="changePackMessage" parameterType="map">
+        update
+            customer_pack
+        <set>
+            <if test="insideMessage != null">
+                inside_message = #{insideMessage,jdbcType=VARCHAR},
+            </if>
+
+            <if test="remarks != null and remarks != ''">
+                remarks = #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="internationalTransshipmentNo != null">
+                international_transshipment_no = #{internationalTransshipmentNo,jdbcType=VARCHAR},
+            </if>
+            update_time = now()
+        </set>
+        where
+            business_number = #{businessNumber,jdbcType=VARCHAR}
+    </update>
+
+    <select id="selectIsRouteUse" resultMap="BaseResultMap">
+        select * from customer_pack
+        where status = 1
+        and pack_type in (1, 2, 3)
+        and transportation_route_id in
+        <foreach collection="routeIds" item="routeId" open="(" close=")" separator=",">
+            #{routeId}
+        </foreach>
+    </select>
+
+    <update id="cancleGoods2pack" parameterType="int">
+        update goods2pack set status = 2 where pack_id = #{packId}
+    </update>
+
+    <update id="cancleGoods" parameterType="int">
+        update goods set goods_type = 1 where id = #{goodId}
+    </update>
+
+    <select id="getAllGoodsIdByPackId" parameterType="int" resultType="string">
+        select goods_id from goods2pack where pack_id = #{packId}
+    </select>
+
+    <insert id="insertList" parameterType="java.util.List">
+        insert into customer_pack
+        (create_time, update_time, `status`, version, business_number, order_number,
+        user_id, customer_id, pack_type, goods_sum, unpacking,
+        goods_no, route_type, transportation_route_id, pre_quoted_price,
+        `length`, width, height, actual_weight, actual_vol,
+        actual_price, address_id, commercial_area_id, commercial_area_name,
+        out_storage_time, pack_time,
+        settlement_weight, settlement_vol, pack_num, remarks,
+        incidental, international_transshipment_no, discount,
+        payment_time, receipt_time, inside_message, accepted,
+        accepted_time,picked_time,is_sensitive, tariffs_price, insurance_price)
+        values
+        <foreach collection="customerPackList" item="item" separator=",">
+            (now(), #{item.updateTime}, 1, 0, #{item.businessNumber}, #{item.orderNumber},
+            #{item.userId}, #{item.customerId}, #{item.packType}, #{item.goodsSum}, #{item.unpacking},
+            #{item.goodsNo},#{item.routeType}, #{item.transportationRouteId}, #{item.preQuotedPrice},
+            #{item.length}, #{item.width}, #{item.height},#{item.actualWeight}, #{item.actualVol},
+            #{item.actualPrice}, #{item.addressId}, #{item.commercialAreaId},#{item.commercialAreaName},
+            #{item.outStorageTime}, #{item.packTime},
+            #{item.settlementWeight},#{item.settlementVol},#{item.packNum}, #{item.remarks},
+            #{item.incidental}, #{item.internationalTransshipmentNo}, #{item.discount},
+            #{item.paymentTime}, #{item.receiptTime}, #{item.insideMessage}, #{item.accepted},
+            #{item.acceptedTime}, #{item.pickedTime}, #{item.isSensitive},
+            #{item.tariffsPrice}, #{item.insurancePrice})
+        </foreach>
+    </insert>
+
+    <update id="updateList" parameterType="java.util.List">
+        <foreach collection="customerPackList" item="item" separator=";">
+            update
+            <include refid="table"/>
+            <set>
+                update_time = now(),
+                version = #{item.version} + 1,
+                <if test="item.incidental != null and item.incidental != ''">
+                    incidental = #{item.incidental},
+                </if>
+                <if test="item.internationalTransshipmentNo != null and item.internationalTransshipmentNo != ''">
+                    international_transshipment_no = #{item.internationalTransshipmentNo},
+                </if>
+                <if test="item.discount != null and item.discount != ''">
+                    discount = #{item.discount},
+                </if>
+                <if test="item.remarks != null and item.remarks != ''">
+                    remarks = #{item.remarks},
+                </if>
+                <if test="item.actualPrice != null and item.actualPrice != ''">
+                    actual_price = #{item.actualPrice},
+                </if>
+                <if test="item.actualWeight != null and item.actualWeight != ''">
+                    actual_weight = #{item.actualWeight,jdbcType=DOUBLE},
+                </if>
+                <if test="item.actualVol != null and item.actualVol != ''">
+                    actual_vol = #{item.actualVol,jdbcType=DOUBLE},
+                </if>
+                <if test="item.settlementWeight != null and item.settlementWeight != ''">
+                    settlement_weight = #{item.settlementWeight},
+                </if>
+                <if test="item.settlementVol != null and item.settlementVol != ''">
+                    settlement_vol = #{item.settlementVol},
+                </if>
+                <if test="item.packNum != null and item.packNum != ''">
+                    pack_num = #{item.packNum},
+                </if>
+                <if test="item.insideMessage != null and item.insideMessage != ''">
+                    inside_message = #{item.insideMessage},
+                </if>
+                <if test="item.accepted != null and item.accepted != ''">
+                    accepted = #{item.accepted},
+                </if>
+                <if test="item.acceptedTime != null">
+                    accepted_time = #{item.acceptedTime},
+                </if>
+                <if test="item.pickedTime != null">
+                    picked_time = #{item.pickedTime},
+                </if>
+                <if test="item.isSensitive != null and item.isSensitive != ''">
+                    is_sensitive = #{item.isSensitive},
+                </if>
+                <if test="item.tariffsPrice != null">
+                    tariffs_price = #{item.tariffsPrice},
+                </if>
+                <if test="item.insurancePrice != null">
+                    insurance_price = #{item.insurancePrice},
+                </if>
+            </set>
+            <where>
+                id = #{item.id} and version = #{item.version}
+            </where>
+        </foreach>
+    </update>
+
+    <update id="updateListByOrderNumber" parameterType="java.util.List">
+        <foreach collection="customerPackList" item="item" separator=";">
+            update
+            <include refid="table"/>
+            <set>
+                update_time = now(),
+                <if test="item.businessNumber != null and item.businessNumber != ''">
+                    business_number = #{item.businessNumber,jdbcType=VARCHAR},
+                </if>
+                <if test="item.userId != null and item.userId != ''">
+                    user_id = #{item.userId,jdbcType=INTEGER},
+                </if>
+                <if test="item.customerId != null and item.customerId != ''">
+                    customer_id = #{item.customerId,jdbcType=INTEGER},
+                </if>
+                <if test="item.goodsSum != null and item.goodsSum != ''">
+                    goods_sum = #{item.goodsSum,jdbcType=INTEGER},
+                </if>
+                <if test="item.unpacking != null and item.unpacking != ''">
+                    unpacking = #{item.unpacking,jdbcType=INTEGER},
+                </if>
+                <if test="item.goodsNo != null and item.goodsNo != ''">
+                    goods_no = #{item.goodsNo,jdbcType=VARCHAR},
+                </if>
+                <if test="item.routeType != null and item.routeType != ''">
+                    route_type = #{item.routeType,jdbcType=INTEGER},
+                </if>
+                <if test="item.transportationRouteId != null and item.transportationRouteId != ''">
+                    transportation_route_id = #{item.transportationRouteId,jdbcType=INTEGER},
+                </if>
+                <if test="item.preQuotedPrice != null and item.preQuotedPrice != ''">
+                    pre_quoted_price = #{item.preQuotedPrice,jdbcType=DOUBLE},
+                </if>
+                <if test="item.actualWeight != null and item.actualWeight != ''">
+                    actual_weight = #{item.actualWeight,jdbcType=DOUBLE},
+                </if>
+                <if test="item.actualVol != null and item.actualVol != ''">
+                    actual_vol = #{item.actualVol,jdbcType=DOUBLE},
+                </if>
+                <if test="item.actualPrice != null and item.actualPrice != ''">
+                    actual_price = #{item.actualPrice,jdbcType=DOUBLE},
+                </if>
+                <if test="item.addressId != null and item.addressId != ''">
+                    address_id = #{item.addressId,jdbcType=INTEGER},
+                </if>
+                <if test="item.commercialAreaId != null and item.commercialAreaId != ''">
+                    commercial_area_id = #{item.commercialAreaId,jdbcType=INTEGER},
+                </if>
+                <if test="item.commercialAreaName != null and item.commercialAreaName != ''">
+                    commercial_area_name = #{item.commercialAreaName,jdbcType=VARCHAR},
+                </if>
+                <if test="item.outStorageTime != null">
+                    out_storage_time = #{item.outStorageTime,jdbcType=TIMESTAMP},
+                </if>
+                <if test="item.packTime != null">
+                    pack_time = #{item.packTime,jdbcType=TIMESTAMP},
+                </if>
+                <if test="item.settlementWeight != null and item.settlementWeight != ''">
+                    settlement_weight = #{item.settlementWeight},
+                </if>
+                <if test="item.settlementVol != null and item.settlementVol != ''">
+                    settlement_vol = #{item.settlementVol},
+                </if>
+                <if test="item.packNum != null and item.packNum != ''">
+                    pack_num = #{item.packNum},
+                </if>
+                <if test="item.remarks != null and item.remarks != ''">
+                    remarks = #{item.remarks},
+                </if>
+                <if test="item.incidental != null and item.incidental != ''">
+                    incidental = #{item.incidental},
+                </if>
+                <if test="item.internationalTransshipmentNo != null and item.internationalTransshipmentNo != ''">
+                    international_transshipment_no = #{item.internationalTransshipmentNo},
+                </if>
+                <if test="item.discount != null and item.discount != ''">
+                    discount = #{item.discount},
+                </if>
+                <if test="item.insideMessage != null and item.insideMessage != ''">
+                    inside_message = #{item.insideMessage},
+                </if>
+                <if test="item.accepted != null and item.accepted != ''">
+                    accepted = #{item.accepted},
+                </if>
+                <if test="item.acceptedTime != null">
+                    accepted_time = #{item.acceptedTime},
+                </if>
+                <if test="item.pickedTime != null">
+                    picked_time = #{item.pickedTime},
+                </if>
+                <if test="item.isSensitive != null and item.isSensitive != ''">
+                    is_sensitive = #{item.isSensitive},
+                </if>
+                <if test="item.tariffsPrice != null">
+                    tariffs_price = #{item.tariffsPrice},
+                </if>
+                <if test="item.insurancePrice != null">
+                    insurance_price = #{item.insurancePrice},
+                </if>
+            </set>
+            <where>
+                order_number = #{item.orderNumber}
+            </where>
+        </foreach>
+    </update>
+
+    <update id="updateByIdAndType">
+        update
+        <include refid="table"/>
+        <set>
+            pack_type = #{packType}
+        </set>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+
+    <select id="selectByOrderNumberList" parameterType="java.util.List" resultMap="CustomerPackVoAll">
+        select
+        <include refid="VoSelectCols"/>
+        from customer_pack t
+        left join customer_pack_receiver_address cuta on t.id = cuta.customer_pack_id and cuta.status = 1
+        left join transportation_route tr on tr.id = t.transportation_route_id
+        left join customer cus on t.customer_id = cus.id
+        left join sys_dict_detail sd on sd.id = tr.country_id
+        where
+        t.status = 1
+        and t.order_number in
+        <foreach collection="orderNumberList" item="orderNumber" open="(" close=")" separator=",">
+            #{orderNumber}
+        </foreach>
+    </select>
+
+    <select id="selectPackVoById" parameterType="java.lang.Integer" resultMap="CustomerPackVoAll">
+        select
+        <include refid="VoSelectCols"/>
+        from
+        <include refid="table"/> t
+        left join customer_pack_receiver_address cuta on t.id = cuta.customer_pack_id and cuta.status = 1
+        left join transportation_route tr on tr.id = t.transportation_route_id
+        left join customer cus on t.customer_id = cus.id
+        left join sys_dict_detail sd on sd.id = tr.country_id
+        where
+        t.`status` = 1 and t.id = #{id}
+    </select>
+
+
+    <select id="getOrdersToPay" parameterType="string" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        customer_pack
+        WHERE
+        `status` = 1
+        AND pack_type = 2
+        <choose>
+            <when test="_parameter != null">
+                <if test='_parameter == "1"'>
+                    AND DATE_SUB(curdate(), INTERVAL 1 DAY) >= DATE_FORMAT(pack_time, '%Y-%m-%d')
+                    AND DATE_FORMAT(pack_time, '%Y-%m-%d') > DATE_SUB(curdate(), INTERVAL 2 DAY)
+                    AND order_number NOT IN (select order_number from wechat_message where status = 1 and type = 'oneDayNotPay')
+                </if>
+                <if test='_parameter == "2"'>
+                    AND DATE_SUB(curdate(), INTERVAL 2 DAY) >= DATE_FORMAT(pack_time, '%Y-%m-%d')
+                    AND DATE_FORMAT(pack_time, '%Y-%m-%d') > DATE_SUB(curdate(), INTERVAL 7 DAY)
+                    AND order_number NOT IN (select order_number from wechat_message where status = 1 and type = 'twoDayNotPay')
+                </if>
+                <if test='_parameter == "7"'>
+                    AND DATE_SUB(curdate(), INTERVAL 7 DAY) >= DATE_FORMAT(pack_time, '%Y-%m-%d')
+                    AND order_number NOT IN (select order_number from wechat_message where status = 1 and type = 'sevenDayNotPay')
+                </if>
+            </when>
+        </choose>
+    </select>
+
+
+    <update id="updateShippedByOrderNumber">
+        update
+        <include refid="table"/>
+        <set>
+            pack_type = 4,
+            out_storage_time = now(),
+        </set>
+        <where>
+            order_number in
+            <foreach collection="orderNumberList" item="orderNumber" open="(" close=")" separator=",">
+                #{orderNumber}
+            </foreach>
+        </where>
+    </update>
+
+    <update id="updatePrint">
+        update customer_pack
+        <set>
+            version = #{version} + 1,
+            print_time = #{printTime},
+            print_oper = #{printOper},
+            print_count = #{printCount}
+        </set>
+        <where>
+            id = #{id}
+            and `status` = 1
+            and version = #{version}
+        </where>
+    </update>
+
+    <select id="selectByWaitPack" resultMap="BaseResultMap">
+        select * from customer_pack where status = 1 and pack_type = 1
+    </select>
+
+    <select id="checkOrderNumberIsOutWare" parameterType="string" resultType="int">
+        select count(1) from customer_pack where status = 1 and pack_type = 4 and order_number = #{orderNumber,jdbcType=VARCHAR}
+    </select>
+
+    <resultMap id="CustomerPackVoNotSonList" extends="BaseResultMap" type="com.example.warehouse.vo.customer.CustomerPackVo">
+        <result column="route_name" property="routeName"/>
+        <result column="transport_type" property="routeType"/>
+        <result column="receiver_address" property="address"/>
+        <result column="addressee" property="addressee"/>
+        <result column="phone_number" property="phoneNumber"/>
+        <result column="address_id" property="addressId"/>
+        <result column="customer_name" property="customerName"/>
+        <result column="login_name" property="loginName"/>
+        <result column="code" property="code"/>
+        <result column="sdd_name" property="destination"/>
+        <result column="is_pin" property="isPin"/>
+        <result column="coupons_amount" property="couponsAmount"/>
+        <collection property="priceDetail" column="id"
+                    select="com.example.warehouse.mapper.customerPack.CustomerPackPriceDetailMapper.selectPackPriceDetailByPackId"/>
+    </resultMap>
+
+    <resultMap id="CustomerPackVoAll" extends="CustomerPackVoNotSonList" type="com.example.warehouse.vo.customer.CustomerPackVo">
+        <collection property="packInsurancePrice" column="id" select="com.example.warehouse.mapper.customerPack.PackInsurancePriceMapper.selectByPackId"/>
+
+        <collection property="goods2packs" column="id" select="com.example.warehouse.mapper.goods2pack.Goods2packMapper.findByPackId"/>
+
+        <collection property="goodsData" column="id" select="com.example.warehouse.mapper.GoodsMapper.findGoodsByPackId" />
+
+        <collection property="customerPackNumbers" column="id"
+                    select="com.example.warehouse.mapper.customerPackNumber.CustomerPackNumberMapper.findByPackId"/>
+
+        <collection property="routeVo" column="transportation_route_id"
+                    select="com.example.warehouse.mapper.transportationRoute.TransportationRouteMapper.findById"/>
+
+        <collection property="packValuations" column="id" select="com.example.warehouse.mapper.customerPack.PackValuationMapper.selectByPackId"/>
+    </resultMap>
+
+    <sql id="VoSelectCols">
+        t.id, t.`status`, t.version, t.business_number, t.order_number, t.user_id,
+        t.customer_id, t.pack_type, t.unpacking, t.goods_no, t.goods_sum,
+        t.transportation_route_id, t.pre_quoted_price, t.`length`, t.width, t.height,
+        t.actual_weight, t.actual_vol, t.actual_price, t.address_id,
+        t.commercial_area_id, t.commercial_area_name,
+        t.settlement_weight, t.settlement_vol, t.pack_num, t.remarks, t.incidental,
+        t.international_transshipment_no, t.discount,  t.print_count, t.print_oper,
+        t.inside_message, t.accepted, t.is_sensitive, t.tariffs_price, t.insurance_price,
+        tr.route_name, tr.transport_type,
+        cus.login_name, cus.customer_name, sd.sdd_name,
+        cuta.code, cuta.receiver_address, cuta.addressee, cuta.phone_number, cuta.provinces,
+        DATE_FORMAT(t.print_time,'%Y-%m-%d %k:%i:%s') as print_time,
+        DATE_FORMAT(t.accepted_time,'%Y-%m-%d %k:%i:%s') as accepted_time,
+        DATE_FORMAT(t.picked_time,'%Y-%m-%d %k:%i:%s') as picked_time,
+        DATE_FORMAT(t.payment_time,'%Y-%m-%d %k:%i:%s') as payment_time,
+        DATE_FORMAT(t.create_time,'%Y-%m-%d %k:%i:%s') as create_time,
+        DATE_FORMAT(t.update_time,'%Y-%m-%d %k:%i:%s') as update_time,
+        DATE_FORMAT(t.out_storage_time,'%Y-%m-%d %k:%i:%s') as out_storage_time,
+        DATE_FORMAT(t.pack_time,'%Y-%m-%d %k:%i:%s') as pack_time
+    </sql>
+
+
+    <!--t.id as id,-->
+    <!--DATE_FORMAT(t.create_time,'%Y-%m-%d %k:%i:%s') as createTime,-->
+    <!--DATE_FORMAT(t.update_time,'%Y-%m-%d %k:%i:%s') as updateTime,-->
+    <!--t.`status`, t.version, t.business_number as businessNumber, t.order_number as orderNumber, t.user_id as userId,-->
+    <!--t.customer_id as customerId, t.pack_type as packType, t.unpacking, t.goods_no as goodsNo,-->
+    <!--t.goods_sum as goodsSum,-->
+    <!--t.transportation_route_id as transportationRouteId, t.pre_quoted_price as preQuotedPrice,-->
+    <!--t.`length`, t.width, t.height, t.actual_weight as actualWeight, t.actual_vol as actualVol,-->
+    <!--t.actual_price as actualPrice, t.address_id as addressId,-->
+    <!--DATE_FORMAT(t.out_storage_time,'%Y-%m-%d %k:%i:%s') as outStorageTime,-->
+    <!--DATE_FORMAT(t.pack_time,'%Y:%m-%d %k:%i:%s') as packTime,-->
+    <!--tr.transport_type as routeType, cuta.receiver_address as address,-->
+    <!--cuta.addressee as addressee, cuta.phone_number as phoneNumber, tr.route_name as routeName,-->
+    <!--t.settlement_weight as settlementWeight,-->
+    <!--t.settlement_vol as settlementVol,t.pack_num as packNum, cus.customer_name as customerName, t.remarks,-->
+    <!--t.incidental, t.international_transshipment_no as internationalTransshipmentNo, t.discount,-->
+    <!--cus.login_name as loginName,sd.sdd_name destination,-->
+    <!--t.print_count as printCount,-->
+    <!--DATE_FORMAT(t.print_time,'%Y:%m-%d %k:%i:%s') as printTime,-->
+    <!--t.print_oper as printOper,cuta.code as code,-->
+    <!--t.inside_message as insideMessage,t.accepted as accepted,-->
+    <!--DATE_FORMAT(t.accepted_time,'%Y:%m-%d %k:%i:%s') as acceptedTime,-->
+    <!--DATE_FORMAT(t.picked_time,'%Y:%m-%d %k:%i:%s') as pickedTime,-->
+    <!--DATE_FORMAT(t.payment_time,'%Y:%m-%d %k:%i:%s') as paymentTime,-->
+    <!--t.is_sensitive as isSensitive-->
+
+    <select id="selectWaitPackDetailByBusinessNumber" resultMap="WaitPackDetail">
+        select <include refid="VoSelectCols"/>
+        from customer_pack t
+        left join customer_pack_receiver_address cuta on t.id = cuta.customer_pack_id and cuta.status = 1
+        left join transportation_route tr on tr.id = t.transportation_route_id
+        left join customer cus on t.customer_id = cus.id
+        left join sys_dict_detail sd on sd.id = tr.country_id
+        <where>
+            t.status = 1
+            and t.pack_type = 1
+            and t.business_number = #{businessNumber}
+        </where>
+    </select>
+
+    <resultMap id="WaitPackDetail" extends="CustomerPackVoNotSonList" type="com.example.warehouse.vo.customer.CustomerPackVo">
+        <collection property="goodsData" column="id" select="com.example.warehouse.mapper.GoodsMapper.findGoodsByPackId" />
+        <collection property="routeVo" column="transportation_route_id"
+                    select="com.example.warehouse.mapper.transportationRoute.TransportationRouteMapper.findById"/>
+        <collection property="packInsurancePrice" column="id" select="com.example.warehouse.mapper.customerPack.PackInsurancePriceMapper.selectByPackId"/>
+        <collection property="packValuations" column="id"
+                    select="com.example.warehouse.mapper.customerPack.PackValuationMapper.selectByPackId"/>
+    </resultMap>
+
+    <select id="getWaitPackList" resultMap="PackOrderRespVo">
+        select <include refid="TableBaseColumns"/>,<include refid="customerColumns"/>,<include refid="routeColumns"/>
+        from customer_pack t
+        left join customer cus on t.customer_id = cus.id and cus.`status` = 1
+        left join transportation_route tr on tr.id = t.transportation_route_id and tr.`status` = 1 and tr.is_available = 1
+        <where>
+            t.`status`= 1
+            and pack_type = 1
+            <if test="businessNumber != null and businessNumber != ''">
+                and t.business_number regexp #{businessNumber}
+            </if>
+            <if test="loginName != null and loginName != ''">
+                and cus.login_name regexp #{loginName}
+            </if>
+            order by t.create_time
+        </where>
+
+    </select>
+    <select id="selectCustomerByRouteId" resultType="java.lang.Integer">
+        select customer_id
+        from customer_pack
+        where status = 1
+        and transportation_route_id in
+          <foreach collection="routeIdList" item="routeId" open="(" close=")" separator=",">
+              #{routeId}
+          </foreach>
+        <if test="groupCustomerIdList != null">
+            and customer_id not in
+            <foreach collection="groupCustomerIdList" item="customerId" open="(" close=")" separator=",">
+                #{customerId}
+            </foreach>
+        </if>
+        group by customer_id
+    </select>
+
+
+    <resultMap id="PackOrderRespVo" extends="BaseResultMap" type="com.example.warehouse.vo.mobile.PackOrderRespVo">
+        <result column="customer_name" property="customerName"/>
+        <result column="login_name" property="loginName"/>
+        <result column="route_name" property="routeName"/>
+    </resultMap>
+
+    <sql id="TableBaseColumns">
+        t.id, t.`status`, t.version, t.business_number, t.order_number, t.user_id,
+        t.customer_id, t.pack_type, t.unpacking, t.goods_no, t.goods_sum,
+        t.transportation_route_id, t.pre_quoted_price, t.`length`, t.width, t.height,
+        t.actual_weight, t.actual_vol, t.actual_price, t.address_id,
+        t.commercial_area_id, t.commercial_area_name,
+        t.settlement_weight, t.settlement_vol, t.pack_num, t.remarks, t.incidental,
+        t.international_transshipment_no, t.discount,  t.print_count, t.print_oper,
+        t.inside_message, t.accepted, t.is_sensitive, t.tariffs_price, t.insurance_price,
+        DATE_FORMAT(t.print_time,'%Y-%m-%d %k:%i:%s') as print_time,
+        DATE_FORMAT(t.accepted_time,'%Y-%m-%d %k:%i:%s') as accepted_time,
+        DATE_FORMAT(t.picked_time,'%Y-%m-%d %k:%i:%s') as picked_time,
+        DATE_FORMAT(t.payment_time,'%Y-%m-%d %k:%i:%s') as payment_time,
+        DATE_FORMAT(t.create_time,'%Y-%m-%d %k:%i:%s') as create_time,
+        DATE_FORMAT(t.update_time,'%Y-%m-%d %k:%i:%s') as update_time,
+        DATE_FORMAT(t.out_storage_time,'%Y-%m-%d %k:%i:%s') as out_storage_time,
+        DATE_FORMAT(t.pack_time,'%Y-%m-%d %k:%i:%s') as pack_time
+    </sql>
+
+    <sql id="customerColumns">
+        cus.login_name, cus.customer_name
+    </sql>
+    <sql id="customerAddressColumns">
+        cuta.code, cuta.receiver_address, cuta.addressee, cuta.phone_number
+    </sql>
+    <sql id="routeColumns">
+        tr.route_name
+    </sql>
+
+
+    <select id="getOrderSum" resultType="java.lang.Integer">
+        select count(id)
+        from customer_pack
+        <where>
+            status = 1
+            and customer_id = #{customerId}
+        </where>
+    </select>
+
+    <select id="getPayAmountSum" resultType="java.math.BigDecimal">
+        select IFNULL(sum(actual_price), 0)
+        from customer_pack
+        <where>
+            status = 1
+            and customer_id = #{customerId}
+        </where>
+    </select>
+
+    <select id="getCustomerOrderCount" resultType="java.lang.Integer">
+        select count(1)
+        from customer_pack t
+        left join goods2pack g2p on g2p.pack_id = t.id
+        left join goods g on g.id = g2p.goods_id
+        <where>
+            t.status = 1
+            and g2p.status = 1
+            and g.status = 1
+            and t.customer_id = #{customerId}
+            <if test="orderNumber != null and orderNumber != ''">
+                and t.order_number regexp #{orderNumber}
+            </if>
+            <if test="businessNumber != null and businessNumber != ''">
+                and t.business_number regexp #{businessNumber}
+            </if>
+            <if test="deliveryOrderNo != null and deliveryOrderNo != ''">
+                and g.delivery_order_no regexp #{deliveryOrderNo}
+            </if>
+        </where>
+    </select>
+
+    <select id="getOrderListByCustomerId" resultType="java.util.Map">
+        select
+        t.id, t.order_number as orderNumber, t.business_number as businessNumber,
+        t.pack_type as packType, t.actual_weight as actualWeight, t.actual_vol as actualVol,
+        t.actual_price as actualPrice, t.international_transshipment_no as transitNumber,
+        route.route_name as routeName, route.destination,
+        DATE_FORMAT(t.create_time, '%Y-%m-%d %k:%i:%s') as createTime
+        from customer_pack t
+        left join transportation_route route on route.id = t.transportation_route_id
+        <if test="deliveryOrderNo != null and deliveryOrderNo != ''">
+            left join goods2pack g2p on g2p.pack_id = t.id
+            left join goods g on g.id = g2p.goods_id
+        </if>
+        <where>
+            t.status = 1
+            and t.customer_id = #{customerId}
+            <if test="orderNumber != null and orderNumber != ''">
+                and t.order_number regexp #{orderNumber}
+            </if>
+            <if test="businessNumber != null and businessNumber != ''">
+                and t.business_number regexp #{businessNumber}
+            </if>
+            <if test="deliveryOrderNo != null and deliveryOrderNo != ''">
+                and g.status = 1
+                and g2p.status = 1
+                and g.delivery_order_no regexp #{deliveryOrderNo}
+            </if>
+        </where>
+        order by t.create_time desc
+        limit #{pageNumber}, #{pageSize}
+    </select>
+
+    <select id="getPayOrderByOrderNumber" resultMap="waitPayOrder">
+        select
+        <include refid="VoSelectCols"/>
+        from
+        <include refid="table"/> t
+        left join customer_pack_receiver_address cuta on t.id = cuta.customer_pack_id and cuta.status = 1
+        left join transportation_route tr on tr.id = t.transportation_route_id
+        left join customer cus on t.customer_id = cus.id
+        left join sys_dict_detail sd on sd.id = tr.country_id
+        where
+        t.`status` = 1 and t.order_number = #{orderNumber}
+    </select>
+    <select id="findByTransshipmentNo" resultType="com.example.warehouse.entity.CustomerPack">
+        select id, order_number as orderNumber, customer_id as customerId
+        from customer_pack
+        where `status` = 1
+        and international_transshipment_no regexp #{orderNumber}
+    </select>
+
+    <select id="selectEffectivePackByOrderNumberList" resultType="com.example.warehouse.entity.CustomerPack">
+        select id, order_number as orderNumber
+        from customer_pack
+        <where>
+            status = 1
+            and pack_type = 4
+            and order_number in
+            <foreach collection="orderNumberList" item="orderNumber" open="(" separator="," close=")">
+                #{orderNumber}
+            </foreach>
+        </where>
+    </select>
+
+    <select id="findExportCustomerPack" resultType="com.example.warehouse.DO.CustomerPackExportDo">
+        select cus.login_name as loginName, cus.customer_name as customerName,
+         t.order_number as orderNumber, t.international_transshipment_no as transitNumber,
+         DATE_FORMAT(t.create_time, '%Y-%m-%d %k:%i:%s') as createTime,
+         DATE_FORMAT(t.pack_time, '%Y-%m-%d %k:%i:%s') as packTime,
+         DATE_FORMAT(t.payment_time, '%Y-%m-%d %k:%i:%s') as paymentTime,
+         DATE_FORMAT(t.out_storage_time, '%Y-%m-%d %k:%i:%s') as outStorageTime,
+         t.goods_sum as goodsNum, t.pack_num as packNum, t.actual_vol as actualVol,
+         t.settlement_vol as settlementVol, t.actual_weight as actualWeight,
+         t.settlement_weight as settlementWeight, t.pre_quoted_price as preQuotedPrice,
+         t.actual_price as actualPrice,
+         cppd.freight, cppd.discount, cppd.incidental, cppd.forklift_fee as forkliftFee,
+         cppd.sensitive_price as sensitivePrice, cppd.tariffs_price as  tariffsPrice,
+         cppd.insurance_price as insurancePrice, cppd.coupons_price as couponsPrice,
+         cppd.deduction_amount as deductionAmount,
+         route.route_name as routeName, route.route_type as routeType, route.destination as country,
+         cpra.addressee, cpra.phone_number as phoneNumber, cpra.code, cpra.receiver_address as address
+         from customer_pack t
+         left join customer cus on t.customer_id = cus.id
+         left join customer_pack_price_detail cppd on cppd.pack_id = t.id and cppd.status = 1
+         left join customer_pack_receiver_address cpra on cpra.customer_pack_id = t.id and cpra.status = 1
+         left join transportation_route route on route.id = t.transportation_route_id
+         <where>
+             t.status = 1
+             <if test="commercialAreaId!= null">
+                 and t.commercial_area_id = #{commercialAreaId}
+             </if>
+             <if test="packType != null">
+                 and t.pack_type = #{packType}
+             </if>
+             <if test="businessNumber != null and businessNumber != ''">
+                 and t.business_number regexp #{businessNumber}
+             </if>
+             <if test="insideMessage != null and insideMessage != ''">
+                 and t.inside_message regexp #{insideMessage}
+             </if>
+             <if test="orderNumber != null and orderNumber != ''">
+                 and t.order_number regexp #{orderNumber}
+             </if>
+             <choose>
+                 <when test="orderNumberType != null and orderNumberType == 1">
+                     and (t.international_transshipment_no is null or t.international_transshipment_no = '')
+                 </when>
+                 <when test="orderNumberType != null and orderNumberType == 2">
+                     and t.international_transshipment_no is not null
+                 </when>
+             </choose>
+             <if test="customerName != null and customerName != ''">
+                 and cus.customer_name like concat('%', #{customerName}, '%')
+             </if>
+             <if test="loginName != null and loginName != ''">
+                 and cus.login_name regexp #{loginName}
+             </if>
+             <if test="destination != null and destination != ''">
+                 and route.destination regexp #{destination}
+             </if>
+             <if test="startTime != null and startTime != ''">
+                 and t.create_time between #{startTime} and #{endTime}
+             </if>
+             <if test="startTime2 != null and startTime2 != ''">
+                 and t.out_storage_time between #{startTime2} and #{endTime2}
+             </if>
+             <if test="routeType != null and routeType != ''">
+                 and route.transport_type = #{routeType}
+             </if>
+             <if test="isSensitive != null and isSensitive != ''">
+                 and route.is_sensitive = #{isSensitive}
+             </if>
+             <if test="routeName != null and routeName != ''">
+                 and route.route_name regexp #{routeName}
+             </if>
+             <if test="remarks != null and remarks != ''">
+                 and t.remarks regexp #{remarks}
+             </if>
+             <if test="insideMessage != null and insideMessage != ''">
+                 and t.inside_message regexp #{insideMessage}
+             </if>
+             <if test="internationalTransshipmentNo != null and internationalTransshipmentNo != ''">
+                 and t.international_transshipment_no regexp #{internationalTransshipmentNo}
+             </if>
+             <if test="address != null and address != ''">
+                 and cpra.receiver_address regexp #{address}
+             </if>
+             <if test="deliveryOrderNo != null and deliveryOrderNo != ''">
+                 and t.id in (
+                 select pack_id from goods2pack
+                 where `status` = 1
+                 and goods_id in (
+                 select id from goods where delivery_order_no regexp #{deliveryOrderNo}
+                 )
+                 )
+             </if>
+             order by t.create_time desc
+         </where>
+    </select>
+    <select id="selectByOrderNumber" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/>
+        from customer_pack
+        <where>
+            status = 1
+            and order_number = #{orderNumber}
+        </where>
+    </select>
+    <select id="selectNewestOrderNumber" resultType="java.util.HashMap">
+        select order_number as orderNumber, business_number as businessNumber
+        from customer_pack
+        <where>
+            status = 1
+            and order_number regexp #{orderNumber}
+        </where>
+        order by out_storage_time desc
+        limit 0,1
+    </select>
+    <select id="findPrintInvoiceCustomerPackByIds" resultMap="PrintInvoiceCustomerPackVo">
+        select <include refid="TableBaseColumns"/>,
+        cust.email,
+        cura.code, cura.receiver_address, cura.addressee, cura.phone_number, cura.provinces
+        from customer_pack t
+        left join customer cust on t.customer_id = cust.id
+        left join customer_pack_receiver_address cura on cura.customer_pack_id = t.id and cura.status = 1
+        <where>
+            t.status = 1
+            and t.id in
+            <foreach collection="orderIdList" item="id" open="(" close=")" separator=",">
+                #{id}
+            </foreach>
+        </where>
+    </select>
+
+    <update id="confirmShipmentById" parameterType="com.example.warehouse.entity.CustomerPack">
+        update
+        <include refid="table"/>
+        <set>
+            pack_type = 3,
+            update_time = now(),
+            payment_time = now(),
+            actual_price = #{actualPrice},
+            <if test="tariffsPrice != null">
+                tariffs_price = #{tariffsPrice},
+            </if>
+            <if test="insurancePrice != null">
+                insurance_price = #{insurancePrice},
+            </if>
+        </set>
+        where `status` = 1
+        and id = #{id}
+    </update>
+
+    <resultMap id="PrintInvoiceCustomerPackVo" extends="BaseResultMap" type="com.example.warehouse.vo.customer.CustomerPackVo">
+        <result column="receiver_address" property="address"/>
+        <result column="addressee" property="addressee"/>
+        <result column="phone_number" property="phoneNumber"/>
+        <result column="code" property="code"/>
+        <result column="email" property="email"/>
+
+        <collection property="routeVo" column="transportation_route_id"
+                    select="com.example.warehouse.mapper.transportationRoute.TransportationRouteMapper.findById"/>
+        <collection property="customerPackNumbers" column="id"
+                    select="com.example.warehouse.mapper.customerPackNumber.CustomerPackNumberMapper.findByPackId"/>
+        <collection property="packValuations" column="id"
+                    select="com.example.warehouse.mapper.customerPack.PackValuationMapper.selectByPackId"/>
+    </resultMap>
+
+    <resultMap id="waitPayOrder" extends="BaseResultMap" type="com.example.warehouse.vo.customer.CustomerPackVo">
+        <result column="route_name" property="routeName"/>
+        <result column="transport_type" property="routeType"/>
+        <result column="receiver_address" property="address"/>
+        <result column="addressee" property="addressee"/>
+        <result column="phone_number" property="phoneNumber"/>
+        <result column="address_id" property="addressId"/>
+        <result column="customer_name" property="customerName"/>
+        <result column="login_name" property="loginName"/>
+        <result column="code" property="code"/>
+        <result column="sdd_name" property="destination"/>
+        <result column="is_pin" property="isPin"/>
+
+        <collection property="goodsData" column="id"
+                    select="com.example.warehouse.mapper.GoodsMapper.findGoodsByPackId" />
+
+        <collection property="customerPackNumbers" column="id"
+                    select="com.example.warehouse.mapper.customerPackNumber.CustomerPackNumberMapper.findByPackId"/>
+
+        <collection property="packInsurancePrice" column="id"
+                    select="com.example.warehouse.mapper.customerPack.PackInsurancePriceMapper.selectByPackId"/>
+
+        <collection property="packValuations" column="id"
+                    select="com.example.warehouse.mapper.customerPack.PackValuationMapper.selectByPackId"/>
+    </resultMap>
+</mapper>

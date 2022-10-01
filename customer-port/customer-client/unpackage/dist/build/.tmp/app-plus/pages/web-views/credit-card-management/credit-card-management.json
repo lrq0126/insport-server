@@ -1,0 +1,10 @@
+{
+  "navigationBarTitleText": "银行卡管理",
+  "usingComponents": {
+    "no-cc": "/pages/web-views/credit-card-management/noCC",
+    "cc-btn": "/components/m-cc-btn/m-cc-btn",
+    "uni-load-more": "/components/uni-load-more/uni-load-more",
+    "m-format-card": "/components/m-format-card/m-format-card",
+    "m-format-phone": "/components/m-format-phone/m-format-phone"
+  }
+}

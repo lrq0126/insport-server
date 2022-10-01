@@ -1,0 +1,9 @@
+
+.content{padding-top: 10rpx;}
+.user-name{line-height: 80rpx;margin-left: 30rpx;}
+.uni-icon-clear{color: #ccc;}
+.confirm{width: 690rpx;height: 80rpx;line-height: 80rpx;margin-top: 28rpx;font-size: 28rpx;}
+.confirm,button[disabled]:not([type]){background-color: #89afd6;color: #fff;}
+.btn-hover{background-color: #5c8abf;}
+.confirm:after{border: none;}
+

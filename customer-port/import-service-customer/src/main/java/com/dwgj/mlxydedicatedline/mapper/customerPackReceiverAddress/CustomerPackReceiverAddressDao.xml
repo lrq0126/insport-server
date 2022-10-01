@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dwgj.mlxydedicatedline.mapper.customerPackReceiverAddress.CustomerPackReceiverAddressDao">
+
+    <resultMap type="com.dwgj.mlxydedicatedline.entity.CustomerPackReceiverAddress" id="CustomerPackReceiverAddressMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="customerPackId" column="customer_pack_id" jdbcType="INTEGER"/>
+        <result property="receiverAddress" column="receiver_address" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="INTEGER"/>
+        <result property="phoneNumber" column="phone_number" jdbcType="VARCHAR"/>
+        <result property="addressee" column="addressee" jdbcType="VARCHAR"/>
+        <result property="code" column="code" jdbcType="VARCHAR"/>
+        <result property="provinces" column="provinces" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="CustomerPackReceiverAddressMap">
+        select
+          id, customer_pack_id, receiver_address, status, phone_number, addressee, code, provinces
+        from customer_pack_receiver_address
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="CustomerPackReceiverAddressMap">
+        select
+          id, customer_pack_id, receiver_address, status, phone_number, addressee, code, provinces
+        from customer_pack_receiver_address
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="CustomerPackReceiverAddressMap">
+        select
+        id, customer_pack_id, receiver_address, status, phone_number, addressee, code, provinces
+        from customer_pack_receiver_address
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="customerPackId != null">
+                and customer_pack_id = #{customerPackId}
+            </if>
+            <if test="receiverAddress != null and receiverAddress != ''">
+                and receiver_address = #{receiverAddress}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+            <if test="phoneNumber != null and phoneNumber != ''">
+                and phone_number = #{phoneNumber}
+            </if>
+            <if test="addressee != null and addressee != ''">
+                and addressee = #{addressee}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into customer_pack_receiver_address(customer_pack_id, receiver_address,
+        status, phone_number, addressee, code, provinces)
+        values (#{customerPackId}, #{receiverAddress},
+        1, #{phoneNumber}, #{addressee}, #{code}, #{provinces})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update customer_pack_receiver_address
+        <set>
+            <if test="customerPackId != null">
+                customer_pack_id = #{customerPackId},
+            </if>
+            <if test="receiverAddress != null and receiverAddress != ''">
+                receiver_address = #{receiverAddress},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="phoneNumber != null and phoneNumber != ''">
+                phone_number = #{phoneNumber},
+            </if>
+            <if test="addressee != null and addressee != ''">
+                addressee = #{addressee},
+            </if>
+            <if test="code != null and code != ''">
+                code = #{code},
+            </if>
+            <if test="provinces != null and provinces != ''">
+                provinces = #{provinces},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from customer_pack_receiver_address where id = #{id}
+    </delete>
+
+    <select id="findByCustomerPackId" parameterType="java.lang.Integer" resultMap="CustomerPackReceiverAddressMap">
+        select
+        id, customer_pack_id, receiver_address, status, phone_number, addressee, code, provinces
+        from customer_pack_receiver_address
+        <where>
+            customer_pack_id = #{customerPackId} and status = 1
+        </where>
+    </select>
+
+    <select id="findByOrderNumber" resultMap="CustomerPackReceiverAddressMap">
+        select
+        id, receiver_address, phone_number, addressee, code, provinces
+        from customer_pack_receiver_address
+        <where>
+            status = 1
+            and customer_pack_id = (select id from customer_pack where status = 1 and order_number = #{orderNumber})
+        </where>
+    </select>
+
+    <update id="deleteByCustomerPackId" parameterType="java.lang.Integer">
+        update customer_pack_receiver_address
+        <set>
+            status = 0
+        </set>
+        where customer_pack_id = #{customerPackId} and status = 1
+    </update>
+
+    <update id="deleteByCustomerPackIdList">
+        update customer_pack_receiver_address
+        <set>
+            status = 0
+        </set>
+        where status = 1
+        and customer_pack_id in
+        <foreach collection="customerPackIdList" item="customerPackId" open="(" close=")" separator=",">
+            #{customerPackId}
+        </foreach>
+    </update>
+
+    <insert id="insertList" parameterType="java.util.List">
+        insert into customer_pack_receiver_address
+        (customer_pack_id, receiver_address, code, provinces,
+        phone_number, addressee)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.customerPackId},#{item.receiverAddress}, #{item.code}, #{item.provinces},
+            #{item.phoneNumber},#{item.addressee})
+        </foreach>
+    </insert>
+
+</mapper>

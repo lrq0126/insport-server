@@ -1,0 +1,21 @@
+.leave-application.data-v-327e2a93 {
+  padding: 0 20rpx;
+}
+.leave-application .uni-triplex-row.data-v-327e2a93 {
+  padding: 20rpx 10rpx;
+}
+.leave-application .uni-list-cell.data-v-327e2a93:after {
+  right: 4rpx;
+  left: 4rpx;
+}
+.leave-application .title.data-v-327e2a93 {
+  padding: 10rpx;
+}
+.leave-application .title text.data-v-327e2a93 {
+  margin-right: 10rpx;
+  position: relative;
+}
+.leave-application .uni-textarea uni-textarea.data-v-327e2a93 {
+  height: 150px;
+}
+

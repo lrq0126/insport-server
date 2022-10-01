@@ -1,0 +1,2 @@
+setCssToHead([".",[1],"refund-application { padding: 0 ",[0,20],"; }\n.",[1],"refund-application .",[1],"title { padding: ",[0,10],"; }\n.",[1],"refund-application .",[1],"title wx-text { margin-right: ",[0,10],"; }\n.",[1],"refund-application .",[1],"uni-textarea wx-uni-textarea { height: 150px; }\n",],undefined,{path:"./pages/web-views/refund-application/refund-application.wxss"})();
+document.dispatchEvent(new CustomEvent("generateFuncReady", { detail: { generateFunc: $gwx('./pages/web-views/refund-application/refund-application.wxml') } }));

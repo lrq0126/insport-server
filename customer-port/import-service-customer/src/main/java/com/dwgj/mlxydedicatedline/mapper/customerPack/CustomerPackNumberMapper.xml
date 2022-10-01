@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dwgj.mlxydedicatedline.mapper.customerPack.CustomerPackNumberMapper">
+    <resultMap id="BaseResultMap" type="com.dwgj.mlxydedicatedline.entity.customerPack.CustomerPackNumber">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="create_id" jdbcType="INTEGER" property="createId"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="update_id" jdbcType="INTEGER" property="updateId"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="version" jdbcType="INTEGER" property="version"/>
+        <result column="customer_pack_id" jdbcType="INTEGER" property="customerPackId"/>
+        <result column="length" jdbcType="INTEGER" property="length"/>
+        <result column="width" jdbcType="INTEGER" property="width"/>
+        <result column="height" jdbcType="INTEGER" property="height"/>
+        <result column="actual_weight" jdbcType="DOUBLE" property="actualWeight"/>
+        <result column="actual_vol" jdbcType="DOUBLE" property="actualVol"/>
+        <result column="out_storage_time" jdbcType="TIMESTAMP" property="outStorageTime"/>
+        <result column="pack_time" jdbcType="TIMESTAMP" property="packTime"/>
+        <result column="settlement_weight" jdbcType="DOUBLE" property="settlementWeight"/>
+        <result column="settlement_vol" jdbcType="DOUBLE" property="settlementVol"/>
+        <result column="actual_price" jdbcType="DOUBLE" property="actualPrice"/>
+        <result column="goods_nos" jdbcType="VARCHAR" property="goodsNos"/>
+        <result column="pack_order" jdbcType="VARCHAR" property="packOrder"/>
+        <result column="international_transshipment_no" jdbcType="VARCHAR" property="internationalTransshipmentNo"/>
+        <result column="is_sensitive" jdbcType="INTEGER" property="isSensitive"/>
+    </resultMap>
+
+    <sql id="SelectCols">
+    t.id, t.create_time, t.create_id, t.update_time, t.update_id, t.`status`, t.version, t.customer_pack_id,
+    t.`length`, t.width, t.height, t.actual_weight, t.actual_vol, t.out_storage_time, t.pack_time,
+    t.settlement_weight, t.settlement_vol, t.actual_price, t.goods_nos, t.pack_order, t.international_transshipment_no,
+    t.is_sensitive
+  </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="SelectCols"/>
+        from customer_pack_number
+        where id = #{id,jdbcType=INTEGER} and `status` = 1
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from customer_pack_number
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.dwgj.mlxydedicatedline.entity.customerPack.CustomerPackNumber"
+            useGeneratedKeys="true">
+    insert into customer_pack_number (create_time, create_id, update_time, 
+      update_id, `status`, version, 
+      customer_pack_id, `length`, width, 
+      height, actual_weight, actual_vol, 
+      out_storage_time, pack_time, settlement_weight, 
+      settlement_vol, actual_price, goods_nos, pack_order, international_transshipment_no,is_sensitive)
+    values (#{createTime,jdbcType=TIMESTAMP}, #{createId,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{updateId,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{version,jdbcType=INTEGER}, 
+      #{customerPackId,jdbcType=INTEGER}, #{length,jdbcType=INTEGER}, #{width,jdbcType=INTEGER}, 
+      #{height,jdbcType=INTEGER}, #{actualWeight,jdbcType=DOUBLE}, #{actualVol,jdbcType=DOUBLE}, 
+      #{outStorageTime,jdbcType=TIMESTAMP}, #{packTime,jdbcType=TIMESTAMP}, #{settlementWeight,jdbcType=DOUBLE}, 
+      #{settlementVol,jdbcType=DOUBLE}, #{actualPrice,jdbcType=DOUBLE}, #{goodsNos}, #{packOrder}, #{internationalTransshipmentNo},
+      #{isSensitive})
+  </insert>
+    <insert id="insertSelective" keyColumn="id" keyProperty="id"
+            parameterType="com.dwgj.mlxydedicatedline.entity.customerPack.CustomerPackNumber" useGeneratedKeys="true">
+        insert into customer_pack_number
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            create_time,
+            <if test="createId != null and createId != ''">
+                create_id,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="updateId != null and updateId != ''">
+                update_id,
+            </if>
+            <if test="status != null and status != ''">
+                `status`,
+            </if>
+            <if test="version != null and version != ''">
+                version,
+            </if>
+            <if test="customerPackId != null and customerPackId != ''">
+                customer_pack_id,
+            </if>
+            <if test="length != null and length != ''">
+                `length`,
+            </if>
+            <if test="width != null and width != ''">
+                width,
+            </if>
+            <if test="height != null and height != ''">
+                height,
+            </if>
+            <if test="actualWeight != null and actualWeight != ''">
+                actual_weight,
+            </if>
+            <if test="actualVol != null and actualVol != ''">
+                actual_vol,
+            </if>
+            <if test="outStorageTime != null">
+                out_storage_time,
+            </if>
+            <if test="packTime != null">
+                pack_time,
+            </if>
+            <if test="settlementWeight != null and settlementWeight != ''">
+                settlement_weight,
+            </if>
+            <if test="settlementVol != null and settlementVol != ''">
+                settlement_vol,
+            </if>
+            <if test="actualPrice != null and actualPrice != ''">
+                actual_price,
+            </if>
+            <if test="goodsNos != null and goodsNos != ''">
+                goods_nos,
+            </if>
+            <if test="packOrder != null and packOrder != ''">
+                pack_order,
+            </if>
+            <if test="internationalTransshipmentNo != null and internationalTransshipmentNo != ''">
+                international_transshipment_no,
+            </if>
+            <if test="isSensitive != null">
+                is_sensitive,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            now(),
+            <if test="createId != null and createId != ''">
+                #{createId,jdbcType=INTEGER},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateId != null and updateId != ''">
+                #{updateId,jdbcType=INTEGER},
+            </if>
+            <if test="status != null and status != ''">
+                #{status,jdbcType=INTEGER},
+            </if>
+            <if test="version != null and version != ''">
+                #{version,jdbcType=INTEGER},
+            </if>
+            <if test="customerPackId != null and customerPackId != ''">
+                #{customerPackId,jdbcType=INTEGER},
+            </if>
+            <if test="length != null and length != ''">
+                #{length,jdbcType=INTEGER},
+            </if>
+            <if test="width != null and width != ''">
+                #{width,jdbcType=INTEGER},
+            </if>
+            <if test="height != null and height != ''">
+                #{height,jdbcType=INTEGER},
+            </if>
+            <if test="actualWeight != null and actualWeight != ''">
+                #{actualWeight,jdbcType=DOUBLE},
+            </if>
+            <if test="actualVol != null and actualVol != ''">
+                #{actualVol,jdbcType=DOUBLE},
+            </if>
+            <if test="outStorageTime != null">
+                #{outStorageTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="packTime != null">
+                #{packTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="settlementWeight != null and settlementWeight != ''">
+                #{settlementWeight,jdbcType=DOUBLE},
+            </if>
+            <if test="settlementVol != null and settlementVol != ''">
+                #{settlementVol,jdbcType=DOUBLE},
+            </if>
+            <if test="actualPrice != null and actualPrice != ''">
+                #{actualPrice,jdbcType=DOUBLE},
+            </if>
+            <if test="goodsNos != null and goodsNos != ''">
+                #{goodsNos},
+            </if>
+            <if test="packOrder != null and packOrder != ''">
+                #{packOrder},
+            </if>
+            <if test="internationalTransshipmentNo != null and internationalTransshipmentNo != ''">
+                #{internationalTransshipmentNo},
+            </if>
+            <if test="isSensitive != null">
+                #{isSensitive},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.dwgj.mlxydedicatedline.entity.customerPack.CustomerPackNumber">
+        update customer_pack_number
+        <set>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createId != null and createId != ''">
+                create_id = #{createId,jdbcType=INTEGER},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateId != null and updateId != ''">
+                update_id = #{updateId,jdbcType=INTEGER},
+            </if>
+            <if test="status != null and status != ''">
+                `status` = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="version != null and version != ''">
+                version = #{version,jdbcType=INTEGER} + 1,
+            </if>
+            <if test="customerPackId != null and customerPackId != ''">
+                customer_pack_id = #{customerPackId,jdbcType=INTEGER},
+            </if>
+            <if test="length != null and length != ''">
+                `length` = #{length,jdbcType=INTEGER},
+            </if>
+            <if test="width != null and width != ''">
+                width = #{width,jdbcType=INTEGER},
+            </if>
+            <if test="height != null and height != ''">
+                height = #{height,jdbcType=INTEGER},
+            </if>
+            <if test="actualWeight != null and actualWeight != ''">
+                actual_weight = #{actualWeight,jdbcType=DOUBLE},
+            </if>
+            <if test="actualVol != null and actualVol != ''">
+                actual_vol = #{actualVol,jdbcType=DOUBLE},
+            </if>
+            <if test="outStorageTime != null">
+                out_storage_time = #{outStorageTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="packTime != null">
+                pack_time = #{packTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="settlementWeight != null and settlementWeight != ''">
+                settlement_weight = #{settlementWeight,jdbcType=DOUBLE},
+            </if>
+            <if test="settlementVol != null and settlementVol != ''">
+                settlement_vol = #{settlementVol,jdbcType=DOUBLE},
+            </if>
+            <if test="actualPrice != null and actualPrice != ''">
+                actual_price = #{actualPrice,jdbcType=DOUBLE},
+            </if>
+            <if test="goodsNos != null and goodsNos != ''">
+                goods_nos = #{goodsNos},
+            </if>
+            <if test="packOrder != null and packOrder != ''">
+                pack_order = #{packOrder},
+            </if>
+            <if test="internationalTransshipmentNo != null and internationalTransshipmentNo != ''">
+                international_transshipment_no = #{internationalTransshipmentNo},
+            </if>
+            <if test="isSensitive != null">
+                is_sensitive = #{isSensitive},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER} and version = #{version,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.dwgj.mlxydedicatedline.entity.customerPack.CustomerPackNumber">
+    update customer_pack_number
+    set create_time = #{createTime,jdbcType=TIMESTAMP},
+      create_id = #{createId,jdbcType=INTEGER},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      update_id = #{updateId,jdbcType=INTEGER},
+      `status` = #{status,jdbcType=INTEGER},
+      version = #{version,jdbcType=INTEGER} + 1,
+      customer_pack_id = #{customerPackId,jdbcType=INTEGER},
+      `length` = #{length,jdbcType=INTEGER},
+      width = #{width,jdbcType=INTEGER},
+      height = #{height,jdbcType=INTEGER},
+      actual_weight = #{actualWeight,jdbcType=DOUBLE},
+      actual_vol = #{actualVol,jdbcType=DOUBLE},
+      out_storage_time = #{outStorageTime,jdbcType=TIMESTAMP},
+      pack_time = #{packTime,jdbcType=TIMESTAMP},
+      settlement_weight = #{settlementWeight,jdbcType=DOUBLE},
+      settlement_vol = #{settlementVol,jdbcType=DOUBLE},
+      actual_price = #{actualPrice,jdbcType=DOUBLE},
+      goods_nos = #{goodsNos},
+      pack_order = #{packOrder},
+      is_sensitive = #{isSensitive},
+      international_transshipment_no = #{internationalTransshipmentNo}
+    where id = #{id,jdbcType=INTEGER} and version = #{version,jdbcType=INTEGER}
+  </update>
+
+    <select id="findByPackId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="SelectCols"/>
+        from
+        <include refid="table"/>
+        t
+        where t.customer_pack_id = #{pacakId} and t.`status` = 1
+    </select>
+
+    <select id="findByPackIdList" parameterType="java.util.List"
+            resultMap="BaseResultMap">
+        select
+        <include refid="SelectCols"/>
+        from
+        <include refid="table"/>
+        t
+        where t.`status` = 1
+        and t.customer_pack_id in
+        <foreach collection="packIdList" item="packId" open="(" close=")" separator=",">
+            #{packId}
+        </foreach>
+    </select>
+
+    <select id="findToBeShipped" parameterType="java.util.Map" resultMap="BaseResultMap">
+        select
+        <include refid="SelectCols"/>
+        from
+        <include refid="table"/>
+        t
+        left join customer_pack cp on t.customer_pack_id = cp.id
+        left join customer c on cp.customer_id = c.id
+        where
+        t.`status` = 1
+        <if test="customerName != null and customerName != ''">
+            and INSTR(c.customer_name,#{customerName})>0
+        </if>
+        <if test="startTime != null and startTime != ''">
+            and cp.create_time &gt;= #{startTime}
+        </if>
+        <if test="endTime != null and endTime != ''">
+            and cp.create_time &lt;= #{endTime}
+        </if>
+        LIMIT #{pageNumber},#{pageSize}
+    </select>
+
+    <select id="findByPackOrder" parameterType="java.lang.String"
+            resultMap="customerPackNumberVoResultMap">
+        select
+        <include refid="VoSelectCols"/>
+        from
+        <include refid="table"/>
+        t
+        where
+        t.`status` = 1 and t.pack_order = #{packOrder}
+    </select>
+
+    <select id="countSelectAll" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select
+        count(t.id) as count
+        from
+        <include refid="table"/>
+        t
+        left join customer_pack cp on t.customer_pack_id = cp.id
+        left join customer ct on cp.customer_id = ct.id
+        where
+        t.`status` = 1
+        <if test="customerName != null and customerName != ''">
+            and INSTR(ct.customer_name,#{customerName})>0
+        </if>
+        <if test="startTime != null and startTime != ''">
+            and cp.create_time &gt;= #{startTime}
+        </if>
+        <if test="endTime != null and endTime != ''">
+            and cp.create_time &lt;= #{endTime}
+        </if>
+    </select>
+
+
+    <select id="findById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="SelectCols"/>
+        from
+        <include refid="table"/>
+        t
+        where t.id = #{customerPackNumberId} and t.status = 1
+    </select>
+
+    <sql id="table">customer_pack_number</sql>
+
+    <sql id="VoSelectCols">
+          t.id, t.pack_order, t.customer_pack_id, t.`length`, t.width, t.height,
+          t.actual_weight, t.settlement_weight,t.actual_vol, t.settlement_vol,
+          DATE_FORMAT(t.out_storage_time,'%Y-%m-%d %k:%i:%s') as out_storage_time,
+          DATE_FORMAT(t.pack_time,'%Y-%m-%d %k:%i:%s') as pack_time,
+          t.actual_price,t.goods_nos,
+          t.international_transshipment_no, t.is_sensitive
+    </sql>
+
+    <resultMap id="customerPackNumberVoResultMap" extends="BaseResultMap" type="com.dwgj.mlxydedicatedline.vo.pack.CustomerPackNumberVo">
+        <collection property="goods" column="id" select="com.dwgj.mlxydedicatedline.mapper.GoodsMapper.selectGoodsBySonPackId"/>
+    </resultMap>
+</mapper>

@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "建议留言",
+  "usingComponents": {
+    "dn-icon": "/components/dn-icon/dn-icon"
+  }
+}

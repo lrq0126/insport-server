@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "dn-icon": "/components/dn-icon/dn-icon"
+  },
+  "component": true
+}

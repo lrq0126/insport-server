@@ -1,0 +1,6 @@
+
+.content{padding: 30rpx;}
+.problem{margin-bottom: 30rpx;}
+.problem-title{font-size: 34rpx;color: #333;}
+.problem-text{font-size: 28rpx;color: #666;}
+

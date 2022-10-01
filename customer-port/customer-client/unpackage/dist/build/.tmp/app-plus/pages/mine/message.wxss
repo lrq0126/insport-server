@@ -1,0 +1,9 @@
+
+.message-list{background-color: #fff;margin-top: 10rpx;}
+.message-item{padding: 30rpx;border-bottom: 1px solid #f0f0f0;}
+.message-header{display: -webkit-box;display: -webkit-flex;display: -ms-flexbox;display: flex;-webkit-box-pack: justify;-webkit-justify-content: space-between;-ms-flex-pack: justify;justify-content: space-between;margin-bottom: 20rpx;}
+.message-title{line-height: 28rpx;font-size: 28rpx;}
+.message-time,.message-text{color: #999;font-size: 24rpx;line-height: 28rpx;}
+.message-text{color: #999;}
+
+

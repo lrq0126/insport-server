@@ -1,0 +1,1 @@
+alter table `sys_statistical` add column `out_ware_customer_sum` int default 0 comment '已出库客户';

@@ -1,0 +1,1 @@
+<view class="{{[(true)?'my-tabs':'',(formatBe)?'space-between':'']}}"><block wx:for="{{getModelData}}" wx:for-item="item" wx:for-index="index" wx:key="index"><view data-event-opts="{{[['tap',[['tap',[index]]]]]}}" class="{{[(true)?'tab-item':'',(formatIndex==index)?'active':'']}}" bindtap="__e">{{''+item.label+''}}</view></block></view>

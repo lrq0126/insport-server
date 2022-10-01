@@ -1,0 +1,26 @@
+.pay-success {
+  height: 100%;
+  background: #FFFFFF;
+}
+.pay-success .header {
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-flow: column;
+      -ms-flex-flow: column;
+          flex-flow: column;
+  text-align: center;
+  padding-top: 80rpx;
+}
+.pay-success .uni-triplex-center .span {
+  text-align: right;
+  letter-spacing: 1px;
+  display: inline-block;
+  color: #666;
+  font-weight: 700;
+}
+.pay-success .uni-triplex-center .uni-h5 {
+  color: #000000;
+  font-weight: 700;
+  margin: 10rpx 0;
+}
+

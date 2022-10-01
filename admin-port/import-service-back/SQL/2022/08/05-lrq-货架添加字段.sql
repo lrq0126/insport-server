@@ -1,0 +1,1 @@
+alter table `shelves_row` add column `is_full` int default -1 comment '是否已满 1、是 -1、否';

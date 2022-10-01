@@ -1,0 +1,13 @@
+
+.content{border-top: 1px solid #efefef;padding-bottom: 100rpx;overflow: hidden;}
+.uni-form-item{padding: 0;padding-left: 28rpx;background-color: #fff;}
+.uni-form-item:nth-child(2) .label-title{font-size: 24rpx;}
+.uni-input{line-height: 90rpx;padding: 20rpx 28rpx;}
+.with-fun{line-height: 90rpx;border-bottom: 1px solid #efefef;}
+.label-title{width: 150rpx;line-height: 90rpx;}
+.radio-group{width: auto;padding-left: 28rpx;}
+.radio{margin-right: 10rpx;}
+.save{position: absolute;bottom: 20rpx;left: 30rpx;z-index: 111;}
+.default{line-height: 32rpx;color: #4d4d4d;margin: 23rpx 0 0 28rpx;}
+.radio-label{margin-right: 100rpx;line-height: 90rpx;}
+

@@ -1,0 +1,2 @@
+setCssToHead([".",[1],"uni-list-cell:after { right: ",[0,24]," !important; }\n.",[1],"uni-triplex-center .",[1],"span { width: ",[0,130],"; text-align: right; letter-spacing: 1px; display: inline-block; color: #666; font-weight: 700; }\n",],undefined,{path:"./pages/web-views/leave-management/leave-management.wxss"})();
+document.dispatchEvent(new CustomEvent("generateFuncReady", { detail: { generateFunc: $gwx('./pages/web-views/leave-management/leave-management.wxml') } }));

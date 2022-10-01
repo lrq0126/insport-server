@@ -1,0 +1,2 @@
+setCssToHead([".",[1],"content{padding: ",[0,30],";}\n.",[1],"problem{margin-bottom: ",[0,30],";}\n.",[1],"problem-title{font-size: ",[0,34],";color: #333;}\n.",[1],"problem-text{font-size: ",[0,28],";color: #666;}\n",],undefined,{path:"./pages/mine/feedback/details.wxss"})();
+document.dispatchEvent(new CustomEvent("generateFuncReady", { detail: { generateFunc: $gwx('./pages/mine/feedback/details.wxml') } }));

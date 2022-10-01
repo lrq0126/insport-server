@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dwgj.mlxydedicatedline.mapper.customerPack.OrderEvaluateMapper">
+    <resultMap id="BaseResultMap" type="com.dwgj.mlxydedicatedline.entity.customerPack.OrderEvaluate">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+    	
+	    <result column="create_id" jdbcType="INTEGER" property="createId"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_id" jdbcType="INTEGER" property="updateId"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="version" jdbcType="INTEGER" property="version"/>
+        <result column="remarks" jdbcType="VARCHAR" property="remarks"/>
+        <result column="pack_id" jdbcType="INTEGER" property="packId"/>
+        <result column="order_number" jdbcType="VARCHAR" property="orderNumber"/>
+        <result column="customer_id" jdbcType="INTEGER" property="customerId"/>
+        <result column="customer_name" jdbcType="VARCHAR" property="customerName"/>
+        <result column="packing_speed" jdbcType="INTEGER" property="packingSpeed"/>
+        <result column="packing_quality" jdbcType="INTEGER" property="packingQuality"/>
+        <result column="logistics_speed" jdbcType="INTEGER" property="logisticsSpeed"/>
+        <result column="customer_server_attitude" jdbcType="INTEGER" property="customerServerAttitude"/>
+        <result column="comprehensive_server" jdbcType="INTEGER" property="comprehensiveServer"/>
+
+
+    </resultMap>
+	
+	<!-- 字段 -->
+	<sql id="Base_Column_List">
+		id,
+		create_id, DATE_FORMAT(create_time, '%Y-%M-%d %k:%i:%s') as create_time,
+		update_id, DATE_FORMAT(update_time, '%Y-%M-%d %k:%i:%s') as update_time,
+		status, version, remarks, pack_id, order_number,
+		customer_id, customer_name,
+		packing_speed, packing_quality, logistics_speed,
+		customer_server_attitude, comprehensive_server
+	</sql>
+	
+	<!-- 插入字段实际数值 -->
+	<sql id="Insert_Column_Values">
+		#{createId},#{createTime},#{updateId},#{updateTime},
+		#{status},#{version},#{remarks},#{packId},#{orderNumber},
+		#{customerId},#{customerName},
+		#{packingSpeed},#{packingQuality},#{logisticsSpeed},
+		#{customerServerAttitude},#{comprehensiveServer},
+	</sql>
+	
+	<!-- 插入字段（判空） -->
+	<sql id="Base_Column_List_NotNull">
+		<if test="createId != null">
+			create_id, 
+		</if>
+    	<if test="createTime != null">
+			create_time, 
+		</if>
+    	<if test="updateId != null">
+			update_id, 
+		</if>
+    	<if test="updateTime != null">
+			update_time, 
+		</if>
+    	<if test="status != null">
+			status, 
+		</if>
+    	<if test="version != null">
+			version, 
+		</if>
+    	<if test="remarks != null and remarks != ''">
+			remarks, 
+		</if>
+    	<if test="packId != null">
+			pack_id, 
+		</if>
+    	<if test="orderNumber != null and orderNumber != ''">
+			order_number, 
+		</if>
+    	<if test="customerId != null">
+			customer_id, 
+		</if>
+    	<if test="customerName != null and customerName != ''">
+			customer_name, 
+		</if>
+    	<if test="packingSpeed != null">
+			packing_speed, 
+		</if>
+    	<if test="packingQuality != null">
+			packing_quality, 
+		</if>
+    	<if test="logisticsSpeed != null">
+			logistics_speed, 
+		</if>
+    	<if test="customerServerAttitude != null">
+			customer_server_attitude, 
+		</if>
+    	<if test="comprehensiveServer != null">
+			comprehensive_server, 
+		</if>
+    	
+	</sql>
+	
+	<!-- 插入字段实际数值(判空) -->
+	<sql id="Insert_Column_Values_NotNull">
+		<if test="createId != null">
+			#{createId},
+		</if>
+    	<if test="createTime != null">
+			#{createTime},
+		</if>
+    	<if test="updateId != null">
+			#{updateId},
+		</if>
+    	<if test="updateTime != null">
+			#{updateTime},
+		</if>
+    	<if test="status != null">
+			#{status},
+		</if>
+    	<if test="version != null">
+			#{version},
+		</if>
+    	<if test="remarks != null and remarks != ''">
+			#{remarks},
+		</if>
+    	<if test="packId != null">
+			#{packId},
+		</if>
+    	<if test="orderNumber != null and orderNumber != ''">
+			#{orderNumber},
+		</if>
+    	<if test="customerId != null">
+			#{customerId},
+		</if>
+    	<if test="customerName != null and customerName != ''">
+			#{customerName},
+		</if>
+    	<if test="packingSpeed != null">
+			#{packingSpeed},
+		</if>
+    	<if test="packingQuality != null">
+			#{packingQuality},
+		</if>
+    	<if test="logisticsSpeed != null">
+			#{logisticsSpeed},
+		</if>
+    	<if test="customerServerAttitude != null">
+			#{customerServerAttitude},
+		</if>
+    	<if test="comprehensiveServer != null">
+			#{comprehensiveServer},
+		</if>
+    	
+	</sql>
+	
+	<!-- 更新字段 -->
+	<sql id="Update_Column">
+		create_id = #{createId},
+    	create_time = #{createTime},
+    	update_id = #{updateId},
+    	update_time = #{updateTime},
+    	status = #{status},
+    	version = #{version},
+    	remarks = #{remarks},
+    	pack_id = #{packId},
+    	order_number = #{orderNumber},
+    	customer_id = #{customerId},
+    	customer_name = #{customerName},
+    	packing_speed = #{packingSpeed},
+    	packing_quality = #{packingQuality},
+    	logistics_speed = #{logisticsSpeed},
+    	customer_server_attitude = #{customerServerAttitude},
+    	comprehensive_server = #{comprehensiveServer},
+    	
+	</sql>
+	
+	<!-- 更新字段（判空） -->
+	<sql id="Update_Column_NotNull">
+		<if test="createId != null">
+			create_id = #{createId},
+		</if>
+    	<if test="createTime != null">
+			create_time = #{createTime},
+		</if>
+    	<if test="updateId != null">
+			update_id = #{updateId},
+		</if>
+    	<if test="updateTime != null">
+			update_time = #{updateTime},
+		</if>
+    	<if test="status != null">
+			status = #{status},
+		</if>
+    	<if test="version != null">
+			version = #{version},
+		</if>
+    	<if test="remarks != null and remarks != ''">
+			remarks = #{remarks},
+		</if>
+    	<if test="packId != null">
+			pack_id = #{packId},
+		</if>
+    	<if test="orderNumber != null and orderNumber != ''">
+			order_number = #{orderNumber},
+		</if>
+    	<if test="customerId != null">
+			customer_id = #{customerId},
+		</if>
+    	<if test="customerName != null and customerName != ''">
+			customer_name = #{customerName},
+		</if>
+    	<if test="packingSpeed != null">
+			packing_speed = #{packingSpeed},
+		</if>
+    	<if test="packingQuality != null">
+			packing_quality = #{packingQuality},
+		</if>
+    	<if test="logisticsSpeed != null">
+			logistics_speed = #{logisticsSpeed},
+		</if>
+    	<if test="customerServerAttitude != null">
+			customer_server_attitude = #{customerServerAttitude},
+		</if>
+    	<if test="comprehensiveServer != null">
+			comprehensive_server = #{comprehensiveServer},
+		</if>
+    	
+	</sql>
+	
+	<select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <trim suffixOverrides=",">
+        <include refid="Base_Column_List"/>
+        </trim>
+        from order_evaluate
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+	<insert id="insert" parameterType="com.dwgj.mlxydedicatedline.entity.customerPack.OrderEvaluate">
+		insert into order_evaluate
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			create_id, 
+			create_time, 
+			update_id, 
+			update_time, 
+			status, 
+			version, 
+			remarks, 
+			pack_id, 
+			order_number, 
+			customer_id, 
+			customer_name,
+			packing_speed, 
+			packing_quality, 
+			logistics_speed, 
+			customer_server_attitude, 
+			comprehensive_server, 
+					</trim>
+		values
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<include refid="Insert_Column_Values"/>
+		</trim>
+	</insert>
+	
+	<insert id="insertSelective" parameterType="com.dwgj.mlxydedicatedline.entity.customerPack.OrderEvaluate">
+		insert into order_evaluate
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<include refid="Base_Column_List_NotNull"/>
+		</trim>
+		values
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<include refid="Insert_Column_Values_NotNull"/>
+		</trim>
+	</insert>
+	
+	<update id="updateByPrimaryKey" parameterType="com.dwgj.mlxydedicatedline.entity.customerPack.OrderEvaluate">
+		update order_evaluate
+		<set>
+			<include refid="Update_Column"/>
+		</set>
+		
+		<where>
+			id = #{id} and status = 1
+		</where>
+		
+	</update>
+	
+	<update id="updateByPrimaryKeySelective" parameterType="com.dwgj.mlxydedicatedline.entity.customerPack.OrderEvaluate">
+		update order_evaluate
+		<set>
+			<include refid="Update_Column_NotNull"/>
+		</set>
+		<where>
+			id = #{id} and status = 1
+		</where>
+	</update>
+
+	<!-- 删除数据（逻辑删除） -->
+	<update id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		update  order_evaluate
+		set `status` = 0
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	
+	<!-- 移除数据（物理删除） -->
+	<delete id="removeByPrimaryKey" parameterType="java.lang.Integer">
+		delete from order_evaluate
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+
+	<select id="getEvaluateCount" resultType="java.lang.Integer">
+		select count(1)
+		from order_evaluate t
+		left join customer_pack cp on cp.id = t.pack_id and cp.`status` = 1
+		where t.`status` = 1
+		<if test="orderNumber != null and orderNumber != ''">
+			and t.order_number regexp #{orderNumber}
+		</if>
+		<if test="customerId != null and customerId != ''">
+			and t.customer_id = #{customerId}
+		</if>
+	</select>
+
+	<select id="getEvaluateList" resultMap="entityRespVoMap">
+		select
+		t.id,
+		DATE_FORMAT(t.create_time, '%Y-%M-%d %k:%i:%s') as create_time,
+		t.pack_id, t.order_number, t.remarks,
+		cp.actual_price, cp.business_number,
+		DATE_FORMAT(cp.receipt_time, '%Y-%m-%d %k:%i:%s') as receipt_time,
+		DATE_FORMAT(cp.create_time, '%Y-%m-%d %k:%i:%s') as order_time,
+		tr.route_name
+		from order_evaluate t
+		left join customer_pack cp on cp.id = t.pack_id and cp.`status` = 1
+		left join transportation_route tr on tr.id = cp.transportation_route_id
+		where t.`status` = 1
+		<if test="orderNumber != null and orderNumber != ''">
+			and t.order_number regexp #{orderNumber}
+		</if>
+		<if test="customerId != null and customerId != ''">
+			and t.customer_id = #{customerId}
+		</if>
+		order by receipt_time desc
+		limit #{pageNumber}, #{pageSize}
+	</select>
+
+	<select id="selectEvaluateByPackId" resultMap="OrderEvaluateRespVo">
+		select
+		<include refid="entityRespColumns"/>,
+		tr.route_name, tr.transportation_time,
+		DATE_FORMAT(cp.out_storage_time, '%Y-%M-%d %k:%i:%s') as out_storage_time,
+		DATE_FORMAT(cp.create_time, '%Y-%m-%d %k:%i:%s') as order_time,
+		cp.actual_price
+		from order_evaluate t
+		left join customer_pack cp on cp.order_number = t.order_number and cp.status = 1 and cp.pack_type = 9
+		left join transportation_route tr on tr.id = cp.transportation_route_id and tr.status = 1
+		where t.`status` = 1
+		and t.pack_id = #{packId}
+	</select>
+
+
+
+    <sql id="entityRespColumns">
+		t.id,
+		t.create_id, DATE_FORMAT(t.create_time, '%Y-%M-%d %k:%m:%s') as create_time,
+		t.update_id, DATE_FORMAT(t.update_time, '%Y-%M-%d %k:%m:%s') as update_time,
+		t.remarks, t.pack_id, t.order_number, t.customer_id, t.customer_name,
+		t.packing_speed, t.packing_quality, t.logistics_speed,
+		t.customer_server_attitude, t.comprehensive_server
+	</sql>
+
+	<resultMap id="entityRespVoMap" extends="BaseResultMap" type="com.dwgj.mlxydedicatedline.vo.orderEvaluate.OrderEvaluateRespVo">
+		<result column="route_name" property="routeName"/>
+		<result column="transportation_time" property="transportationTime"/>
+		<result column="out_storage_time" property="outStorageTime"/>
+		<result column="receipt_time" property="receiptTime"/>
+		<result column="business_number" property="businessNumber"/>
+		<result column="actual_price" property="actualPrice"/>
+		<result column="order_time" property="orderTime"/>
+	</resultMap>
+
+	<resultMap id="OrderEvaluateRespVo" extends="entityRespVoMap" type="com.dwgj.mlxydedicatedline.vo.orderEvaluate.OrderEvaluateRespVo">
+		<collection property="images" column="order_number" select="com.dwgj.mlxydedicatedline.mapper.image.ImagesMapper.getEvaluateImagesByContentId"/>
+	</resultMap>
+	
+</mapper>

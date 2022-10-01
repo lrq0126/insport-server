@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.warehouse.mapper.wx.WechatReplyLogMapper">
+    <resultMap id="BaseResultMap" type="com.example.warehouse.entity.wx.WechatReplyLog">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+    	
+	    <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="open_id" jdbcType="VARCHAR" property="openId"/>
+        <result column="key_word" jdbcType="VARCHAR" property="keyWord"/>
+    		
+    </resultMap>
+	
+	<!-- 字段 -->
+	<sql id="Base_Column_List">
+		id, create_time, open_id, key_word
+	</sql>
+	
+	<!-- 插入字段实际数值 -->
+	<sql id="Insert_Column_Values">
+		#{createTime},#{openId},#{keyWord}
+	</sql>
+	
+	<!-- 插入字段（判空） -->
+	<sql id="Base_Column_List_NotNull">
+		<if test="createTime != null and createTime != ''">
+			create_time, 
+		</if>
+    	<if test="openId != null and openId != ''">
+			open_id, 
+		</if>
+    	<if test="keyWord != null and keyWord != ''">
+			key_word, 
+		</if>
+    	
+	</sql>
+	
+	<!-- 插入字段实际数值(判空) -->
+	<sql id="Insert_Column_Values_NotNull">
+		<if test="createTime != null and createTime != ''">
+			#{createTime},
+		</if>
+    	<if test="openId != null and openId != ''">
+			#{openId},
+		</if>
+    	<if test="keyWord != null and keyWord != ''">
+			#{keyWord},
+		</if>
+    	
+	</sql>
+	
+	<!-- 更新字段 -->
+	<sql id="Update_Column">
+		create_time = #{createTime},
+    	open_id = #{openId},
+    	key_word = #{keyWord},
+    	
+	</sql>
+	
+	<!-- 更新字段（判空） -->
+	<sql id="Update_Column_NotNull">
+		<if test="createTime != null and createTime != ''">
+			create_time = #{createTime},
+		</if>
+    	<if test="openId != null and openId != ''">
+			open_id = #{openId},
+		</if>
+    	<if test="keyWord != null and keyWord != ''">
+			key_word = #{keyWord},
+		</if>
+    	
+	</sql>
+	
+	<select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <trim suffixOverrides=",">
+        <include refid="Base_Column_List"/>
+        </trim>
+        from wechat_reply_log
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+	
+	<insert id="insert" parameterType="com.example.warehouse.entity.wx.WechatReplyLog">
+		insert into wechat_reply_log
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			create_time, 
+			open_id, 
+			key_word, 
+					</trim>
+		values
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<include refid="Insert_Column_Values"/>
+		</trim>
+	</insert>
+	
+	<insert id="insertSelective" parameterType="com.example.warehouse.entity.wx.WechatReplyLog">
+		insert into wechat_reply_log
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<include refid="Base_Column_List_NotNull"/>
+		</trim>
+		values
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<include refid="Insert_Column_Values_NotNull"/>
+		</trim>
+	</insert>
+	
+	<update id="updateByPrimaryKey" parameterType="com.example.warehouse.entity.wx.WechatReplyLog">
+		update wechat_reply_log
+		<set>
+			<include refid="Update_Column"/>
+		</set>
+		
+		<where>
+		id = #{id} and status = 1
+		</where>
+		
+	</update>
+	
+	<update id="updateByPrimaryKeySelective" parameterType="com.example.warehouse.entity.wx.WechatReplyLog">
+		update wechat_reply_log
+		<set>
+			<include refid="Update_Column_NotNull"/>
+		</set>
+		<where>
+		id = #{id} and status = 1
+		</where>
+	</update>
+
+	<!-- 删除数据（逻辑删除） -->
+	<update id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		update  wechat_reply_log
+		set `status` = 0
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	
+	<!-- 移除数据（物理删除） -->
+	<delete id="removeByPrimaryKey" parameterType="java.lang.Integer">
+		delete from wechat_reply_log
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	
+</mapper>

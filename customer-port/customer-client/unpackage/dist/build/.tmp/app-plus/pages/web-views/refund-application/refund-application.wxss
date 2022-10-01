@@ -1,0 +1,13 @@
+.refund-application {
+  padding: 0 20rpx;
+}
+.refund-application .title {
+  padding: 10rpx;
+}
+.refund-application .title text {
+  margin-right: 10rpx;
+}
+.refund-application .uni-textarea uni-textarea {
+  height: 150px;
+}
+

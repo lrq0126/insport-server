@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dwgj.mlxydedicatedline.mapper.customer2address.Customer2addressMapper">
+    <resultMap id="BaseResultMap" type="com.dwgj.mlxydedicatedline.entity.Customer2address">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="customer_id" jdbcType="INTEGER" property="customerId"/>
+        <result column="customer_name" jdbcType="VARCHAR" property="customerName"/>
+        <result column="customer_pack_id" jdbcType="INTEGER" property="customerPackId"/>
+        <result column="addressee" jdbcType="VARCHAR" property="addressee"/>
+        <result column="telephone" jdbcType="VARCHAR" property="telephone"/>
+        <result column="address" jdbcType="VARCHAR" property="address"/>
+        <result column="code" jdbcType="VARCHAR" property="code"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, create_time, `status`, customer_id, customer_name, customer_pack_id, addressee,
+    telephone, address
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from customer2address
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from customer2address
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" keyColumn="id" keyProperty="id"
+            parameterType="com.dwgj.mlxydedicatedline.entity.Customer2address" useGeneratedKeys="true">
+    insert into customer2address (create_time, `status`, customer_id,
+      customer_name, customer_pack_id, addressee,
+      telephone, address,code)
+    values (#{createTime,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}, #{customerId,jdbcType=INTEGER},
+      #{customerName,jdbcType=VARCHAR}, #{customerPackId,jdbcType=INTEGER}, #{addressee,jdbcType=VARCHAR},
+      #{telephone,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR},#{code,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" keyColumn="id" keyProperty="id"
+            parameterType="com.dwgj.mlxydedicatedline.entity.Customer2address" useGeneratedKeys="true">
+        insert into customer2address
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="status != null">
+                `status`,
+            </if>
+            <if test="customerId != null">
+                customer_id,
+            </if>
+            <if test="customerName != null">
+                customer_name,
+            </if>
+            <if test="customerPackId != null">
+                customer_pack_id,
+            </if>
+            <if test="addressee != null">
+                addressee,
+            </if>
+            <if test="telephone != null">
+                telephone,
+            </if>
+            <if test="address != null">
+                address,
+            </if>
+            <if test="code != null">
+                code,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=INTEGER},
+            </if>
+            <if test="customerId != null">
+                #{customerId,jdbcType=INTEGER},
+            </if>
+            <if test="customerName != null">
+                #{customerName,jdbcType=VARCHAR},
+            </if>
+            <if test="customerPackId != null">
+                #{customerPackId,jdbcType=INTEGER},
+            </if>
+            <if test="addressee != null">
+                #{addressee,jdbcType=VARCHAR},
+            </if>
+            <if test="telephone != null">
+                #{telephone,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="code != null">
+                #{code,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.dwgj.mlxydedicatedline.entity.Customer2address">
+        update customer2address
+        <set>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="status != null">
+                `status` = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="customerId != null">
+                customer_id = #{customerId,jdbcType=INTEGER},
+            </if>
+            <if test="customerName != null">
+                customer_name = #{customerName,jdbcType=VARCHAR},
+            </if>
+            <if test="customerPackId != null">
+                customer_pack_id = #{customerPackId,jdbcType=INTEGER},
+            </if>
+            <if test="addressee != null">
+                addressee = #{addressee,jdbcType=VARCHAR},
+            </if>
+            <if test="telephone != null">
+                telephone = #{telephone,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                address = #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="code != null">
+                code = #{code,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.dwgj.mlxydedicatedline.entity.Customer2address">
+    update customer2address
+    set create_time = #{createTime,jdbcType=TIMESTAMP},
+      `status` = #{status,jdbcType=INTEGER},
+      customer_id = #{customerId,jdbcType=INTEGER},
+      customer_name = #{customerName,jdbcType=VARCHAR},
+      customer_pack_id = #{customerPackId,jdbcType=INTEGER},
+      addressee = #{addressee,jdbcType=VARCHAR},
+      telephone = #{telephone,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      code = #{code,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+    <select id="findByPackId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from customer2address
+        where customer_pack_id = #{customerPackId,jdbcType=INTEGER} and `status` = 1
+    </select>
+
+    <update id="deleteById" parameterType="java.lang.Integer">
+        update customer2address
+        set
+          `status` = 0
+        where
+          `status` = 1
+          and id = #{id}
+    </update>
+</mapper>

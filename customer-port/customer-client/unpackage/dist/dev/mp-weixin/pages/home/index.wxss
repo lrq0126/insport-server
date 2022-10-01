@@ -1,0 +1,57 @@
+
+.index-content {
+    height: 100%;
+    background-color: rgb(246, 246, 246);
+}
+.swiper-box {
+    height: 420rpx;
+}
+.banner {
+    position: relative;
+}
+.banner-image {
+    width: 100%;
+}
+.btn-box {
+    margin: 40rpx;
+}
+.btn-box > button {
+    margin: 60rpx 0;
+}
+/* 提示窗口 */
+.button {
+    margin: 20rpx 0;
+}
+.uni-tip {
+    padding: 15px;
+    width: 300px;
+    background: #fff;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+    border-radius: 10px;
+}
+.uni-tip-title {
+    text-align: center;
+    font-weight: bold;
+    font-size: 16px;
+    color: #333;
+}
+.uni-tip-content {
+    padding: 15px;
+    font-size: 14px;
+    color: #666;
+}
+.uni-tip-group-button {
+    margin-top: 10px;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+}
+.uni-tip-button {
+    width: 100%;
+    text-align: center;
+    font-size: 14px;
+    color: #3b4144;
+}
+

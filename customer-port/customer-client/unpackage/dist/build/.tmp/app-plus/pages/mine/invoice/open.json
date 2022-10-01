@@ -1,0 +1,12 @@
+{
+  "navigationBarTitleText": "开具发票",
+  "titleNView": {
+    "buttons": [
+      {
+        "text": "说明",
+        "fontSize": "28upx"
+      }
+    ]
+  },
+  "usingComponents": {}
+}

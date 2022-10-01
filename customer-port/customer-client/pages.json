@@ -1,0 +1,550 @@
+{
+	"pages": [
+		// pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/home/index",
+			"style": {
+				"app-plus": {
+					"titleNView": false
+				}
+			}
+		},
+		{
+			"path": "pages/parcel-inquiry/parcel-inquiry",
+			"style": {
+				"navigationBarTitleText": "报价查询"
+			}
+		},
+		{
+			"path": "pages/freight-estimate/freight-estimate",
+			"style": {
+				"navigationBarTitleText": "渠道查询"
+			}
+		},
+		{
+			"path": "pages/freight-estimate/check-details/check-details",
+			"style": {
+				"navigationBarTitleText": "查看明细"
+			}
+		},
+		{
+			"path": "pages/icon-list/index",
+			"style": {
+				"navigationBarTitleText": "图标列表"
+			}
+		},
+		{
+			"path": "pages/mine/index",
+			"style": {
+				"app-plus": {
+					"titleNView": false
+				}
+			}
+		},
+		{
+			"path": "pages/login/login",
+			"style": {
+				"navigationBarTitleText": "登录"
+			}
+		},
+		{
+			"path": "pages/login/register",
+			"style": {
+				"navigationBarTitleText": "注册"
+			}
+		},
+		{
+			"path": "pages/web-views/article-details/article-details",
+			"style": {
+				"navigationBarTitleText": "文章详情"
+			}
+		},
+		{
+			"path": "pages/web-views/article-details/article-details2",
+			"style": {
+				"navigationBarTitleText": "文章详情"
+			}
+		},
+		{
+			"path": "pages/web-views/article-details/article-details3",
+			"style": {
+				"navigationBarTitleText": "文章详情"
+			}
+		},
+		{
+			"path": "pages/web-views/article-details/newman",
+			"style": {
+				"navigationBarTitleText": "新手教程"
+			}
+		},
+		{
+			"path": "pages/mine/add-package/add-package",
+			"style": {
+				"navigationBarTitleText": "添加包裹"
+			}
+		},
+		{
+			"path": "pages/mine/stock-pending/stock-pending",
+			"style": {
+				"navigationBarTitleText": "预登记列表"
+			}
+		},
+		{
+			"path": "pages/mine/stock-pending/edit/edit",
+			"style": {
+				"navigationBarTitleText": "修改包裹信息"
+			}
+		},
+		{
+			"path": "pages/mine/application-package/application-info/application-info",
+			"style": {
+				"navigationBarTitleText": "拆分打包信息"
+			}
+		},
+		{
+			"path": "pages/mine/application-package/application-package",
+			"style": {
+				"navigationBarTitleText": "申请打包"
+			}
+		},
+		{
+			"path": "pages/mine/application-package/edit-apply",
+			"style": {
+				"navigationBarTitleText": "编辑包裹信息"
+			}
+		},
+		
+		{
+			"path": "pages/mine/my-wallet/my-wallet",
+			"style": {
+				"navigationBarTitleText": "我的钱包"
+			}
+		},
+		{
+			"path": "pages/mine/my-wallet/recharge-record/recharge-record",
+			"style": {
+				"navigationBarTitleText": "充值记录"
+			}
+		},
+		{
+			"path": "pages/mine/my-wallet/transaction-details/transaction-details",
+			"style": {
+				"navigationBarTitleText": "消费明细"
+			}
+		},
+		{
+			"path": "pages/mine/shipping-address/shipping-address",
+			"style": {
+				"navigationBarTitleText": "收货地址"
+			}
+		},
+		{
+			"path": "pages/mine/shipping-address/add-address/add-address",
+			"style": {
+				"navigationBarTitleText": "新增收货地址"
+			}
+		},
+		{
+			"path": "pages/mine/shipping-address/edit-address/edit-address",
+			"style": {
+				"navigationBarTitleText": "编辑收货地址"
+			}
+		},
+		{
+			"path": "pages/mine/warehouse-address/warehouse-address",
+			"style": {
+				"navigationBarTitleText": "仓库地址"
+			}
+		},
+		{
+			"path": "pages/mine/message-center/message-center",
+			"style": {
+				"navigationBarTitleText": "消息中心"
+			}
+		},
+		// {
+		// 	"path": "pages/mine/coupons/components/coolc-coupon",
+		// 	"style": {
+		// 		"navigationBarTitleText": "领劵中心"
+		// 	}
+		// },
+		{
+			"path": "pages/mine/coupons/coupons-my",
+			"style": {
+				"navigationBarTitleText": "我的优惠券",
+				"navigationStyle":"custom"
+			}
+		},
+		{
+            "path" : "pages/mine/coupons/coupons-center",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "领劵中心"
+            }
+            
+        },
+		{
+			"path": "pages/mine/message-center/message-detils/message-detils",
+			"style": {
+				"navigationBarTitleText": "消息详情"
+			}
+		},
+		{
+			"path": "pages/mine/personal-information/personal-information",
+			"style": {
+				"navigationBarTitleText": "个人信息"
+			}
+		},
+		{
+			"path": "pages/mine/transport-channels/transport-channels",
+			"style": {
+				"navigationBarTitleText": "运输渠道"
+			}
+		},
+		{
+			"path": "pages/mine/pending-payment/pending-payment",
+			"style": {
+				"navigationBarTitleText": "待付款列表",
+				"navigationStyle":"custom"
+			}
+		},
+		{
+			"path": "pages/mine/pending-payment/parcel-info/my-coupons",
+			"style": {
+				"navigationBarTitleText": "我的优惠券",
+				"navigationStyle":"custom"
+			}
+		},
+		
+		
+		{
+			"path": "pages/mine/pending-payment/parcel-info/parcel-info",
+			"style": {
+				"navigationBarTitleText": "包裹信息"
+			}
+		},
+		{
+			"path": "pages/mine/unpacking-list/unpacking-list",
+			"style": {
+				"navigationBarTitleText": "待拆包列表"
+			}
+		},
+		{
+			"path": "pages/mine/waiting-to-receive/waiting-to-receive",
+			"style": {
+				"navigationBarTitleText": "待收货列表",
+				"navigationStyle":"custom"
+			}
+		},
+		{
+			"path": "pages/mine/cargo-list/cargo-list",
+			"style": {
+				"navigationBarTitleText": "货物列表"
+			}
+		},
+		{
+			"path": "pages/mine/my-wallet/recharge-record/record-details/record-details",
+			"style": {
+				"navigationBarTitleText": "记录信息"
+			}
+		},
+		{
+			"path": "pages/quotation-inquiry/quotation-inquiry",
+			"style": {
+				"navigationBarTitleText": "报价查询"
+			}
+		},
+		{
+			"path": "pages/about-us/about-us",
+			"style": {
+				"navigationBarTitleText": "关于我们"
+			}
+		},
+		{
+			"path": "pages/about-us/terms-service/terms-service",
+			"style": {
+				"navigationBarTitleText": "文章详情"
+			}
+		},
+		{
+			"path": "pages/about-us/contact-way/contact-way",
+			"style": {
+				"navigationBarTitleText": "文章详情"
+			}
+		},
+		{
+			"path": "pages/dynamic-information/dynamic-information",
+			"style": {
+				"navigationBarTitleText": "动态资讯"
+			}
+		},
+		{
+			"path": "pages/dynamic-information/article-details1/article-details1",
+			"style": {
+				"navigationBarTitleText": "文章详情"
+			}
+		},
+		{
+			"path": "pages/dynamic-information/article-details2/article-details2",
+			"style": {
+				"navigationBarTitleText": "文章详情"
+			}
+		},
+		{
+			"path": "pages/mine/time-activities/time-activities",
+			"style": {
+				"navigationBarTitleText": "限时活动"
+			}
+		},
+		{
+			"path": "pages/mine/time-activities/activities-details/activities-details",
+			"style": {
+				"navigationBarTitleText": "活动详情"
+			}
+		},
+		{
+			"path": "pages/mine/time-activities/transport-channels/transport-channels",
+			"style": {
+				"navigationBarTitleText": "运输渠道"
+			}
+		}
+		,{
+            "path" : "pages/mine/jion-group/jion-group",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "我的拼团",
+                 "enablePullDownRefresh": true,
+				 "onReachBottomDistance":500//距离底部多远时触发 单位px
+				 // "scrollIndicator":"none"
+				 // "enablePullDownRefresh":true
+            }
+            
+        }
+		,{
+		    "path" : "pages/mine/jion-group/spell-group/spell-group",
+		    "style" :                                                                                    
+		    {
+		        "navigationBarTitleText": "发起拼团",
+		        "enablePullDownRefresh": false
+		    }
+		    
+		}
+		,{
+		    "path" : "pages/mine/jion-group/detail/spell",
+		    "style" :                                                                                    
+		    {
+		        "navigationBarTitleText": "我发起的拼团详情",
+		        "enablePullDownRefresh": false
+		    }
+		    
+		}
+		,{
+		    "path" : "pages/mine/jion-group/detail/jion-test",
+		    "style" :                                                                                    
+		    {
+		        "navigationBarTitleText": "我参与的拼团详情",
+		        "enablePullDownRefresh": false
+		    }
+		    
+		}
+		
+		,{
+		    "path" : "pages/play-spell-group/play-spell-group",
+		    "style" :                                                                                    
+		    {
+		        "navigationBarTitleText": "玩转拼团",
+		        "enablePullDownRefresh": true,
+		        "onReachBottomDistance":500//距离底部多远时触发 单位px
+		    }
+		    
+		},
+		{
+		    "path" : "pages/mine/jion-group/add-package/add-package",
+		    "style" :                                                                                    
+		    {
+		        "navigationBarTitleText": "添加包裹",
+		        "enablePullDownRefresh": false
+		    }
+		    
+		}
+		,{
+		    "path" : "pages/mine/jion-group/add-package/application-info/application-info",
+		    "style" :                                                                                    
+		    {
+		        "navigationBarTitleText": "",
+		        "enablePullDownRefresh": false
+		    }
+		    
+		}
+		,{
+		    "path" : "pages/mine/jion-group/transport-channels/transport-channels",
+		    "style" :                                                                                    
+		    {
+		        "navigationBarTitleText": "",
+		        "enablePullDownRefresh": false
+		    }
+		    
+		},{
+            "path" : "pages/mine/pending-payment/parcel-info/pack-info",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "订单详情",
+				"navigationStyle":"custom"
+            }
+        },{
+            "path" : "pages/mine/waiting-to-receive/pack-info/pack-info",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "订单详情"
+				// "navigationStyle":"custom"
+            }
+        }
+        ,{
+            "path" : "pages/mine/pending-payment/parcel-info/insurance-detail",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "保险信息详情",
+                "enablePullDownRefresh": false,
+				"navigationStyle":"custom"
+            }
+            
+        }
+        ,{
+            "path" : "pages/mine/order-evaluate/evaluate-info",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "售后评价",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/mine/my-report/annual-repoet",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "海淘年度账单",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        
+        ,{
+            "path" : "pages/mine/order-evaluate/order-evaluate",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "订单评价",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/mine/share/share-list",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "分享有礼",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/mine/share/popularize-detail",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "推广明细",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/mine/integral/integral",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "个人积分",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/mine/personal-information/edit-password",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "修改密码",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/mine/waiting-to-receive/trajectory/trajectory",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "物流轨迹信息",
+                "enablePullDownRefresh": false,
+				"navigationStyle":"custom"
+            }
+            
+        }
+        ,{
+            "path" : "pages/mine/personal/personal-identity",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "身份证信息列表",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/mine/personal/personal-identity-info",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "身份证信息详情",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+    ],
+	"globalStyle": {
+		"navigationBarTextStyle": "white",
+		"navigationBarTitleText": "",
+		"navigationBarBackgroundColor": "#52c3ff",
+		"backgroundColor": "#fff",
+		"backgroundColorTop": "#F4F5F6",
+		"backgroundColorBottom": "#F4F5F6",
+		"app-plus": {
+			"animationType": "pop-in"
+		}
+	},
+	"tabBar": {
+		"color": "#8a8396",
+		"selectedColor": "#52c3ff",
+		"borderStyle": "black",
+		"backgroundColor": "#fff",
+		"list": [{
+				"pagePath": "pages/home/index",
+				"iconPath": "static/home.png",
+				"selectedIconPath": "static/home-select.png",
+				"text": "集运首页"
+			},
+			{
+				"pagePath": "pages/quotation-inquiry/quotation-inquiry",
+				"iconPath": "static/parcel-inquiry.png",
+				"selectedIconPath": "static/parcel-inquiry-select.png",
+				"text": "报价查询"
+			},
+			{
+				"pagePath": "pages/mine/index",
+				"iconPath": "static/personal-center.png",
+				"selectedIconPath": "static/personal-center-select.png",
+				"text": "个人中心"
+			}
+		]
+	},
+	"condition": {
+		//模式配置，仅开发期间生效
+		"current": 0, //当前激活的模式(list 的索引项)
+		"list": [{
+			"name": "", //模式名称
+			"path": "", //启动页面，必选
+			"query": "" //启动参数，在页面的onLoad函数里面得到
+		}]
+	}
+}

@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.warehouse.mapper.dwReceipt.DwReceiptDao">
+
+    <resultMap type="com.example.warehouse.entity.DwReceipt" id="DwReceiptMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="createId" column="create_id" jdbcType="INTEGER"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="status" column="status" jdbcType="INTEGER"/>
+        <result property="version" column="version" jdbcType="INTEGER"/>
+        <result property="deliveryOrderNo" column="delivery_order_no" jdbcType="VARCHAR"/>
+        <result property="deliveryNo" column="delivery_no" jdbcType="VARCHAR"/>
+        <result property="remarks" column="remarks" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap id="RejectResultMap" type="com.example.warehouse.entity.DwReciptReject">
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="reject_type" jdbcType="VARCHAR" property="rejectType" />
+        <result column="delivery_order_no" jdbcType="VARCHAR" property="deliveryOrderNo" />
+        <result column="operator" jdbcType="VARCHAR" property="operator" />
+        <result column="status" jdbcType="INTEGER" property="status" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="create_id" jdbcType="TIMESTAMP" property="createId" />
+        <result column="last_update_time" jdbcType="TIMESTAMP" property="lastUpdateTime" />
+        <result column="last_update_id" jdbcType="INTEGER" property="lastUpdateId" />
+        <result column="message" jdbcType="VARCHAR" property="message" />
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="DwReceiptMap">
+        select
+          id, create_time, create_id, update_time, status, version, delivery_order_no, delivery_no, remarks
+        from dw_receipt
+        where id = #{id}
+    </select>
+
+    <select id="findById" resultType="com.example.warehouse.vo.receipt.DwReceiptVo">
+        select
+        <include refid="DwReceiptVo"/>
+        from dw_receipt t
+        left join delivery_company dc on dc.delivery_no = t.delivery_no
+        where t.id = #{id}
+    </select>
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="DwReceiptMap">
+        select
+          id, create_time, create_id, update_time, status, version, delivery_order_no, delivery_no, remarks
+        from dw_receipt
+        limit #{offset}, #{limit}
+    </select>
+
+
+    <select id="queryAll" parameterType="java.util.Map" resultType="com.example.warehouse.vo.receipt.DwReceiptVo">
+        select
+        <include refid="DwReceiptVo"/>
+        from dw_receipt t
+        left join delivery_company dc on dc.delivery_no = t.delivery_no
+        left join `user` u on u.id = t.create_id and u.status = 1
+        <where>
+            <if test="commercialAreaId!= null">
+                and u.commercial_area_id = #{commercialAreaId}
+            </if>
+            <if test="receiptTime != null and receiptTime != ''">
+                and t.create_time &gt;= #{receiptTime} and t.create_time &lt;= #{endTime}
+            </if>
+            <if test="deliveryOrderNo != null and deliveryOrderNo != ''">
+                and t.delivery_order_no regexp #{deliveryOrderNo}
+            </if>
+            <if test="deliveryNo != null and deliveryNo != ''">
+                and t.delivery_no = #{deliveryNo}
+            </if>
+        </where>
+        ORDER BY t.create_time DESC
+        limit #{pageNumber}, #{pageSize}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAllCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select
+        count(t.id) as `count`
+        from dw_receipt t
+        left join `user` u on u.id = t.create_id and u.status  = 1
+        <where>
+            <if test="commercialAreaId!= null">
+                and u.commercial_area_id = #{commercialAreaId}
+            </if>
+            <if test="receiptTime != null and receiptTime != ''">
+                and t.tcreate_time &gt;= #{receiptTime} and t.tcreate_time &lt;= #{endTime}
+            </if>
+            <if test="deliveryOrderNo != null and deliveryOrderNo != ''">
+                and t.tdelivery_order_no regexp #{deliveryOrderNo}
+            </if>
+            <if test="deliveryNo != null and deliveryNo != ''">
+                and t.tdelivery_no = #{deliveryNo}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into dw_receipt(create_time, create_id, update_time, status, version, delivery_order_no, delivery_no, remarks)
+        values (#{createTime}, #{createId}, #{updateTime}, #{status}, #{version}, #{deliveryOrderNo}, #{deliveryNo}, #{remarks}),
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update dw_receipt
+        <set>
+            update_time = now(),
+            version = #{version} + 1,
+            <if test="deliveryOrderNo != null and deliveryOrderNo != ''">
+                delivery_order_no = #{deliveryOrderNo},
+            </if>
+            <if test="deliveryNo != null and deliveryNo != ''">
+                delivery_no = #{deliveryNo},
+            </if>
+            <if test="remarks != null and remarks != ''">
+                remarks = #{remarks},
+            </if>
+        </set>
+        where id = #{id} and status = 1 and version = #{version}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from dw_receipt where id = #{id}
+    </delete>
+
+    <!-- 批量插入 -->
+    <insert id="insertList" parameterType="java.util.List">
+        insert into dw_receipt
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            create_time, status, version, create_id, delivery_order_no, delivery_no, remarks
+        </trim>
+        values
+        <foreach collection="dwReceiptList" item="dwReceipt" separator=",">
+            (now(), 1, 1,
+            #{dwReceipt.createId},
+            #{dwReceipt.deliveryOrderNo},
+            #{dwReceipt.deliveryNo},
+            #{dwReceipt.remarks})
+        </foreach>
+    </insert>
+
+    <select id="findByIdList" parameterType="java.util.List" resultType="com.example.warehouse.vo.receipt.DwReceiptVo">
+        select
+        <include refid="DwReceiptVo"/>
+        from dw_receipt t
+        left join delivery_company dc on dc.delivery_no = t.delivery_no
+        <where>
+            t.id in
+            <foreach collection="idList" item="id" separator="," open="(" close=")">
+                #{id}
+            </foreach>
+        </where>
+    </select>
+
+    <insert id="insertReject" parameterType="com.example.warehouse.entity.DwReciptReject">
+    insert into dw_recipt_reject (id, reject_type, delivery_order_no,
+      `operator`, `status`, create_time,
+      create_id, last_update_time, last_update_id,
+      message)
+    values (#{id,jdbcType=INTEGER}, #{rejectType,jdbcType=VARCHAR}, #{deliveryOrderNo,jdbcType=VARCHAR},
+      #{operator,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP},
+      #{createId,jdbcType=INTEGER}, #{lastUpdateTime,jdbcType=TIMESTAMP}, #{lastUpdateId,jdbcType=INTEGER},
+      #{message,jdbcType=VARCHAR})
+  </insert>
+
+    <!--查询单个-->
+    <select id="queryByDeliveryOrderNo" resultType="int">
+        select
+          count(1)
+        from dw_receipt
+        where delivery_order_no = #{deliveryOrderNo}
+        and status = 1
+    </select>
+
+    <!--    检查是否拒收-->
+    <select id="checkDeliveryOrderNo" resultType="int">
+        select
+            count(1)
+        from dw_recipt_reject
+        where delivery_order_no = #{deliveryOrderNo}
+        and status = 1
+    </select>
+
+    <!--通过主键修改数据-->
+    <update id="updateReject">
+        update dw_recipt_reject
+        <set>
+            <if test="deliveryOrderNo != null and deliveryOrderNo != ''">
+                delivery_order_no = #{deliveryOrderNo},
+            </if>
+            <if test="message != null and message != ''">
+                message = #{message},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <select id="selectRejectList" resultMap="RejectResultMap" parameterType="map">
+        select
+        t.*
+        from dw_recipt_reject t
+        left join `user` u on u.id = t.create_id
+        where t.status = 1
+        <if test="commercialAreaId!= null">
+            and u.commercial_area_id = #{commercialAreaId}
+        </if>
+        <if test="deliveryOrderNo != null and deliveryOrderNo != ''">
+            and t.delivery_order_no like concat('%',#{deliveryOrderNo},'%')
+        </if>
+        <if test="message != null and message != ''">
+            and t.message like concat('%',#{message},'%')
+        </if>
+        ORDER BY t.create_time DESC
+        limit #{pageNumber}, #{pageSize}
+    </select>
+
+    <select id="countRejectList" resultType="int" parameterType="map">
+        select
+        count(1)
+        from dw_recipt_reject t
+        left join `user` u on u.id = t.create_id
+        where t.status = 1
+        <if test="commercialAreaId!= null">
+            and u.commercial_area_id = #{commercialAreaId}
+        </if>
+        <if test="deliveryOrderNo != null and deliveryOrderNo != ''">
+            and tdelivery_order_no like concat('%',#{deliveryOrderNo},'%')
+        </if>
+        <if test="message != null and message != ''">
+            and tmessage like concat('%',#{message},'%')
+        </if>
+    </select>
+
+    <sql id="DwReceiptVo">
+        t.id, t.create_time as receiptTime, t.create_id as createId,
+        t.delivery_order_no as deliveryOrderNo, t.delivery_no as deliveryNo,
+        dc.delivery_name as deliveryName, t.remarks
+    </sql>
+</mapper>

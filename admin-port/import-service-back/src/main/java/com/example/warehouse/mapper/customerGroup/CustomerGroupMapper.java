@@ -1,0 +1,48 @@
+package com.example.warehouse.mapper.customerGroup;
+
+import com.example.warehouse.entity.customerGroup.CustomerGroup;
+import com.example.warehouse.mapper.MyBatisBaseDao;
+import com.example.warehouse.vo.customerGroup.CustomerGroupReqVo;
+import com.example.warehouse.vo.customerGroup.CustomerGroupRespVo;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+/**
+* 客户组表(CustomerGroup)表Mapper类
+*
+* @author Mr.Wang
+* @version 1.0
+* @since 2021/10/19 16:23
+*/
+@Repository
+public interface CustomerGroupMapper extends MyBatisBaseDao<CustomerGroup, Integer> {
+
+    @Override
+    int insert(CustomerGroup record);
+
+    @Override
+    int insertSelective(CustomerGroup record);
+
+    @Override
+    CustomerGroup selectByPrimaryKey(Integer id);
+
+    @Override
+    int updateByPrimaryKeySelective(CustomerGroup record);
+
+    @Override
+    int updateByPrimaryKey(CustomerGroup record);
+	
+	@Override
+    int deleteByPrimaryKey(Integer id);
+	
+	int removeByPrimaryKey(Integer id);
+
+    List<Integer> selectCustomerGroupCount(CustomerGroupReqVo customerGroupReqVo);
+
+    List<CustomerGroupRespVo> selectCustomerGroupList(CustomerGroupReqVo customerGroupReqVo);
+
+    CustomerGroupRespVo selectCustomerGroupById(int id);
+
+    int selectGroupByGroupName(CustomerGroup customerGroup);
+}

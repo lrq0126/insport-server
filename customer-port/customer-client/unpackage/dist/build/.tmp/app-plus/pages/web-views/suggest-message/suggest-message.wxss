@@ -1,0 +1,13 @@
+.suggest-message {
+  padding: 0 20rpx;
+}
+.suggest-message .title {
+  padding: 10rpx;
+}
+.suggest-message .title text {
+  margin-right: 10rpx;
+}
+.suggest-message .uni-textarea uni-textarea {
+  height: 150px;
+}
+

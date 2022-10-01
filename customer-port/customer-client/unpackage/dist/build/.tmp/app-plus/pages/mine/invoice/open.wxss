@@ -1,0 +1,11 @@
+
+.tab{display: -webkit-box;display: -webkit-flex;display: -ms-flexbox;display: flex;text-align: center;background: #fff;border-top: 1px solid #f0f0f0;border-bottom: 1px solid #f0f0f0;color: #666;}
+.tab-li{-webkit-box-flex: 1;-webkit-flex-grow: 1;-ms-flex-positive: 1;flex-grow: 1;height: 100rpx;line-height: 100rpx;border-left: 1px solid #f0f0f0;width: 50%;}
+.tab-li:first-child{border: none;}
+.tab-li.active{color: #5c8abf;}
+.list{background-color: #fff;}
+.list-cell{padding: 20rpx 30rpx;position: relative;border-bottom: 1px solid #f0f0f0;}
+.list-label{display: inline-block;width: 140rpx;}
+.navigate-right:after{font-family: uniicons;content: '\E583';position: absolute;right: 12px;top: 50%;color: #bbb;-webkit-transform: translateY(-50%);-ms-transform: translateY(-50%);transform: translateY(-50%);font-size: 42rpx;}
+
+

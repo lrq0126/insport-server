@@ -1,0 +1,101 @@
+{
+  "pages": [
+    "pages/home/index",
+    "pages/icon-list/index",
+    "pages/cart/index",
+    "pages/menu/index",
+    "pages/mine/index",
+    "pages/order/index",
+    "pages/mine/personal/list",
+    "pages/mine/personal/change-name",
+    "pages/mine/address/list",
+    "pages/mine/address/add",
+    "pages/mine/address/edit",
+    "pages/mine/invoice/index",
+    "pages/mine/invoice/open",
+    "pages/mine/invoice/explain",
+    "pages/mine/invoice/open-info",
+    "pages/mine/invoice/record",
+    "pages/mine/invoice/title",
+    "pages/mine/invoice/title-add",
+    "pages/mine/feedback/list",
+    "pages/mine/feedback/feedback",
+    "pages/mine/feedback/about",
+    "pages/mine/feedback/details",
+    "pages/mine/message",
+    "pages/login/login",
+    "pages/login/forget",
+    "pages/login/register",
+    "pages/web-views/my-courses/index",
+    "pages/web-views/course-details/index",
+    "pages/web-views/refund-application/refund-application",
+    "pages/web-views/classroo-exercise/classroo-exercise",
+    "pages/web-views/my-schedule/my-schedule",
+    "pages/web-views/leave-application/leave-application",
+    "pages/web-views/my-refund/my-refund",
+    "pages/web-views/leave-management/leave-management",
+    "pages/web-views/course-evaluation/course-evaluation",
+    "pages/web-views/post-comment/post-comment",
+    "pages/web-views/comment-details/comment-details",
+    "pages/web-views/news-bulletin/news-bulletin",
+    "pages/web-views/suggest-message/suggest-message",
+    "pages/web-views/course-selection/course-selection",
+    "pages/web-views/pay-center/pay-center",
+    "pages/web-views/credit-card-management/credit-card-management",
+    "pages/web-views/credit-card-management/ccAdd",
+    "pages/web-views/selected-course/selected-course",
+    "pages/mine/my-child/my-child",
+    "pages/mine/add-child/add-child",
+    "pages/mine/set-password/set-password",
+    "pages/mine/application-settings/application-settings",
+    "pages/web-views/elective-center/elective-center",
+    "pages/web-views/pay-success/pay-success"
+  ],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "",
+    "navigationBarBackgroundColor": "#fff",
+    "backgroundColor": "#fff"
+  },
+  "tabBar": {
+    "color": "#8a8396",
+    "selectedColor": "#2a4c7e",
+    "borderStyle": "black",
+    "backgroundColor": "#fff",
+    "list": [
+      {
+        "pagePath": "pages/home/index",
+        "iconPath": "static/home.png",
+        "selectedIconPath": "static/home-active.png",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/web-views/elective-center/elective-center",
+        "iconPath": "static/cart.png",
+        "selectedIconPath": "static/cart-active.png",
+        "text": "选课中心"
+      },
+      {
+        "pagePath": "pages/web-views/my-schedule/my-schedule",
+        "iconPath": "static/order.png",
+        "selectedIconPath": "static/order-active.png",
+        "text": "课程表"
+      },
+      {
+        "pagePath": "pages/mine/index",
+        "iconPath": "static/mine.png",
+        "selectedIconPath": "static/mine-active.png",
+        "text": "我的"
+      }
+    ]
+  },
+  "nvueCompiler": "weex",
+  "renderer": "auto",
+  "splashscreen": {
+    "alwaysShowBeforeRender": false,
+    "autoclose": true
+  },
+  "appname": "课后平台（家长端）",
+  "compilerVersion": "2.3.6",
+  "usingComponents": {}
+}

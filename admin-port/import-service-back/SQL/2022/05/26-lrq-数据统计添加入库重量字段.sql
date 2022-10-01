@@ -1,0 +1,1 @@
+alter table `sys_statistical` add column `in_ware_weight_sum` double(10,2) DEFAULT '0.00' COMMENT '入库重量';

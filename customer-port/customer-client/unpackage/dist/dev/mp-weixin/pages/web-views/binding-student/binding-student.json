@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "绑定孩子",
+  "usingComponents": {
+    "uni-tag": "/components/uni-tag/uni-tag"
+  }
+}

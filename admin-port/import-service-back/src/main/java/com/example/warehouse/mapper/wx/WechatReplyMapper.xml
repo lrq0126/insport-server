@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.warehouse.mapper.wx.WechatReplyMapper">
+    <resultMap id="BaseResultMap" type="com.example.warehouse.entity.wx.WechatReply">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+    	
+	    <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="create_id" jdbcType="INTEGER" property="createId"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="update_id" jdbcType="INTEGER" property="updateId"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="version" jdbcType="INTEGER" property="version"/>
+        <result column="remarks" jdbcType="VARCHAR" property="remarks"/>
+        <result column="reply_rule" jdbcType="VARCHAR" property="replyRule"/>
+        <result column="reply_type" jdbcType="VARCHAR" property="replyType"/>
+        <result column="reply_content" jdbcType="VARCHAR" property="replyContent"/>
+        <result column="key_word" jdbcType="VARCHAR" property="keyWord"/>
+        <result column="redirect_url" jdbcType="VARCHAR" property="redirectUrl"/>
+        <result column="media_id" jdbcType="VARCHAR" property="mediaId"/>
+    		
+    </resultMap>
+	
+	<!-- 字段 -->
+	<sql id="Base_Column_List">
+		 id, create_time, create_id, update_time, update_id,
+		 status, version, remarks, reply_rule, reply_type,
+		 reply_content, key_word, redirect_url, media_id
+	</sql>
+	
+	<!-- 插入字段实际数值 -->
+	<sql id="Insert_Column_Values">
+		#{createTime},#{createId},#{updateTime},#{updateId},
+		#{status},#{version},#{remarks},#{replyRule},#{replyType},
+		#{replyContent},#{keyWord},#{redirectUrl},#{mediaId}
+	</sql>
+	
+	<!-- 插入字段（判空） -->
+	<sql id="Base_Column_List_NotNull">
+		<if test="createTime != null and createTime != ''">
+			create_time, 
+		</if>
+    	<if test="createId != null and createId != ''">
+			create_id, 
+		</if>
+    	<if test="updateTime != null and updateTime != ''">
+			update_time, 
+		</if>
+    	<if test="updateId != null and updateId != ''">
+			update_id, 
+		</if>
+    	<if test="status != null and status != ''">
+			status, 
+		</if>
+    	<if test="version != null and version != ''">
+			version, 
+		</if>
+    	<if test="remarks != null and remarks != ''">
+			remarks, 
+		</if>
+    	<if test="replyRule != null and replyRule != ''">
+			reply_rule, 
+		</if>
+    	<if test="replyType != null and replyType != ''">
+			reply_type,
+		</if>
+    	<if test="replyContent != null and replyContent != ''">
+			reply_content, 
+		</if>
+    	<if test="keyWord != null and keyWord != ''">
+			key_word, 
+		</if>
+    	<if test="redirectUrl != null and redirectUrl != ''">
+			redirect_url, 
+		</if>
+    	<if test="mediaId != null and mediaId != ''">
+			media_id, 
+		</if>
+    	
+	</sql>
+	
+	<!-- 插入字段实际数值(判空) -->
+	<sql id="Insert_Column_Values_NotNull">
+		<if test="createTime != null and createTime != ''">
+			#{createTime},
+		</if>
+    	<if test="createId != null and createId != ''">
+			#{createId},
+		</if>
+    	<if test="updateTime != null and updateTime != ''">
+			#{updateTime},
+		</if>
+    	<if test="updateId != null and updateId != ''">
+			#{updateId},
+		</if>
+    	<if test="status != null and status != ''">
+			#{status},
+		</if>
+    	<if test="version != null and version != ''">
+			#{version},
+		</if>
+    	<if test="remarks != null and remarks != ''">
+			#{remarks},
+		</if>
+    	<if test="replyRule != null and replyRule != ''">
+			#{replyRule},
+		</if>
+    	<if test="replyType != null and replyType != ''">
+			#{replyType},
+		</if>
+    	<if test="replyContent != null and replyContent != ''">
+			#{replyContent},
+		</if>
+    	<if test="keyWord != null and keyWord != ''">
+			#{keyWord},
+		</if>
+    	<if test="redirectUrl != null and redirectUrl != ''">
+			#{redirectUrl},
+		</if>
+    	<if test="mediaId != null and mediaId != ''">
+			#{mediaId},
+		</if>
+    	
+	</sql>
+	
+	<!-- 更新字段 -->
+	<sql id="Update_Column">
+    	update_time = #{updateTime},
+    	update_id = #{updateId},
+    	status = #{status},
+    	version = #{version},
+    	remarks = #{remarks},
+    	reply_rule = #{replyRule},
+    	reply_type = #{replyType},
+    	reply_content = #{replyContent},
+    	key_word = #{keyWord},
+    	redirect_url = #{redirectUrl},
+    	media_id = #{mediaId},
+    	
+	</sql>
+	
+	<!-- 更新字段（判空） -->
+	<sql id="Update_Column_NotNull">
+		<if test="createTime != null and createTime != ''">
+			create_time = #{createTime},
+		</if>
+    	<if test="createId != null and createId != ''">
+			create_id = #{createId},
+		</if>
+    	<if test="updateTime != null and updateTime != ''">
+			update_time = #{updateTime},
+		</if>
+    	<if test="updateId != null and updateId != ''">
+			update_id = #{updateId},
+		</if>
+    	<if test="status != null and status != ''">
+			status = #{status},
+		</if>
+    	<if test="version != null and version != ''">
+			version = #{version},
+		</if>
+    	<if test="remarks != null and remarks != ''">
+			remarks = #{remarks},
+		</if>
+    	<if test="replyRule != null and replyRule != ''">
+			reply_rule = #{replyRule},
+		</if>
+    	<if test="replyType != null and replyType != ''">
+			reply_type = #{replyType},
+		</if>
+    	<if test="replyContent != null and replyContent != ''">
+			reply_content = #{replyContent},
+		</if>
+    	<if test="keyWord != null and keyWord != ''">
+			key_word = #{keyWord},
+		</if>
+    	<if test="redirectUrl != null and redirectUrl != ''">
+			redirect_url = #{redirectUrl},
+		</if>
+    	<if test="mediaId != null and mediaId != ''">
+			media_id = #{mediaId},
+		</if>
+    	
+	</sql>
+	
+	<select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <trim suffixOverrides=",">
+        <include refid="Base_Column_List"/>
+        </trim>
+        from wechat_reply
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+	<select id="getReplyListCount" resultType="java.lang.Integer">
+		select count(id) from wechat_reply
+		<where>
+			status = 1
+			<if test="replyRule != null and replyRule != ''">
+				and reply_rule regexp #{replyRule}
+			</if>
+			<if test="keyWord != null and keyWord != ''">
+				  and key_word regexp #{keyWord}
+			</if>
+		</where>
+	</select>
+	<select id="getReplyList" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"/>
+		from wechat_reply
+		<where>
+			status = 1
+			<if test="replyRule != null and replyRule != ''">
+				and reply_rule regexp #{replyRule}
+			</if>
+			<if test="keyWord != null and keyWord != ''">
+				and key_word regexp #{keyWord}
+			</if>
+		</where>
+		order by create_time
+		limit #{pageNumber}, #{pageSize}
+	</select>
+
+	<select id="selectByKeyWord" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"/>
+		from wechat_reply
+		<where>
+			status = 1
+			<if test="keyWord != null and keyWord != ''">
+				and key_word like concat('%', #{keyWord}, '%')
+			</if>
+		</where>
+	</select>
+
+    <select id="selectAllKeyWord" resultType="java.lang.String">
+		select key_word as keyWord
+		from wechat_reply
+		<where>
+			status = 1
+		</where>
+	</select>
+
+    <select id="selectByReplyRule" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/>
+        from wechat_reply
+        <where>
+            status = 1
+            <if test="replyRule != null and replyRule != ''">
+                and reply_rule regexp #{replyRule}
+            </if>
+        </where>
+    </select>
+
+    <insert id="insert" parameterType="com.example.warehouse.entity.wx.WechatReply">
+		insert into wechat_reply
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			create_time, 
+			create_id, 
+			update_time, 
+			update_id, 
+			status, 
+			version, 
+			remarks, 
+			reply_rule,
+			reply_type,
+			reply_content,
+			key_word, 
+			redirect_url, 
+			media_id, 
+		</trim>
+		values
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<include refid="Insert_Column_Values"/>
+		</trim>
+	</insert>
+	
+	<insert id="insertSelective" parameterType="com.example.warehouse.entity.wx.WechatReply">
+		insert into wechat_reply
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<include refid="Base_Column_List_NotNull"/>
+		</trim>
+		values
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<include refid="Insert_Column_Values_NotNull"/>
+		</trim>
+	</insert>
+	
+	<update id="updateByPrimaryKey" parameterType="com.example.warehouse.entity.wx.WechatReply">
+		update wechat_reply
+		<set>
+			<include refid="Update_Column"/>
+		</set>
+		
+		<where>
+			id = #{id} and status = 1
+		</where>
+		
+	</update>
+	
+	<update id="updateByPrimaryKeySelective" parameterType="com.example.warehouse.entity.wx.WechatReply">
+		update wechat_reply
+		<set>
+			<include refid="Update_Column_NotNull"/>
+		</set>
+		<where>
+		id = #{id} and status = 1
+		</where>
+	</update>
+
+	<!-- 删除数据（逻辑删除） -->
+	<update id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		update  wechat_reply
+		set `status` = 0
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+
+    <select id="checkRuleAndKeyWord" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"/>
+		from wechat_reply
+		<where>
+			status = 1
+			and (reply_rule = #{replyRule} or key_word = #{keyWord})
+			<if test="id != null">
+				and id != #{id}
+			</if>
+		</where>
+	</select>
+
+    <!-- 移除数据（物理删除） -->
+	<delete id="removeByPrimaryKey" parameterType="java.lang.Integer">
+		delete from wechat_reply
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	
+</mapper>

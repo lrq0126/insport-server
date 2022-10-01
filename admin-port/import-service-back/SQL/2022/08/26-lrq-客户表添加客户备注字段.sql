@@ -1,0 +1,1 @@
+alter table `customer` add column `customer_remarks` varchar(255) default null comment '客户备注';

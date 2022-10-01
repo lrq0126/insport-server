@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.warehouse.mapper.webLog.WebClickLogMapper">
+    <resultMap id="BaseResultMap" type="com.example.warehouse.entity.webLog.WebClickLog">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+    	
+	    <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="ip_location" jdbcType="VARCHAR" property="ipLocation"/>
+        <result column="open_url" jdbcType="VARCHAR" property="openUrl"/>
+        <result column="country" jdbcType="VARCHAR" property="country"/>
+        <result column="count_num" jdbcType="INTEGER" property="countNum"/>
+        <result column="time_long" jdbcType="INTEGER" property="timeLong"/>
+        <result column="from_source" jdbcType="VARCHAR" property="fromSource"/>
+        <result column="system_name" jdbcType="VARCHAR" property="systemName"/>
+        <result column="click_event" jdbcType="VARCHAR" property="clickEvent"/>
+        <result column="is_contact" jdbcType="VARCHAR" property="isContact"/>
+    		
+    </resultMap>
+	
+	<!-- 字段 -->
+	<sql id="Base_Column_List">
+		id, create_time, ip_location, open_url, country,
+		count_num, time_long, from_source, system_name,
+		click_event, is_contact
+	</sql>
+	
+	<!-- 插入字段实际数值 -->
+	<sql id="Insert_Column_Values">
+		#{createTime},#{ipLocation},#{openUrl},#{country},
+		#{countNum},#{timeLong},#{fromSource},#{systemName},
+		#{clickEvent},#{isContact}
+	</sql>
+	
+	<!-- 插入字段（判空） -->
+	<sql id="Base_Column_List_NotNull">
+		<if test="createTime != null and createTime != ''">
+			create_time, 
+		</if>
+    	<if test="ipLocation != null and ipLocation != ''">
+			ip_location, 
+		</if>
+    	<if test="openUrl != null and openUrl != ''">
+			open_url, 
+		</if>
+    	<if test="country != null and country != ''">
+			country, 
+		</if>
+    	<if test="countNum != null and countNum != ''">
+			count_num, 
+		</if>
+    	<if test="timeLong != null and timeLong != ''">
+			time_long, 
+		</if>
+    	<if test="fromSource != null and fromSource != ''">
+			from_source, 
+		</if>
+    	<if test="systemName != null and systemName != ''">
+			system_name, 
+		</if>
+    	<if test="clickEvent != null and clickEvent != ''">
+			click_event, 
+		</if>
+    	<if test="isContact != null and isContact != ''">
+			is_contact, 
+		</if>
+    	
+	</sql>
+	
+	<!-- 插入字段实际数值(判空) -->
+	<sql id="Insert_Column_Values_NotNull">
+		<if test="createTime != null and createTime != ''">
+			#{createTime},
+		</if>
+    	<if test="ipLocation != null and ipLocation != ''">
+			#{ipLocation},
+		</if>
+    	<if test="openUrl != null and openUrl != ''">
+			#{openUrl},
+		</if>
+    	<if test="country != null and country != ''">
+			#{country},
+		</if>
+    	<if test="countNum != null and countNum != ''">
+			#{countNum},
+		</if>
+    	<if test="timeLong != null and timeLong != ''">
+			#{timeLong},
+		</if>
+    	<if test="fromSource != null and fromSource != ''">
+			#{fromSource},
+		</if>
+    	<if test="systemName != null and systemName != ''">
+			#{systemName},
+		</if>
+    	<if test="clickEvent != null and clickEvent != ''">
+			#{clickEvent},
+		</if>
+    	<if test="isContact != null and isContact != ''">
+			#{isContact},
+		</if>
+    	
+	</sql>
+	
+	<!-- 更新字段 -->
+	<sql id="Update_Column">
+		create_time = #{createTime},
+    	ip_location = #{ipLocation},
+    	open_url = #{openUrl},
+    	country = #{country},
+    	count_num = #{countNum},
+    	time_long = #{timeLong},
+    	from_source = #{fromSource},
+    	system_name = #{systemName},
+    	click_event = #{clickEvent},
+    	is_contact = #{isContact},
+    	
+	</sql>
+	
+	<!-- 更新字段（判空） -->
+	<sql id="Update_Column_NotNull">
+		<if test="createTime != null and createTime != ''">
+			create_time = #{createTime},
+		</if>
+    	<if test="ipLocation != null and ipLocation != ''">
+			ip_location = #{ipLocation},
+		</if>
+    	<if test="openUrl != null and openUrl != ''">
+			open_url = #{openUrl},
+		</if>
+    	<if test="country != null and country != ''">
+			country = #{country},
+		</if>
+    	<if test="countNum != null and countNum != ''">
+			count_num = #{countNum},
+		</if>
+    	<if test="timeLong != null and timeLong != ''">
+			time_long = #{timeLong},
+		</if>
+    	<if test="fromSource != null and fromSource != ''">
+			from_source = #{fromSource},
+		</if>
+    	<if test="systemName != null and systemName != ''">
+			system_name = #{systemName},
+		</if>
+    	<if test="clickEvent != null and clickEvent != ''">
+			click_event = #{clickEvent},
+		</if>
+    	<if test="isContact != null and isContact != ''">
+			is_contact = #{isContact},
+		</if>
+    	
+	</sql>
+	
+	<select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <trim suffixOverrides=",">
+        <include refid="Base_Column_List"/>
+        </trim>
+        from web_click_log
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+	<select id="getCount" resultType="java.lang.Integer">
+		select count(1) from web_click_log
+		<where>
+			<if test="country != null and country != ''">
+				and country = #{country}
+			</if>
+			<if test="countNum != null and countNum != ''">
+				and count_num = #{countNum}
+			</if>
+			<if test="fromSource != null and fromSource != ''">
+				and from_source = #{fromSource}
+			</if>
+			<if test="systemName != null and systemName != ''">
+				and system_name regexp #{systemName}
+			</if>
+			<if test="isContact != null">
+				and is_contact = #{isContact}
+			</if>
+			<if test="startTime != null and startTime != ''">
+				and create_time BETWEEN #{startTime} and #{endTime}
+			</if>
+		</where>
+	</select>
+	<select id="getList" resultMap="BaseResultMap">
+		select
+		id, DATE_FORMAT(create_time, '%Y-%m-%d %k:%i:%s') AS create_time,
+		ip_location, open_url, country,
+		count_num, time_long, from_source, system_name,
+		click_event, is_contact
+		from web_click_log
+		<where>
+			<if test="country != null and country != ''">
+				and country = #{country}
+			</if>
+			<if test="countNum != null and countNum != ''">
+				and count_num = #{countNum}
+			</if>
+			<if test="fromSource != null and fromSource != ''">
+				and from_source = #{fromSource}
+			</if>
+			<if test="systemName != null and systemName != ''">
+				and system_name regexp #{systemName}
+			</if>
+			<if test="isContact != null">
+				and is_contact = #{isContact}
+			</if>
+			<if test="startTime != null and startTime != ''">
+				and create_time BETWEEN #{startTime} and #{endTime}
+			</if>
+		</where>
+		order by create_time desc
+		limit #{pageNumber}, #{pageSize}
+	</select>
+
+	<insert id="insert" parameterType="com.example.warehouse.entity.webLog.WebClickLog">
+		insert into web_click_log
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			create_time, 
+			ip_location, 
+			open_url, 
+			country, 
+			count_num, 
+			time_long, 
+			from_source, 
+			system_name, 
+			click_event, 
+			is_contact, 
+					</trim>
+		values
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<include refid="Insert_Column_Values"/>
+		</trim>
+	</insert>
+	
+	<insert id="insertSelective" parameterType="com.example.warehouse.entity.webLog.WebClickLog">
+		insert into web_click_log
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<include refid="Base_Column_List_NotNull"/>
+		</trim>
+		values
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<include refid="Insert_Column_Values_NotNull"/>
+		</trim>
+	</insert>
+	
+	<update id="updateByPrimaryKey" parameterType="com.example.warehouse.entity.webLog.WebClickLog">
+		update web_click_log
+		<set>
+			<include refid="Update_Column"/>
+		</set>
+		
+		<where>
+		id = #{id}
+		</where>
+		
+	</update>
+	
+	<update id="updateByPrimaryKeySelective" parameterType="com.example.warehouse.entity.webLog.WebClickLog">
+		update web_click_log
+		<set>
+			<include refid="Update_Column_NotNull"/>
+		</set>
+		<where>
+		id = #{id}
+		</where>
+	</update>
+
+	<!-- 删除数据（逻辑删除） -->
+	<update id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		update  web_click_log
+		set `status` = 0
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	
+	<!-- 移除数据（物理删除） -->
+	<delete id="removeByPrimaryKey" parameterType="java.lang.Integer">
+		delete from web_click_log
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	
+</mapper>

@@ -1,0 +1,1 @@
+<view class="content"><block wx:for="{{problem}}" wx:for-item="item" wx:for-index="index" wx:key="index"><view class="problem"><view class="problem-title">{{"Q"+(index+1)+"、"+item.title}}</view><view class="problem-text">{{item.text}}</view></view></block></view>

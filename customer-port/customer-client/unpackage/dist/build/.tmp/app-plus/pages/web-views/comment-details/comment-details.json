@@ -1,0 +1,10 @@
+{
+  "navigationBarTitleText": "评价详情",
+  "usingComponents": {
+    "my-tabs": "/components/myTabs/myTabs",
+    "my-unit": "/components/myUnits/purchaseUnit/unit",
+    "my-loading": "/components/myLoading/myLoading",
+    "dn-icon": "/components/dn-icon/dn-icon",
+    "uni-evaluate": "/components/xiujun-evaluate/uni-evaluate"
+  }
+}

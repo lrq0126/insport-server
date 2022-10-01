@@ -1,0 +1,1 @@
+<view data-event-opts="{{[['tap',[['switch_loading',['$event']]]]]}}" hidden="{{!(is_loading)}}" class="loading_box" bindtap="__e"><view class="loading"><view class="loader loader-17"><block wx:for="{{9}}" wx:for-item="item" wx:for-index="index" wx:key="index"><view class="{{['css-square '+'square'+(index+1)]}}"></view></block></view></view></view>

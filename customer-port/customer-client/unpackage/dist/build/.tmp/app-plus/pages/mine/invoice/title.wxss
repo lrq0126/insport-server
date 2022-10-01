@@ -1,0 +1,13 @@
+
+.state{padding-top: 30%;color: #999;text-align: center;}
+.uni-icon-plusempty{line-height: 80rpx;vertical-align: top;font-size: 44rpx;}
+.add-address{width: 690rpx;height: 80rpx;line-height: 80rpx;margin-top: 28rpx;font-size: 28rpx;background-color: #89afd6;color: #fff;position: fixed;bottom: 20rpx;left: 30rpx;}
+.btn-hover{background-color: #5c8abf;}
+.add-address:after{border: none;}
+.address-item{background-color: #fff;padding: 20rpx 84rpx 20rpx 30rpx;border-top: 1px solid #ececec;position: relative;}
+.address-title{line-height: 40rpx;margin-bottom: 14rpx;}
+.address-footer{display: -webkit-box;display: -webkit-flex;display: -ms-flexbox;display: flex;color: #999;font-size: 24rpx;line-height: 32rpx;}
+.addressType{font-size: 24rpx;border: 1px solid #74a1ce;color: #74a1ce;border-radius: 8rpx;line-height: 32rpx;height: 32rpx;padding: 0 8rpx;margin-right: 14rpx;}
+.phone{margin-right: 20rpx;}
+.uni-icon-compose{color: #d7d7d7;font-size: 64rpx;position: absolute;top: 50%;right: 34rpx;-webkit-transform: translateY(-50%);-ms-transform: translateY(-50%);transform: translateY(-50%);}
+

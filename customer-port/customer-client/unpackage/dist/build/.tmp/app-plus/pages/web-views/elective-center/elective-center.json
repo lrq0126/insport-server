@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "选择中心",
+  "usingComponents": {
+    "uni-card": "/components/uni-card/uni-card",
+    "dn-icon": "/components/dn-icon/dn-icon",
+    "mpvue-picker": "/components/mpvue-picker/mpvuePicker",
+    "choose-lits": "/components/choose-Cade/choose-Cade"
+  }
+}

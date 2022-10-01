@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dwgj.mlxydedicatedline.mapper.WarehouseAddressMapper">
+    <resultMap id="BaseResultMap" type="com.dwgj.mlxydedicatedline.entity.WarehouseAddress">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+    	
+	    <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="create_id" jdbcType="INTEGER" property="createId"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="update_id" jdbcType="INTEGER" property="updateId"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="version" jdbcType="INTEGER" property="version"/>
+        <result column="addressee" jdbcType="VARCHAR" property="addressee"/>
+        <result column="address" jdbcType="VARCHAR" property="address"/>
+        <result column="phone_number" jdbcType="VARCHAR" property="phoneNumber"/>
+        <result column="postcode" jdbcType="VARCHAR" property="postcode"/>
+        <result column="is_enable" jdbcType="INTEGER" property="isEnable"/>
+        <result column="abnormal_relation" jdbcType="VARCHAR" property="abnormalRelation"/>
+        <result column="company_name" jdbcType="VARCHAR" property="companyName"/>
+
+    </resultMap>
+	
+	<!-- 字段 -->
+	<sql id="Base_Column_List">
+		id, create_time, create_id, update_time, update_id, status, 
+		version, addressee, address, phone_number, postcode, is_enable,
+		abnormal_relation , company_name
+	</sql>
+	
+	<!-- 插入字段实际数值 -->
+	<sql id="Insert_Column_Values">
+		#{createTime},#{createId},#{updateTime},#{updateId},#{status},
+		#{version},#{addressee},#{address},#{phoneNumber},#{postcode},#{isEnable},
+		#{abnormalRelation},#{companyName}
+	</sql>
+	
+	<!-- 插入字段（判空） -->
+	<sql id="Base_Column_List_NotNull">
+		<if test="createTime != null and createTime != ''">
+			create_time, 
+		</if>
+    	<if test="createId != null and createId != ''">
+			create_id, 
+		</if>
+    	<if test="updateTime != null and updateTime != ''">
+			update_time, 
+		</if>
+    	<if test="updateId != null and updateId != ''">
+			update_id, 
+		</if>
+    	<if test="status != null and status != ''">
+			status, 
+		</if>
+    	<if test="version != null and version != ''">
+			version, 
+		</if>
+    	<if test="addressee != null and addressee != ''">
+			addressee, 
+		</if>
+    	<if test="address != null and address != ''">
+			address, 
+		</if>
+    	<if test="phoneNumber != null and phoneNumber != ''">
+			phone_number, 
+		</if>
+    	<if test="postcode != null and postcode != ''">
+			postcode, 
+		</if>
+    	<if test="isEnable != null">
+			is_enable, 
+		</if>
+    	<if test="abnormalRelation != null and abnormalRelation != ''">
+			abnormal_relation, 
+		</if>
+    	<if test="companyName != null and companyName != ''">
+			company_name,
+		</if>
+    	
+	</sql>
+	
+	<!-- 插入字段实际数值(判空) -->
+	<sql id="Insert_Column_Values_NotNull">
+		<if test="createTime != null and createTime != ''">
+			#{createTime},
+		</if>
+    	<if test="createId != null and createId != ''">
+			#{createId},
+		</if>
+    	<if test="updateTime != null and updateTime != ''">
+			#{updateTime},
+		</if>
+    	<if test="updateId != null and updateId != ''">
+			#{updateId},
+		</if>
+    	<if test="status != null and status != ''">
+			#{status},
+		</if>
+    	<if test="version != null and version != ''">
+			#{version},
+		</if>
+    	<if test="addressee != null and addressee != ''">
+			#{addressee},
+		</if>
+    	<if test="address != null and address != ''">
+			#{address},
+		</if>
+    	<if test="phoneNumber != null and phoneNumber != ''">
+			#{phoneNumber},
+		</if>
+    	<if test="postcode != null and postcode != ''">
+			#{postcode},
+		</if>
+    	<if test="isEnable != null">
+			#{isEnable},
+		</if>
+    	<if test="abnormalRelation != null and abnormalRelation != ''">
+			#{abnormalRelation},
+		</if>
+    	<if test="companyName != null and companyName != ''">
+			#{companyName},
+		</if>
+    	
+	</sql>
+	
+	<!-- 更新字段 -->
+	<sql id="Update_Column">
+		create_time = #{createTime},
+    	create_id = #{createId},
+    	update_time = #{updateTime},
+    	update_id = #{updateId},
+    	status = #{status},
+    	version = #{version},
+    	addressee = #{addressee},
+    	address = #{address},
+    	phone_number = #{phoneNumber},
+    	postcode = #{postcode},
+    	is_enable = #{isEnable},
+    	abnormal_relation = #{abnormalRelation},
+    	company_name = #{companyName}
+	</sql>
+	
+	<!-- 更新字段（判空） -->
+	<sql id="Update_Column_NotNull">
+		<if test="createTime != null and createTime != ''">
+			create_time = #{createTime},
+		</if>
+    	<if test="createId != null and createId != ''">
+			create_id = #{createId},
+		</if>
+    	<if test="updateTime != null and updateTime != ''">
+			update_time = #{updateTime},
+		</if>
+    	<if test="updateId != null and updateId != ''">
+			update_id = #{updateId},
+		</if>
+    	<if test="status != null and status != ''">
+			status = #{status},
+		</if>
+    	<if test="version != null and version != ''">
+			version = #{version},
+		</if>
+    	<if test="addressee != null and addressee != ''">
+			addressee = #{addressee},
+		</if>
+    	<if test="address != null and address != ''">
+			address = #{address},
+		</if>
+    	<if test="phoneNumber != null and phoneNumber != ''">
+			phone_number = #{phoneNumber},
+		</if>
+    	<if test="postcode != null and postcode != ''">
+			postcode = #{postcode},
+		</if>
+    	<if test="isEnable != null">
+			is_enable = #{isEnable},
+		</if>
+    	<if test="abnormalRelation != null and abnormalRelation != ''">
+			abnormal_relation = #{abnormalRelation},
+		</if>
+    	<if test="companyName != null and companyName != ''">
+			company_name = #{companyName},
+		</if>
+    	
+	</sql>
+	
+	<select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <trim suffixOverrides=",">
+        <include refid="Base_Column_List"/>
+        </trim>
+        from warehouse_address
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+	<select id="getIsEnableAddress" resultMap="BaseResultMap">
+		select
+		t.id, t.create_time, t.create_id, t.update_time, t.update_id, t.status,
+		t.version, t.addressee, t.address, t.phone_number, t.postcode, t.is_enable,
+		t.abnormal_relation , t.company_name
+		from warehouse_address t
+		left join `user` u on u.id = t.create_id and u.status = 1
+		<where>
+			t.`status` = 1
+			and t.is_enable = 1
+			and u.commercial_area_id = #{commercialAreaId}
+		</where>
+	</select>
+
+	<insert id="insert" parameterType="com.dwgj.mlxydedicatedline.entity.WarehouseAddress">
+		insert into warehouse_address
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			create_time, 
+			create_id, 
+			update_time, 
+			update_id, 
+			status, 
+			version, 
+			addressee, 
+			address, 
+			phone_number, 
+			postcode, 
+			is_enable, 
+			abnormal_relation,
+			company_name
+		</trim>
+		values
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<include refid="Insert_Column_Values"/>
+		</trim>
+	</insert>
+	
+	<insert id="insertSelective" parameterType="com.dwgj.mlxydedicatedline.entity.WarehouseAddress">
+		insert into warehouse_address
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<include refid="Base_Column_List_NotNull"/>
+		</trim>
+		values
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<include refid="Insert_Column_Values_NotNull"/>
+		</trim>
+	</insert>
+	
+	<update id="updateByPrimaryKey" parameterType="com.dwgj.mlxydedicatedline.entity.WarehouseAddress">
+		update warehouse_address
+		<set>
+			<include refid="Update_Column"/>
+		</set>
+		
+		<where>
+		id = #{id} and status = 1
+		</where>
+		
+	</update>
+	
+	<update id="updateByPrimaryKeySelective" parameterType="com.dwgj.mlxydedicatedline.entity.WarehouseAddress">
+		update warehouse_address
+		<set>
+			<include refid="Update_Column_NotNull"/>
+		</set>
+		<where>
+		id = #{id} and status = 1
+		</where>
+	</update>
+
+	<!-- 删除数据（逻辑删除） -->
+	<update id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		update  warehouse_address
+		set `status` = 0
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	
+	<!-- 移除数据（物理删除） -->
+	<delete id="removeByPrimaryKey" parameterType="java.lang.Integer">
+		delete from warehouse_address
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	
+</mapper>

@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "放学查询",
+  "usingComponents": {
+    "uni-tag": "/components/uni-tag/uni-tag"
+  }
+}

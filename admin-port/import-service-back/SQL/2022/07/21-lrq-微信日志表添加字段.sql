@@ -1,0 +1,1 @@
+alter table `wechat_message` add column `order_status` varchar(100) default null comment '订单状态';

@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "通知设置",
+  "usingComponents": {
+    "uni-tag": "/components/uni-tag/uni-tag"
+  }
+}

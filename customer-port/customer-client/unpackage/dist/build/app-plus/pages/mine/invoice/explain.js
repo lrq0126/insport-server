@@ -1,0 +1,2 @@
+setCssToHead([".",[1],"text{padding: ",[0,40],";}\n.",[1],"text-p{font-size: ",[0,32],";margin-bottom: ",[0,30],";}\n",],undefined,{path:"./pages/mine/invoice/explain.wxss"})();
+document.dispatchEvent(new CustomEvent("generateFuncReady", { detail: { generateFunc: $gwx('./pages/mine/invoice/explain.wxml') } }));

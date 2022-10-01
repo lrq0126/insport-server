@@ -1,0 +1,1 @@
+ALTER TABLE `ping_main` ADD COLUMN `is_paid` int default 0 comment '是否已完成付款，0否1是';   -- 是否已完成付款

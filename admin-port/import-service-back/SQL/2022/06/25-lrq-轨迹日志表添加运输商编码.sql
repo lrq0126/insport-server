@@ -1,0 +1,1 @@
+alter table `trajectory_log` add column `shipper_carrier` varchar(40) default null comment '运输商编码';

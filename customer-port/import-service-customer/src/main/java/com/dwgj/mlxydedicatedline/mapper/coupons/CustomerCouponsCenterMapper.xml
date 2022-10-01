@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dwgj.mlxydedicatedline.mapper.coupons.CustomerCouponsCenterMapper">
+	<resultMap id="BaseResultMap" type="com.dwgj.mlxydedicatedline.entity.coupons.CustomerCouponsCenter">
+		<id column="id" jdbcType="INTEGER" property="id"/>
+
+		<result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+		<result column="create_id" jdbcType="INTEGER" property="createId"/>
+		<result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+		<result column="update_id" jdbcType="INTEGER" property="updateId"/>
+		<result column="status" jdbcType="INTEGER" property="status"/>
+		<result column="version" jdbcType="INTEGER" property="version"/>
+		<result column="remarks" jdbcType="VARCHAR" property="remarks"/>
+		<result column="sys_coupons_id" jdbcType="INTEGER" property="sysCouponsId"/>
+		<result column="customer_group_id" jdbcType="INTEGER" property="customerGroupId"/>
+		<result column="customer_get_num" jdbcType="INTEGER" property="customerGetNum"/>
+		<result column="customer_used_num" jdbcType="INTEGER" property="customerUsedNum"/>
+		<result column="coupons_img_url" jdbcType="VARCHAR" property="couponsImgUrl"/>
+		<result column="coupons_name" jdbcType="VARCHAR" property="couponsName"/>
+		<result column="coupons_type" jdbcType="INTEGER" property="couponsType"/>
+		<result column="coupons_amount" jdbcType="DECIMAL" property="couponsAmount"/>
+		<result column="minimum_amount" jdbcType="DECIMAL" property="minimumAmount"/>
+		<result column="overdue_type" jdbcType="INTEGER" property="overdueType"/>
+		<result column="time_limit" jdbcType="INTEGER" property="timeLimit"/>
+		<result column="time_overdue" jdbcType="TIMESTAMP" property="timeOverdue"/>
+
+	</resultMap>
+
+	<!-- 字段 -->
+	<sql id="Base_Column_List">
+		id,
+		DATE_FORMAT(create_time,'%Y-%m-%d %k:%i:%s') as create_time, create_id,
+		DATE_FORMAT(update_time,'%Y-%m-%d %k:%i:%s') as update_time, update_id,
+		status, version, remarks, sys_coupons_id,
+		customer_group_id, customer_get_num, customer_used_num,
+		coupons_img_url, coupons_name, coupons_type, coupons_amount,
+		minimum_amount, overdue_type, time_limit, time_overdue
+	</sql>
+
+	<!-- 插入字段实际数值 -->
+	<sql id="Insert_Column_Values">
+		#{createTime},#{createId},#{updateTime},#{updateId},
+		#{status},#{version},#{remarks},#{sysCouponsId},
+		#{customerGroupId},#{customerGetNum},#{customerUsedNum},
+		#{couponsImgUrl},#{couponsName},#{couponsType},#{couponsAmount},
+		#{minimumAmount},#{overdueType},#{timeLimit},#{timeOverdue}
+	</sql>
+
+	<!-- 插入字段（判空） -->
+	<sql id="Base_Column_List_NotNull">
+		<if test="createTime != null and createTime != ''">
+			create_time,
+		</if>
+		<if test="createId != null and createId != ''">
+			create_id,
+		</if>
+		<if test="updateTime != null and updateTime != ''">
+			update_time,
+		</if>
+		<if test="updateId != null and updateId != ''">
+			update_id,
+		</if>
+		<if test="status != null and status != ''">
+			status,
+		</if>
+		<if test="version != null and version != ''">
+			version,
+		</if>
+		<if test="remarks != null and remarks != ''">
+			remarks,
+		</if>
+		<if test="sysCouponsId != null and sysCouponsId != ''">
+			sys_coupons_id,
+		</if>
+		<if test="customerGroupId != null and customerGroupId != ''">
+			customer_group_id,
+		</if>
+		<if test="customerGetNum != null and customerGetNum != ''">
+			customer_get_num,
+		</if>
+		<if test="customerUsedNum != null and customerUsedNum != ''">
+			customer_used_num,
+		</if>
+		<if test="couponsImgUrl != null and couponsImgUrl != ''">
+			coupons_img_url,
+		</if>
+		<if test="couponsName != null and couponsName != ''">
+			coupons_name,
+		</if>
+		<if test="couponsType != null and couponsType != ''">
+			coupons_type,
+		</if>
+		<if test="couponsAmount != null and couponsAmount != ''">
+			coupons_amount,
+		</if>
+		<if test="minimumAmount != null and minimumAmount != ''">
+			minimum_amount,
+		</if>
+		<if test="overdueType != null and overdueType != ''">
+			overdue_type,
+		</if>
+		<if test="timeLimit != null and timeLimit != ''">
+			time_limit,
+		</if>
+		<if test="timeOverdue != null and timeOverdue != ''">
+			time_overdue,
+		</if>
+
+	</sql>
+
+	<!-- 插入字段实际数值(判空) -->
+	<sql id="Insert_Column_Values_NotNull">
+		<if test="createTime != null and createTime != ''">
+			#{createTime},
+		</if>
+		<if test="createId != null and createId != ''">
+			#{createId},
+		</if>
+		<if test="updateTime != null and updateTime != ''">
+			#{updateTime},
+		</if>
+		<if test="updateId != null and updateId != ''">
+			#{updateId},
+		</if>
+		<if test="status != null and status != ''">
+			#{status},
+		</if>
+		<if test="version != null and version != ''">
+			#{version},
+		</if>
+		<if test="remarks != null and remarks != ''">
+			#{remarks},
+		</if>
+		<if test="sysCouponsId != null and sysCouponsId != ''">
+			#{sysCouponsId},
+		</if>
+		<if test="customerGroupId != null and customerGroupId != ''">
+			#{customerGroupId},
+		</if>
+		<if test="customerGetNum != null and customerGetNum != ''">
+			#{customerGetNum},
+		</if>
+		<if test="customerUsedNum != null and customerUsedNum != ''">
+			#{customerUsedNum},
+		</if>
+		<if test="couponsImgUrl != null and couponsImgUrl != ''">
+			#{couponsImgUrl},
+		</if>
+		<if test="couponsName != null and couponsName != ''">
+			#{couponsName},
+		</if>
+		<if test="couponsType != null and couponsType != ''">
+			#{couponsType},
+		</if>
+		<if test="couponsAmount != null and couponsAmount != ''">
+			#{couponsAmount},
+		</if>
+		<if test="minimumAmount != null and minimumAmount != ''">
+			#{minimumAmount},
+		</if>
+		<if test="overdueType != null and overdueType != ''">
+			#{overdueType},
+		</if>
+		<if test="timeLimit != null and timeLimit != ''">
+			#{timeLimit},
+		</if>
+		<if test="timeOverdue != null and timeOverdue != ''">
+			#{timeOverdue},
+		</if>
+
+	</sql>
+
+	<!-- 更新字段 -->
+	<sql id="Update_Column">
+		create_time = #{createTime},
+    	create_id = #{createId},
+    	update_time = #{updateTime},
+    	update_id = #{updateId},
+    	status = #{status},
+    	version = #{version},
+    	remarks = #{remarks},
+    	sys_coupons_id = #{sysCouponsId},
+    	customer_group_id = #{customerGroupId},
+    	customer_get_num = #{customerGetNum},
+    	customer_used_num = #{customerUsedNum},
+    	coupons_img_url = #{couponsImgUrl},
+    	coupons_name = #{couponsName},
+    	coupons_type = #{couponsType},
+    	coupons_amount = #{couponsAmount},
+    	minimum_amount = #{minimumAmount},
+    	overdue_type = #{overdueType},
+    	time_limit = #{timeLimit},
+    	time_overdue = #{timeOverdue}
+
+	</sql>
+
+	<!-- 更新字段（判空） -->
+	<sql id="Update_Column_NotNull">
+		<if test="createTime != null and createTime != ''">
+			create_time = #{createTime},
+		</if>
+		<if test="createId != null and createId != ''">
+			create_id = #{createId},
+		</if>
+		<if test="updateTime != null and updateTime != ''">
+			update_time = #{updateTime},
+		</if>
+		<if test="updateId != null and updateId != ''">
+			update_id = #{updateId},
+		</if>
+		<if test="status != null and status != ''">
+			status = #{status},
+		</if>
+		<if test="version != null and version != ''">
+			version = #{version},
+		</if>
+		<if test="remarks != null and remarks != ''">
+			remarks = #{remarks},
+		</if>
+		<if test="sysCouponsId != null and sysCouponsId != ''">
+			sys_coupons_id = #{sysCouponsId},
+		</if>
+		<if test="customerGroupId != null and customerGroupId != ''">
+			customer_group_id = #{customerGroupId},
+		</if>
+		<if test="customerGetNum != null and customerGetNum != ''">
+			customer_get_num = #{customerGetNum},
+		</if>
+		<if test="customerUsedNum != null and customerUsedNum != ''">
+			customer_used_num = #{customerUsedNum},
+		</if>
+		<if test="couponsImgUrl != null and couponsImgUrl != ''">
+			coupons_img_url = #{couponsImgUrl},
+		</if>
+		<if test="couponsName != null and couponsName != ''">
+			coupons_name = #{couponsName},
+		</if>
+		<if test="couponsType != null and couponsType != ''">
+			coupons_type = #{couponsType},
+		</if>
+		<if test="couponsAmount != null and couponsAmount != ''">
+			coupons_amount = #{couponsAmount},
+		</if>
+		<if test="minimumAmount != null and minimumAmount != ''">
+			minimum_amount = #{minimumAmount},
+		</if>
+		<if test="overdueType != null and overdueType != ''">
+			overdue_type = #{overdueType},
+		</if>
+		<if test="timeLimit != null and timeLimit != ''">
+			time_limit = #{timeLimit},
+		</if>
+		<if test="timeOverdue != null and timeOverdue != ''">
+			time_overdue = #{timeOverdue},
+		</if>
+
+	</sql>
+
+	<select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+		select
+		id,
+		DATE_FORMAT(create_time,'%Y-%m-%d %k:%i:%s') as create_time,
+    	DATE_FORMAT(update_time,'%Y-%m-%d %k:%i:%s') as update_time,
+		create_id,
+		update_id, status, version, remarks, sys_coupons_id,
+		customer_group_id, customer_get_num, customer_used_num,
+		coupons_img_url, coupons_name, coupons_type, coupons_amount,
+		minimum_amount, overdue_type, time_limit, time_overdue
+		from customer_coupons_center
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+
+	<insert id="insert" parameterType="com.dwgj.mlxydedicatedline.entity.coupons.CustomerCouponsCenter">
+		insert into customer_coupons_center
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			create_time,
+			create_id,
+			update_time,
+			update_id,
+			status,
+			version,
+			remarks,
+			sys_coupons_id,
+			customer_group_id,
+			customer_get_num,
+			customer_used_num,
+			coupons_img_url,
+			coupons_name,
+			coupons_type,
+			coupons_amount,
+			minimum_amount,
+			overdue_type,
+			time_limit,
+			time_overdue
+		</trim>
+		values
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<include refid="Insert_Column_Values"/>
+		</trim>
+	</insert>
+
+	<insert id="insertSelective" parameterType="com.dwgj.mlxydedicatedline.entity.coupons.CustomerCouponsCenter">
+		insert into customer_coupons_center
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<include refid="Base_Column_List_NotNull"/>
+		</trim>
+		values
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<include refid="Insert_Column_Values_NotNull"/>
+		</trim>
+	</insert>
+
+	<update id="updateByPrimaryKey" parameterType="com.dwgj.mlxydedicatedline.entity.coupons.CustomerCouponsCenter">
+		update customer_coupons_center
+		<set>
+			<include refid="Update_Column"/>
+		</set>
+
+		<where>
+			id = #{id} and status = 1
+		</where>
+
+	</update>
+
+	<update id="updateByPrimaryKeySelective" parameterType="com.dwgj.mlxydedicatedline.entity.coupons.CustomerCouponsCenter">
+		update customer_coupons_center
+		<set>
+			<include refid="Update_Column_NotNull"/>
+		</set>
+		<where>
+			id = #{id} and status = 1
+		</where>
+	</update>
+
+	<!-- 移除数据（物理删除） -->
+	<delete id="removeByPrimaryKey" parameterType="java.lang.Integer">
+		delete from customer_coupons_center
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+
+	<!-- 删除数据（逻辑删除） -->
+	<update id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		update  customer_coupons_center
+		set `status` = 0
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+
+
+	<select id="getCouponsCenterList" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"/>
+		from customer_coupons_center
+		
+		<where>
+			status = 1
+			<if test="couponsCenterIdList.size > 0">
+				and id not in
+				<foreach collection="couponsCenterIdList" item="id" open="(" close=")" separator=",">
+					#{id}
+				</foreach>
+			</if>
+			<if test="groupIdList.size > 0">
+				and
+				customer_group_id in
+				<foreach collection="groupIdList" item="groupId" open="(" close=")" separator=",">
+					#{groupId}
+				</foreach>
+			</if>
+		</where>
+	</select>
+
+	<select id="getCouponsCenterExchangeList" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"/>
+		from customer_coupons_center
+		<where>
+			status = 1
+			
+		</where>
+	</select>
+
+</mapper>

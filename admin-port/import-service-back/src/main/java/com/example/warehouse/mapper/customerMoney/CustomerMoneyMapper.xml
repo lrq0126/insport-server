@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.warehouse.mapper.customerMoney.CustomerMoneyMapper">
+  <resultMap id="BaseResultMap" type="com.example.warehouse.entity.CustomerMoney">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="customer_id" jdbcType="VARCHAR" property="customerId" />
+    <result column="customer_name" jdbcType="VARCHAR" property="customerName" />
+    <result column="amount" jdbcType="DECIMAL" property="amount" />
+    <result column="last_update_time" jdbcType="TIMESTAMP" property="lastUpdateTime" />
+    <result column="version" jdbcType="INTEGER" property="version" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    t.id, t.customer_id, t.customer_name, t.amount, t.last_update_time, t.version, t.`status`
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from customer_money t
+    where t.id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectByCustomerNo" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from customer_money t
+    where t.customer_id = #{customerNo}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from customer_money
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.example.warehouse.entity.CustomerMoney" useGeneratedKeys="true">
+    insert into customer_money (customer_id, customer_name, amount,
+      last_update_time, version, `status`
+      )
+    values (#{customerId,jdbcType=VARCHAR}, #{customerName,jdbcType=VARCHAR}, #{amount,jdbcType=DECIMAL},
+      #{lastUpdateTime,jdbcType=TIMESTAMP}, #{version,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id"
+          parameterType="com.example.warehouse.entity.CustomerMoney" useGeneratedKeys="true">
+    insert into customer_money
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="customerId != null and customerId != ''">
+        customer_id,
+      </if>
+      <if test="customerName != null and customerName != ''">
+        customer_name,
+      </if>
+      <if test="amount != null">
+        amount,
+      </if>
+      <if test="lastUpdateTime != null and lastUpdateTime != ''">
+        last_update_time,
+      </if>
+        version,
+        `status`,
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="customerId != null and customerId != ''">
+        #{customerId,jdbcType=VARCHAR},
+      </if>
+      <if test="customerName != null and customerName != ''">
+        #{customerName,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null">
+        #{amount},
+      </if>
+      <if test="lastUpdateTime != null and lastUpdateTime != ''">
+        #{lastUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+        1,
+        1,
+    </trim>
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.warehouse.entity.CustomerMoney">
+    update customer_money
+    <set>
+      <if test="customerId != null and customerId != ''">
+        customer_id = #{customerId,jdbcType=VARCHAR},
+      </if>
+      <if test="customerName != null and customerName != ''">
+        customer_name = #{customerName,jdbcType=VARCHAR},
+      </if>
+        amount = #{amount,jdbcType=DECIMAL},
+      <if test="lastUpdateTime != null and lastUpdateTime != ''">
+        last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="version != null and version != ''">
+        version = #{version,jdbcType=INTEGER},
+      </if>
+      <if test="status != null and status != ''">
+        `status` = #{status,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.warehouse.entity.CustomerMoney">
+    update customer_money
+    set customer_id = #{customerId,jdbcType=VARCHAR},
+      customer_name = #{customerName,jdbcType=VARCHAR},
+      amount = #{amount,jdbcType=DECIMAL},
+      last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+      version = #{version,jdbcType=INTEGER},
+      `status` = #{status,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+    <update id="deleteByCustomerId" parameterType="java.lang.String">
+        update customer_money
+        set
+      `status` = 0
+    where customer_id = #{customerId}
+    </update>
+
+  <update id="amountReset" parameterType="java.lang.String">
+    update customer_money set amount = 0 where customer_id = #{customerNo}
+  </update>
+</mapper>

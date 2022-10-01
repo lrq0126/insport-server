@@ -1,0 +1,1 @@
+alter table `trajectory_log` add column `system_code` varchar(40) default null comment '系统编码';

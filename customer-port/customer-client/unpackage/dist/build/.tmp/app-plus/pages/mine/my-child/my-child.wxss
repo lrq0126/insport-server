@@ -1,0 +1,99 @@
+.list-box.data-v-3732001c {
+  padding: 20rpx 0;
+}
+.container_of_slide.data-v-3732001c {
+  width: 100%;
+  overflow: hidden;
+}
+.slide_list.data-v-3732001c {
+  -webkit-transition: all 100ms;
+  -o-transition: all 100ms;
+  transition: all 100ms;
+  -webkit-transition-timing-function: ease-out;
+       -o-transition-timing-function: ease-out;
+          transition-timing-function: ease-out;
+  min-width: 200%;
+  height: 160rpx;
+}
+.now-message-info.data-v-3732001c {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  /* justify-content: space-between; */
+  font-size: 32rpx;
+  clear: both;
+  height: 160rpx;
+  padding: 0 30rpx;
+  margin-bottom: 20rpx;
+  background: #FFFFFF;
+}
+.now-message-info.data-v-3732001c,
+.group-btn.data-v-3732001c {
+  float: left;
+}
+.group-btn.data-v-3732001c {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  height: 160rpx;
+  min-width: 100rpx;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+.group-btn .btn-div.data-v-3732001c {
+  height: 160rpx;
+  color: #fff;
+  text-align: center;
+  padding: 0 50rpx;
+  font-size: 34rpx;
+  line-height: 160rpx;
+}
+.group-btn .top.data-v-3732001c {
+  background-color: #c4c7cd;
+}
+.group-btn .removeM.data-v-3732001c {
+  background-color: #ff3b32;
+}
+.icon-circle.data-v-3732001c {
+  background: #3396fb;
+  border-radius: 100%;
+  width: 100rpx;
+  height: 100rpx;
+  line-height: 100rpx;
+  text-align: center;
+  color: #FFFFFF;
+  font-weight: bold;
+  font-size: 36rpx;
+  float: left;
+}
+.list-right.data-v-3732001c {
+  float: left;
+  margin-left: 25rpx;
+  margin-right: 30rpx;
+}
+.list-right-1.data-v-3732001c {
+  float: right;
+  color: #A9A9A9;
+}
+.uni-list-cell-hover.data-v-3732001c {
+  background-color: #eeeeee;
+}
+.bottom-btn-hover.data-v-3732001c {
+  background: #0564c7 !important;
+}
+

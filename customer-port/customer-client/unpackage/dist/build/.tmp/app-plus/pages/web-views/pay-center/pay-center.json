@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "支付中心",
+  "usingComponents": {
+    "dn-icon": "/components/dn-icon/dn-icon",
+    "cc-popup-list": "/components/m-cc-popup/m-cc-popup"
+  }
+}

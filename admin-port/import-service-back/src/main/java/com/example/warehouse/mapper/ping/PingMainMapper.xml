@@ -1,0 +1,808 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.warehouse.mapper.ping.PingMainMapper">
+    <resultMap id="BaseResultMap" type="com.example.warehouse.entity.ping.PingMain">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <id column="pin_name" jdbcType="VARCHAR" property="pinName"/>
+        <id column="order_number" jdbcType="VARCHAR" property="orderNumber"/>
+        <id column="agent_number" jdbcType="VARCHAR" property="agentNumber"/>
+        <id column="route_id" jdbcType="INTEGER" property="routeId"/>
+        <id column="address_id" jdbcType="INTEGER" property="addressId"/>
+        <id column="public_address" jdbcType="VARCHAR" property="publicAddress"/>
+        <id column="is_public" jdbcType="INTEGER" property="isPublic"/>
+        <id column="password" jdbcType="VARCHAR" property="password"/>
+        <id column="target_weight" jdbcType="DOUBLE" property="targetWeight"/>
+        <id column="target_unit_price" jdbcType="DECIMAL" property="targetUnitPrice"/>
+        <id column="target_member" jdbcType="INTEGER" property="targetMember"/>
+        <id column="target_vol" jdbcType="DOUBLE" property="targetVol"/>
+        <id column="cut_off_time" jdbcType="TIMESTAMP" property="cutOffTime"/>
+        <id column="leader_id" jdbcType="INTEGER" property="leaderId"/>
+        <id column="p_type" jdbcType="INTEGER" property="pType"/>
+        <id column="is_actived" jdbcType="INTEGER" property="isActived"/>
+        <id column="actived_id" jdbcType="VARCHAR" property="activedId"/>
+        <id column="message" jdbcType="VARCHAR" property="message"/>
+        <id column="check_message" jdbcType="VARCHAR" property="checkMessage"/>
+        <id column="pack_time" jdbcType="TIMESTAMP" property="packTime"/>
+        <id column="print_time" jdbcType="TIMESTAMP" property="printTime"/>
+        <id column="is_print" jdbcType="INTEGER" property="isPrint"/>
+        <id column="pack_message" jdbcType="VARCHAR" property="packMessage"/>
+        <id column="actual_weight" jdbcType="DOUBLE" property="actualWeight"/>
+        <id column="actual_l" jdbcType="DOUBLE" property="actualL"/>
+        <id column="actual_w" jdbcType="DOUBLE" property="actualW"/>
+        <id column="actual_h" jdbcType="DOUBLE" property="actualH"/>
+        <id column="actual_vol" jdbcType="DOUBLE" property="actualVol"/>
+        <id column="is_cut_off" jdbcType="INTEGER" property="isCutOff"/>
+        <id column="is_packed" jdbcType="INTEGER" property="isPacked"/>
+        <id column="is_shipped" jdbcType="INTEGER" property="isShipped"/>
+        <id column="is_passed" jdbcType="INTEGER" property="isPassed"/>
+        <id column="top_time" jdbcType="TIMESTAMP" property="topTime"/>
+        <id column="is_top" jdbcType="INTEGER" property="isTop"/>
+        <id column="total_price" jdbcType="DECIMAL" property="totalPrice"/>
+        <id column="status" jdbcType="INTEGER" property="status"/>
+        <id column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <id column="create_id" jdbcType="INTEGER" property="createId"/>
+        <id column="last_update_time" jdbcType="TIMESTAMP" property="lastUpdateTime"/>
+        <id column="last_update_id" jdbcType="INTEGER" property="lastUpdateId"/>
+        <id column="out_of_time" jdbcType="TIMESTAMP" property="outOfTime"/>
+        <id column="inside_message" jdbcType="VARCHAR" property="insideMessage"/>
+        <id column="is_paid" jdbcType="INTEGER" property="isPaid"/>
+    </resultMap>
+
+    <!--<resultMap id="BaseUpResultMap" extends="BaseResultMap" type="com.example.warehouse.entity.ping.PingMain">
+      <result column="packageWeight" jdbcType="DOUBLE" property="packageWeight" />
+      <result column="packageSum" jdbcType="INTEGER" property="packageSum" />
+      <result column="myPackageWeight" jdbcType="INTEGER" property="myPackageWeight" />
+      <result column="myPackageSum" jdbcType="INTEGER" property="myPackageSum" />
+      <result column="currentPeopleNum" jdbcType="INTEGER" property="currentPeopleNum" />
+
+      <result column="customerName" jdbcType="VARCHAR" property="customerName" />
+      <result column="headImaUrl" jdbcType="VARCHAR" property="headImaUrl" />
+      <result column="transportType" jdbcType="INTEGER" property="transportType" />
+      <result column="routeName" jdbcType="VARCHAR" property="routeName" />
+      <result column="actualAddress" jdbcType="VARCHAR" property="actualAddress" />
+      <result column="countryName" jdbcType="VARCHAR" property="countryName" />
+    </resultMap>-->
+
+
+    <sql id="Base_Column_List">
+    id, pin_name, order_number, agent_number, route_id, address_id, public_address, is_public,
+    `password`, target_weight, target_unit_price, target_member, target_vol, cut_off_time,
+    leader_id, p_type, is_actived, actived_id, message, check_message, pack_time, print_time,
+    is_print, pack_message, actual_weight, actual_l, actual_w, actual_h, actual_vol,
+    is_cut_off, is_packed, is_shipped, is_passed, top_time, is_top, total_price, `status`,
+    create_time, create_id, last_update_time, last_update_id, inside_message, out_of_time, is_paid
+  </sql>
+
+    <select id="selectCount" parameterType="com.example.warehouse.vo.ping.requestVo.PingRequestVo"
+            resultType="java.lang.Integer">
+        select count(1)
+        from ping_main t
+        left JOIN customer c on c.id = t.leader_id and c.status = 1
+        left JOIN transportation_route route on route.id = t.route_id and route.status = 1
+        left JOIN sys_dict_detail de on de.id = route.country_id and de.status = 1
+        left JOIN customer_pack_receiver_address address on address.id = t.address_id and address.status = 1
+        <where>
+            t.status = 1
+            and t.p_type = #{pingType}
+            <if test="isPacked != null">
+                and t.is_packed = #{isPacked}
+            </if>
+            <if test="isShipped != null">
+                and t.is_shipped = #{isShipped}
+            </if>
+            <if test="orderNumber != null and orderNumber != ''">
+                and t.order_number regexp #{orderNumber}
+            </if>
+            <if test="loginName != null and loginName != ''">
+                and c.login_name regexp #{loginName}
+            </if>
+            <if test="leaderName != null and leaderName != ''">
+                and c.customer_name regexp #{leaderName}
+            </if>
+            <if test="routeName != null and routeName != ''">
+                and route.route_name regexp #{routeName}
+            </if>
+            <if test="countryId != null and countryId != ''">
+                and de.id = #{countryId}
+            </if>
+            <if test="isPacked != null">
+                and t.is_packed = #{isPacked}
+            </if>
+            <if test="isShipped != null">
+                and t.is_shipped = #{isShipped}
+            </if>
+            <if test="isPaid != null">
+                and t.is_paid = #{isPaid}
+            </if>
+        </where>
+    </select>
+
+    <select id="getPingMainList" resultMap="PingMainRespVoNullSonList">
+        select
+        <include refid="PingMainRespVoColumn"/>,
+        (select sum(kg) from goods where status = 1 and id in ( select goods_id from ping_member where p_id = t.id and status = 1) )as goodsSumKg
+        from ping_main t
+        left JOIN customer c on c.id = t.leader_id and c.status = 1
+        left JOIN transportation_route route on route.id = t.route_id and route.status = 1
+        left JOIN sys_dict_detail de on de.id = route.country_id and de.status = 1
+        left JOIN customer_pack_receiver_address address on address.id = t.address_id and address.status = 1
+        <where>
+            t.status = 1
+            and t.p_type = #{pingType}
+            <if test="isPacked != null">
+                and t.is_packed = #{isPacked}
+            </if>
+            <if test="isShipped != null">
+                and t.is_shipped = #{isShipped}
+            </if>
+            <if test="orderNumber != null and orderNumber != ''">
+                and t.order_number regexp #{orderNumber}
+            </if>
+            <if test="loginName != null and loginName != ''">
+                and c.login_name regexp #{loginName}
+            </if>
+            <if test="leaderName != null and leaderName != ''">
+                and c.customer_name regexp #{leaderName}
+            </if>
+            <if test="routeName != null and routeName != ''">
+                and route.route_name regexp #{routeName}
+            </if>
+            <if test="countryId != null and countryId != ''">
+                and de.id = #{countryId}
+            </if>
+            <if test="isPacked != null">
+                and t.is_packed = #{isPacked}
+            </if>
+            <if test="isShipped != null">
+                and t.is_shipped = #{isShipped}
+            </if>
+            <if test="isPaid != null">
+                and t.is_paid = #{isPaid}
+            </if>
+        </where>
+        limit #{pageNumber}, #{pageSize}
+    </select>
+
+    <select id="selectDeletedList" resultMap="PingMainRespVoNullSonList">
+        select
+        <include refid="PingMainRespVoColumn"/>
+        from ping_main t
+        left JOIN customer c on c.id = t.leader_id and c.status = 1
+        left JOIN transportation_route route on route.id = t.route_id and route.status = 1
+        left JOIN sys_dict_detail de on de.id = route.country_id and de.status = 1
+        left JOIN customer_pack_receiver_address address on address.id = t.address_id and address.status = 1
+        <where>
+            t.status = 0
+            <if test="orderNumber != null and orderNumber != ''">
+                and t.order_number regexp #{orderNumber}
+            </if>
+            <if test="loginName != null and loginName != ''">
+                and c.login_name regexp #{loginName}
+            </if>
+            <if test="leaderName != null and leaderName != ''">
+                and c.customer_name regexp #{leaderName}
+            </if>
+            <if test="routeName != null and routeName != ''">
+                and route.route_name regexp #{routeName}
+            </if>
+            <if test="countryId != null and countryId != ''">
+                and de.id = #{countryId}
+            </if>
+        </where>
+        limit #{pageNumber}, #{pageSize}
+    </select>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from ping_main
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from ping_main
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.example.warehouse.entity.ping.PingMain">
+    insert into ping_main (id, pin_name, order_number,
+      agent_number, route_id, address_id,
+      public_address, is_public, `password`,
+      target_weight, target_unit_price, target_member,
+      target_vol, cut_off_time, leader_id,
+      p_type, is_actived, actived_id,
+      message, check_message, pack_time,
+      print_time, is_print, pack_message,
+      actual_weight, actual_l, actual_w,
+      actual_h, actual_vol, is_cut_off,
+      is_packed, is_shipped, is_passed,
+      top_time, is_top, total_price,
+      `status`, create_time, create_id,
+      last_update_time, last_update_id, inside_message,
+      out_of_time, is_paid)
+    values (#{id,jdbcType=INTEGER}, #{pinName,jdbcType=VARCHAR}, #{orderNumber,jdbcType=VARCHAR},
+      #{agentNumber,jdbcType=VARCHAR}, #{routeId,jdbcType=INTEGER}, #{addressId,jdbcType=INTEGER},
+      #{publicAddress,jdbcType=VARCHAR}, #{isPublic,jdbcType=INTEGER}, #{password,jdbcType=VARCHAR},
+      #{targetWeight,jdbcType=DOUBLE}, #{targetUnitPrice,jdbcType=DECIMAL}, #{targetMember,jdbcType=INTEGER},
+      #{targetVol,jdbcType=DOUBLE}, #{cutOffTime,jdbcType=TIMESTAMP}, #{leaderId,jdbcType=INTEGER},
+      #{pType,jdbcType=INTEGER}, #{isActived,jdbcType=INTEGER}, #{activedId,jdbcType=VARCHAR},
+      #{message,jdbcType=VARCHAR}, #{checkMessage,jdbcType=VARCHAR}, #{packTime,jdbcType=TIMESTAMP},
+      #{printTime,jdbcType=TIMESTAMP}, #{isPrint,jdbcType=INTEGER}, #{packMessage,jdbcType=VARCHAR},
+      #{actualWeight,jdbcType=DOUBLE}, #{actualL,jdbcType=DOUBLE}, #{actualW,jdbcType=DOUBLE},
+      #{actualH,jdbcType=DOUBLE}, #{actualVol,jdbcType=DOUBLE}, #{isCutOff,jdbcType=INTEGER},
+      #{isPacked,jdbcType=INTEGER}, #{isShipped,jdbcType=INTEGER}, #{isPassed,jdbcType=INTEGER},
+      #{topTime,jdbcType=TIMESTAMP}, #{isTop,jdbcType=INTEGER}, #{totalPrice,jdbcType=DECIMAL},
+      #{status,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{createId,jdbcType=INTEGER},
+      #{lastUpdateTime,jdbcType=TIMESTAMP}, #{lastUpdateId,jdbcType=INTEGER}, #{insideMessage,jdbcType=VARCHAR},
+      #{outOfTime,jdbcType=TIMESTAMP}, #{isPaid})
+  </insert>
+    <insert id="insertSelective" parameterType="com.example.warehouse.entity.ping.PingMain">
+        insert into ping_main
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="pinName != null">
+                pin_name,
+            </if>
+            <if test="orderNumber != null">
+                order_number,
+            </if>
+            <if test="agentNumber != null">
+                agent_number,
+            </if>
+            <if test="routeId != null">
+                route_id,
+            </if>
+            <if test="addressId != null">
+                address_id,
+            </if>
+            <if test="publicAddress != null">
+                public_address,
+            </if>
+            <if test="isPublic != null">
+                is_public,
+            </if>
+            <if test="password != null">
+                `password`,
+            </if>
+            <if test="targetWeight != null">
+                target_weight,
+            </if>
+            <if test="targetUnitPrice != null">
+                target_unit_price,
+            </if>
+            <if test="targetMember != null">
+                target_member,
+            </if>
+            <if test="targetVol != null">
+                target_vol,
+            </if>
+            <if test="cutOffTime != null">
+                cut_off_time,
+            </if>
+            <if test="leaderId != null">
+                leader_id,
+            </if>
+            <if test="pType != null">
+                p_type,
+            </if>
+            <if test="isActived != null">
+                is_actived,
+            </if>
+            <if test="activedId != null">
+                actived_id,
+            </if>
+            <if test="message != null">
+                message,
+            </if>
+            <if test="checkMessage != null">
+                check_message,
+            </if>
+            <if test="packTime != null">
+                pack_time,
+            </if>
+            <if test="printTime != null">
+                print_time,
+            </if>
+            <if test="isPrint != null">
+                is_print,
+            </if>
+            <if test="packMessage != null">
+                pack_message,
+            </if>
+            <if test="actualWeight != null">
+                actual_weight,
+            </if>
+            <if test="actualL != null">
+                actual_l,
+            </if>
+            <if test="actualW != null">
+                actual_w,
+            </if>
+            <if test="actualH != null">
+                actual_h,
+            </if>
+            <if test="actualVol != null">
+                actual_vol,
+            </if>
+            <if test="isCutOff != null">
+                is_cut_off,
+            </if>
+            <if test="isPacked != null">
+                is_packed,
+            </if>
+            <if test="isShipped != null">
+                is_shipped,
+            </if>
+            <if test="isPassed != null">
+                is_passed,
+            </if>
+            <if test="topTime != null">
+                top_time,
+            </if>
+            <if test="isTop != null">
+                is_top,
+            </if>
+            <if test="totalPrice != null">
+                total_price,
+            </if>
+            <if test="status != null">
+                `status`,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="createId != null">
+                create_id,
+            </if>
+            <if test="lastUpdateTime != null">
+                last_update_time,
+            </if>
+            <if test="lastUpdateId != null">
+                last_update_id,
+            </if>
+            <if test="insideMessage != null">
+                inside_message,
+            </if>
+            <if test="outOfTime != null">
+                out_of_time,
+            </if>
+            <if test="isPaid != null">
+                is_paid,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="pinName != null">
+                #{pinName,jdbcType=VARCHAR},
+            </if>
+            <if test="orderNumber != null">
+                #{orderNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="agentNumber != null">
+                #{agentNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="routeId != null">
+                #{routeId,jdbcType=INTEGER},
+            </if>
+            <if test="addressId != null">
+                #{addressId,jdbcType=INTEGER},
+            </if>
+            <if test="publicAddress != null">
+                #{publicAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="isPublic != null">
+                #{isPublic,jdbcType=INTEGER},
+            </if>
+            <if test="password != null">
+                #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="targetWeight != null">
+                #{targetWeight,jdbcType=DOUBLE},
+            </if>
+            <if test="targetUnitPrice != null">
+                #{targetUnitPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="targetMember != null">
+                #{targetMember,jdbcType=INTEGER},
+            </if>
+            <if test="targetVol != null">
+                #{targetVol,jdbcType=DOUBLE},
+            </if>
+            <if test="cutOffTime != null">
+                #{cutOffTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="leaderId != null">
+                #{leaderId,jdbcType=INTEGER},
+            </if>
+            <if test="pType != null">
+                #{pType,jdbcType=INTEGER},
+            </if>
+            <if test="isActived != null">
+                #{isActived,jdbcType=INTEGER},
+            </if>
+            <if test="activedId != null">
+                #{activedId,jdbcType=VARCHAR},
+            </if>
+            <if test="message != null">
+                #{message,jdbcType=VARCHAR},
+            </if>
+            <if test="checkMessage != null">
+                #{checkMessage,jdbcType=VARCHAR},
+            </if>
+            <if test="packTime != null">
+                #{packTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="printTime != null">
+                #{printTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isPrint != null">
+                #{isPrint,jdbcType=INTEGER},
+            </if>
+            <if test="packMessage != null">
+                #{packMessage,jdbcType=VARCHAR},
+            </if>
+            <if test="actualWeight != null">
+                #{actualWeight,jdbcType=DOUBLE},
+            </if>
+            <if test="actualL != null">
+                #{actualL,jdbcType=DOUBLE},
+            </if>
+            <if test="actualW != null">
+                #{actualW,jdbcType=DOUBLE},
+            </if>
+            <if test="actualH != null">
+                #{actualH,jdbcType=DOUBLE},
+            </if>
+            <if test="actualVol != null">
+                #{actualVol,jdbcType=DOUBLE},
+            </if>
+            <if test="isCutOff != null">
+                #{isCutOff,jdbcType=INTEGER},
+            </if>
+            <if test="isPacked != null">
+                #{isPacked,jdbcType=INTEGER},
+            </if>
+            <if test="isShipped != null">
+                #{isShipped,jdbcType=INTEGER},
+            </if>
+            <if test="isPassed != null">
+                #{isPassed,jdbcType=INTEGER},
+            </if>
+            <if test="topTime != null">
+                #{topTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isTop != null">
+                #{isTop,jdbcType=INTEGER},
+            </if>
+            <if test="totalPrice != null">
+                #{totalPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createId != null">
+                #{createId,jdbcType=INTEGER},
+            </if>
+            <if test="lastUpdateTime != null">
+                #{lastUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastUpdateId != null">
+                #{lastUpdateId,jdbcType=INTEGER},
+            </if>
+            <if test="insideMessage != null">
+                #{insideMessage,jdbcType=VARCHAR},
+            </if>
+            <if test="outOfTime != null">
+                #{outOfTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isPaid != null">
+                #{isPaid,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.example.warehouse.entity.ping.PingMain">
+        update ping_main
+        <set>
+            <if test="pinName != null">
+                pin_name = #{pinName,jdbcType=VARCHAR},
+            </if>
+            <if test="orderNumber != null">
+                order_number = #{orderNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="agentNumber != null">
+                agent_number = #{agentNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="routeId != null">
+                route_id = #{routeId,jdbcType=INTEGER},
+            </if>
+            <if test="addressId != null">
+                address_id = #{addressId,jdbcType=INTEGER},
+            </if>
+            <if test="publicAddress != null">
+                public_address = #{publicAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="isPublic != null">
+                is_public = #{isPublic,jdbcType=INTEGER},
+            </if>
+            <if test="password != null">
+                `password` = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="targetWeight != null">
+                target_weight = #{targetWeight,jdbcType=DOUBLE},
+            </if>
+            <if test="targetUnitPrice != null">
+                target_unit_price = #{targetUnitPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="targetMember != null">
+                target_member = #{targetMember,jdbcType=INTEGER},
+            </if>
+            <if test="targetVol != null">
+                target_vol = #{targetVol,jdbcType=DOUBLE},
+            </if>
+            <if test="cutOffTime != null">
+                cut_off_time = #{cutOffTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="leaderId != null">
+                leader_id = #{leaderId,jdbcType=INTEGER},
+            </if>
+            <if test="pType != null">
+                p_type = #{pType,jdbcType=INTEGER},
+            </if>
+            <if test="isActived != null">
+                is_actived = #{isActived,jdbcType=INTEGER},
+            </if>
+            <if test="activedId != null">
+                actived_id = #{activedId,jdbcType=VARCHAR},
+            </if>
+            <if test="message != null">
+                message = #{message,jdbcType=VARCHAR},
+            </if>
+            <if test="checkMessage != null">
+                check_message = #{checkMessage,jdbcType=VARCHAR},
+            </if>
+            <if test="packTime != null">
+                pack_time = #{packTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="printTime != null">
+                print_time = #{printTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isPrint != null">
+                is_print = #{isPrint,jdbcType=INTEGER},
+            </if>
+            <if test="packMessage != null">
+                pack_message = #{packMessage,jdbcType=VARCHAR},
+            </if>
+            <if test="actualWeight != null">
+                actual_weight = #{actualWeight,jdbcType=DOUBLE},
+            </if>
+            <if test="actualL != null">
+                actual_l = #{actualL,jdbcType=DOUBLE},
+            </if>
+            <if test="actualW != null">
+                actual_w = #{actualW,jdbcType=DOUBLE},
+            </if>
+            <if test="actualH != null">
+                actual_h = #{actualH,jdbcType=DOUBLE},
+            </if>
+            <if test="actualVol != null">
+                actual_vol = #{actualVol,jdbcType=DOUBLE},
+            </if>
+            <if test="isCutOff != null">
+                is_cut_off = #{isCutOff,jdbcType=INTEGER},
+            </if>
+            <if test="isPacked != null">
+                is_packed = #{isPacked,jdbcType=INTEGER},
+            </if>
+            <if test="isShipped != null">
+                is_shipped = #{isShipped,jdbcType=INTEGER},
+            </if>
+            <if test="isPassed != null">
+                is_passed = #{isPassed,jdbcType=INTEGER},
+            </if>
+            <if test="topTime != null">
+                top_time = #{topTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isTop != null">
+                is_top = #{isTop,jdbcType=INTEGER},
+            </if>
+            <if test="totalPrice != null">
+                total_price = #{totalPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="status != null">
+                `status` = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createId != null">
+                create_id = #{createId,jdbcType=INTEGER},
+            </if>
+            <if test="lastUpdateTime != null">
+                last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastUpdateId != null">
+                last_update_id = #{lastUpdateId,jdbcType=INTEGER},
+            </if>
+            <if test="insideMessage != null">
+                inside_message = #{insideMessage,jdbcType=VARCHAR},
+            </if>
+            <if test="outOfTime != null">
+                out_of_time = #{outOfTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isPaid != null">
+                is_paid = #{isPaid,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.example.warehouse.entity.ping.PingMain">
+    update ping_main
+    set pin_name = #{pinName,jdbcType=VARCHAR},
+      order_number = #{orderNumber,jdbcType=VARCHAR},
+      agent_number = #{agentNumber,jdbcType=VARCHAR},
+      route_id = #{routeId,jdbcType=INTEGER},
+      address_id = #{addressId,jdbcType=INTEGER},
+      public_address = #{publicAddress,jdbcType=VARCHAR},
+      is_public = #{isPublic,jdbcType=INTEGER},
+      `password` = #{password,jdbcType=VARCHAR},
+      target_weight = #{targetWeight,jdbcType=DOUBLE},
+      target_unit_price = #{targetUnitPrice,jdbcType=DECIMAL},
+      target_member = #{targetMember,jdbcType=INTEGER},
+      target_vol = #{targetVol,jdbcType=DOUBLE},
+      cut_off_time = #{cutOffTime,jdbcType=TIMESTAMP},
+      leader_id = #{leaderId,jdbcType=INTEGER},
+      p_type = #{pType,jdbcType=INTEGER},
+      is_actived = #{isActived,jdbcType=INTEGER},
+      actived_id = #{activedId,jdbcType=VARCHAR},
+      message = #{message,jdbcType=VARCHAR},
+      check_message = #{checkMessage,jdbcType=VARCHAR},
+      pack_time = #{packTime,jdbcType=TIMESTAMP},
+      print_time = #{printTime,jdbcType=TIMESTAMP},
+      is_print = #{isPrint,jdbcType=INTEGER},
+      pack_message = #{packMessage,jdbcType=VARCHAR},
+      actual_weight = #{actualWeight,jdbcType=DOUBLE},
+      actual_l = #{actualL,jdbcType=DOUBLE},
+      actual_w = #{actualW,jdbcType=DOUBLE},
+      actual_h = #{actualH,jdbcType=DOUBLE},
+      actual_vol = #{actualVol,jdbcType=DOUBLE},
+      is_cut_off = #{isCutOff,jdbcType=INTEGER},
+      is_packed = #{isPacked,jdbcType=INTEGER},
+      is_shipped = #{isShipped,jdbcType=INTEGER},
+      is_passed = #{isPassed,jdbcType=INTEGER},
+      top_time = #{topTime,jdbcType=TIMESTAMP},
+      is_top = #{isTop,jdbcType=INTEGER},
+      total_price = #{totalPrice,jdbcType=DECIMAL},
+      `status` = #{status,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      create_id = #{createId,jdbcType=INTEGER},
+      last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+      last_update_id = #{lastUpdateId,jdbcType=INTEGER},
+      inside_message = #{insideMessage,jdbcType=VARCHAR},
+      out_of_time = #{outOfTime,jdbcType=TIMESTAMP},
+      is_paid = #{isPaid}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+    <select id="selectById" parameterType="int" resultMap="BaseResultMap">
+        select
+    c.customer_name as customerName, c.headimgurl as headImaUrl,route.transport_type as transportType,
+    route.route_name as routeName,de.sdd_name as countryName,address.addressee as actualAddress,
+    pm.*,
+    (select sum(kg) from goods where id in ( select goods_id from ping_member where p_id = pm.id and status = 1)) packageWeight,
+    (SELECT count(*) FROM ping_member WHERE p_id = pm.id AND STATUS = 1 )packageSum,
+    (select count(1) from ((select count(1) from ping_member where p_id = #{id,jdbcType=INTEGER} and status = 1 GROUP BY customer_id))a) currentPeopleNum
+    from ping_main pm
+    left JOIN customer c on c.id = pm.leader_id and c.status = 1
+    left JOIN route_price price on price.id = pm.route_id
+    left JOIN transportation_route route on route.id = price.route_id and route.status = 1
+    left JOIN sys_dict_detail de on de.id = route.country_id and de.status = 1
+    left JOIN customer_pack_receiver_address address on address.id = pm.address_id and address.status = 1
+    where pm.id = #{id,jdbcType=INTEGER} and pm.status = 1
+  </select>
+
+    <select id="selectByIdList" parameterType="java.util.List" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/>
+        from ping_main
+        where status = 1
+        and id in
+        <foreach collection="idList" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </select>
+
+    <select id="selectPingMainDetailedById" parameterType="java.lang.Integer" resultMap="PingMainRespVo">
+        select
+        <include refid="PingMainRespVoColumn"/>
+        from ping_main t
+        left JOIN customer c on c.id = t.leader_id and c.status = 1
+        left JOIN transportation_route route on route.id = t.route_id and route.status = 1
+        left JOIN sys_dict_detail de on de.id = route.country_id and de.status = 1
+        left JOIN customer_pack_receiver_address address on address.id = t.address_id and address.status = 1
+        <where>
+            t.status = 1
+            and t.id = #{pid}
+        </where>
+    </select>
+
+    <update id="deleteByIds">
+        update ping_main
+        set
+          last_update_id = #{updateId},
+          last_update_time = now(),
+          status = 0
+        where
+          id in
+          <foreach collection="idList" item="id" open="(" close=")" separator=",">
+              #{id}
+          </foreach>
+    </update>
+    <update id="updateTop">
+        update ping_main
+        <set>
+            is_top = #{isTop},
+            top_time = now()
+        </set>
+        where id = #{id} and status = 1
+    </update>
+
+    <update id="updateByShipped">
+        update ping_main
+        <set>
+            is_shipped = 1,
+            out_of_time = now()
+        </set>
+        where id = #{id} and status = 1
+    </update>
+
+    <sql id="PingMainRespVoColumn">
+    t.id, t.pin_name, t.order_number, t.agent_number,
+    t.route_id, t.address_id, t.public_address, t.is_public,
+    t.`password`, t.target_weight, t.target_unit_price,
+    t.target_member, t.target_vol, t.cut_off_time,
+    t.leader_id, t.p_type, t.is_actived, t.actived_id,
+    t.message, t.check_message, t.pack_time, t.print_time,
+    t.is_print, t.pack_message, t.actual_weight,
+    t.actual_l, t.actual_w, t.actual_h, t.actual_vol,
+    t.is_cut_off, t.is_packed, t.is_shipped, t.is_passed,
+    t.top_time, t.is_top, t.total_price, t.`status`,
+    t.create_id, t.last_update_id, t.inside_message,
+    t.is_paid,
+    DATE_FORMAT(t.create_time,'%Y-%m-%d %k:%i:%s') as create_time,
+    DATE_FORMAT(t.last_update_time,'%Y-%m-%d %k:%i:%s') as last_update_time,
+    DATE_FORMAT(t.out_of_time,'%Y-%m-%d %k:%i:%s') as out_of_time,
+    c.customer_name, c.login_name, route.transport_type, route.route_name,
+    route.transport_type, de.sdd_name, address.addressee, address.receiver_address,
+    address.phone_number, address.code
+  </sql>
+
+    <!-- 用于列表查询，不查询所属的子级列表 -->
+    <resultMap id="PingMainRespVoNullSonList" extends="BaseResultMap" type="com.example.warehouse.vo.ping.responseVo.PingMainRespVo">
+        <result column="receiver_address" property="address"/>
+        <result column="addressee" property="addressee"/>
+        <result column="phone_number" property="phoneNumber"/>
+        <result column="code" property="code"/>
+        <result column="customer_name" property="leaderName"/>
+        <result column="login_name" property="loginName"/>
+        <result column="route_name" property="routeName"/>
+        <result column="transport_type" property="routeType"/>
+        <result column="sdd_name" property="country"/>
+    </resultMap>
+
+    <!-- 用于详细查询，查询所属的子级列表 -->
+    <resultMap id="PingMainRespVo" extends="PingMainRespVoNullSonList"
+               type="com.example.warehouse.vo.ping.responseVo.PingMainRespVo">
+        <collection property="transportationRoute" column="route_id"
+                    select="com.example.warehouse.mapper.transportationRoute.TransportationRouteMapper.findById"/>
+        <collection property="pingMainAudit" column="id"
+                    select="com.example.warehouse.mapper.ping.PingMainAuditMapper.selectByPid"/>
+        <collection property="pingMember" column="id"
+                    select="com.example.warehouse.mapper.ping.PingMemberMapper.selectPingMemberByPid"/>
+        <collection property="pingMainOrder" column="id"
+                    select="com.example.warehouse.mapper.ping.PingMainOrderMapper.selectPingMainOrderByPid"/>
+    </resultMap>
+</mapper>

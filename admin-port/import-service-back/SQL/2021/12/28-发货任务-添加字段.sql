@@ -1,0 +1,1 @@
+alter table `delivery_task` add column `task_status` int default 1 comment '任务状态 1、待执行 2、执行完毕'

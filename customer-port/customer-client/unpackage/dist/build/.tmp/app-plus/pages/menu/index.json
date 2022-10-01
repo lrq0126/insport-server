@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "选择咖啡与小食",
+  "usingComponents": {
+    "uni-icon": "/components/uni-icon"
+  }
+}

@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.warehouse.mapper.wx.WechatMessageMapper">
+  <resultMap id="BaseResultMap" type="com.example.warehouse.entity.wx.WechatMessage">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="customer_no" jdbcType="VARCHAR" property="customerNo" />
+    <result column="message" jdbcType="VARCHAR" property="message" />
+    <result column="request_param" jdbcType="VARCHAR" property="requestParam" />
+    <result column="order_number" jdbcType="VARCHAR" property="orderNumber" />
+    <result column="order_status" jdbcType="VARCHAR" property="orderStatus" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="create_id" jdbcType="INTEGER" property="createId" />
+    <result column="last_update_time" jdbcType="TIMESTAMP" property="lastUpdateTime" />
+    <result column="last_update_id" jdbcType="INTEGER" property="lastUpdateId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, `type`, customer_no, message, request_param, order_number, order_status, `status`, create_time,
+    create_id, last_update_time, last_update_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from wechat_message
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+    <select id="selectTrackingUpdateCount" resultType="java.lang.Integer">
+      select count(1)
+      from wechat_message t
+      left join customer cus on cus.customer_no = t.customer_no
+      <where>
+        t.`status` = 1
+        and t.`type` = 'trackingUpdate'
+        <if test="customerName != null and customerName != ''">
+            and cus.customer_name regexp #{customerName}
+        </if>
+        <if test="loginName != null and loginName != ''">
+            and cus.login_name regexp #{loginName}
+        </if>
+        <if test="orderNumber != null and orderNumber != ''">
+            and t.order_number regexp #{orderNumber}
+        </if>
+        <if test="orderStatus != null and orderStatus != ''">
+            and t.order_status regexp #{orderStatus}
+        </if>
+        <if test="transitNumber != null and transitNumber != ''">
+            and t.request_param regexp #{transitNumber}
+        </if>
+        <if test="startTime != null and startTime != ''">
+            and t.create_time between #{startTime} and #{endTime}
+        </if>
+      </where>
+    </select>
+
+  <select id="selectTrackingUpdate" resultType="com.example.warehouse.entity.wx.WechatMessage">
+    select t.id, t.`type`, t.customer_no as customerNo, t.message, t.request_param as requestParam,
+    t.order_number as orderNumber, t.order_status as orderStatus, t.`status`,
+    t.create_time as createTime,
+    cus.customer_name as customerName, cus.login_name as loginName
+    from wechat_message t
+    left join customer cus on cus.customer_no = t.customer_no
+    <where>
+      t.`status` = 1
+      and t.`type` = 'trackingUpdate'
+      <if test="customerName != null and customerName != ''">
+        and cus.customer_name regexp #{customerName}
+      </if>
+      <if test="loginName != null and loginName != ''">
+        and cus.login_name regexp #{loginName}
+      </if>
+      <if test="orderNumber != null and orderNumber != ''">
+        and t.order_number regexp #{orderNumber}
+      </if>
+      <if test="orderStatus != null and orderStatus != ''">
+        and t.order_status regexp #{orderStatus}
+      </if>
+      <if test="transitNumber != null and transitNumber != ''">
+        and t.request_param regexp #{transitNumber}
+      </if>
+      <if test="startTime != null and startTime != ''">
+        and t.create_time between #{startTime} and #{endTime}
+      </if>
+    </where>
+    order by t.create_time desc
+    limit #{pageNumber}, #{pageSize}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from wechat_message
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.example.warehouse.entity.wx.WechatMessage">
+    insert into wechat_message (id, `type`, customer_no, 
+      message, request_param, order_number, order_status,
+      `status`, create_time, create_id, 
+      last_update_time, last_update_id)
+    values (#{id,jdbcType=INTEGER}, #{type,jdbcType=VARCHAR}, #{customerNo,jdbcType=VARCHAR}, 
+      #{message,jdbcType=VARCHAR}, #{requestParam,jdbcType=VARCHAR}, #{orderNumber,jdbcType=VARCHAR},
+      #{orderStatus,jdbcType=VARCHAR},
+      #{status,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{createId,jdbcType=INTEGER}, 
+      #{lastUpdateTime,jdbcType=TIMESTAMP}, #{lastUpdateId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.warehouse.entity.wx.WechatMessage">
+    insert into wechat_message
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="type != null">
+        `type`,
+      </if>
+      <if test="customerNo != null">
+        customer_no,
+      </if>
+      <if test="message != null">
+        message,
+      </if>
+      <if test="requestParam != null">
+        request_param,
+      </if>
+      <if test="orderNumber != null">
+        order_number,
+      </if>
+      <if test="orderStatus != null">
+        order_status,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="createId != null">
+        create_id,
+      </if>
+      <if test="lastUpdateTime != null">
+        last_update_time,
+      </if>
+      <if test="lastUpdateId != null">
+        last_update_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="customerNo != null">
+        #{customerNo,jdbcType=VARCHAR},
+      </if>
+      <if test="message != null">
+        #{message,jdbcType=VARCHAR},
+      </if>
+      <if test="requestParam != null">
+        #{requestParam,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNumber != null">
+        #{orderNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="orderStatus != null">
+        #{orderStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=INTEGER},
+      </if>
+      <if test="lastUpdateTime != null">
+        #{lastUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateId != null">
+        #{lastUpdateId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.warehouse.entity.wx.WechatMessage">
+    update wechat_message
+    <set>
+      <if test="type != null">
+        `type` = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="customerNo != null">
+        customer_no = #{customerNo,jdbcType=VARCHAR},
+      </if>
+      <if test="message != null">
+        message = #{message,jdbcType=VARCHAR},
+      </if>
+      <if test="requestParam != null">
+        request_param = #{requestParam,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNumber != null">
+        order_number = #{orderNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="orderStatus != null">
+        order_status = #{orderStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        create_id = #{createId,jdbcType=INTEGER},
+      </if>
+      <if test="lastUpdateTime != null">
+        last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateId != null">
+        last_update_id = #{lastUpdateId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.warehouse.entity.wx.WechatMessage">
+    update wechat_message
+    set `type` = #{type,jdbcType=VARCHAR},
+      customer_no = #{customerNo,jdbcType=VARCHAR},
+      message = #{message,jdbcType=VARCHAR},
+      request_param = #{requestParam,jdbcType=VARCHAR},
+      order_number = #{orderNumber,jdbcType=VARCHAR},
+      order_status = #{orderStatus,jdbcType=VARCHAR},
+      `status` = #{status,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      create_id = #{createId,jdbcType=INTEGER},
+      last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+      last_update_id = #{lastUpdateId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <insert id="insertList" parameterType="java.util.List">
+    insert into wechat_message (id, `type`, customer_no,
+      message, request_param, order_number, order_status,
+      `status`, create_time, create_id,
+      last_update_time, last_update_id)
+    values
+    <foreach collection="wechatMessageList" item="item" separator=",">
+      (#{item.id,jdbcType=INTEGER}, #{item.type,jdbcType=VARCHAR}, #{item.customerNo,jdbcType=VARCHAR},
+        #{item.message,jdbcType=VARCHAR}, #{item.requestParam,jdbcType=VARCHAR}, #{item.orderNumber,jdbcType=VARCHAR},
+        #{item.orderStatus,jdbcType=VARCHAR},
+        #{item.status,jdbcType=INTEGER}, #{item.createTime,jdbcType=TIMESTAMP}, #{item.createId,jdbcType=INTEGER},
+        #{item.lastUpdateTime,jdbcType=TIMESTAMP}, #{item.lastUpdateId,jdbcType=INTEGER})
+    </foreach>
+
+  </insert>
+</mapper>

@@ -1,0 +1,74 @@
+
+.uni-list {
+	margin-bottom: 20rpx;
+	color: #5b5b5b;
+}
+.uni-list:before,
+.uni-list:after {
+	display: none;
+}
+.uni-list-cell:after {
+	background-color: #f0f0f0;
+	left: 96rpx;
+}
+.uni-list-cell-navigate {
+	padding: 22rpx 30rpx 22rpx 0;
+}
+.info {
+	background: #663333;
+	height: 260rpx;
+	overflow: hidden;
+	
+	color: #fff;
+}
+.per {
+	padding: 0 38rpx;
+	position: relative;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	margin-top: 100rpx;
+}
+.buddha {
+	width: 106rpx;
+	height: 106rpx;
+	border-radius: 50%;
+	background-size: cover;
+	background-position: center;
+}
+.num {
+	font-size: 34rpx;
+	font-weight: 700;
+	line-height: 30rpx;
+}
+.nickname {
+	margin-left: 20rpx;
+	font-size: 36rpx;
+	line-height: 106rpx;
+}
+.nickname:after {
+	font-family: uniicons;
+	content: '\E470';
+	position: absolute;
+	right: 29rpx;
+	top: 50%;
+	color: #bbb;
+	-webkit-transform: translateY(-50%);
+	-ms-transform: translateY(-50%);
+	transform: translateY(-50%);
+	font-size: 54rpx;
+}
+.message {
+	position: absolute;
+	top: 36rpx;
+	right: 36rpx;
+	font-size: 44rpx;
+}
+.list-icon {
+	color: #cbcbcb;
+	margin-right: 10rpx;
+	width: 87rpx;
+	text-align: center;
+}
+

@@ -1,0 +1,1 @@
+alter table `annual_report` add `read` int default 0 comment '是否已读 0未读； 1已读';

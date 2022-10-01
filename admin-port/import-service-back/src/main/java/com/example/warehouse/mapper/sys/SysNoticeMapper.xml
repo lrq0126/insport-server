@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.warehouse.mapper.sys.SysNoticeMapper">
+  <resultMap id="BaseResultMap" type="com.example.warehouse.entity.sys.SysNotice">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="notice_title" jdbcType="VARCHAR" property="noticeTitle" />
+    <result column="notice_content" jdbcType="VARCHAR" property="noticeContent" />
+    <result column="notice_type" jdbcType="INTEGER" property="noticeType" />
+    <result column="publisher" jdbcType="VARCHAR" property="publisher" />
+    <result column="publisher_id" jdbcType="VARCHAR" property="publisherId" />
+    <result column="read_id" jdbcType="VARCHAR" property="readId" />
+    <result column="is_timing_task" jdbcType="INTEGER" property="isTimingTask" />
+    <result column="is_initiative" jdbcType="INTEGER" property="isInitiative" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="release_time" jdbcType="VARCHAR" property="releaseTime" />
+    <result column="overdue_time" jdbcType="VARCHAR" property="overdueTime" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+
+    <result column="isRead" jdbcType="INTEGER" property="isRead" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, notice_title, notice_content, notice_type, publisher, publisher_id,
+    read_id, is_timing_task, is_initiative,
+    create_time, release_time, overdue_time, `status`
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sys_notice
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sys_notice
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.example.warehouse.entity.sys.SysNotice">
+    insert into sys_notice (id, notice_title, notice_content,
+      notice_type, publisher, publisher_id,
+      read_id, is_timing_task,  is_initiative, create_time, release_time, overdue_time, `status`
+      )
+    values (#{id,jdbcType=INTEGER}, #{noticeTitle,jdbcType=VARCHAR}, #{noticeContent,jdbcType=VARCHAR},
+      #{noticeType,jdbcType=INTEGER}, #{publisher,jdbcType=VARCHAR}, #{publisherId,jdbcType=VARCHAR},
+      #{readId,jdbcType=VARCHAR}, #{isTimingTask,jdbcType=VARCHAR}, #{isInitiative,jdbcType=VARCHAR},
+      #{createTime,jdbcType=TIMESTAMP},
+      #{releaseTime,jdbcType=TIMESTAMP}, #{overdueTime,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.warehouse.entity.sys.SysNotice">
+    insert into sys_notice
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="noticeTitle != null">
+        notice_title,
+      </if>
+      <if test="noticeContent != null">
+        notice_content,
+      </if>
+      <if test="noticeType != null">
+        notice_type,
+      </if>
+      <if test="publisher != null">
+        publisher,
+      </if>
+      <if test="publisherId != null">
+        publisher_id,
+      </if>
+      <if test="readId != null">
+        read_id,
+      </if>
+      <if test="isTimingTask != null">
+        is_timing_task,
+      </if>
+      <if test="isInitiative != null">
+        is_initiative,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="releaseTime != null and releaseTime != ''">
+        release_time,
+      </if>
+      <if test="overdueTime != null and overdueTime != ''">
+        overdue_time,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="noticeTitle != null">
+        #{noticeTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="noticeContent != null">
+        #{noticeContent,jdbcType=VARCHAR},
+      </if>
+      <if test="noticeType != null">
+        #{noticeType,jdbcType=INTEGER},
+      </if>
+      <if test="publisher != null">
+        #{publisher,jdbcType=VARCHAR},
+      </if>
+      <if test="publisherId != null">
+        #{publisherId,jdbcType=VARCHAR},
+      </if>
+      <if test="readId != null">
+        #{readId,jdbcType=VARCHAR},
+      </if>
+      <if test="isTimingTask != null">
+        #{isTimingTask,jdbcType=INTEGER},
+      </if>
+      <if test="isInitiative != null">
+        #{isInitiative,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="releaseTime != null and releaseTime != ''">
+        #{releaseTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="overdueTime != null and overdueTime != ''">
+        #{overdueTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.warehouse.entity.sys.SysNotice">
+    update sys_notice
+    <set>
+      <if test="noticeTitle != null">
+        notice_title = #{noticeTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="noticeContent != null">
+        notice_content = #{noticeContent,jdbcType=VARCHAR},
+      </if>
+      <if test="noticeType != null">
+        notice_type = #{noticeType,jdbcType=INTEGER},
+      </if>
+      <if test="publisher != null">
+        publisher = #{publisher,jdbcType=VARCHAR},
+      </if>
+      <if test="publisherId != null">
+        publisher_id = #{publisherId,jdbcType=VARCHAR},
+      </if>
+      <if test="readId != null">
+        read_id = #{readId,jdbcType=VARCHAR},
+      </if>
+      <if test="isTimingTask != null">
+        is_timing_task = #{isTimingTask,jdbcType=INTEGER},
+      </if>
+      <if test="isInitiative != null">
+        is_initiative = #{isInitiative,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="releaseTime != null and releaseTime != ''">
+        release_time = #{releaseTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="overdueTime != null and overdueTime != ''">
+        overdue_time = #{overdueTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.warehouse.entity.sys.SysNotice">
+    update sys_notice
+    set notice_title = #{noticeTitle,jdbcType=VARCHAR},
+      notice_content = #{noticeContent,jdbcType=VARCHAR},
+      notice_type = #{noticeType,jdbcType=INTEGER},
+      publisher = #{publisher,jdbcType=VARCHAR},
+      publisher_id = #{publisherId,jdbcType=VARCHAR},
+      read_id = #{readId,jdbcType=VARCHAR},
+      is_timing_task = #{isTimingTask,jdbcType=INTEGER},
+      is_initiative = #{isInitiative,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      release_time = #{releaseTime,jdbcType=TIMESTAMP},
+      overdue_time = #{overdueTime,jdbcType=TIMESTAMP},
+      `status` = #{status,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+<!-- 查询所有发布的消息 -->
+  <select id="selectNoticeList" parameterType="map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from sys_notice
+    where status = 1
+    and is_initiative = 1
+    <if test="publisher != null and publisher != ''">
+      and publisher like concat('%',#{publisher},'%')
+    </if>
+    <if test="noticeTitle != null and noticeTitle != ''">
+      and notice_title like concat('%',#{noticeTitle},'%')
+    </if>
+    <if test="noticeContent != null and noticeContent != ''">
+      and notice_content like concat('%',#{noticeContent},'%')
+    </if>
+    <if test="noticeType != null and noticeType != ''">
+      and notice_type = #{noticeType}
+    </if>
+    <if test="startTime != null and startTime != ''">
+      and create_time &gt;= #{startTime}
+    </if>
+    <if test="endTime != null and endTime != ''">
+      and create_time &lt;= #{endTime}
+    </if>
+    <if test="overdueTime != null and overdueTime != ''">
+      and overdue_time = #{overdueTime,jdbcType=TIMESTAMP}
+    </if>
+    ORDER BY create_time desc
+    LIMIT #{pageNumber},#{pageSize}
+  </select>
+
+  <select id="countSelectNoticeList" parameterType="map" resultType="int">
+    select
+        count(1)
+    from sys_notice
+    where status = 1
+    and is_initiative = 1
+    <if test="publisher != null and publisher != ''">
+      and publisher like concat('%',#{publisher},'%')
+    </if>
+    <if test="noticeTitle != null and noticeTitle != ''">
+      and notice_title like concat('%',#{noticeTitle},'%')
+    </if>
+    <if test="noticeContent != null and noticeContent != ''">
+      and notice_content like concat('%',#{noticeContent},'%')
+    </if>
+    <if test="noticeType != null and noticeType != ''">
+      and notice_type = #{noticeType}
+    </if>
+    <if test="startTime != null and startTime != ''">
+      and create_time &gt;= #{startTime}
+    </if>
+    <if test="endTime != null and endTime != ''">
+      and create_time &lt;= #{endTime}
+    </if>
+    <if test="overdueTime != null and overdueTime != ''">
+      and overdue_time = #{overdueTime,jdbcType=TIMESTAMP}
+    </if>
+  </select>
+
+  <select id="selectNoticeDetail" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/>
+    from sys_notice
+    where `status` = 1
+    and id = #{id}
+  </select>
+
+</mapper>

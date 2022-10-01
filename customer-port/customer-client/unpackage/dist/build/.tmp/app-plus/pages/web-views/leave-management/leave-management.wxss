@@ -1,0 +1,12 @@
+.uni-list-cell:after {
+  right: 24rpx !important;
+}
+.uni-triplex-center .span {
+  width: 130rpx;
+  text-align: right;
+  letter-spacing: 1px;
+  display: inline-block;
+  color: #666;
+  font-weight: 700;
+}
+

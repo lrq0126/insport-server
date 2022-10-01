@@ -1,0 +1,2 @@
+ALTER TABLE `ping_pack` ADD COLUMN `pack_order` varchar(50) default 0 comment '拼团客户子包裹订单号';   -- 拼团客户子包裹订单号
+ALTER TABLE `ping_pack` ADD COLUMN `is_sensitive` int default 0 comment '是否敏感货，0否1是';   -- 是否敏感货

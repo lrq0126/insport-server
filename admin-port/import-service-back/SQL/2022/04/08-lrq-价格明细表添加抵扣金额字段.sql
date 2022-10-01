@@ -1,0 +1,1 @@
+alter table `customer_pack_price_detail` add column `deduction_amount` decimal(10,2) DEFAULT NULL COMMENT '抵扣金额';

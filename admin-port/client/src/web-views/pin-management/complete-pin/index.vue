@@ -1,0 +1,95 @@
+/**
+ * 待打包任务视图
+ * @function {function name}
+ * @return {type} {description}
+ */
+
+<template>
+    <div class="tab-container">
+        <el-tabs v-model="activeName"
+                 style="margin-top:15px;"
+                 type="border-card"
+                 @tab-click="handTabClick">
+            <el-tab-pane label="已成团列表"
+                         name="list">
+                <keep-alive>
+                    <list-pane ref="listPane"
+                               :notice-types="noticeType"
+                               :hiddendanger-statusdata="hiddendangerStatus" />
+                </keep-alive>
+            </el-tab-pane>
+
+            <el-tab-pane label="已打包"
+                         name="packedList">
+                         <keep-alive>
+                    <packed-list-pane ref="packedListPane"/>
+                </keep-alive>
+            </el-tab-pane>
+
+            <el-tab-pane label="已付款"
+                         name="paymentedList">
+                         <keep-alive>
+                    <paymented-list-pane ref="paymentedListPane"/>
+                </keep-alive>
+            </el-tab-pane>
+
+        </el-tabs>
+    </div>
+</template>
+
+<script>
+import listPane from './components/list'
+import packedListPane from './components/packed-list'
+import paymentedListPane from './components/paymented-list'
+import { getBaseDictByType } from '@/api/basic-info'
+
+export default {
+    name: 'HiddendangerTreatment',
+    components: { 
+        listPane,
+        packedListPane,
+        paymentedListPane
+    },
+    data () {
+        return {
+            noticeType: [],  // 通知公告类型
+            hiddendangerStatus: [], // 隐患状态
+            activeName: 'list'
+        }
+    },
+    methods: {
+        /**
+        * 获取列表信息
+        * @param  {nnumber} page {初始化页码}
+        * @return {type} {description}
+        */
+        handleSearch () {
+            const p1 = getBaseDictByType('notice_type')
+            const p2 = getBaseDictByType('risk_status')
+            Promise.all([p1, p2]).then(res => {
+                this.noticeType = res[0].data
+                this.hiddendangerStatus = res[1].data
+            })
+        },
+
+        handTabClick (data) {
+            if (data.name === 'list') {
+                this.$refs['listPane'].queryLiist();
+            }else if(data.name === 'packedList'){
+                this.$refs['packedListPane'].queryLiist();
+            }else if(data.name === 'paymentedList'){
+                this.$refs['paymentedListPane'].queryLiist();
+            }
+        }
+    },
+    mounted () {
+        // this.handleSearch()
+    }
+}
+</script>
+
+<style scoped>
+.tab-container {
+    margin: 30px;
+}
+</style>

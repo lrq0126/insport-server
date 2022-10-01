@@ -1,0 +1,1 @@
+alter table `activity_poster` add column `redirects_address` varchar(255) default null comment '转跳链接';

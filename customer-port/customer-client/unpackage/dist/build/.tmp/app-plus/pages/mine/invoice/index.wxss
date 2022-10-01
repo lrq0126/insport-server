@@ -1,0 +1,5 @@
+
+.uni-list{margin-bottom: 20rpx;color: #5b5b5b;border-top: 1px solid #f0f0f0;}
+.uni-list:before,.uni-list:after{display: none;}
+.uni-list-cell:after{background-color: #f0f0f0;}
+

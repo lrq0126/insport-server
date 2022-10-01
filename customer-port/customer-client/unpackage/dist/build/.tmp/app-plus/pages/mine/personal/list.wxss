@@ -1,0 +1,15 @@
+
+.content{padding-top: 10rpx;}
+.uni-list:before,.uni-list:after{display: none;}
+.uni-list-cell:after{background-color: #f0f0f0;}
+.edit-text{float: right;margin-right: 30rpx;color: #8d8d8d;}
+.blue{color: #0A98D5;}
+.buddha{width: 60rpx;height: 60rpx;border-radius: 50%;margin-right: 30rpx;background-size: cover;}
+.login-out{width: 690rpx;height: 80rpx;line-height: 80rpx;margin-top: 28rpx;color: #fff;background-color: #89afd6;font-size: 28rpx;}
+.btn-hover{background-color: #5c8abf;}
+.login-out:after{border: none;}
+.mask{position: fixed;z-index: 998;top: 0;right: 0;left: 0;bottom: 0;background-color: rgba(0, 0, 0, .3);}
+.popup{position: fixed;z-index: 998;right: 0;left: 0;bottom: 0;-webkit-box-shadow: 0 0 30rpx rgba(0, 0, 0, .1);box-shadow: 0 0 30rpx rgba(0, 0, 0, .1);text-align: center;background-color: #f4f5f6;}
+.popup-item{line-height: 90rpx;background-color: #fff;border-bottom: 1px solid #ececec;font-size: 32rpx;}
+.popup-cancel{margin-top: 20rpx;}
+

@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.warehouse.mapper.ping.PingPackMapper">
+  <resultMap id="BaseResultMap" type="com.example.warehouse.entity.ping.PingPack">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="p_id" jdbcType="INTEGER" property="pId" />
+    <result column="customer_id" jdbcType="INTEGER" property="customerId" />
+    <result column="actual_weight" jdbcType="DOUBLE" property="actualWeight" />
+    <result column="actual_l" jdbcType="DOUBLE" property="actualL" />
+    <result column="actual_w" jdbcType="DOUBLE" property="actualW" />
+    <result column="actual_h" jdbcType="DOUBLE" property="actualH" />
+    <result column="actual_vol" jdbcType="DOUBLE" property="actualVol" />
+    <result column="sort_no" jdbcType="INTEGER" property="sortNo" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="create_id" jdbcType="INTEGER" property="createId" />
+    <result column="last_update_time" jdbcType="TIMESTAMP" property="lastUpdateTime" />
+    <result column="last_update_id" jdbcType="INTEGER" property="lastUpdateId" />
+    <result column="pm_id" jdbcType="INTEGER" property="pmId" />
+    <result column="is_sensitive" jdbcType="INTEGER" property="isSensitive" />
+    <result column="pack_order" jdbcType="VARCHAR" property="packOrder" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, p_id, customer_id, actual_weight, actual_l, actual_w, actual_h, actual_vol, sort_no,
+    `status`, create_time, create_id, last_update_time, last_update_id, pm_id, pack_order, is_sensitive
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from ping_pack
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from ping_pack
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.example.warehouse.entity.ping.PingPack">
+    insert into ping_pack (id, p_id, customer_id,
+      actual_weight, actual_l, actual_w,
+      actual_h, actual_vol, sort_no,
+      `status`, create_time, create_id,
+      last_update_time, last_update_id,
+      pm_id, pack_order, is_sensitive
+      )
+    values (#{id,jdbcType=INTEGER}, #{pId,jdbcType=INTEGER}, #{customerId,jdbcType=INTEGER},
+      #{actualWeight,jdbcType=DOUBLE}, #{actualL,jdbcType=DOUBLE}, #{actualW,jdbcType=DOUBLE},
+      #{actualH,jdbcType=DOUBLE}, #{actualVol,jdbcType=DOUBLE}, #{sortNo,jdbcType=INTEGER},
+      #{status,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{createId,jdbcType=INTEGER},
+      #{lastUpdateTime,jdbcType=TIMESTAMP}, #{lastUpdateId,jdbcType=INTEGER},
+      #{pmId,jdbcType=INTEGER}, #{packOrder}, #{isSensitive}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.warehouse.entity.ping.PingPack">
+    insert into ping_pack
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="pId != null">
+        p_id,
+      </if>
+      <if test="customerId != null">
+        customer_id,
+      </if>
+      <if test="actualWeight != null">
+        actual_weight,
+      </if>
+      <if test="actualL != null">
+        actual_l,
+      </if>
+      <if test="actualW != null">
+        actual_w,
+      </if>
+      <if test="actualH != null">
+        actual_h,
+      </if>
+      <if test="actualVol != null">
+        actual_vol,
+      </if>
+      <if test="sortNo != null">
+        sort_no,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="createId != null">
+        create_id,
+      </if>
+      <if test="lastUpdateTime != null">
+        last_update_time,
+      </if>
+      <if test="lastUpdateId != null">
+        last_update_id,
+      </if>
+      <if test="pmId != null">
+        pm_id,
+      </if>
+      <if test="packOrder != null">
+        pack_order,
+      </if>
+      <if test="isSensitive != null">
+        is_sensitive,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="pId != null">
+        #{pId,jdbcType=INTEGER},
+      </if>
+      <if test="customerId != null">
+        #{customerId,jdbcType=INTEGER},
+      </if>
+      <if test="actualWeight != null">
+        #{actualWeight,jdbcType=DOUBLE},
+      </if>
+      <if test="actualL != null">
+        #{actualL,jdbcType=DOUBLE},
+      </if>
+      <if test="actualW != null">
+        #{actualW,jdbcType=DOUBLE},
+      </if>
+      <if test="actualH != null">
+        #{actualH,jdbcType=DOUBLE},
+      </if>
+      <if test="actualVol != null">
+        #{actualVol,jdbcType=DOUBLE},
+      </if>
+      <if test="sortNo != null">
+        #{sortNo,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=INTEGER},
+      </if>
+      <if test="lastUpdateTime != null">
+        #{lastUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateId != null">
+        #{lastUpdateId,jdbcType=INTEGER},
+      </if>
+      <if test="pmId != null">
+        #{pmId,jdbcType=INTEGER},
+      </if>
+      <if test="packOrder != null">
+        #{packOrder},
+      </if>
+      <if test="isSensitive != null">
+        #{isSensitive},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.warehouse.entity.ping.PingPack">
+    update ping_pack
+    <set>
+      <if test="pId != null">
+        p_id = #{pId,jdbcType=INTEGER},
+      </if>
+      <if test="customerId != null">
+        customer_id = #{customerId,jdbcType=INTEGER},
+      </if>
+      <if test="actualWeight != null">
+        actual_weight = #{actualWeight,jdbcType=DOUBLE},
+      </if>
+      <if test="actualL != null">
+        actual_l = #{actualL,jdbcType=DOUBLE},
+      </if>
+      <if test="actualW != null">
+        actual_w = #{actualW,jdbcType=DOUBLE},
+      </if>
+      <if test="actualH != null">
+        actual_h = #{actualH,jdbcType=DOUBLE},
+      </if>
+      <if test="actualVol != null">
+        actual_vol = #{actualVol,jdbcType=DOUBLE},
+      </if>
+      <if test="sortNo != null">
+        sort_no = #{sortNo,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        create_id = #{createId,jdbcType=INTEGER},
+      </if>
+      <if test="lastUpdateTime != null">
+        last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateId != null">
+        last_update_id = #{lastUpdateId,jdbcType=INTEGER},
+      </if>
+      <if test="pmId != null">
+        pm_id = #{pmId,jdbcType=INTEGER},
+      </if>
+      <if test="packOrder != null">
+        pack_order = #{packOrder},
+      </if>
+      <if test="isSensitive != null">
+        is_sensitive = #{isSensitive},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.warehouse.entity.ping.PingPack">
+    update ping_pack
+    set p_id = #{pId,jdbcType=INTEGER},
+      customer_id = #{customerId,jdbcType=INTEGER},
+      actual_weight = #{actualWeight,jdbcType=DOUBLE},
+      actual_l = #{actualL,jdbcType=DOUBLE},
+      actual_w = #{actualW,jdbcType=DOUBLE},
+      actual_h = #{actualH,jdbcType=DOUBLE},
+      actual_vol = #{actualVol,jdbcType=DOUBLE},
+      sort_no = #{sortNo,jdbcType=INTEGER},
+      `status` = #{status,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      create_id = #{createId,jdbcType=INTEGER},
+      last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+      last_update_id = #{lastUpdateId,jdbcType=INTEGER},
+      pm_id = #{pmId,jdbcType=INTEGER},
+      pack_order = #{packOrder},
+      is_sensitive = #{isSensitive}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+
+  <insert id="insertList" parameterType="java.util.List">
+    insert into ping_pack (p_id, customer_id,
+      actual_weight, actual_l, actual_w,
+      actual_h, actual_vol, sort_no,
+      `status`, create_time, create_id,
+      last_update_time, last_update_id,
+      pm_id, pack_order, is_sensitive
+      )
+    values
+    <foreach collection="pingPackList" item="pingPack" separator=",">
+      (#{pingPack.pId,jdbcType=INTEGER}, #{pingPack.customerId,jdbcType=INTEGER},
+      #{pingPack.actualWeight,jdbcType=DOUBLE}, #{pingPack.actualL,jdbcType=DOUBLE}, #{pingPack.actualW,jdbcType=DOUBLE},
+      #{pingPack.actualH,jdbcType=DOUBLE}, #{pingPack.actualVol,jdbcType=DOUBLE}, #{pingPack.sortNo,jdbcType=INTEGER},
+      #{pingPack.status,jdbcType=INTEGER}, #{pingPack.createTime,jdbcType=TIMESTAMP}, #{pingPack.createId,jdbcType=INTEGER},
+      #{pingPack.lastUpdateTime,jdbcType=TIMESTAMP}, #{pingPack.lastUpdateId,jdbcType=INTEGER},
+      #{pingPack.pmId,jdbcType=INTEGER}, #{pingPack.packOrder}, #{pingPack.isSensitive} )
+    </foreach>
+  </insert>
+
+  <select id="selectByPmIdAndCustomerId" resultMap="PingPackRespVo">
+    select <include refid="Base_Column_List"/>
+    from ping_pack
+    <where>
+      status = 1
+      and pm_id = #{pmId}
+      and customer_id = #{customerId}
+    </where>
+  </select>
+
+  <update id="deleteByOrderId">
+    update ping_pack set status = 0
+    where status = 1
+    and pm_id = #{pmId}
+    and customer_id = #{customerId}
+  </update>
+
+  <resultMap id="PingPackRespVo" extends="BaseResultMap" type="com.example.warehouse.vo.ping.responseVo.PingPackRespVo">
+    <collection property="pingPackGoods" column="id" select="com.example.warehouse.mapper.ping.PingPackGoodsMapper.selectByPPackId"/>
+  </resultMap>
+
+</mapper>

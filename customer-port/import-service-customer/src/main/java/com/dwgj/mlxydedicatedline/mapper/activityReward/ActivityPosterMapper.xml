@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dwgj.mlxydedicatedline.mapper.activityReward.ActivityPosterMapper">
+    <resultMap id="BaseResultMap" type="com.dwgj.mlxydedicatedline.entity.activityReward.ActivityPoster">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+    	
+	    <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="create_id" jdbcType="INTEGER" property="createId"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="version" jdbcType="INTEGER" property="version"/>
+        <result column="remarks" jdbcType="VARCHAR" property="remarks"/>
+        <result column="poster_name" jdbcType="VARCHAR" property="posterName"/>
+		<result column="location_path" jdbcType="VARCHAR" property="locationPath"/>
+		<result column="poster_url" jdbcType="VARCHAR" property="posterUrl"/>
+		<result column="redirects_address" jdbcType="VARCHAR" property="redirectsAddress"/>
+        <result column="is_place_qrcode" jdbcType="INTEGER" property="isPlaceQrcode"/>
+        <result column="qrcode_scaling" jdbcType="DOUBLE" property="qrcodeScaling"/>
+        <result column="width_position" jdbcType="INTEGER" property="widthPosition"/>
+        <result column="height_position" jdbcType="INTEGER" property="heightPosition"/>
+        <result column="is_enable" jdbcType="INTEGER" property="isEnable"/>
+    		
+    </resultMap>
+	
+	<!-- 字段 -->
+	<sql id="Base_Column_List">
+		id, create_time, create_id, status, version, remarks, 
+		poster_name, location_path, poster_url, redirects_address, is_place_qrcode, qrcode_scaling,
+		width_position, height_position, is_enable	
+	</sql>
+	
+	<!-- 插入字段实际数值 -->
+	<sql id="Insert_Column_Values">
+		#{createTime},#{createId},#{status},#{version},#{remarks},
+		#{posterName},#{locationPath},#{posterUrl},#{redirectsAddress},#{isPlaceQrcode},#{qrcodeScaling},
+		#{widthPosition},#{heightPosition},#{isEnable}
+	</sql>
+	
+	<!-- 插入字段（判空） -->
+	<sql id="Base_Column_List_NotNull">
+		<if test="createTime != null and createTime != ''">
+			create_time, 
+		</if>
+    	<if test="createId != null and createId != ''">
+			create_id, 
+		</if>
+    	<if test="status != null and status != ''">
+			status, 
+		</if>
+    	<if test="version != null and version != ''">
+			version, 
+		</if>
+    	<if test="remarks != null and remarks != ''">
+			remarks, 
+		</if>
+    	<if test="posterName != null and posterName != ''">
+			poster_name, 
+		</if>
+    	<if test="locationPath != null and locationPath != ''">
+			location_path,
+		</if>
+    	<if test="posterUrl != null and posterUrl != ''">
+			poster_url,
+		</if>
+    	<if test="redirectsAddress != null and redirectsAddress != ''">
+			redirects_address,
+		</if>
+    	<if test="isPlaceQrcode != null and isPlaceQrcode != ''">
+			is_place_qrcode, 
+		</if>
+    	<if test="qrcodeScaling != null and qrcodeScaling != ''">
+			qrcode_scaling, 
+		</if>
+    	<if test="widthPosition != null and widthPosition != ''">
+			width_position, 
+		</if>
+    	<if test="heightPosition != null and heightPosition != ''">
+			height_position, 
+		</if>
+    	<if test="isEnable != null and isEnable != ''">
+			is_enable, 
+		</if>
+    	
+	</sql>
+	
+	<!-- 插入字段实际数值(判空) -->
+	<sql id="Insert_Column_Values_NotNull">
+		<if test="createTime != null and createTime != ''">
+			#{createTime},
+		</if>
+    	<if test="createId != null and createId != ''">
+			#{createId},
+		</if>
+    	<if test="status != null and status != ''">
+			#{status},
+		</if>
+    	<if test="version != null and version != ''">
+			#{version},
+		</if>
+    	<if test="remarks != null and remarks != ''">
+			#{remarks},
+		</if>
+    	<if test="posterName != null and posterName != ''">
+			#{posterName},
+		</if>
+    	<if test="locationPath != null and locationPath != ''">
+			#{locationPath},
+		</if>
+    	<if test="posterUrl != null and posterUrl != ''">
+			#{posterUrl},
+		</if>
+    	<if test="redirectsAddress != null and redirectsAddress != ''">
+			#{redirectsAddress},
+		</if>
+    	<if test="isPlaceQrcode != null and isPlaceQrcode != ''">
+			#{isPlaceQrcode},
+		</if>
+    	<if test="qrcodeScaling != null and qrcodeScaling != ''">
+			#{qrcodeScaling},
+		</if>
+    	<if test="widthPosition != null and widthPosition != ''">
+			#{widthPosition},
+		</if>
+    	<if test="heightPosition != null and heightPosition != ''">
+			#{heightPosition},
+		</if>
+    	<if test="isEnable != null and isEnable != ''">
+			#{isEnable},
+		</if>
+    	
+	</sql>
+	
+	<!-- 更新字段 -->
+	<sql id="Update_Column">
+		create_time = #{createTime},
+    	create_id = #{createId},
+    	status = #{status},
+    	version = #{version},
+    	remarks = #{remarks},
+    	poster_name = #{posterName},
+    	location_path = #{locationPath},
+    	poster_url = #{posterUrl},
+    	redirects_address = #{redirectsAddress},
+    	is_place_qrcode = #{isPlaceQrcode},
+    	qrcode_scaling = #{qrcodeScaling},
+    	width_position = #{widthPosition},
+    	height_position = #{heightPosition},
+    	is_enable = #{isEnable},
+    	
+	</sql>
+	
+	<!-- 更新字段（判空） -->
+	<sql id="Update_Column_NotNull">
+		<if test="createTime != null and createTime != ''">
+			create_time = #{createTime},
+		</if>
+    	<if test="createId != null and createId != ''">
+			create_id = #{createId},
+		</if>
+    	<if test="status != null and status != ''">
+			status = #{status},
+		</if>
+    	<if test="version != null and version != ''">
+			version = #{version},
+		</if>
+    	<if test="remarks != null and remarks != ''">
+			remarks = #{remarks},
+		</if>
+    	<if test="posterName != null and posterName != ''">
+			poster_name = #{posterName},
+		</if>
+    	<if test="locationPath != null and locationPath != ''">
+			location_path = #{locationPath},
+		</if>
+    	<if test="posterUrl != null and posterUrl != ''">
+			poster_url = #{posterUrl},
+		</if>
+    	<if test="redirectsAddress != null and redirectsAddress != ''">
+			redirects_address = #{redirectsAddress},
+		</if>
+    	<if test="isPlaceQrcode != null and isPlaceQrcode != ''">
+			is_place_qrcode = #{isPlaceQrcode},
+		</if>
+    	<if test="qrcodeScaling != null and qrcodeScaling != ''">
+			qrcode_scaling = #{qrcodeScaling},
+		</if>
+    	<if test="widthPosition != null and widthPosition != ''">
+			width_position = #{widthPosition},
+		</if>
+    	<if test="heightPosition != null and heightPosition != ''">
+			height_position = #{heightPosition},
+		</if>
+    	<if test="isEnable != null and isEnable != ''">
+			is_enable = #{isEnable},
+		</if>
+    	
+	</sql>
+	
+	<select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <trim suffixOverrides=",">
+        <include refid="Base_Column_List"/>
+        </trim>
+        from activity_poster
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+	<insert id="insert" parameterType="com.dwgj.mlxydedicatedline.entity.activityReward.ActivityPoster">
+		insert into activity_poster
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			create_time, 
+			create_id, 
+			status, 
+			version, 
+			remarks, 
+			poster_name,
+			location_path,
+			poster_url,
+			redirects_address,
+			is_place_qrcode,
+			qrcode_scaling, 
+			width_position, 
+			height_position, 
+			is_enable, 
+					</trim>
+		values
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<include refid="Insert_Column_Values"/>
+		</trim>
+	</insert>
+	
+	<insert id="insertSelective" parameterType="com.dwgj.mlxydedicatedline.entity.activityReward.ActivityPoster">
+		insert into activity_poster
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<include refid="Base_Column_List_NotNull"/>
+		</trim>
+		values
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<include refid="Insert_Column_Values_NotNull"/>
+		</trim>
+	</insert>
+	
+	<update id="updateByPrimaryKey" parameterType="com.dwgj.mlxydedicatedline.entity.activityReward.ActivityPoster">
+		update activity_poster
+		<set>
+			<include refid="Update_Column"/>
+		</set>
+		
+		<where>
+		id = #{id} and status = 1
+		</where>
+		
+	</update>
+	
+	<update id="updateByPrimaryKeySelective" parameterType="com.dwgj.mlxydedicatedline.entity.activityReward.ActivityPoster">
+		update activity_poster
+		<set>
+			<include refid="Update_Column_NotNull"/>
+		</set>
+		<where>
+		id = #{id} and status = 1
+		</where>
+	</update>
+
+	<!-- 删除数据（逻辑删除） -->
+	<update id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		update  activity_poster
+		set `status` = 0
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+
+	<!-- 移除数据（物理删除） -->
+	<delete id="removeByPrimaryKey" parameterType="java.lang.Integer">
+		delete from activity_poster
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+
+	<select id="selectEnablePoster" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"/>
+		from activity_poster
+		<where>
+			status = 1
+			and is_enable = 1
+			and poster_type = 'sharePoster'
+		</where>
+	</select>
+
+	<select id="selectEnableAdvertisingPoster" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"/>
+		from activity_poster
+		<where>
+			status = 1
+			and is_enable = 1
+			and poster_type = 'trajectoryAdvertising'
+		</where>
+	</select>
+
+
+</mapper>

@@ -1,0 +1,1 @@
+alter table `customer_from` modify column `from_type` varchar(50) default null comment '来源类型';

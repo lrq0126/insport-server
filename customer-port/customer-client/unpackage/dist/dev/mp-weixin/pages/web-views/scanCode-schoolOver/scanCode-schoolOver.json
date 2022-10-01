@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "扫码放学",
+  "usingComponents": {
+    "uni-tag": "/components/uni-tag/uni-tag",
+    "uni-count-down": "/components/uni-count-down/uni-count-down"
+  }
+}
