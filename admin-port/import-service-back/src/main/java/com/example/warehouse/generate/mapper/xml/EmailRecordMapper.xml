@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.warehouse.generate.mapper.EmailRecordMapper">
+    <resultMap id="BaseResultMap" type="com.example.warehouse.generate.entity.EmailRecord">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+    	
+	    <result column="create_time" jdbcType="datetime" property="createTime"/>
+        <result column="create_id" jdbcType="INTEGER" property="createId"/>
+        <result column="create_name" jdbcType="VARCHAR" property="createName"/>
+        <result column="update_time" jdbcType="datetime" property="updateTime"/>
+        <result column="update_id" jdbcType="INTEGER" property="updateId"/>
+        <result column="update_name" jdbcType="VARCHAR" property="updateName"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="version" jdbcType="INTEGER" property="version"/>
+        <result column="remarks" jdbcType="VARCHAR" property="remarks"/>
+        <result column="is_send" jdbcType="INTEGER" property="isSend"/>
+        <result column="sender_id" jdbcType="INTEGER" property="senderId"/>
+        <result column="sender_name" jdbcType="VARCHAR" property="senderName"/>
+        <result column="title" jdbcType="VARCHAR" property="title"/>
+        <result column="send_object_type" jdbcType="VARCHAR" property="sendObjectType"/>
+        <result column="send_object_id" jdbcType="INTEGER" property="sendObjectId"/>
+        <result column="send_object_name" jdbcType="INTEGER" property="sendObjectName"/>
+        <result column="content_type" jdbcType="VARCHAR" property="contentType"/>
+        <result column="content" jdbcType="VARCHAR" property="content"/>
+    		
+    </resultMap>
+	
+	<!-- 字段 -->
+	<sql id="Base_Column_List">
+		id, create_time, create_id, create_name, update_time, update_id, update_name, status, version, remarks, is_send, sender_id, sender_name, title, send_object_type, send_object_id, send_object_name, content_type, content, 	
+	</sql>
+	
+	<!-- 插入字段实际数值 -->
+	<sql id="Insert_Column_Values">
+		#{createTime},#{createId},#{createName},#{updateTime},#{updateId},#{updateName},#{status},#{version},#{remarks},#{isSend},#{senderId},#{senderName},#{title},#{sendObjectType},#{sendObjectId},#{sendObjectName},#{contentType},#{content},	
+	</sql>
+	
+	<!-- 插入字段（判空） -->
+	<sql id="Base_Column_List_NotNull">
+		<if test="createTime != null and createTime != ''">
+			create_time, 
+		</if>
+    	<if test="createId != null and createId != ''">
+			create_id, 
+		</if>
+    	<if test="createName != null and createName != ''">
+			create_name, 
+		</if>
+    	<if test="updateTime != null and updateTime != ''">
+			update_time, 
+		</if>
+    	<if test="updateId != null and updateId != ''">
+			update_id, 
+		</if>
+    	<if test="updateName != null and updateName != ''">
+			update_name, 
+		</if>
+    	<if test="status != null and status != ''">
+			status, 
+		</if>
+    	<if test="version != null and version != ''">
+			version, 
+		</if>
+    	<if test="remarks != null and remarks != ''">
+			remarks, 
+		</if>
+    	<if test="isSend != null and isSend != ''">
+			is_send, 
+		</if>
+    	<if test="senderId != null and senderId != ''">
+			sender_id, 
+		</if>
+    	<if test="senderName != null and senderName != ''">
+			sender_name, 
+		</if>
+    	<if test="title != null and title != ''">
+			title, 
+		</if>
+    	<if test="sendObjectType != null and sendObjectType != ''">
+			send_object_type, 
+		</if>
+    	<if test="sendObjectId != null and sendObjectId != ''">
+			send_object_id, 
+		</if>
+    	<if test="sendObjectName != null and sendObjectName != ''">
+			send_object_name, 
+		</if>
+    	<if test="contentType != null and contentType != ''">
+			content_type, 
+		</if>
+    	<if test="content != null and content != ''">
+			content, 
+		</if>
+    	
+	</sql>
+	
+	<!-- 插入字段实际数值(判空) -->
+	<sql id="Insert_Column_Values_NotNull">
+		<if test="createTime != null and createTime != ''">
+			#{createTime},
+		</if>
+    	<if test="createId != null and createId != ''">
+			#{createId},
+		</if>
+    	<if test="createName != null and createName != ''">
+			#{createName},
+		</if>
+    	<if test="updateTime != null and updateTime != ''">
+			#{updateTime},
+		</if>
+    	<if test="updateId != null and updateId != ''">
+			#{updateId},
+		</if>
+    	<if test="updateName != null and updateName != ''">
+			#{updateName},
+		</if>
+    	<if test="status != null and status != ''">
+			#{status},
+		</if>
+    	<if test="version != null and version != ''">
+			#{version},
+		</if>
+    	<if test="remarks != null and remarks != ''">
+			#{remarks},
+		</if>
+    	<if test="isSend != null and isSend != ''">
+			#{isSend},
+		</if>
+    	<if test="senderId != null and senderId != ''">
+			#{senderId},
+		</if>
+    	<if test="senderName != null and senderName != ''">
+			#{senderName},
+		</if>
+    	<if test="title != null and title != ''">
+			#{title},
+		</if>
+    	<if test="sendObjectType != null and sendObjectType != ''">
+			#{sendObjectType},
+		</if>
+    	<if test="sendObjectId != null and sendObjectId != ''">
+			#{sendObjectId},
+		</if>
+    	<if test="sendObjectName != null and sendObjectName != ''">
+			#{sendObjectName},
+		</if>
+    	<if test="contentType != null and contentType != ''">
+			#{contentType},
+		</if>
+    	<if test="content != null and content != ''">
+			#{content},
+		</if>
+    	
+	</sql>
+	
+	<!-- 更新字段 -->
+	<sql id="Update_Column">
+		create_time = #{createTime},
+    	create_id = #{createId},
+    	create_name = #{createName},
+    	update_time = #{updateTime},
+    	update_id = #{updateId},
+    	update_name = #{updateName},
+    	status = #{status},
+    	version = #{version},
+    	remarks = #{remarks},
+    	is_send = #{isSend},
+    	sender_id = #{senderId},
+    	sender_name = #{senderName},
+    	title = #{title},
+    	send_object_type = #{sendObjectType},
+    	send_object_id = #{sendObjectId},
+    	send_object_name = #{sendObjectName},
+    	content_type = #{contentType},
+    	content = #{content},
+    	
+	</sql>
+	
+	<!-- 更新字段（判空） -->
+	<sql id="Update_Column_NotNull">
+		<if test="createTime != null and createTime != ''">
+			create_time = #{createTime},
+		</if>
+    	<if test="createId != null and createId != ''">
+			create_id = #{createId},
+		</if>
+    	<if test="createName != null and createName != ''">
+			create_name = #{createName},
+		</if>
+    	<if test="updateTime != null and updateTime != ''">
+			update_time = #{updateTime},
+		</if>
+    	<if test="updateId != null and updateId != ''">
+			update_id = #{updateId},
+		</if>
+    	<if test="updateName != null and updateName != ''">
+			update_name = #{updateName},
+		</if>
+    	<if test="status != null and status != ''">
+			status = #{status},
+		</if>
+    	<if test="version != null and version != ''">
+			version = #{version},
+		</if>
+    	<if test="remarks != null and remarks != ''">
+			remarks = #{remarks},
+		</if>
+    	<if test="isSend != null and isSend != ''">
+			is_send = #{isSend},
+		</if>
+    	<if test="senderId != null and senderId != ''">
+			sender_id = #{senderId},
+		</if>
+    	<if test="senderName != null and senderName != ''">
+			sender_name = #{senderName},
+		</if>
+    	<if test="title != null and title != ''">
+			title = #{title},
+		</if>
+    	<if test="sendObjectType != null and sendObjectType != ''">
+			send_object_type = #{sendObjectType},
+		</if>
+    	<if test="sendObjectId != null and sendObjectId != ''">
+			send_object_id = #{sendObjectId},
+		</if>
+    	<if test="sendObjectName != null and sendObjectName != ''">
+			send_object_name = #{sendObjectName},
+		</if>
+    	<if test="contentType != null and contentType != ''">
+			content_type = #{contentType},
+		</if>
+    	<if test="content != null and content != ''">
+			content = #{content},
+		</if>
+    	
+	</sql>
+	
+	<select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <trim suffixOverrides=",">
+        <include refid="Base_Column_List"/>
+        </trim>
+        from email_record
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+	
+	<insert id="insert" parameterType="com.example.warehouse.generate.entity.EmailRecord">
+		insert into email_record
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			create_time, 
+			create_id, 
+			create_name, 
+			update_time, 
+			update_id, 
+			update_name, 
+			status, 
+			version, 
+			remarks, 
+			is_send, 
+			sender_id, 
+			sender_name, 
+			title, 
+			send_object_type, 
+			send_object_id, 
+			send_object_name, 
+			content_type, 
+			content, 
+					</trim>
+		values
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<include refid="Insert_Column_Values"/>
+		</trim>
+	</insert>
+	
+	<insert id="insertSelective" parameterType="com.example.warehouse.generate.entity.EmailRecord">
+		insert into email_record
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<include refid="Base_Column_List_NotNull"/>
+		</trim>
+		values
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<include refid="Insert_Column_Values_NotNull"/>
+		</trim>
+	</insert>
+	
+	<update id="updateByPrimaryKey" parameterType="com.example.warehouse.generate.entity.EmailRecord">
+		update email_record
+		<set>
+			<include refid="Update_Column"/>
+		</set>
+		
+		<where>
+		id = #{id} and status = 1
+		</where>
+		
+	</update>
+	
+	<update id="updateByPrimaryKeySelective" parameterType="com.example.warehouse.generate.entity.EmailRecord">
+		update email_record
+		<set>
+			<include refid="Update_Column_NotNull"/>
+		</set>
+		<where>
+		id = #{id} and status = 1
+		</where>
+	</update>
+
+	<!-- 删除数据（逻辑删除） -->
+	<update id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		update  email_record
+		set `status` = 0
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	
+	<!-- 移除数据（物理删除） -->
+	<delete id="removeByPrimaryKey" parameterType="java.lang.Integer">
+		delete from email_record
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	
+</mapper>
