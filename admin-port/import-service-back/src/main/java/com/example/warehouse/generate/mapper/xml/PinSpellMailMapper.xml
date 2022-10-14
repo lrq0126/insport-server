@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.warehouse.generate.mapper.PinSpellMailMapper">
+    <resultMap id="BaseResultMap" type="com.example.warehouse.generate.entity.PinSpellMail">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+    	
+	    <result column="create_time" jdbcType="datetime" property="createTime"/>
+        <result column="create_id" jdbcType="INTEGER" property="createId"/>
+        <result column="create_name" jdbcType="VARCHAR" property="createName"/>
+        <result column="update_time" jdbcType="datetime" property="updateTime"/>
+        <result column="update_id" jdbcType="INTEGER" property="updateId"/>
+        <result column="update_name" jdbcType="VARCHAR" property="updateName"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="version" jdbcType="INTEGER" property="version"/>
+        <result column="remarks" jdbcType="VARCHAR" property="remarks"/>
+        <result column="order_name" jdbcType="VARCHAR" property="orderName"/>
+        <result column="order_number" jdbcType="INTEGER" property="orderNumber"/>
+        <result column="route_id" jdbcType="INTEGER" property="routeId"/>
+        <result column="route_name" jdbcType="VARCHAR" property="routeName"/>
+        <result column="country" jdbcType="VARCHAR" property="country"/>
+    		
+    </resultMap>
+	
+	<!-- 字段 -->
+	<sql id="Base_Column_List">
+		id, create_time, create_id, create_name, update_time, update_id, update_name, status, version, remarks, order_name, order_number, route_id, route_name, country, 	
+	</sql>
+	
+	<!-- 插入字段实际数值 -->
+	<sql id="Insert_Column_Values">
+		#{createTime},#{createId},#{createName},#{updateTime},#{updateId},#{updateName},#{status},#{version},#{remarks},#{orderName},#{orderNumber},#{routeId},#{routeName},#{country},	
+	</sql>
+	
+	<!-- 插入字段（判空） -->
+	<sql id="Base_Column_List_NotNull">
+		<if test="createTime != null and createTime != ''">
+			create_time, 
+		</if>
+    	<if test="createId != null and createId != ''">
+			create_id, 
+		</if>
+    	<if test="createName != null and createName != ''">
+			create_name, 
+		</if>
+    	<if test="updateTime != null and updateTime != ''">
+			update_time, 
+		</if>
+    	<if test="updateId != null and updateId != ''">
+			update_id, 
+		</if>
+    	<if test="updateName != null and updateName != ''">
+			update_name, 
+		</if>
+    	<if test="status != null and status != ''">
+			status, 
+		</if>
+    	<if test="version != null and version != ''">
+			version, 
+		</if>
+    	<if test="remarks != null and remarks != ''">
+			remarks, 
+		</if>
+    	<if test="orderName != null and orderName != ''">
+			order_name, 
+		</if>
+    	<if test="orderNumber != null and orderNumber != ''">
+			order_number, 
+		</if>
+    	<if test="routeId != null and routeId != ''">
+			route_id, 
+		</if>
+    	<if test="routeName != null and routeName != ''">
+			route_name, 
+		</if>
+    	<if test="country != null and country != ''">
+			country, 
+		</if>
+    	
+	</sql>
+	
+	<!-- 插入字段实际数值(判空) -->
+	<sql id="Insert_Column_Values_NotNull">
+		<if test="createTime != null and createTime != ''">
+			#{createTime},
+		</if>
+    	<if test="createId != null and createId != ''">
+			#{createId},
+		</if>
+    	<if test="createName != null and createName != ''">
+			#{createName},
+		</if>
+    	<if test="updateTime != null and updateTime != ''">
+			#{updateTime},
+		</if>
+    	<if test="updateId != null and updateId != ''">
+			#{updateId},
+		</if>
+    	<if test="updateName != null and updateName != ''">
+			#{updateName},
+		</if>
+    	<if test="status != null and status != ''">
+			#{status},
+		</if>
+    	<if test="version != null and version != ''">
+			#{version},
+		</if>
+    	<if test="remarks != null and remarks != ''">
+			#{remarks},
+		</if>
+    	<if test="orderName != null and orderName != ''">
+			#{orderName},
+		</if>
+    	<if test="orderNumber != null and orderNumber != ''">
+			#{orderNumber},
+		</if>
+    	<if test="routeId != null and routeId != ''">
+			#{routeId},
+		</if>
+    	<if test="routeName != null and routeName != ''">
+			#{routeName},
+		</if>
+    	<if test="country != null and country != ''">
+			#{country},
+		</if>
+    	
+	</sql>
+	
+	<!-- 更新字段 -->
+	<sql id="Update_Column">
+		create_time = #{createTime},
+    	create_id = #{createId},
+    	create_name = #{createName},
+    	update_time = #{updateTime},
+    	update_id = #{updateId},
+    	update_name = #{updateName},
+    	status = #{status},
+    	version = #{version},
+    	remarks = #{remarks},
+    	order_name = #{orderName},
+    	order_number = #{orderNumber},
+    	route_id = #{routeId},
+    	route_name = #{routeName},
+    	country = #{country},
+    	
+	</sql>
+	
+	<!-- 更新字段（判空） -->
+	<sql id="Update_Column_NotNull">
+		<if test="createTime != null and createTime != ''">
+			create_time = #{createTime},
+		</if>
+    	<if test="createId != null and createId != ''">
+			create_id = #{createId},
+		</if>
+    	<if test="createName != null and createName != ''">
+			create_name = #{createName},
+		</if>
+    	<if test="updateTime != null and updateTime != ''">
+			update_time = #{updateTime},
+		</if>
+    	<if test="updateId != null and updateId != ''">
+			update_id = #{updateId},
+		</if>
+    	<if test="updateName != null and updateName != ''">
+			update_name = #{updateName},
+		</if>
+    	<if test="status != null and status != ''">
+			status = #{status},
+		</if>
+    	<if test="version != null and version != ''">
+			version = #{version},
+		</if>
+    	<if test="remarks != null and remarks != ''">
+			remarks = #{remarks},
+		</if>
+    	<if test="orderName != null and orderName != ''">
+			order_name = #{orderName},
+		</if>
+    	<if test="orderNumber != null and orderNumber != ''">
+			order_number = #{orderNumber},
+		</if>
+    	<if test="routeId != null and routeId != ''">
+			route_id = #{routeId},
+		</if>
+    	<if test="routeName != null and routeName != ''">
+			route_name = #{routeName},
+		</if>
+    	<if test="country != null and country != ''">
+			country = #{country},
+		</if>
+    	
+	</sql>
+	
+	<select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <trim suffixOverrides=",">
+        <include refid="Base_Column_List"/>
+        </trim>
+        from pin_spell_mail
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+	
+	<insert id="insert" parameterType="com.example.warehouse.generate.entity.PinSpellMail">
+		insert into pin_spell_mail
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			create_time, 
+			create_id, 
+			create_name, 
+			update_time, 
+			update_id, 
+			update_name, 
+			status, 
+			version, 
+			remarks, 
+			order_name, 
+			order_number, 
+			route_id, 
+			route_name, 
+			country, 
+					</trim>
+		values
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<include refid="Insert_Column_Values"/>
+		</trim>
+	</insert>
+	
+	<insert id="insertSelective" parameterType="com.example.warehouse.generate.entity.PinSpellMail">
+		insert into pin_spell_mail
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<include refid="Base_Column_List_NotNull"/>
+		</trim>
+		values
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<include refid="Insert_Column_Values_NotNull"/>
+		</trim>
+	</insert>
+	
+	<update id="updateByPrimaryKey" parameterType="com.example.warehouse.generate.entity.PinSpellMail">
+		update pin_spell_mail
+		<set>
+			<include refid="Update_Column"/>
+		</set>
+		
+		<where>
+		id = #{id} and status = 1
+		</where>
+		
+	</update>
+	
+	<update id="updateByPrimaryKeySelective" parameterType="com.example.warehouse.generate.entity.PinSpellMail">
+		update pin_spell_mail
+		<set>
+			<include refid="Update_Column_NotNull"/>
+		</set>
+		<where>
+		id = #{id} and status = 1
+		</where>
+	</update>
+
+	<!-- 删除数据（逻辑删除） -->
+	<update id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		update  pin_spell_mail
+		set `status` = 0
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	
+	<!-- 移除数据（物理删除） -->
+	<delete id="removeByPrimaryKey" parameterType="java.lang.Integer">
+		delete from pin_spell_mail
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	
+</mapper>
