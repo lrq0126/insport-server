@@ -12,5 +12,7 @@ public class WarehouseAddressReqVo extends PageVo {
     private String address;
     private String companyName;
     private Integer isEnable;
+    private Integer commercialAreaId;
+    private String commercialAreaName;
 
 }

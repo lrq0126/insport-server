@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.warehouse.mapper.DeliveryCompanyMapper">
+  <sql id="table">delivery_company</sql>
+
+  <sql id="selectCols">t.id, t.delivery_no, t.delivery_name, t.status, DATE_FORMAT(t.create_time,'%Y-%m-%d %k:%i:%s') as create_time, t.create_id, DATE_FORMAT(t.last_update_time,'%Y-%m-%d %k:%i:%s') as last_update_time, t.last_update_id</sql>
+  <resultMap id="beanMap" type="com.example.warehouse.entity.DeliveryCompany">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="delivery_no" jdbcType="VARCHAR" property="deliveryNo" />
+    <result column="delivery_name" jdbcType="VARCHAR" property="deliveryName" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="create_id" jdbcType="INTEGER" property="createId" />
+    <result column="last_update_time" jdbcType="TIMESTAMP" property="lastUpdateTime" />
+    <result column="last_update_id" jdbcType="INTEGER" property="lastUpdateId" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from delivery_company
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.example.warehouse.entity.DeliveryCompany">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into delivery_company (delivery_no, delivery_name, `status`,
+    create_time, create_id, last_update_time,
+    last_update_id)
+    values (#{deliveryNo,jdbcType=VARCHAR}, #{deliveryName,jdbcType=VARCHAR}, 1,
+    now(), #{createId,jdbcType=INTEGER}, #{lastUpdateTime,jdbcType=TIMESTAMP},
+    #{lastUpdateId,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.example.warehouse.entity.DeliveryCompany">
+    update delivery_company
+    set
+      delivery_name = #{deliveryName,jdbcType=VARCHAR},
+      create_id = #{createId,jdbcType=INTEGER},
+      last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+      last_update_id = #{lastUpdateId,jdbcType=INTEGER}
+    where delivery_no = #{deliveryNo,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="beanMap">
+    select
+    <include refid="selectCols"/>
+    from
+    <include refid="table"/> t
+    where t.id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectAll" resultMap="beanMap" parameterType="java.util.Map">
+    select
+    <include refid="selectCols"/>
+    from
+    <include refid="table"/>t
+    <where>
+      <include refid="condition_sql"/>
+      and
+      t.status = 1
+    </where>
+    ORDER BY t.create_time desc
+    LIMIT #{pageNumber},#{pageSize}
+  </select>
+
+  <select id="countSelectAll" resultType="java.lang.Integer" parameterType="java.util.Map">
+    select
+    count(*) as count
+    from
+    <include refid="table"/>t
+    <where>
+      <include refid="condition_sql"/>
+      and
+      t.status = 1
+    </where>
+  </select>
+
+  <sql id="condition_sql">
+    <if test="deliveryNo!= null and deliveryNo!=''">and t.delivery_no=#{deliveryNo}</if>
+    <if test="deliveryName!= null and deliveryName!=''">and t.delivery_name like CONCAT('%',#{deliveryName},'%')</if>
+    <if test="createId!= null and createId!=''">and t.create_id=#{createId}</if>
+  </sql>
+
+  <update id="del">
+    update delivery_company
+    set
+    status = 0 and last_update_id = #{userId}
+    where delivery_no = #{deliveryNo}
+  </update>
+
+  <select id="find" parameterType="java.util.Map" resultMap="beanMap">
+    select
+    <include refid="selectCols"/>
+    from
+    <include refid="table"/> t
+    <where>
+      <include refid="condition_sql"/>
+      and t.status = 1
+    </where>
+  </select>
+</mapper>

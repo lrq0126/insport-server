@@ -13,6 +13,7 @@ import java.util.List;
 public interface ShelvesAreaService {
 
     ResponseEntity<PageResultModel> getShelvesAreaList(ShelvesReqVo shelvesReqVo);
+    ResponseEntity<ResultModel> getShelvesAreaDropdownList();
 
     ResponseEntity<ResultModel> saveShelves(ShelvesRespVo shelves);
 

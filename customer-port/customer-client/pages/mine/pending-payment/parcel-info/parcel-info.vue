@@ -57,11 +57,11 @@
                                             <text class="package_C_C_T">备注信息：</text><text style="color: red;">{{item.message}}</text>
                                         </p>
                                     </view>
-									<view style="height: 70upx;">
+									<!-- <view style="height: 70upx;">
 										<view style="margin-left: 10%; margin-top: 20upx; width: 30%; text-align: center;background-color: #38a9ff; border-radius: 10upx;" @click="checkPicture(item.deliveryOrderNo)">
 											查看入库图片
 										</view>
-									</view>
+									</view> -->
                                     <!-- <view class="package_C_B">
 		                                <view class="rejection" @click="handleGo('./application-info/application-info')">单独打包</view>
 		                                <view class="look">查看详情</view>

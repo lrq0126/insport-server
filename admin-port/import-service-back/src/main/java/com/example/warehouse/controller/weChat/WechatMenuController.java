@@ -28,7 +28,7 @@ public class WechatMenuController {
     @ResponseBody
     public String getAccessToken(){
         HttpUtilManager httpUtilManager = HttpUtilManager.getInstance();
-        String url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wx0b9a53ec48a455a4&secret=37d41628a143e2bef5ba13c6639295ab";
+        String url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wx41baa8dfc1dae72b&secret=8d5b1a036d81714ac5b5e3d29fff1419";
         String request = null;
         try {
             request = httpUtilManager.requestHttpGet(url);

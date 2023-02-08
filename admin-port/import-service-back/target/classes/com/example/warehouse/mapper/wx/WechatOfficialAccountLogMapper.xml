@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.warehouse.mapper.wx.WechatOfficialAccountLogMapper">
+    <resultMap id="BaseResultMap" type="com.example.warehouse.entity.wx.WechatOfficialAccountLog">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+    	
+	    <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="from_user_name" jdbcType="VARCHAR" property="fromUserName"/>
+        <result column="msg_type" jdbcType="VARCHAR" property="msgType"/>
+        <result column="event" jdbcType="VARCHAR" property="event"/>
+        <result column="event_key" jdbcType="VARCHAR" property="eventKey"/>
+    		
+    </resultMap>
+	
+	<!-- 字段 -->
+	<sql id="Base_Column_List">
+		id, create_time, from_user_name, msg_type, event, event_key
+	</sql>
+	
+	<!-- 插入字段实际数值 -->
+	<sql id="Insert_Column_Values">
+		#{createTime},#{fromUserName},#{msgType},#{event},#{eventKey}
+	</sql>
+	
+	<!-- 插入字段（判空） -->
+	<sql id="Base_Column_List_NotNull">
+		<if test="createTime != null and createTime != ''">
+			create_time, 
+		</if>
+    	<if test="fromUserName != null and fromUserName != ''">
+			from_user_name, 
+		</if>
+    	<if test="msgType != null and msgType != ''">
+			msg_type, 
+		</if>
+    	<if test="event != null and event != ''">
+			event, 
+		</if>
+    	<if test="eventKey != null and eventKey != ''">
+			event_key, 
+		</if>
+    	
+	</sql>
+	
+	<!-- 插入字段实际数值(判空) -->
+	<sql id="Insert_Column_Values_NotNull">
+		<if test="createTime != null and createTime != ''">
+			#{createTime},
+		</if>
+    	<if test="fromUserName != null and fromUserName != ''">
+			#{fromUserName},
+		</if>
+    	<if test="msgType != null and msgType != ''">
+			#{msgType},
+		</if>
+    	<if test="event != null and event != ''">
+			#{event},
+		</if>
+    	<if test="eventKey != null and eventKey != ''">
+			#{eventKey},
+		</if>
+    	
+	</sql>
+	
+	<!-- 更新字段 -->
+	<sql id="Update_Column">
+		create_time = #{createTime},
+    	from_user_name = #{fromUserName},
+    	msg_type = #{msgType},
+    	event = #{event},
+    	event_key = #{eventKey},
+    	
+	</sql>
+	
+	<!-- 更新字段（判空） -->
+	<sql id="Update_Column_NotNull">
+		<if test="createTime != null and createTime != ''">
+			create_time = #{createTime},
+		</if>
+    	<if test="fromUserName != null and fromUserName != ''">
+			from_user_name = #{fromUserName},
+		</if>
+    	<if test="msgType != null and msgType != ''">
+			msg_type = #{msgType},
+		</if>
+    	<if test="event != null and event != ''">
+			event = #{event},
+		</if>
+    	<if test="eventKey != null and eventKey != ''">
+			event_key = #{eventKey},
+		</if>
+    	
+	</sql>
+	
+	<select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <trim suffixOverrides=",">
+        <include refid="Base_Column_List"/>
+        </trim>
+        from wechat_official_account_log
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+	<select id="getWeChatLogCount" resultType="java.lang.Integer">
+		select count(1)
+		from wechat_official_account_log t
+        <if test="customerID != null and customerID != ''">
+            LEFT JOIN (SELECT login_name, openid from customer WHERE `status` = 1) cus ON cus.openid = t.from_user_name
+        </if>
+		<where>
+			<if test="customerID != null and customerID != ''">
+				and cus.login_name like concat('%', #{customerID}, '%')
+			</if>
+			<if test="msgType != null and msgType != ''">
+				and t.msg_type = #{msgType}
+			</if>
+			<if test="event != null and event != ''">
+				and t.event = #{event}
+			</if>
+			<if test="eventKey != null and eventKey != ''">
+				and t.event_key like concat('%', #{eventKey}, '%')
+			</if>
+		</where>
+	</select>
+
+	<select id="getWeChatLog" resultMap="BaseResultMap">
+		select
+		t.id,
+		DATE_FORMAT(t.create_time, '%Y-%m-%d %k:%i:%s') as create_time,
+		t.from_user_name, t.msg_type, t.event, t.event_key, cus.login_name as loginName
+		from wechat_official_account_log t
+        LEFT JOIN (SELECT login_name, openid from customer WHERE `status` = 1) cus ON cus.openid = t.from_user_name
+		<where>
+			<if test="customerID != null and customerID != ''">
+				and cus.login_name like concat('%', #{customerID}, '%')
+			</if>
+			<if test="msgType != null and msgType != ''">
+				and t.msg_type = #{msgType}
+			</if>
+			<if test="event != null and event != ''">
+				and t.event = #{event}
+			</if>
+			<if test="eventKey != null and eventKey != ''">
+				and t.event_key like concat('%', #{eventKey}, '%')
+			</if>
+		</where>
+		order by t.create_time desc
+		limit #{pageNumber}, #{pageSize}
+	</select>
+
+	<insert id="insert" parameterType="com.example.warehouse.entity.wx.WechatOfficialAccountLog">
+		insert into wechat_official_account_log
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			create_time, 
+			from_user_name, 
+			msg_type, 
+			event, 
+			event_key, 
+					</trim>
+		values
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<include refid="Insert_Column_Values"/>
+		</trim>
+	</insert>
+	
+	<insert id="insertSelective" parameterType="com.example.warehouse.entity.wx.WechatOfficialAccountLog">
+		insert into wechat_official_account_log
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<include refid="Base_Column_List_NotNull"/>
+		</trim>
+		values
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<include refid="Insert_Column_Values_NotNull"/>
+		</trim>
+	</insert>
+	
+	<update id="updateByPrimaryKey" parameterType="com.example.warehouse.entity.wx.WechatOfficialAccountLog">
+		update wechat_official_account_log
+		<set>
+			<include refid="Update_Column"/>
+		</set>
+		
+		<where>
+		id = #{id} and status = 1
+		</where>
+		
+	</update>
+	
+	<update id="updateByPrimaryKeySelective" parameterType="com.example.warehouse.entity.wx.WechatOfficialAccountLog">
+		update wechat_official_account_log
+		<set>
+			<include refid="Update_Column_NotNull"/>
+		</set>
+		<where>
+		id = #{id} and status = 1
+		</where>
+	</update>
+
+	<!-- 删除数据（逻辑删除） -->
+	<update id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		update  wechat_official_account_log
+		set `status` = 0
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	
+	<!-- 移除数据（物理删除） -->
+	<delete id="removeByPrimaryKey" parameterType="java.lang.Integer">
+		delete from wechat_official_account_log
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	
+</mapper>

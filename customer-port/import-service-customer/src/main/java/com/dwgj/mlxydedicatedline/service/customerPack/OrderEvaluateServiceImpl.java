@@ -17,6 +17,7 @@ import com.dwgj.mlxydedicatedline.resultType.PageResultModel;
 import com.dwgj.mlxydedicatedline.resultType.ResultModel;
 import com.dwgj.mlxydedicatedline.utils.DateUtil;
 import com.dwgj.mlxydedicatedline.utils.FileUtil;
+import com.dwgj.mlxydedicatedline.utils.ImgUtil;
 import com.dwgj.mlxydedicatedline.vo.orderEvaluate.OrderEvaluateReqVo;
 import com.dwgj.mlxydedicatedline.vo.orderEvaluate.OrderEvaluateRespVo;
 import com.dwgj.mlxydedicatedline.vo.pack.CustomerPackRespVo;
@@ -42,6 +43,7 @@ import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.dwgj.mlxydedicatedline.entity.image.ImageType.OrderEvaluatePicture;
 import static com.dwgj.mlxydedicatedline.enums.ResultStatus.ERROR;
 import static com.dwgj.mlxydedicatedline.enums.ResultStatus.FILE_MAX;
 import static com.dwgj.mlxydedicatedline.enums.ResultStatus.SYS_ERROR;
@@ -131,10 +133,8 @@ public class OrderEvaluateServiceImpl implements OrderEvaluateService {
     @Override
     @Transactional
     public ResponseEntity<ResultModel> saveEvaluate(OrderEvaluate orderEvaluate, MultipartFile[] multipartFiles) {
-        List<Images> imagesList = new ArrayList<>(3);
         try {
-            ResponseEntity<ResultModel> responseEntity = imagesUpload(multipartFiles, imagesList);
-            if (responseEntity == null) {
+            List<Images> imagesList = ImgUtil.imagesUpload(multipartFiles, OrderEvaluatePicture.toString());
                 orderEvaluate.setCreateTime(DateUtil.getCurrentTime("yyyy-MM-dd HH:mm:ss"));
                 orderEvaluate.setStatus(1);
                 orderEvaluateMapper.insertSelective(orderEvaluate);
@@ -142,15 +142,13 @@ public class OrderEvaluateServiceImpl implements OrderEvaluateService {
                 if (!imagesList.isEmpty()) {
                     imagesList.forEach(images -> {
                         images.setContentId(orderEvaluate.getOrderNumber());
-                        images.setPicType(ImageType.OrderEvaluatePicture.toString());
+                        images.setPicType(OrderEvaluatePicture.toString());
                     });
                     imagesMapper.insertImagesList(imagesList);
                 }
 
                 return new ResponseEntity<>(ResultModel.ok(), HttpStatus.OK);
 
-            }
-            return responseEntity;
         } catch (IOException e) {
             e.printStackTrace();
             return new ResponseEntity<>(ResultModel.error(ERROR, "图片上传错误"), HttpStatus.OK);
@@ -192,125 +190,6 @@ public class OrderEvaluateServiceImpl implements OrderEvaluateService {
         return new ResponseEntity<>(ResultModel.ok(orderEvaluate), HttpStatus.OK);
     }
 
-
-    // 图片上传保存
-    private ResponseEntity<ResultModel> imagesUpload(MultipartFile[] multipartFiles, List<Images> imagesList) throws IOException {
-        // 上传文件的地址
-        String filePath = UPLOAD_LOCATION + "/" +ImageType.OrderEvaluatePicture.toString() + "/" + DateUtil.getYMStr();
-
-        File files = new File(filePath);
-        if (files.getParentFile() != null) {
-            //创建文件
-            files.mkdirs();
-        }
-
-        int i = 0;
-        for (MultipartFile f : multipartFiles) {
-
-            if (f.getSize() >= 10*1024*1024) {
-                System.out.println("文件不能大于10M");
-            }
-
-            String originalFilename = f.getOriginalFilename();
-            String suffix = FileUtil.getSuffix2(originalFilename);
-            String fileSize = f.getSize() + "";
-
-            if (f.getSize() > FileUtil.IMAGE_MAX_SIZE) {
-                return new ResponseEntity<>(ResultModel.error(FILE_MAX), HttpStatus.OK);
-            }
-            String imageName = SequenceCode.gainSerialNo("IMG_") + suffix;
-
-            // 创建文件路径
-            File file = FileUtil.buildFileName(ImageType.OrderEvaluatePicture.toString(), imageName);
-
-            try {
-                f.transferTo(file);
-            } catch (IOException e) {
-                e.printStackTrace();
-                return new ResponseEntity<>(ResultModel.error(SYS_ERROR), HttpStatus.OK);
-            }
-            String picurl = domain + "/" + file.getPath().substring(file.getPath().indexOf("upload"));
-            picurl = picurl.replaceAll("\\\\", "/");
-
-
-            pictureZip(f, picurl, imageName);
-
-            Images images = new Images();
-            images.setImageName(originalFilename);
-            images.setPicType(ImageType.OrderEvaluatePicture.toString());
-
-
-            images.setPicUrl(picurl);
-            images.setImageSize(fileSize);
-            images.setSortNo(i);
-            images.setPath(file.getPath());
-            images.setCreateTime(new Date());
-            images.setStatus(1);
-            imagesList.add(images);
-            i++;
-        }
-        return null;
-    }
-
-    /**
-     *
-     * @param imageFile 输入文件
-     * @param outPath 输出文件完整路径
-     * @param outFileName 输出文件名称
-     */
-    private void pictureZip(MultipartFile imageFile, String outPath, String outFileName) {
-
-        // 去掉后缀中包含的.png字符串
-        if(outFileName.contains(".png")){
-            outFileName = outFileName.replace(".png", ".jpg");
-        }
-
-        InputStream inputStream = null;
-        FileOutputStream fileOutputStream = null;
-        // 输出文件完整路径
-        String outPathFile = outPath + "/" + outFileName;
-
-        File file = new File(outPathFile);
-        if(file.exists()){
-            file.delete();
-        }
-        try {
-            inputStream = imageFile.getInputStream();
-            fileOutputStream = new FileOutputStream(outPathFile);
-            IOUtils.copyLarge(inputStream, fileOutputStream);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (inputStream != null) {
-                    inputStream.close();
-                }
-                if (fileOutputStream != null) {
-                    fileOutputStream.flush();
-                    fileOutputStream.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        long size = imageFile.getSize();
-        double scale = 1.0d ;
-        // 修改
-        if(size > 500*1024){
-            scale = (500*1024f) / size ;
-        }
-
-        try {
-            if(size > 500*1024){
-                Thumbnails.of(outPathFile).scale(1f).outputQuality(scale).outputFormat("jpg").toFile(outPathFile);
-            }else {
-                Thumbnails.of(outPathFile).scale(1f).outputFormat("jpg").toFile(outPathFile);
-            }
-        } catch (Exception e1) {
-           e1.printStackTrace();
-        }
-    }
 
     public static void main(String[] args) {
 //        String outFileName = "BBBBB.png";

@@ -20,6 +20,10 @@ public class CustomerPackReceiverAddress implements Serializable {
     */
     private Integer customerPackId;
     /**
+    * 收件地址ID
+    */
+    private Integer addressId;
+    /**
     * 收货地址
     */
     private String receiverAddress;

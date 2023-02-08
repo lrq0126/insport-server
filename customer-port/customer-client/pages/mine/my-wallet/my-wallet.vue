@@ -273,7 +273,7 @@ export default {
     .comx {
         background: #f1f1f1;
         .my_wallet {
-            background: #fbbd43f5;
+            background: #52c3ff;
             padding: 42upx;
             color: #fff;
             text-align: center;

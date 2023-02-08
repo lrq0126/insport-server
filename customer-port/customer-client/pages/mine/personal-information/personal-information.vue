@@ -365,7 +365,7 @@ export default {
 				        border: 1px #dedede solid;
 				        width: 100%;
 				        // height: 84upx;
-				        background: #fbbd43f5;
+				        background: #0b58ff;
 				        border-radius: 10upx;
 				        color: #fff;
 				        font-size: 32upx;

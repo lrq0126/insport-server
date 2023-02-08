@@ -65,7 +65,7 @@
                             <label>
                                 <checkbox value="cb"
                                           checked="true"
-                                          color="#FFCC33"
+                                          color="#00007f"
                                           style="transform:scale(0.7)" />默认地址
                             </label>
                         </checkbox-group>
@@ -286,7 +286,7 @@ export default {
                 display: block;
                 width: 80%;
                 height: 72upx;
-                background: #fbbd43f5;
+                background: #0c44fff5;
                 margin: 20upx auto;
                 border-radius: 50px;
                 text-align: center;

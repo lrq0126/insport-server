@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.warehouse.mapper.customerPack.PinSpellMailMapper">
+    <resultMap id="BaseResultMap" type="com.example.warehouse.entity.customerPack.PinSpellMail">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+    	
+	    <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="create_id" jdbcType="INTEGER" property="createId"/>
+        <result column="create_name" jdbcType="VARCHAR" property="createName"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="update_id" jdbcType="INTEGER" property="updateId"/>
+        <result column="update_name" jdbcType="VARCHAR" property="updateName"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="version" jdbcType="INTEGER" property="version"/>
+        <result column="remarks" jdbcType="VARCHAR" property="remarks"/>
+        <result column="order_name" jdbcType="VARCHAR" property="orderName"/>
+        <result column="order_number" jdbcType="VARCHAR" property="orderNumber"/>
+        <result column="pin_type" jdbcType="INTEGER" property="pinType"/>
+        <result column="route_id" jdbcType="INTEGER" property="routeId"/>
+        <result column="route_name" jdbcType="VARCHAR" property="routeName"/>
+        <result column="country" jdbcType="VARCHAR" property="country"/>
+    		
+    </resultMap>
+	<resultMap id="RespResultMap" extends="BaseResultMap" type="com.example.warehouse.entity.customerPack.PinSpellMail">
+		<collection property="orderWeight" column="id" select="com.example.warehouse.mapper.customerPack.PinSpellMailMapper.sumOrderWeight"/>
+	</resultMap>
+	<!-- 字段 -->
+	<sql id="Base_Column_List">
+		id, create_time, create_id, create_name,
+		update_time, update_id, update_name, status, version, remarks,
+		order_name, order_number, pin_type, route_id, route_name, country
+	</sql>
+	
+	<!-- 插入字段实际数值 -->
+	<sql id="Insert_Column_Values">
+		#{createTime},#{createId},#{createName},
+		#{updateTime},#{updateId},#{updateName},#{status},#{version},#{remarks},
+		#{orderName},#{orderNumber},#{pinType},#{routeId},#{routeName},#{country}
+	</sql>
+	
+	<!-- 插入字段（判空） -->
+	<sql id="Base_Column_List_NotNull">
+		<if test="createTime != null and createTime != ''">
+			create_time, 
+		</if>
+    	<if test="createId != null and createId != ''">
+			create_id, 
+		</if>
+    	<if test="createName != null and createName != ''">
+			create_name, 
+		</if>
+    	<if test="updateTime != null and updateTime != ''">
+			update_time, 
+		</if>
+    	<if test="updateId != null and updateId != ''">
+			update_id, 
+		</if>
+    	<if test="updateName != null and updateName != ''">
+			update_name, 
+		</if>
+    	<if test="status != null and status != ''">
+			status, 
+		</if>
+    	<if test="version != null and version != ''">
+			version, 
+		</if>
+    	<if test="remarks != null and remarks != ''">
+			remarks, 
+		</if>
+    	<if test="orderName != null and orderName != ''">
+			order_name, 
+		</if>
+    	<if test="orderNumber != null and orderNumber != ''">
+			order_number, 
+		</if>
+    	<if test="pinType != null and pinType != ''">
+			pin_type,
+		</if>
+    	<if test="routeId != null and routeId != ''">
+			route_id, 
+		</if>
+    	<if test="routeName != null and routeName != ''">
+			route_name, 
+		</if>
+    	<if test="country != null and country != ''">
+			country, 
+		</if>
+    	
+	</sql>
+	
+	<!-- 插入字段实际数值(判空) -->
+	<sql id="Insert_Column_Values_NotNull">
+		<if test="createTime != null and createTime != ''">
+			#{createTime},
+		</if>
+    	<if test="createId != null and createId != ''">
+			#{createId},
+		</if>
+    	<if test="createName != null and createName != ''">
+			#{createName},
+		</if>
+    	<if test="updateTime != null and updateTime != ''">
+			#{updateTime},
+		</if>
+    	<if test="updateId != null and updateId != ''">
+			#{updateId},
+		</if>
+    	<if test="updateName != null and updateName != ''">
+			#{updateName},
+		</if>
+    	<if test="status != null and status != ''">
+			#{status},
+		</if>
+    	<if test="version != null and version != ''">
+			#{version},
+		</if>
+    	<if test="remarks != null and remarks != ''">
+			#{remarks},
+		</if>
+    	<if test="orderName != null and orderName != ''">
+			#{orderName},
+		</if>
+    	<if test="orderNumber != null and orderNumber != ''">
+			#{orderNumber},
+		</if>
+    	<if test="pinType != null and pinType != ''">
+			#{pinType},
+		</if>
+    	<if test="routeId != null and routeId != ''">
+			#{routeId},
+		</if>
+    	<if test="routeName != null and routeName != ''">
+			#{routeName},
+		</if>
+    	<if test="country != null and country != ''">
+			#{country},
+		</if>
+    	
+	</sql>
+	
+	<!-- 更新字段 -->
+	<sql id="Update_Column">
+		create_time = #{createTime},
+    	create_id = #{createId},
+    	create_name = #{createName},
+    	update_time = #{updateTime},
+    	update_id = #{updateId},
+    	update_name = #{updateName},
+    	status = #{status},
+    	version = #{version},
+    	remarks = #{remarks},
+    	order_name = #{orderName},
+    	order_number = #{orderNumber},
+		pin_type = #{pinType},
+    	route_id = #{routeId},
+    	route_name = #{routeName},
+    	country = #{country},
+    	
+	</sql>
+	
+	<!-- 更新字段（判空） -->
+	<sql id="Update_Column_NotNull">
+		<if test="createTime != null and createTime != ''">
+			create_time = #{createTime},
+		</if>
+    	<if test="createId != null and createId != ''">
+			create_id = #{createId},
+		</if>
+    	<if test="createName != null and createName != ''">
+			create_name = #{createName},
+		</if>
+    	<if test="updateTime != null and updateTime != ''">
+			update_time = #{updateTime},
+		</if>
+    	<if test="updateId != null and updateId != ''">
+			update_id = #{updateId},
+		</if>
+    	<if test="updateName != null and updateName != ''">
+			update_name = #{updateName},
+		</if>
+    	<if test="status != null and status != ''">
+			status = #{status},
+		</if>
+    	<if test="version != null and version != ''">
+			version = #{version},
+		</if>
+    	<if test="remarks != null and remarks != ''">
+			remarks = #{remarks},
+		</if>
+    	<if test="orderName != null and orderName != ''">
+			order_name = #{orderName},
+		</if>
+    	<if test="orderNumber != null and orderNumber != ''">
+			order_number = #{orderNumber},
+		</if>
+    	<if test="pinType != null and pinType != ''">
+			pin_type = #{pinType},
+		</if>
+    	<if test="routeId != null and routeId != ''">
+			route_id = #{routeId},
+		</if>
+    	<if test="routeName != null and routeName != ''">
+			route_name = #{routeName},
+		</if>
+    	<if test="country != null and country != ''">
+			country = #{country},
+		</if>
+    	
+	</sql>
+	
+	<select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <trim suffixOverrides=",">
+        <include refid="Base_Column_List"/>
+        </trim>
+        from pin_spell_mail
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+	<select id="getPinSpellMailCount" resultType="java.lang.Integer">
+		select count(1)
+		from pin_spell_mail t
+		left join transportation_route route on route.id = t.route_id
+		left join `user` u on u.id = route.operation_id
+		<where>
+			t.status = 1
+			<if test="commercialAreaId != null">
+				and u.commercial_area_id = #{commercialAreaId}
+			</if>
+			<if test="orderName != null and orderName != ''">
+				and t.order_name regexp #{orderName}
+			</if>
+			<if test="orderNumber != null and orderNumber != ''">
+				and t.order_number regexp #{orderNumber}
+			</if>
+			<if test="pinType != null">
+				and t.pin_type = #{pinType}
+			</if>
+			<if test="country != null and country != ''">
+				and t.country regexp #{country}
+			</if>
+		</where>
+	</select>
+	<select id="getPinSpellMailList" resultMap="RespResultMap">
+		select
+			DATE_FORMAT(t.create_time, '%Y-%m-%d %k:%i:%s') as create_time,
+			t.id, t.create_id, t.create_name,
+			t.remarks, t.order_name, t.order_number,
+			t.pin_type, t.route_id, t.route_name, t.country
+		from pin_spell_mail t
+		left join transportation_route route on route.id = t.route_id
+		left join `user` u on u.id = route.operation_id
+		<where>
+			t.status = 1
+			<if test="commercialAreaId != null">
+				and u.commercial_area_id = #{commercialAreaId}
+			</if>
+			<if test="orderName != null and orderName != ''">
+				and t.order_name regexp #{orderName}
+			</if>
+			<if test="orderNumber != null and orderNumber != ''">
+				and t.order_number regexp #{orderNumber}
+			</if>
+			<if test="pinType != null">
+				and t.pin_type = #{pinType}
+			</if>
+			<if test="country != null and country != ''">
+				and t.country regexp #{country}
+			</if>
+		</where>
+		limit #{pageNumber}, #{pageSize}
+	</select>
+
+	<select id="sumOrderWeight" resultType="java.lang.Double">
+		select IFNULL(sum(t.actual_weight), 0)
+		from customer_pack t
+		left join pin_spell_mail_customer_pack psmcp on t.id = psmcp.customer_pack_id and psmcp.status = 1
+		<where>
+			t.status = 1
+			and psmcp.pin_spell_mail_id = #{pinSpellMailId}
+		</where>
+	</select>
+
+	<select id="getPinSpellMailInfo" resultMap="PinSpellMailInfoMap">
+		select
+			DATE_FORMAT(create_time, '%Y-%m-%d %k:%i:%s') as create_time,
+			id, create_id, create_name,
+			remarks, order_name, order_number,
+			pin_type, route_id, route_name, country
+		from pin_spell_mail
+		<where>
+			status = 1
+			and id = #{id}
+		</where>
+	</select>
+
+	<insert id="insert" parameterType="com.example.warehouse.entity.customerPack.PinSpellMail">
+		insert into pin_spell_mail
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			create_time, 
+			create_id, 
+			create_name, 
+			update_time, 
+			update_id, 
+			update_name, 
+			status, 
+			version, 
+			remarks, 
+			order_name, 
+			order_number,
+			pin_type,
+			route_id,
+			route_name, 
+			country, 
+		</trim>
+		values
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<include refid="Insert_Column_Values"/>
+		</trim>
+	</insert>
+	
+	<insert id="insertSelective" parameterType="com.example.warehouse.entity.customerPack.PinSpellMail">
+		insert into pin_spell_mail
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<include refid="Base_Column_List_NotNull"/>
+		</trim>
+		values
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<include refid="Insert_Column_Values_NotNull"/>
+		</trim>
+	</insert>
+	
+	<update id="updateByPrimaryKey" parameterType="com.example.warehouse.entity.customerPack.PinSpellMail">
+		update pin_spell_mail
+		<set>
+			<include refid="Update_Column"/>
+		</set>
+		
+		<where>
+		id = #{id} and status = 1
+		</where>
+		
+	</update>
+	
+	<update id="updateByPrimaryKeySelective" parameterType="com.example.warehouse.entity.customerPack.PinSpellMail">
+		update pin_spell_mail
+		<set>
+			<include refid="Update_Column_NotNull"/>
+		</set>
+		<where>
+		id = #{id} and status = 1
+		</where>
+	</update>
+
+	<!-- 删除数据（逻辑删除） -->
+	<update id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		update  pin_spell_mail
+		set `status` = 0
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	
+	<!-- 移除数据（物理删除） -->
+	<delete id="removeByPrimaryKey" parameterType="java.lang.Integer">
+		delete from pin_spell_mail
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+
+
+	<resultMap id="PinSpellMailInfoMap" extends="BaseResultMap" type="com.example.warehouse.vo.customerPack.PinSpellMailInfoVo">
+		<collection property="route" column="route_id" select="com.example.warehouse.mapper.transportationRoute.TransportationRouteMapper.selectByPrimaryKey"/>
+		<collection property="customerPacks" column="id" select="com.example.warehouse.mapper.customerPack.CustomerPackMapper.selectListByPinSpellMailId"/>
+	</resultMap>
+
+</mapper>

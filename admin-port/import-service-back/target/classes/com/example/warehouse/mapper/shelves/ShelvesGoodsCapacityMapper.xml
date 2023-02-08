@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.warehouse.mapper.shelves.ShelvesGoodsCapacityMapper">
+	<resultMap id="BaseResultMap" type="com.example.warehouse.entity.shelves.ShelvesGoodsCapacity">
+		<id column="id" jdbcType="INTEGER" property="id"/>
+
+		<result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+		<result column="status" jdbcType="INTEGER" property="status"/>
+		<result column="shelves_area_id" jdbcType="INTEGER" property="shelvesAreaId"/>
+		<result column="shelves_area" jdbcType="VARCHAR" property="shelvesArea"/>
+		<result column="shelves_row_id" jdbcType="INTEGER" property="shelvesRowId"/>
+		<result column="shelves_row" jdbcType="VARCHAR" property="shelvesRow"/>
+		<result column="shelves_limit" jdbcType="INTEGER" property="shelvesLimit"/>
+		<result column="goods_sum" jdbcType="INTEGER" property="goodsSum"/>
+		<result column="capacity" jdbcType="DOUBLE" property="capacity"/>
+		<result column="sorting_export" jdbcType="VARCHAR" property="sortingExport"/>
+
+	</resultMap>
+
+	<!-- 字段 -->
+	<sql id="Base_Column_List">
+		id, create_time, status, shelves_area_id, shelves_area,
+		shelves_row_id, shelves_row, shelves_limit, goods_sum,
+		capacity, sorting_export
+	</sql>
+
+	<!-- 插入字段实际数值 -->
+	<sql id="Insert_Column_Values">
+		#{createTime},#{status},#{shelvesAreaId},#{shelvesArea},
+		#{shelvesRowId},#{shelvesRow},#{shelvesLimit},#{goodsSum},
+		#{capacity}, #{sortingExport}
+	</sql>
+
+	<!-- 插入字段（判空） -->
+	<sql id="Base_Column_List_NotNull">
+		<if test="createTime != null and createTime != ''">
+			create_time,
+		</if>
+		<if test="status != null and status != ''">
+			status,
+		</if>
+		<if test="shelvesAreaId != null and shelvesAreaId != ''">
+			shelves_area_id,
+		</if>
+		<if test="shelvesArea != null and shelvesArea != ''">
+			shelves_area,
+		</if>
+		<if test="shelvesRowId != null and shelvesRowId != ''">
+			shelves_row_id,
+		</if>
+		<if test="shelvesRow != null and shelvesRow != ''">
+			shelves_row,
+		</if>
+		<if test="shelvesLimit != null and shelvesLimit != ''">
+			shelves_limit,
+		</if>
+		<if test="goodsSum != null and goodsSum != ''">
+			goods_sum,
+		</if>
+		<if test="capacity != null and capacity != ''">
+			capacity,
+		</if>
+
+		<if test="sortingExport != null and sortingExport != ''">
+			sorting_export,
+		</if>
+
+	</sql>
+
+	<!-- 插入字段实际数值(判空) -->
+	<sql id="Insert_Column_Values_NotNull">
+		<if test="createTime != null and createTime != ''">
+			#{createTime},
+		</if>
+		<if test="status != null and status != ''">
+			#{status},
+		</if>
+		<if test="shelvesAreaId != null and shelvesAreaId != ''">
+			#{shelvesAreaId},
+		</if>
+		<if test="shelvesArea != null and shelvesArea != ''">
+			#{shelvesArea},
+		</if>
+		<if test="shelvesRowId != null and shelvesRowId != ''">
+			#{shelvesRowId},
+		</if>
+		<if test="shelvesRow != null and shelvesRow != ''">
+			#{shelvesRow},
+		</if>
+		<if test="shelvesLimit != null and shelvesLimit != ''">
+			#{shelvesLimit},
+		</if>
+		<if test="goodsSum != null and goodsSum != ''">
+			#{goodsSum},
+		</if>
+		<if test="capacity != null and capacity != ''">
+			#{capacity},
+		</if>
+
+		<if test="sortingExport != null and sortingExport != ''">
+			#{sortingExport},
+		</if>
+
+	</sql>
+
+	<!-- 更新字段 -->
+	<sql id="Update_Column">
+		create_time = #{createTime},
+    	status = #{status},
+    	shelves_area_id = #{shelvesAreaId},
+    	shelves_area = #{shelvesArea},
+    	shelves_row_id = #{shelvesRowId},
+    	shelves_row = #{shelvesRow},
+    	shelves_limit = #{shelvesLimit},
+    	goods_sum = #{goodsSum},
+    	capacity = #{capacity},
+
+    	sorting_export = #{sortingExport},
+
+	</sql>
+
+	<!-- 更新字段（判空） -->
+	<sql id="Update_Column_NotNull">
+		<if test="createTime != null and createTime != ''">
+			create_time = #{createTime},
+		</if>
+		<if test="status != null and status != ''">
+			status = #{status},
+		</if>
+		<if test="shelvesAreaId != null and shelvesAreaId != ''">
+			shelves_area_id = #{shelvesAreaId},
+		</if>
+		<if test="shelvesArea != null and shelvesArea != ''">
+			shelves_area = #{shelvesArea},
+		</if>
+		<if test="shelvesRowId != null and shelvesRowId != ''">
+			shelves_row_id = #{shelvesRowId},
+		</if>
+		<if test="shelvesRow != null and shelvesRow != ''">
+			shelves_row = #{shelvesRow},
+		</if>
+		<if test="shelvesLimit != null and shelvesLimit != ''">
+			shelves_limit = #{shelvesLimit},
+		</if>
+		<if test="goodsSum != null and goodsSum != ''">
+			goods_sum = #{goodsSum},
+		</if>
+		<if test="capacity != null and capacity != ''">
+			capacity = #{capacity},
+		</if>
+
+		<if test="sortingExport != null and sortingExport != ''">
+			sorting_export = #{sortingExport},
+		</if>
+
+	</sql>
+
+	<select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+		select
+		<trim suffixOverrides=",">
+			<include refid="Base_Column_List"/>
+		</trim>
+		from shelves_goods_capacity
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	<select id="getLatestShelvesAreaRow" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"/>
+		from shelves_goods_capacity
+		<where>
+			status = 1
+		</where>
+		order by create_time desc
+		limit 0, 1
+	</select>
+
+	<insert id="insert" parameterType="com.example.warehouse.entity.shelves.ShelvesGoodsCapacity">
+		insert into shelves_goods_capacity
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			create_time,
+			status,
+			shelves_area_id,
+			shelves_area,
+			shelves_row_id,
+			shelves_row,
+			shelves_limit,
+			goods_sum,
+			capacity,
+			sorting_export,
+		</trim>
+		values
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<include refid="Insert_Column_Values"/>
+		</trim>
+	</insert>
+
+	<insert id="insertSelective" parameterType="com.example.warehouse.entity.shelves.ShelvesGoodsCapacity">
+		insert into shelves_goods_capacity
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<include refid="Base_Column_List_NotNull"/>
+		</trim>
+		values
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<include refid="Insert_Column_Values_NotNull"/>
+		</trim>
+	</insert>
+
+	<update id="updateByPrimaryKey" parameterType="com.example.warehouse.entity.shelves.ShelvesGoodsCapacity">
+		update shelves_goods_capacity
+		<set>
+			<include refid="Update_Column"/>
+		</set>
+
+		<where>
+			id = #{id} and status = 1
+		</where>
+
+	</update>
+
+	<update id="updateByPrimaryKeySelective" parameterType="com.example.warehouse.entity.shelves.ShelvesGoodsCapacity">
+		update shelves_goods_capacity
+		<set>
+			<include refid="Update_Column_NotNull"/>
+		</set>
+		<where>
+			id = #{id} and status = 1
+		</where>
+	</update>
+
+	<!-- 删除数据（逻辑删除） -->
+	<update id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		update  shelves_goods_capacity
+		set `status` = 0
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+
+	<!-- 移除数据（物理删除） -->
+	<delete id="removeByPrimaryKey" parameterType="java.lang.Integer">
+		delete from shelves_goods_capacity
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	
+</mapper>

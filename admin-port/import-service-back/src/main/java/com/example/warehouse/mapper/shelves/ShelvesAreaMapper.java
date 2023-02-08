@@ -5,6 +5,7 @@ import com.example.warehouse.entity.shelves.ShelvesGoodsCapacity;
 import com.example.warehouse.mapper.MyBatisBaseDao;
 import com.example.warehouse.vo.shelves.ShelvesReqVo;
 import com.example.warehouse.vo.shelves.ShelvesRespVo;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -43,6 +44,9 @@ public interface ShelvesAreaMapper extends MyBatisBaseDao<ShelvesArea, Integer> 
 
     List<ShelvesRespVo> getShelvesAreaList(ShelvesReqVo shelvesReqVo);
 
+    // 获取货物区
+    List<ShelvesRespVo> getShelvesAreaDropdownList(@Param("commercialAreaId") Integer commercialAreaId);
+
     int selectShelvesAreaGoodsSum(Integer id);
 
     int selectRepetitionArea(ShelvesArea shelvesArea);
@@ -60,5 +64,6 @@ public interface ShelvesAreaMapper extends MyBatisBaseDao<ShelvesArea, Integer> 
      * @return
      */
     ShelvesGoodsCapacity selectBigArea();
+
 
 }

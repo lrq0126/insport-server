@@ -50,4 +50,6 @@ public interface ImagesMapper {
     List<Images> getCustomerIdentityPicture(int customerIdentityId);
 
     void deleteImages(@Param("imageIdList") List<Integer> imageIdList);
+
+    List<Images> getCustomerPackIdentity(@Param("idList") List<Integer> imagesIdList);
 }

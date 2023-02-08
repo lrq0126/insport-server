@@ -33,10 +33,7 @@ import com.example.warehouse.mapper.customer.CustomerIntegralMapper;
 import com.example.warehouse.mapper.customer.CustomerIntegralRuleMapper;
 import com.example.warehouse.mapper.customer2address.Customer2addressMapper;
 import com.example.warehouse.mapper.customerMoney.CustomerMoneyMapper;
-import com.example.warehouse.mapper.customerPack.CustomerPackMapper;
-import com.example.warehouse.mapper.customerPack.CustomerPackPriceDetailMapper;
-import com.example.warehouse.mapper.customerPack.PackInsurancePriceMapper;
-import com.example.warehouse.mapper.customerPack.PackValuationMapper;
+import com.example.warehouse.mapper.customerPack.*;
 import com.example.warehouse.mapper.customerPackNumber.CustomerPackNumberMapper;
 import com.example.warehouse.mapper.customerPackReceiverAddress.CustomerPackReceiverAddressDao;
 import com.example.warehouse.mapper.goods2pack.Goods2packMapper;
@@ -53,12 +50,17 @@ import com.example.warehouse.mapper.transportationRoute.TransportationRouteMappe
 import com.example.warehouse.model.PageResultModel;
 import com.example.warehouse.model.ResultModel;
 import com.example.warehouse.service.CustomerPackService;
+import com.example.warehouse.service.agentApplyPack.ApplyPackService;
 import com.example.warehouse.service.sys.LogOperationService;
 import com.example.warehouse.service.sys.SysTokenService;
 import com.example.warehouse.service.sys.TrajectoryService;
 import com.example.warehouse.service.wechat.SendMessageServer;
 import com.example.warehouse.vo.GoodsVo;
+import com.example.warehouse.vo.applyPack.GoodsPackingVo;
 import com.example.warehouse.vo.customer.*;
+import com.example.warehouse.vo.customerPack.CustomerPackNumberVo;
+import com.example.warehouse.vo.customerPack.CustomerPackVo;
+import com.example.warehouse.vo.customerPack.RouteCustomerPackReqVo;
 import com.example.warehouse.vo.mobile.PackSortReqVo;
 import com.example.warehouse.vo.packVo.PackConditionsQueryReqVo;
 import com.example.warehouse.vo.packVo.PackSonVo;
@@ -70,10 +72,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.poi.hssf.usermodel.*;
-import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
-import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -87,7 +86,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
@@ -115,6 +113,8 @@ public class CustomerPackServiceImpl implements CustomerPackService {
     private DataSourceTransactionManager transactionManager;
     @Autowired
     private CustomerPackMapper customerPackMapper;
+    @Autowired
+    private CustomerPackIdentityMapper customerPackIdentityMapper;
     @Autowired
     private CustomerMapper customerMapper;
     @Autowired
@@ -193,7 +193,8 @@ public class CustomerPackServiceImpl implements CustomerPackService {
 
     @Autowired
     private PackUtils packUtils;
-
+    @Resource
+    private ApplyPackService applyPackService;
     /**
      * 申请打包url
      */
@@ -2909,6 +2910,93 @@ public class CustomerPackServiceImpl implements CustomerPackService {
         customerPackMapper.updateByPrimaryKeySelective(customerPack);
 
         return new ResponseEntity<>(ResultModel.ok(), HttpStatus.OK);
+    }
+
+
+    @Override
+    public ResponseEntity<ResultModel> getCustomerPackIdentity(Integer customerPackId) {
+        CustomerIdentityRespVo customerIdentityRespVo = customerPackIdentityMapper.getCustomerPackIdentity(customerPackId);
+        if(customerIdentityRespVo == null || customerIdentityRespVo.getImageIds() == null){
+            return new ResponseEntity<>(ResultModel.error(CUSTOMER_PACK_IDENTITY_NULL), HttpStatus.OK);
+        }
+        List<Integer> imagesIdList = JSONObject.parseObject(customerIdentityRespVo.getImageIds(), List.class);
+        List<Images> imagesList = imagesMapper.getCustomerPackIdentity(imagesIdList);
+        customerIdentityRespVo.setImages(imagesList);
+        return new ResponseEntity<>(ResultModel.ok(customerIdentityRespVo), HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<ResultModel> getGoodsList(Integer customerPackId) {
+        List<GoodsVo> goodsVoList = goodsMapper.selectGoodsVoByPackId(customerPackId);
+        return new ResponseEntity<>(ResultModel.ok(goodsVoList), HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<PageResultModel> getRouteCustomerPackList(RouteCustomerPackReqVo routeCustomerPackReqVo) {
+        User user = (User) SecurityUtils.getSubject().getPrincipal();
+        if(user == null){
+            return new ResponseEntity<>(PageResultModel.error(USER_NOT_LOGIN, null), HttpStatus.OK);
+        }
+        if(user.getCommercialAreaId() == null){
+            return new ResponseEntity<>(PageResultModel.error(USER_NOT_COMMERCIAL_AREA, null), HttpStatus.OK);
+        }
+        // 当用户所在的区域是中国总部，则不限制查看
+        if(user.getCommercialAreaId() != 1){
+//            paramMap.put("commercialAreaId", user.getCommercialAreaId());
+            routeCustomerPackReqVo.setCommercialAreaId(user.getCommercialAreaId());
+        }
+
+        PageData pageData = PageHelp.editPage(routeCustomerPackReqVo);
+
+        List<String> customerPackIdList = null;
+        if (!StringUtils.isEmpty(routeCustomerPackReqVo.getCustomerPackIds())){
+            customerPackIdList = Arrays.asList(routeCustomerPackReqVo.getCustomerPackIds().split(","));
+        }
+
+        int count = customerPackMapper.getRouteCustomerPackCount(routeCustomerPackReqVo, customerPackIdList);
+        pageData.setTotal(count);
+        List<CustomerPackVo> customerPackVoList = new ArrayList<>();
+        if(count > 0){
+            routeCustomerPackReqVo.setPageNumber(pageData.getPageNumber());
+            customerPackVoList = customerPackMapper.getRouteCustomerPackList(routeCustomerPackReqVo, customerPackIdList);
+        }
+        return new ResponseEntity<>(PageResultModel.ok(customerPackVoList, pageData), HttpStatus.OK);
+    }
+
+    @Override
+    @Transactional(rollbackFor = RuntimeException.class)
+    public ResponseEntity<ResultModel> orderSplit(int id) {
+        CustomerPackVo customerPack = customerPackMapper.selectPackVoById(id);
+        CustomerPackReceiverAddress customerPackReceiverAddress = customerPackReceiverAddressMapper.findByCustomerPackId(id);
+        List<Goods> goodsVoList = customerPack.getGoodsData();
+        List<Goods> insertGoods = new ArrayList<>();
+        List<String> goodsNos = new ArrayList<>();
+
+        for (Goods goods : goodsVoList) {
+            String code = SequenceCode.gainSerialNo("GOODS");
+            goods.setId(null);
+            goods.setGoodsNo(code);
+            goods.setDeliveryOrderNo(goods.getDeliveryOrderNo()+"OSR");
+
+            //设置入库时间
+            goods.setInStorageTime(DateUtil.timestamp2String(new Date()));
+            //入库
+            goods.setGoodsType(1);
+            insertGoods.add(goods);
+            goodsNos.add(code);
+        }
+        goodsMapper.batchInsert(insertGoods);
+        List<GoodsVo> goodsList = goodsMapper.findByGoodsNos(goodsNos);
+        String goodsIds = "";
+        for (Goods goods : goodsList) {
+            goodsIds = StringUtils.isEmpty(goodsIds) ? String.valueOf(goods.getId()) : goodsIds + "," + goods.getId();
+        }
+        GoodsPackingVo goodsPackingVo = new GoodsPackingVo();
+        goodsPackingVo.setAddressId(customerPackReceiverAddress.getAddressId());
+        goodsPackingVo.setCustomerId(customerPack.getCustomerId());
+        goodsPackingVo.setTransportRouteId(customerPack.getTransportationRouteId());
+        goodsPackingVo.setGoodsIds(goodsIds);
+        return applyPackService.goodsPacking(goodsPackingVo);
     }
 
     @Override

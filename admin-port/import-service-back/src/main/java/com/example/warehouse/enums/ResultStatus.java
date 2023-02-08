@@ -45,6 +45,7 @@ public enum ResultStatus implements CodeEnum {
     SHELVES_ROW_HAVE_GOODS(706, "当前货架排上还存在客户包裹，请将包裹下架再进行删除操作"),
     SHELVES_AREA_ROW_NULL_ERROR(707, "当前货架不存在"),
     // 包裹类型错误
+    CUSTOMER_PACK_IDENTITY_NULL(-1009, "当前订单暂无身份证信息"),
     PACK_ACCEPTED(-1100, "包裹已经由别的用户开始处理了"),
 
     PACK_SURPLUS_ERROR(-1101,"存在未拣货的货物，请核查"),

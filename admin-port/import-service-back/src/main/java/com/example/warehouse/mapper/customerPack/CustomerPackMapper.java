@@ -2,11 +2,10 @@ package com.example.warehouse.mapper.customerPack;
 
 import com.example.warehouse.DO.CustomerPackExportDo;
 import com.example.warehouse.entity.CustomerPack;
-import com.example.warehouse.entity.customerGroup.CustomerGroupLink;
 import com.example.warehouse.mapper.MyBatisBaseDao;
-import com.example.warehouse.vo.GoodsVo;
-import com.example.warehouse.vo.customer.CustomerOrderReqVo;
-import com.example.warehouse.vo.customer.CustomerPackVo;
+import com.example.warehouse.vo.customerPack.CustomerOrderReqVo;
+import com.example.warehouse.vo.customerPack.CustomerPackVo;
+import com.example.warehouse.vo.customerPack.RouteCustomerPackReqVo;
 import com.example.warehouse.vo.mobile.PackSortReqVo;
 import com.example.warehouse.vo.packVo.PackConditionsQueryReqVo;
 import org.apache.ibatis.annotations.Param;
@@ -243,4 +242,25 @@ public interface CustomerPackMapper extends MyBatisBaseDao<CustomerPack, Integer
     Map<String, String> selectNewestOrderNumber(String orderNumber);
 
     List<CustomerPackVo> findPrintInvoiceCustomerPackByIds(@Param("orderIdList") List<Integer> orderIdList);
+
+    List<CustomerPackVo> selectListByPinSpellMailId(@Param("pinSpellMailId") int pinSpellMailId);
+
+    /**
+     * 查询当前路线的待打包订单数量
+     * @param routeCustomerPackReqVo
+     * @param customerPackId
+     * @return
+     */
+    int getRouteCustomerPackCount(@Param("reqVo") RouteCustomerPackReqVo routeCustomerPackReqVo,
+                                  @Param("customerPackIdList") List<String> customerPackId);
+    /**
+     * 查询当前路线的待打包订单数据
+     * @param routeCustomerPackReqVo
+     * @param customerPackId
+     * @return
+     */
+    List<CustomerPackVo> getRouteCustomerPackList(@Param("reqVo") RouteCustomerPackReqVo routeCustomerPackReqVo,
+                                                  @Param("customerPackIdList") List<String> customerPackId);
+
+    void updatePackTypeList(@Param("packIdList") List<Integer> packIdList, @Param("packType") int packType);
 }

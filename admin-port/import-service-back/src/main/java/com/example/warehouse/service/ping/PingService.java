@@ -1,5 +1,6 @@
 package com.example.warehouse.service.ping;
 
+import com.example.warehouse.entity.ping.PingMain;
 import com.example.warehouse.model.ResultModel;
 import com.example.warehouse.vo.ping.requestVo.AuditRequestVo;
 import com.example.warehouse.vo.ping.requestVo.PingRequestVo;
@@ -76,4 +77,7 @@ public interface PingService {
 
     ResponseEntity<ResultModel> shipped(int id);
 
+
+    /**====================新版拼邮接口======================*/
+    ResponseEntity<ResultModel> savePin(PingMain pingMain);
 }

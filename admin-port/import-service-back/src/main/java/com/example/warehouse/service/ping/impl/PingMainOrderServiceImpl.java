@@ -18,7 +18,7 @@ import com.example.warehouse.model.ResultModel;
 import com.example.warehouse.service.ping.PingMainOrderService;
 import com.example.warehouse.common.PingUtil;
 import com.example.warehouse.vo.GoodsVo;
-import com.example.warehouse.vo.customer.CustomerPackNumberVo;
+import com.example.warehouse.vo.customerPack.CustomerPackNumberVo;
 import com.example.warehouse.vo.packVo.PackSonVo;
 import com.example.warehouse.vo.packVo.PackedReqVo;
 import com.example.warehouse.vo.ping.responseVo.PingMainOrderRespVo;

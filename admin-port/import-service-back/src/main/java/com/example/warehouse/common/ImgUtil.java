@@ -298,10 +298,11 @@ public class ImgUtil {
      * 处理文件
      * @param files
      * @param posterName
+     * @param filesName 文件夹名称
      * @return
      * @throws IOException
      */
-    public static String imageProcess(String files, String posterName) throws IOException {
+    public static String imageProcess(String files, String posterName, String filesName) throws IOException {
 //        log.info("插入海报base图片: {}", posterName);
         int index = files.indexOf(",");
         int index2 = files.indexOf("/");
@@ -312,15 +313,15 @@ public class ImgUtil {
         Base64.Decoder decoder = Base64.getDecoder();
         byte[] bytes = decoder.decode(files.replace("\r\n", ""));
 
-        String posterPath = UPLOAD_LOCATION + "/template/poster/basePoster";
+        String posterPath = UPLOAD_LOCATION + "/template/"+filesName;
 
         /**指定保存的路径*/
         File path = new File(posterPath);
         if(!path .exists()) {
             path.mkdirs();
         }
-        String filesName = posterName+"."+type;
-        File basePoster = new File(posterPath + "/" + filesName);
+        String fileName = posterName+"."+type;
+        File basePoster = new File(posterPath + "/" + fileName);
         // 如果这个名称的图片存在，则删除
         if(basePoster.exists()){
             basePoster.delete();
@@ -329,6 +330,6 @@ public class ImgUtil {
         outputStream.write(bytes);
         outputStream.close();
 
-        return posterPath+ "/" +filesName;
+        return posterPath+ "/" +fileName;
     }
 }

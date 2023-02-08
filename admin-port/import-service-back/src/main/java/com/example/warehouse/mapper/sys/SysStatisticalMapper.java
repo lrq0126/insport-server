@@ -2,12 +2,10 @@ package com.example.warehouse.mapper.sys;
 
 import com.example.warehouse.entity.Customer;
 import com.example.warehouse.entity.CustomerAccount;
-import com.example.warehouse.entity.CustomerPack;
-import com.example.warehouse.entity.Goods;
 import com.example.warehouse.entity.sys.SysStatistical;
 import com.example.warehouse.mapper.MyBatisBaseDao;
 import com.example.warehouse.vo.GoodsVo;
-import com.example.warehouse.vo.customer.CustomerPackVo;
+import com.example.warehouse.vo.customerPack.CustomerPackVo;
 import com.example.warehouse.vo.sys.SysStatisticalReqVo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;

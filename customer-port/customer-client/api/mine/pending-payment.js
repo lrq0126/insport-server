@@ -56,7 +56,8 @@ export function deliveryPendingPayment ({
 	packValuations,
 	isTariffs,
 	tariffsPrice,
-	deductionAmount
+	deductionAmount,
+	customerIdentityId
 }) {
   const data = {
 	businessNumber: businessNumber,
@@ -68,7 +69,8 @@ export function deliveryPendingPayment ({
 	packValuations: packValuations,
 	isTariffs: isTariffs,
 	tariffsPrice: tariffsPrice,
-	deductionAmount: deductionAmount
+	deductionAmount: deductionAmount,
+	customerIdentityId: customerIdentityId
   };
   return uni.request({
     url: config.baseUrl.dev + "/goods/confirm/shipment",

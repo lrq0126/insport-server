@@ -446,6 +446,15 @@
                 </template>
             </el-table-column>
 
+            <el-table-column prop="phoneNumber"
+                             label="身份证信息"
+                             min-width="150"
+                             align="center">
+                             <template slot-scope="scope">
+                                <el-button type="primary" plain @click="checkIdentity(scope.row.id)">查 看</el-button>
+                             </template>
+                            </el-table-column>
+
             <el-table-column label="操作"
                              fixed="right"
                              width="220"
@@ -471,6 +480,31 @@
         <son-pack-model-view ref="sonPackModelView"/>
         <product-value-view ref="productValueView"/>
 
+
+        <el-dialog :visible.sync="identityDialog" width="50%" title="身份证信息">
+            <el-form label-width="120px">
+                <el-form-item label="姓名：">
+                    <span>{{customerIdentityData.identityName}}</span>
+                </el-form-item>
+                <el-form-item label="身份证号：">
+                    <span>{{customerIdentityData.identityCode}}</span>
+                </el-form-item>
+                <el-form-item label="">
+                    <div style="dispaly: flex;">
+                        <div  v-for="item in customerIdentityData.images" :key="item.picUrl" :value="item.picUrl">
+                            <el-image 
+                                style="width: 100px; height: 100px"
+                                :src="item.picUrl" 
+                                :preview-src-list="identityImages">
+                            </el-image>
+                        </div>
+                    </div>
+                    
+                </el-form-item>
+            </el-form>
+        </el-dialog>
+
+
         <el-dialog :visible.sync="imageDialog" width="50%" title="订单图片">
             <div v-if="goodsImages" style="display: flex; flex-wrap: wrap;">
                 <div v-for="item in goodsImages" :key="item.key" style="width: 33.3%">
@@ -492,7 +526,7 @@ import ModelView from './model';
 import sonPackModelView from './son-pack-model';
 import ProductValueView from './product-value';
 import { getReceivedList } from '@/api/package-management/received-list.js'
-import { printOrderListing } from '@/api/package-management/unpackaged-task'
+import { printOrderListing, getCustomerPackIdentity} from '@/api/package-management/unpackaged-task'
 import { getOrderPicture} from '@/api/package-management/waiting-area'
 export default {
     components: {
@@ -505,6 +539,13 @@ export default {
         return {
             loading: false,
             tableData: [],
+            identityDialog: false,
+            customerIdentityData: {
+                identityName: "",
+                identityCode: "",
+                images: []
+            },
+            identityImages: [],
             pageInfo: {
                 total: 0,
                 page: 1,    // 当前页码
@@ -608,7 +649,15 @@ export default {
                 this.handleSearch(1)
             }
         },
-
+        checkIdentity(customerPackId){
+            getCustomerPackIdentity(customerPackId).then(res => {
+                this.identityDialog = true;
+                this.customerIdentityData = res.content;
+                res.content.images.forEach((ele) => {
+                    this.identityImages.push(ele.picUrl)
+                })
+            });
+        },
         /**
          * 查看订单图片
          */

@@ -1,0 +1,572 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dwgj.mlxydedicatedline.mapper.RoutePriceMapper">
+    <resultMap id="BaseResultMap" type="com.dwgj.mlxydedicatedline.entity.RoutePrice">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="create_id" jdbcType="INTEGER" property="createId"/>
+        <result column="create_name" jdbcType="VARCHAR" property="createName"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="update_id" jdbcType="INTEGER" property="updateId"/>
+        <result column="version" jdbcType="INTEGER" property="version"/>
+        <result column="is_available" jdbcType="INTEGER" property="isAvailable"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="route_id" jdbcType="INTEGER" property="routeId"/>
+        <result column="route_type" jdbcType="INTEGER" property="routeType"/>
+        <result column="count_type" jdbcType="INTEGER" property="countType"/>
+        <result column="start_weight" jdbcType="DOUBLE" property="startWeight"/>
+        <result column="end_weight" jdbcType="DOUBLE" property="endWeight"/>
+        <result column="start_volume" jdbcType="DOUBLE" property="startVolume"/>
+        <result column="end_volume" jdbcType="DOUBLE" property="endVolume"/>
+        <result column="price" jdbcType="DOUBLE" property="price"/>
+        <result column="price_no" jdbcType="VARCHAR" property="priceNo"/>
+        <result column="small_package_weight" jdbcType="DOUBLE" property="smallPackageWeight"/>
+        <result column="remarks" jdbcType="VARCHAR" property="remarks"/>
+        <result column="weight_carry_type" jdbcType="INTEGER" property="weightCarryType"/>
+        <result column="greater_weight" jdbcType="DOUBLE" property="greaterWeight"/>
+        <result column="forklift_fee" jdbcType="DECIMAL" property="forkliftFee"/>
+        <result column="package_type" jdbcType="INTEGER" property="packageType"/>
+        <result column="upper_limit_weight" jdbcType="INTEGER" property="upperLimitWeight"/>
+        <result column="first_length" jdbcType="INTEGER" property="firstLength"/>
+        <result column="second_length" jdbcType="INTEGER" property="secondLength"/>
+        <result column="sensitive_price" jdbcType="DOUBLE" property="sensitivePrice"/>
+        <result column="cube_upper" jdbcType="DOUBLE" property="cubeUpper"/>
+        <result column="vol_conversion" jdbcType="DOUBLE" property="volConversion"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    t.id, t.create_time, t.create_id, t.create_name, t.update_time, t.update_id, t.version, t.is_available,
+    t.`status`, t.route_id, t.route_type, t.count_type, t.start_weight, t.end_weight, t.start_volume,
+    t.end_volume, t.price, t.price_no, t.small_package_weight, t.remarks, t.weight_carry_type,
+    t.greater_weight, t.forklift_fee, t.package_type, t.upper_limit_weight, t.first_length, t.second_length,
+    t.sensitive_price, t.cube_upper, t.vol_conversion
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from route_price t
+        where t.id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from route_price
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.dwgj.mlxydedicatedline.entity.RoutePrice"
+            useGeneratedKeys="true">
+    insert into route_price (create_time, create_id, create_name,
+      update_time, update_id, version,
+      is_available, `status`, route_id,
+      route_type, count_type, start_weight,
+      end_weight, start_volume, end_volume,
+      price, price_no, small_package_weight,
+      remarks, weight_carry_type,
+      greater_weight, forklift_fee, package_type, upper_limit_weight,
+      first_length, second_length, sensitive_price, cube_upper, vol_conversion)
+    values (#{createTime,jdbcType=TIMESTAMP}, #{createId,jdbcType=INTEGER}, #{createName,jdbcType=VARCHAR},
+      #{updateTime,jdbcType=TIMESTAMP}, #{updateId,jdbcType=INTEGER}, #{version,jdbcType=INTEGER},
+      #{isAvailable,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{routeId,jdbcType=INTEGER},
+      #{routeType,jdbcType=INTEGER}, #{countType,jdbcType=INTEGER}, #{startWeight,jdbcType=DOUBLE},
+      #{endWeight,jdbcType=DOUBLE}, #{startVolume,jdbcType=DOUBLE}, #{endVolume,jdbcType=DOUBLE},
+      #{price,jdbcType=DOUBLE}, #{priceNo,jdbcType=VARCHAR}, #{smallPackageWeight,jdbcType=DOUBLE},
+      #{remarks,jdbcType=VARCHAR}, #{weightCarryType,jdbcType=INTEGER},
+      #{greaterWeight,jdbcType=DOUBLE}, #{forkliftFee,jdbcType=INTEGER}, #{packageType,jdbcType=INTEGER},
+      #{upperLimitWeight},#{firstLength}, #{secondLength}, #{sensitivePrice}, #{cubeUpper}, #{volConversion} )
+  </insert>
+    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.dwgj.mlxydedicatedline.entity.RoutePrice"
+            useGeneratedKeys="true">
+        insert into route_price
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            create_time,
+            <if test="createId != null and createId != ''">
+                create_id,
+            </if>
+            <if test="createName != null and createName != ''">
+                create_name,
+            </if>
+            <if test="updateTime != null and updateTime != ''">
+                update_time,
+            </if>
+            <if test="updateId != null and updateId != ''">
+                update_id,
+            </if>
+            version,
+            is_available,
+            `status`,
+            <if test="routeId != null and routeId != ''">
+                route_id,
+            </if>
+            <if test="routeType != null and routeType != ''">
+                route_type,
+            </if>
+            <if test="countType != null and countType != ''">
+                count_type,
+            </if>
+            <if test="startWeight == 0">
+                start_weight,
+            </if>
+            <if test="startWeight != null and startWeight != ''">
+                start_weight,
+            </if>
+            <if test="endWeight != null and endWeight != ''">
+                end_weight,
+            </if>
+            <if test="startVolume == 0">
+                start_volume,
+            </if>
+            <if test="startVolume != null and startVolume != ''">
+                start_volume,
+            </if>
+            <if test="endVolume != null and endVolume != ''">
+                end_volume,
+            </if>
+            <if test="price != null and price != ''">
+                price,
+            </if>
+            <if test="priceNo != null and priceNo != ''">
+                price_no,
+            </if>
+            <if test="smallPackageWeight != null and smallPackageWeight != ''">
+                small_package_weight,
+            </if>
+            <if test="remarks != null and remarks != ''">
+                remarks,
+            </if>
+            <if test="weightCarryType != null and weightCarryType != ''">
+                weight_carry_type,
+            </if>
+            <if test="greaterWeight != null and greaterWeight != ''">
+                greater_weight,
+            </if>
+            <if test="forkliftFee != null and forkliftFee != ''">
+                forklift_fee,
+            </if>
+            <if test="packageType != null and packageType != ''">
+                package_type,
+            </if>
+            <if test="upperLimitWeight != null and upperLimitWeight != ''">
+                upper_limit_weight,
+            </if>
+            <if test="firstLength != null and firstLength != ''">
+                first_length,
+            </if>
+            <if test="secondLength != null and secondLength != ''">
+                second_length,
+            </if>
+            <if test="sensitivePrice != null and sensitivePrice != ''">
+                sensitive_price,
+            </if>
+            <if test="cubeUpper != null and cubeUpper != ''">
+                cube_upper,
+            </if>
+            <if test="volConversion != null and volConversion != ''">
+                vol_conversion,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            now(),
+            <if test="createId != null and createId != ''">
+                #{createId},
+            </if>
+            <if test="createName != null and createName != ''">
+                #{createName},
+            </if>
+            <if test="updateTime != null and updateTime != ''">
+                #{updateTime},
+            </if>
+            <if test="updateId != null and updateId != ''">
+                #{updateId},
+            </if>
+            1,
+            1,
+            1,
+            <if test="routeId != null and routeId != ''">
+                #{routeId},
+            </if>
+            <if test="routeType != null and routeType != ''">
+                #{routeType},
+            </if>
+            <if test="countType != null and countType != ''">
+                #{countType},
+            </if>
+            <if test="startWeight == 0">
+                #{startWeight},
+            </if>
+            <if test="startWeight != null and startWeight != ''">
+                #{startWeight},
+            </if>
+            <if test="endWeight != null and endWeight != ''">
+                #{endWeight},
+            </if>
+            <if test="startVolume == 0">
+                #{startVolume},
+            </if>
+            <if test="startVolume != null and startVolume != ''">
+                #{startVolume},
+            </if>
+            <if test="endVolume != null and endVolume != ''">
+                #{endVolume},
+            </if>
+            <if test="price != null and price != ''">
+                #{price},
+            </if>
+            <if test="priceNo != null and priceNo != ''">
+                #{priceNo},
+            </if>
+            <if test="smallPackageWeight != null and smallPackageWeight != ''">
+                #{smallPackageWeight},
+            </if>
+            <if test="remarks != null and remarks != ''">
+                #{remarks},
+            </if>
+            <if test="weightCarryType != null and weightCarryType != ''">
+                #{weightCarryType},
+            </if>
+            <if test="greaterWeight != null and greaterWeight != ''">
+                #{greaterWeight},
+            </if>
+            <if test="forkliftFee != null and forkliftFee != ''">
+                #{forkliftFee},
+            </if>
+            <if test="packageType != null and packageType != ''">
+                #{packageType},
+            </if>
+            <if test="upperLimitWeight != null and upperLimitWeight != ''">
+                #{upperLimitWeight},
+            </if>
+            <if test="firstLength != null and firstLength != ''">
+                #{firstLength},
+            </if>
+            <if test="secondLength != null and secondLength != ''">
+                #{secondLength},
+            </if>
+            <if test="sensitivePrice != null and sensitivePrice != ''">
+                #{sensitivePrice},
+            </if>
+            <if test="cubeUpper != null and cubeUpper != ''">
+                #{cubeUpper},
+            </if>
+            <if test="volConversion != null and volConversion != ''">
+                #{volConversion},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.dwgj.mlxydedicatedline.entity.RoutePrice">
+        update route_price
+        <set>
+            <if test="createTime != null and createTime != ''">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createId != null and createId != ''">
+                create_id = #{createId,jdbcType=INTEGER},
+            </if>
+            <if test="createName != null and createName != ''">
+                create_name = #{createName,jdbcType=VARCHAR},
+            </if>
+            update_time = now(),
+            <if test="updateId != null and updateId != ''">
+                update_id = #{updateId,jdbcType=INTEGER},
+            </if>
+            version = #{version} + 1,
+            <if test="isAvailable != null and isAvailable != ''">
+                is_available = #{isAvailable,jdbcType=INTEGER},
+            </if>
+            <if test="status != null and status != ''">
+                `status` = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="routeId != null and routeId != ''">
+                route_id = #{routeId,jdbcType=INTEGER},
+            </if>
+            <if test="routeType != null and routeType != ''">
+                route_type = #{routeType,jdbcType=INTEGER},
+            </if>
+            <if test="countType != null and countType != ''">
+                count_type = #{countType,jdbcType=INTEGER},
+            </if>
+            <if test="startWeight != null and startWeight != ''">
+                start_weight = #{startWeight,jdbcType=DOUBLE},
+            </if>
+            <if test="endWeight != null and endWeight != ''">
+                end_weight = #{endWeight,jdbcType=DOUBLE},
+            </if>
+            <if test="startVolume != null and startVolume != ''">
+                start_volume = #{startVolume,jdbcType=DOUBLE},
+            </if>
+            <if test="endVolume != null and endVolume != ''">
+                end_volume = #{endVolume,jdbcType=DOUBLE},
+            </if>
+            <if test="price != null and price != ''">
+                price = #{price,jdbcType=DOUBLE},
+            </if>
+            <if test="priceNo != null and priceNo != ''">
+                price_no = #{priceNo,jdbcType=VARCHAR},
+            </if>
+            <if test="smallPackageWeight != null and smallPackageWeight != ''">
+                small_package_weight = #{smallPackageWeight,jdbcType=DOUBLE},
+            </if>
+            <if test="remarks != null and remarks != ''">
+                remarks = #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="weightCarryType != null and weightCarryType != ''">
+                weight_carry_type = #{weightCarryType,jdbcType=INTEGER},
+            </if>
+            <if test="greaterWeight != null and greaterWeight != ''">
+                greater_weight = #{greaterWeight,jdbcType=DOUBLE},
+            </if>
+            <if test="forkliftFee != null and forkliftFee != ''">
+                forklift_fee = #{forkliftFee,jdbcType=INTEGER},
+            </if>
+            <if test="packageType != null and packageType != ''">
+                package_type = #{packageType},
+            </if>
+            <if test="upperLimitWeight != null and upperLimitWeight != ''">
+                upper_limit_weight = #{upperLimitWeight},
+            </if>
+            <if test="firstLength != null and firstLength != ''">
+                first_length = #{firstLength},
+            </if>
+            <if test="secondLength != null and secondLength != ''">
+                second_length = #{secondLength},
+            </if>
+            <if test="sensitivePrice != null and sensitivePrice != ''">
+                sensitive_price = #{sensitivePrice},
+            </if>
+            <if test="cubeUpper != null and cubeUpper != ''">
+                cube_upper = #{cubeUpper},
+            </if>
+            <if test="volConversion != null and volConversion != ''">
+                vol_conversion = #{volConversion},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER} and version = #{version}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.dwgj.mlxydedicatedline.entity.RoutePrice">
+    update route_price
+    set create_time = #{createTime,jdbcType=TIMESTAMP},
+      create_id = #{createId,jdbcType=INTEGER},
+      create_name = #{createName,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      update_id = #{updateId,jdbcType=INTEGER},
+      version = #{version,jdbcType=INTEGER},
+      is_available = #{isAvailable,jdbcType=INTEGER},
+      `status` = #{status,jdbcType=INTEGER},
+      route_id = #{routeId,jdbcType=INTEGER},
+      route_type = #{routeType,jdbcType=INTEGER},
+      count_type = #{countType,jdbcType=INTEGER},
+      start_weight = #{startWeight,jdbcType=DOUBLE},
+      end_weight = #{endWeight,jdbcType=DOUBLE},
+      start_volume = #{startVolume,jdbcType=DOUBLE},
+      end_volume = #{endVolume,jdbcType=DOUBLE},
+      price = #{price,jdbcType=DOUBLE},
+      price_no = #{priceNo,jdbcType=VARCHAR},
+      small_package_weight = #{smallPackageWeight,jdbcType=DOUBLE},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      weight_carry_type = #{weightCarryType,jdbcType=INTEGER},
+      greater_weight = #{greaterWeight,jdbcType=DOUBLE},
+      forklift_fee = #{forkliftFee,jdbcType=INTEGER},
+      package_type = #{packageType},
+      upper_limit_weight = #{upperLimitWeight},
+      first_length = #{firstLength},
+      second_length = #{secondLength},
+      sensitive_price = #{sensitivePrice},
+      cube_upper = #{cubeUpper},
+      vol_conversion = #{volConversion}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+    <select id="fingByRouteId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        <include refid="table"/> t
+        where t.`status` = 1 and t.route_id = #{routeId}
+    </select>
+    <select id="findSmallPackByRouteId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        <include refid="table"/> t
+        where t.`status` = 1 and t.route_id = #{routeId} and t.package_type = 1
+        order by t.small_package_weight desc
+    </select>
+    <select id="findSmallPackPrice" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        <include refid="table"/> t
+        where t.`status` = 1 and t.route_id = #{routeId} and t.package_type = 1
+        and #{weight} &gt;= t.small_package_weight and #{weight} &lt; (t.small_package_weight + 1)
+    </select>
+
+    <select id="findByWeight" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        <include refid="table"/> t
+        where t.`status` = 1 and t.route_id = #{routeId} and #{weight} &gt;= t.start_weight and  #{weight} &lt;= t.end_weight
+    </select>
+
+    <select id="findByVol" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        <include refid="table"/> t
+        where t.`status` = 1 and t.route_id = #{routeId} and #{vol} &gt;= t.start_volume and #{vol} &lt;= t.end_volume
+    </select>
+
+    <select id="findByPriceNo" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        <include refid="table"/> t
+        where t.`status` = 1 and t.price_no = #{priceNo}
+    </select>
+
+    <update id="deleteByIds">
+        update
+        <include refid="table"/> t
+        set t.`status` = 0
+        where t.id in
+        <foreach collection="ids" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </update>
+
+    <!-- 查询 空运小包裹 的价格 -->
+    <select id="findSmallPackPriceByWeight" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        <include refid="table"/>
+        t
+        where t.`status` = 1 and t.route_id = #{routeId} and #{weight} = t.small_package_weight
+    </select>
+
+    <!-- 查询 空运 按照KG  价格集合 -->
+    <select id="findAirSmallPackPrice" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/>
+        from <include refid="table"/> t
+        left join transportation_route tr on tr.id = t.route_id
+        <where>
+            t.status = 1 and t.route_type = 1 and t.package_type = 2 and tr.id = #{routeId}
+        </where>
+        order by t.small_package_weight
+    </select>
+    <!-- 查询 空运 小包裹的  价格集合  倒序 -->
+    <select id="findAirSmallPackPriceDesc" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/>
+        from <include refid="table"/> t
+        left join transportation_route tr on tr.id = t.route_id
+        <where>
+            t.status = 1 and t.route_type = 1 and t.package_type = 1 and tr.id = #{routeId}
+        </where>
+        order by t.small_package_weight desc
+    </select>
+
+    <!-- 查询 价格 -->
+    <select id="findBySeaSmallPrice" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        <include refid="table"/>
+        t
+        where t.`status` = 1 and t.route_id = #{routeId} and #{weight} &gt;= t.start_weight and #{weight} &lt;= t.end_weight
+    </select>
+
+    <!-- 查询 海运 小包裹 的价格集合 -->
+    <select id="findSeaSmallPackPrice" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/>
+        from <include refid="table"/> t
+        left join transportation_route tr on tr.id = t.route_id
+        <where>
+            t.status = 1 and t.route_type = 2 and t.package_type = 1 and tr.id = #{routeId}
+        </where>
+        order by t.start_weight
+    </select>
+    <!-- 查询 海运 小包裹 的价格集合 -->
+    <select id="findSeaSmallPackPriceDesc" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/>
+        from <include refid="table"/> t
+        left join transportation_route tr on tr.id = t.route_id
+        <where>
+            t.status = 1 and t.route_type = 2 and t.package_type = 1 and tr.id = #{routeId}
+        </where>
+        order by t.start_weight desc
+    </select>
+
+
+    <!-- 查询 海运大包裹 的价格集合 -->
+    <select id="findSeaBigPackPrice" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/>
+        from <include refid="table"/> t
+        left join transportation_route tr on tr.id = t.route_id
+        <where>
+            t.status = 1 and t.route_type = 2 and t.package_type = 2 and tr.id = #{routeId}
+        </where>
+        order by t.start_weight
+    </select>
+
+
+    <!-- 根据 id 查询 小包裹 的价格集合 -->
+    <select id="findSmallPackageByRouteId" parameterType="java.lang.Integer" resultType="com.dwgj.mlxydedicatedline.vo.route.SmallPackagePriceVo">
+        select <include refid="SmallPackageVoSelect"/>
+        from <include refid="table"/> t
+        <where>
+            t.status = 1 and t.package_type = 1 and t.route_id = #{routeId}
+        </where>
+        order by t.start_weight
+    </select>
+    <!-- 根据 id 查询 大包裹 的价格集合 -->
+    <select id="findBigPackageByRouteId" parameterType="java.lang.Integer" resultType="com.dwgj.mlxydedicatedline.vo.route.BigPackagePriceVo">
+        select <include refid="BigPackageVoSelect"/>
+        from <include refid="table"/> t
+        <where>
+            t.status = 1 and t.package_type = 2 and t.route_id = #{routeId}
+        </where>
+        order by t.start_weight
+    </select>
+
+    <select id="findByRouteId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from <include refid="table"/> t
+        <where>
+            t.status = 1 and t.is_available = 1 and t.route_type = #{routeType} and  t.route_id = #{routeId}
+        </where>
+        <if test="routeType == 1">
+            order by t.end_weight ASC
+        </if>
+        <if test="routeType == 2">
+            order by t.end_volume ASC
+        </if>
+    </select>
+
+    <select id="findByRouteIdOfActivity" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        <include refid="table"/> t
+        where t.`status` = 1 and t.route_id = #{routeId}
+        order by start_weight
+    </select>
+
+    <select id="getAllPrice" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        <include refid="table"/> t
+        where t.`status` = 1
+    </select>
+
+    <sql id="SmallPackageVoSelect">
+        t.id,t.route_id as routeId, t.greater_weight as greaterWeight, t.forklift_fee as forkliftFee, t.package_type as smallPackageType,
+        t.start_weight as smallStartWeight, t.end_weight as smallEndWeight, t.price as smallPrice, t.remarks as smallRemarks,
+        t.first_length as firstLength, t.second_length as secondLength, t.upper_limit_weight as upperLimitWeight,
+        t.small_package_weight as smallPackageWeight,t.price_no as smallPriceNo, t.vol_conversion as volConversion
+    </sql>
+    <sql id="BigPackageVoSelect">
+        t.id,t.route_id as routeId, t.greater_weight as greaterWeight, t.forklift_fee as forkliftFee, t.package_type as packageType,
+        t.start_weight as startWeight, t.end_weight as endWeight, t.start_volume as startVolume ,t.end_volume as endVolume, t.price as price, t.remarks as remarks,
+        t.first_length as firstLength, t.second_length as secondLength, t.upper_limit_weight as upperLimitWeight,
+        t.price_no as priceNo, t.sensitive_price as sensitivePrice, t.cube_upper as cubeUpper, t.vol_conversion as volConversion
+    </sql>
+
+    <sql id="table">route_price</sql>
+</mapper>

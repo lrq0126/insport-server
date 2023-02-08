@@ -63,7 +63,8 @@ export function comfirmPackageCargoList({
   insuranceId,
   insurancePriceId,
   
-  commercialAreaId
+  commercialAreaId,
+  customerIdentityId,
 }) {
   const data = {
     goodsNos: goodsNos ? goodsNos.join(",") : goodsNos,
@@ -80,7 +81,8 @@ export function comfirmPackageCargoList({
 	insuranceId: insuranceId,
 	insurancePriceId: insurancePriceId,
 	
-	commercialAreaId: commercialAreaId
+	commercialAreaId: commercialAreaId,
+	customerIdentityId: customerIdentityId,
   };
   return uni.request({
     url: config.baseUrl.dev + "/goods/confirm/pack",

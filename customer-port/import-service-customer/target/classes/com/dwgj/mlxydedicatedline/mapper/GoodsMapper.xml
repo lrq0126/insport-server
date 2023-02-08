@@ -1,0 +1,871 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dwgj.mlxydedicatedline.mapper.GoodsMapper">
+
+    <sql id="table">goods</sql>
+
+    <resultMap id="BaseResultMap" type="com.dwgj.mlxydedicatedline.entity.Goods">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="goods_no" jdbcType="VARCHAR" property="goodsNo"/>
+        <result column="goods_name" jdbcType="VARCHAR" property="goodsName"/>
+        <result column="commercial_area_id" jdbcType="VARCHAR" property="commercialAreaId"/>
+        <result column="commercial_area_name" jdbcType="VARCHAR" property="commercialAreaName"/>
+        <result column="customer_no" jdbcType="VARCHAR" property="customerNo"/>
+        <result column="delivery_order_no" jdbcType="VARCHAR" property="deliveryOrderNo"/>
+        <result column="delivery_no" jdbcType="VARCHAR" property="deliveryNo"/>
+        <result column="package_type" jdbcType="VARCHAR" property="packageType"/>
+        <result column="location" jdbcType="VARCHAR" property="location"/>
+        <result column="scan_type" jdbcType="VARCHAR" property="scanType"/>
+        <result column="package_num" jdbcType="INTEGER" property="packageNum"/>
+        <result column="in_storage_time" jdbcType="TIMESTAMP" property="inStorageTime"/>
+        <result column="out_storage_time" jdbcType="TIMESTAMP" property="outStorageTime"/>
+        <result column="operator_code" jdbcType="VARCHAR" property="operatorCode"/>
+        <result column="operator_name" jdbcType="VARCHAR" property="operatorName"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="create_id" jdbcType="INTEGER" property="createId"/>
+        <result column="last_update_time" jdbcType="TIMESTAMP" property="lastUpdateTime"/>
+        <result column="last_update_id" jdbcType="INTEGER" property="lastUpdateId"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="message" jdbcType="VARCHAR" property="message"/>
+        <result column="goods_type" jdbcType="VARCHAR" property="goodsType"/>
+        <result column="kg" jdbcType="DOUBLE" property="kg"/>
+        <result column="vol" jdbcType="DOUBLE" property="vol"/>
+        <result column="version" jdbcType="DOUBLE" property="version"/>
+        <result column="pack_time" jdbcType="TIMESTAMP" property="packTime"/>
+        <result column="sort_type" jdbcType="INTEGER" property="sortType"/>
+        <result column="length" jdbcType="INTEGER" property="length"/>
+        <result column="width" jdbcType="INTEGER" property="width"/>
+        <result column="height" jdbcType="INTEGER" property="height"/>
+        <result column="address_id" jdbcType="INTEGER" property="addressId"/>
+
+    </resultMap>
+    <sql id="Base_Column_List">
+    t.id, t.goods_no, t.goods_name, t.commercial_area_id, t.commercial_area_name, t.customer_no,
+    t.delivery_order_no, t.delivery_no, t.package_type,
+    t.`location`, t.scan_type, t.package_num, DATE_FORMAT(t.in_storage_time,'%Y-%m-%d %k:%i:%s') as in_storage_time,
+    DATE_FORMAT(t.out_storage_time,'%Y-%m-%d %k:%i:%s') as out_storage_time, t.operator_code, t.operator_name,
+    DATE_FORMAT(t.create_time,'%Y-%m-%d %k:%i:%s') as create_time, t.create_id,
+    DATE_FORMAT(t.last_update_time,'%Y-%m-%d %k:%i:%s') as last_update_time, t.last_update_id, t.`status`,
+    t.message, t.goods_type, t.kg, t.vol, t.version, DATE_FORMAT(t.pack_time,'%Y-%m-%d %k:%i:%s') as pack_time,
+    t.sort_type, t.length, t.width, t.height, t.address_id
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from goods t
+        where t.id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from goods
+    where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.dwgj.mlxydedicatedline.entity.Goods"
+            useGeneratedKeys="true">
+    insert into goods (goods_no, goods_name, commercial_area_id, commercial_area_name, customer_no,
+      delivery_order_no, delivery_no, package_type,
+      `location`, scan_type, package_num,
+      in_storage_time, out_storage_time, operator_code,
+      operator_name, create_time, create_id,
+      last_update_time, last_update_id, `status`,
+      message, goods_type, kg, vol, version, pack_time, sort_type, `length`, width, height, address_id
+      )
+    values (#{goodsNo,jdbcType=VARCHAR}, #{goodsName,jdbcType=VARCHAR}, #{commercialAreaId,jdbcType=INTEGER},
+      #{commercialAreaName,jdbcType=VARCHAR}, #{customerNo,jdbcType=VARCHAR},
+      #{deliveryOrderNo,jdbcType=VARCHAR}, #{deliveryNo,jdbcType=VARCHAR}, #{packageType,jdbcType=VARCHAR},
+      #{location,jdbcType=VARCHAR}, #{scanType,jdbcType=VARCHAR}, #{packageNum,jdbcType=INTEGER},
+      #{inStorageTime,jdbcType=TIMESTAMP}, #{outStorageTime,jdbcType=TIMESTAMP}, #{operatorCode,jdbcType=VARCHAR},
+      #{operatorName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{createId,jdbcType=INTEGER},
+      #{lastUpdateTime,jdbcType=TIMESTAMP}, #{lastUpdateId,jdbcType=INTEGER}, #{status,jdbcType=INTEGER},
+      #{message,jdbcType=VARCHAR}, #{goodsType,jdbcType=VARCHAR}, #{kg,jdbcType=DOUBLE},
+      #{vol,jdbcType=DOUBLE}, #{version}, #{packTime}, #{sortType}, #{length}, #{width}, #{height}, #{addressId}
+      )
+    </insert>
+    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.dwgj.mlxydedicatedline.entity.Goods"
+            useGeneratedKeys="true">
+        insert into goods
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="goodsNo != null and goodsNo != ''">
+                goods_no,
+            </if>
+            <if test="goodsName != null and goodsName != ''">
+                goods_name,
+            </if>
+            <if test="commercialAreaId != null and commercialAreaId != ''">
+                commercial_area_id,
+            </if>
+            <if test="commercialAreaName != null and commercialAreaName != ''">
+                commercial_area_name,
+            </if>
+            <if test="customerNo != null and customerNo != ''">
+                customer_no,
+            </if>
+            <if test="deliveryOrderNo != null and deliveryOrderNo != ''">
+                delivery_order_no,
+            </if>
+            <if test="deliveryNo != null and deliveryNo != ''">
+                delivery_no,
+            </if>
+            <if test="packageType != null and packageType != ''">
+                package_type,
+            </if>
+            <if test="location != null and location != ''">
+                `location`,
+            </if>
+            <if test="scanType != null and scanType != ''">
+                scan_type,
+            </if>
+            <if test="packageNum != null and packageNum != ''">
+                package_num,
+            </if>
+            <if test="inStorageTime != null and inStorageTime != ''">
+                in_storage_time,
+            </if>
+            <if test="outStorageTime != null and outStorageTime != ''">
+                out_storage_time,
+            </if>
+            <if test="operatorCode != null and operatorCode != ''">
+                operator_code,
+            </if>
+            <if test="operatorName != null and operatorName != ''">
+                operator_name,
+            </if>
+            create_time,
+            <if test="createId != null and createId != ''">
+                create_id,
+            </if>
+            <if test="lastUpdateTime != null and lastUpdateTime != ''">
+                last_update_time,
+            </if>
+            <if test="lastUpdateId != null and lastUpdateId != ''">
+                last_update_id,
+            </if>
+            `status`,
+            <if test="message != null and message != ''">
+                message,
+            </if>
+            <if test="goodsType != null and goodsType != ''">
+                goods_type,
+            </if>
+            <if test="kg != null and kg != ''">
+                kg,
+            </if>
+            <if test="vol != null and vol != ''">
+                vol,
+            </if>
+            version,
+            <if test="packTime != null and packTime != ''">
+                pack_time,
+            </if>
+            <if test="sortType != null and sortType != ''">
+                sort_type,
+            </if>
+            <if test="length != null and length != ''">
+                `length`,
+            </if>
+            <if test="width != null and width != ''">
+                width,
+            </if>
+            <if test="height != null and height != ''">
+                height,
+            </if>
+            <if test="addressId != null and addressId != ''">
+                address_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="goodsNo != null and goodsNo != ''">
+                #{goodsNo,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsName != null and goodsName != ''">
+                #{goodsName,jdbcType=VARCHAR},
+            </if>
+            <if test="commercialAreaId != null and commercialAreaId != ''">
+                #{commercialAreaId,jdbcType=INTEGER},
+            </if>
+            <if test="commercialAreaName != null and commercialAreaName != ''">
+                #{commercialAreaName,jdbcType=VARCHAR},
+            </if>
+            <if test="customerNo != null and customerNo != ''">
+                #{customerNo,jdbcType=VARCHAR},
+            </if>
+            <if test="deliveryOrderNo != null and deliveryOrderNo != ''">
+                #{deliveryOrderNo},
+            </if>
+            <if test="deliveryNo != null and deliveryNo != ''">
+                #{deliveryNo},
+            </if>
+            <if test="packageType != null and packageType != ''">
+                #{packageType,jdbcType=VARCHAR},
+            </if>
+            <if test="location != null and location != ''">
+                #{location,jdbcType=VARCHAR},
+            </if>
+            <if test="scanType != null and scanType != ''">
+                #{scanType,jdbcType=VARCHAR},
+            </if>
+            <if test="packageNum != null and packageNum != ''">
+                #{packageNum,jdbcType=INTEGER},
+            </if>
+            <if test="inStorageTime != null and inStorageTime != ''">
+                #{inStorageTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="outStorageTime != null and outStorageTime != ''">
+                #{outStorageTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="operatorCode != null and operatorCode != ''">
+                #{operatorCode,jdbcType=VARCHAR},
+            </if>
+            <if test="operatorName != null and operatorName != ''">
+                #{operatorName,jdbcType=VARCHAR},
+            </if>
+            now(),
+            <if test="createId != null and createId != ''">
+                #{createId,jdbcType=INTEGER},
+            </if>
+            <if test="lastUpdateTime != null and lastUpdateTime != ''">
+                #{lastUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastUpdateId != null and lastUpdateId != ''">
+                #{lastUpdateId,jdbcType=INTEGER},
+            </if>
+            1,
+            <if test="message != null and message != ''">
+                #{message,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsType != null and goodsType != ''">
+                #{goodsType,jdbcType=VARCHAR},
+            </if>
+            <if test="kg != null and kg != ''">
+                #{kg,jdbcType=DOUBLE},
+            </if>
+            <if test="vol != null and vol != ''">
+                #{vol,jdbcType=DOUBLE},
+            </if>
+            0,
+            <if test="packTime != null and packTime != ''">
+                #{packTime},
+            </if>
+            <if test="sortType != null and sortType != ''">
+                #{sortType},
+            </if>
+            <if test="length != null and length != ''">
+                #{length},
+            </if>
+            <if test="width != null and width != ''">
+                #{width},
+            </if>
+            <if test="height != null and height != ''">
+                #{height},
+            </if>
+            <if test="addressId != null and addressId != ''">
+                #{addressId},
+            </if>
+        </trim>
+    </insert>
+
+    <insert id="insertList">
+      insert into goods (create_time, create_id, `status`, version, goods_no, goods_name,
+        commercial_area_id, commercial_area_name, customer_no, delivery_order_no,
+        package_type,package_num, message, goods_type, kg)
+      values
+        <foreach collection="goodsList" item="item" separator=",">
+            (now(), #{item.createId}, 1, 1, #{item.goodsNo}, #{item.goodsName},
+            #{item.commercialAreaId}, #{item.commercialAreaName}, #{item.customerNo}, #{item.deliveryOrderNo},
+            #{item.packageType}, #{item.packageNum}, #{item.message}, #{item.goodsType}, #{item.kg})
+        </foreach>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.dwgj.mlxydedicatedline.entity.Goods">
+        update goods
+        <set>
+            <if test="goodsNo != null and goodsNo != ''">
+                goods_no = #{goodsNo,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsName != null and goodsName != ''">
+                goods_name = #{goodsName,jdbcType=VARCHAR},
+            </if>
+            <if test="commercialAreaId != null and commercialAreaId != ''">
+                commercial_area_id = #{commercialAreaId,jdbcType=INTEGER},
+            </if>
+            <if test="commercialAreaName != null and commercialAreaName != ''">
+                commercial_area_name = #{commercialAreaName,jdbcType=VARCHAR},
+            </if>
+            <if test="customerNo != null and customerNo != ''">
+                customer_no = #{customerNo,jdbcType=VARCHAR},
+            </if>
+            <if test="deliveryOrderNo != null and deliveryOrderNo != ''">
+                delivery_order_no = #{deliveryOrderNo,jdbcType=VARCHAR},
+            </if>
+            <if test="deliveryNo != null and deliveryNo != ''">
+                delivery_no = #{deliveryNo,jdbcType=VARCHAR},
+            </if>
+            <if test="packageType != null and packageType != ''">
+                package_type = #{packageType,jdbcType=VARCHAR},
+            </if>
+            <if test="location != null and location != ''">
+                `location` = #{location,jdbcType=VARCHAR},
+            </if>
+            <if test="scanType != null and scanType != ''">
+                scan_type = #{scanType,jdbcType=VARCHAR},
+            </if>
+            <if test="packageNum != null and packageNum != ''">
+                package_num = #{packageNum,jdbcType=INTEGER},
+            </if>
+            <if test="inStorageTime != null and inStorageTime != ''">
+                in_storage_time = #{inStorageTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="outStorageTime != null and outStorageTime != ''">
+                out_storage_time = #{outStorageTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="operatorCode != null and operatorCode != ''">
+                operator_code = #{operatorCode,jdbcType=VARCHAR},
+            </if>
+            <if test="operatorName != null and operatorName != ''">
+                operator_name = #{operatorName,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null and createTime != ''">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createId != null and createId != ''">
+                create_id = #{createId,jdbcType=INTEGER},
+            </if>
+            last_update_time = now(),
+            <if test="lastUpdateId != null and lastUpdateId != ''">
+                last_update_id = #{lastUpdateId,jdbcType=INTEGER},
+            </if>
+            <if test="status != null and status != ''">
+                `status` = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="message != null and message != ''">
+                message = #{message,jdbcType=VARCHAR},
+            </if>
+            <if test="kg != null and kg != ''">
+                kg = #{kg,jdbcType=DOUBLE},
+            </if>
+            <if test="vol != null and vol != ''">
+                vol = #{vol,jdbcType=DOUBLE},
+            </if>
+            <if test="version != null and version != ''">
+                version = #{version} + 1,
+            </if>
+            <if test="packTime != null and packTime != ''">
+                pack_time = #{packTime},
+            </if>
+            <if test="sortType != null and sortType != ''">
+                sort_type = #{sortType},
+            </if>
+            <if test="length != null and length != ''">
+                `length` = #{length},
+            </if>
+            <if test="width != null and width != ''">
+                width = #{width},
+            </if>
+            <if test="height != null and height != ''">
+                height = #{height},
+            </if>
+            <if test="addressId != null and addressId != ''">
+                address_id = #{addressId},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER} and goods_type = 3 and version = #{version}
+    </update>
+
+    <update id="updateByPrimary" parameterType="com.dwgj.mlxydedicatedline.entity.Goods">
+        update goods
+        <set>
+            <if test="goodsNo != null and goodsNo != ''">
+                goods_no = #{goodsNo,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsName != null and goodsName != ''">
+                goods_name = #{goodsName,jdbcType=VARCHAR},
+            </if>
+            <if test="commercialAreaId != null and commercialAreaId != ''">
+                commercial_area_id = #{commercialAreaId,jdbcType=INTEGER},
+            </if>
+            <if test="commercialAreaName != null and commercialAreaName != ''">
+                commercial_area_name = #{commercialAreaName,jdbcType=VARCHAR},
+            </if>
+            <if test="customerNo != null and customerNo != ''">
+                customer_no = #{customerNo,jdbcType=VARCHAR},
+            </if>
+            <if test="deliveryOrderNo != null and deliveryOrderNo != ''">
+                delivery_order_no = #{deliveryOrderNo,jdbcType=VARCHAR},
+            </if>
+            <if test="deliveryNo != null and deliveryNo != ''">
+                delivery_no = #{deliveryNo,jdbcType=VARCHAR},
+            </if>
+            <if test="packageType != null and packageType != ''">
+                package_type = #{packageType,jdbcType=VARCHAR},
+            </if>
+            <if test="location != null and location != ''">
+                `location` = #{location,jdbcType=VARCHAR},
+            </if>
+            <if test="scanType != null and scanType != ''">
+                scan_type = #{scanType,jdbcType=VARCHAR},
+            </if>
+            <if test="packageNum != null and packageNum != ''">
+                package_num = #{packageNum,jdbcType=INTEGER},
+            </if>
+            <if test="inStorageTime != null and inStorageTime != ''">
+                in_storage_time = #{inStorageTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="outStorageTime != null and outStorageTime != ''">
+                out_storage_time = #{outStorageTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="operatorCode != null and operatorCode != ''">
+                operator_code = #{operatorCode,jdbcType=VARCHAR},
+            </if>
+            <if test="operatorName != null and operatorName != ''">
+                operator_name = #{operatorName,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null and createTime != ''">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createId != null and createId != ''">
+                create_id = #{createId,jdbcType=INTEGER},
+            </if>
+            last_update_time = now(),
+            <if test="lastUpdateId != null and lastUpdateId != ''">
+                last_update_id = #{lastUpdateId,jdbcType=INTEGER},
+            </if>
+            <if test="status != null and status != ''">
+                `status` = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="message != null and message != ''">
+                message = #{message,jdbcType=VARCHAR},
+            </if>
+            <if test="kg != null and kg != ''">
+                kg = #{kg,jdbcType=DOUBLE},
+            </if>
+            <if test="vol != null and vol != ''">
+                vol = #{vol,jdbcType=DOUBLE},
+            </if>
+            <if test="version != null and version != ''">
+                version = #{version} + 1,
+            </if>
+            <if test="packTime != null and packTime != ''">
+                pack_time = #{packTime},
+            </if>
+            <if test="sortType != null and sortType != ''">
+                sort_type = #{sortType},
+            </if>
+            <if test="length != null and length != ''">
+                `length` = #{length},
+            </if>
+            <if test="width != null and width != ''">
+                width = #{width},
+            </if>
+            <if test="height != null and height != ''">
+                height = #{height},
+            </if>
+            <if test="addressId != null and addressId != ''">
+                address_id = #{addressId},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.dwgj.mlxydedicatedline.entity.Goods">
+        update goods
+        set
+          goods_no = #{goodsNo,jdbcType=VARCHAR},
+          goods_name = #{goodsName,jdbcType=VARCHAR},
+          commercial_area_id = #{commercialAreaId,jdbcType=INTEGER},
+          commercial_area_name = #{commercialAreaName,jdbcType=VARCHAR},
+          customer_no = #{customerNo,jdbcType=VARCHAR},
+          delivery_order_no = #{deliveryOrderNo,jdbcType=VARCHAR},
+          delivery_no = #{deliveryNo,jdbcType=VARCHAR},
+          package_type = #{packageType,jdbcType=VARCHAR},
+          `location` = #{location,jdbcType=VARCHAR},
+          scan_type = #{scanType,jdbcType=VARCHAR},
+          package_num = #{packageNum,jdbcType=INTEGER},
+          in_storage_time = #{inStorageTime,jdbcType=TIMESTAMP},
+          out_storage_time = #{outStorageTime,jdbcType=TIMESTAMP},
+          operator_code = #{operatorCode,jdbcType=VARCHAR},
+          operator_name = #{operatorName,jdbcType=VARCHAR},
+          create_time = #{createTime,jdbcType=TIMESTAMP},
+          create_id = #{createId,jdbcType=INTEGER},
+          last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+          last_update_id = #{lastUpdateId,jdbcType=INTEGER},
+          `status` = #{status,jdbcType=INTEGER},
+          message = #{message,jdbcType=VARCHAR},
+          goods_type = #{goodsType,jdbcType=VARCHAR},
+          kg = #{kg,jdbcType=DOUBLE},
+          vol = #{vol,jdbcType=DOUBLE},
+          version = #{version},
+          pack_time = #{packTime},
+          sort_type = #{sortType},
+          `length` = #{length},
+          width = #{width},
+          height = #{height},
+          address_id = #{addressId}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <select id="findGoods" parameterType="java.util.Map" resultType="com.dwgj.mlxydedicatedline.vo.GoodsVo">
+        select
+        <include refid="VoSelectCols"/>
+        from
+        <include refid="table"/>
+        t
+        left join customer ctm on t.customer_no = ctm.customer_no
+        LEFT JOIN delivery_company dc on dc.delivery_no = t.delivery_no
+        left join goods2address g2a on g2a.goods_id = t.id and g2a.`status` = 1
+        left join customer_address cuta on cuta.id = t.address_id
+        where
+            ctm.id = #{customerId}
+            and t.status = 1
+            <if test="commercialAreaId != null and commercialAreaId != ''">
+                and t.commercial_area_id = #{commercialAreaId}
+            </if>
+            <if test="deliveryOrderNo != null and deliveryOrderNo != '' ">
+                and t.delivery_order_no = #{deliveryOrderNo}
+            </if>
+            <if test="deliveryName != null and deliveryName != '' ">
+                and dc.delivery_name like concat('%',#{deliveryName},'%')
+            </if>
+            <if test="goodsName != null and goodsName != '' ">
+                and INSTR(goods_name,#{goodsName})>0
+            </if>
+            <if test="inStorageTime != null and inStorageTime != '' ">
+                and t.in_storage_time between #{startTime} and #{endTime}
+            </if>
+            <if test="goodsType != null and goodsType != '' ">
+                and t.goods_type = #{goodsType}
+            </if>
+        order by t.in_storage_time desc
+        LIMIT #{pageNumber},#{pageSize}
+    </select>
+
+    <select id="findByGoodsNos" parameterType="java.util.Map" resultType="com.dwgj.mlxydedicatedline.vo.GoodsVo">
+        select
+        <include refid="VoSelectCols"/>
+        from
+        <include refid="table"/>
+        t
+        left join customer ctm on t.customer_no = ctm.customer_no
+        LEFT JOIN delivery_company as dc ON dc.delivery_no = t.delivery_no
+        left join goods2address g2a on g2a.goods_id = t.id and g2a.`status` = 1
+        left join customer_address cuta on cuta.id = t.address_id
+        where t.status = 1 and
+        t.goods_no in
+        <foreach collection="goodsNos" item="goodsNo" open="(" close=")" separator=",">
+            #{goodsNo}
+        </foreach>
+    </select>
+
+
+    <select id="selectGoodsByIds" parameterType="java.util.List" resultType="com.dwgj.mlxydedicatedline.vo.GoodsVo">
+        select
+        <include refid="VoSelectCols"/>
+        from
+        <include refid="table"/>
+        t
+        left join customer ctm on t.customer_no = ctm.customer_no
+        LEFT JOIN delivery_company as dc ON dc.delivery_no = t.delivery_no
+        left join goods2address g2a on g2a.goods_id = t.id and g2a.`status` = 1
+        left join customer_address cuta on cuta.id = t.address_id
+        where t.status = 1 and
+        t.id in
+        <foreach collection="goodsIds" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </select>
+
+    <select id="selectGoodsBySonPackId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        <include refid="table"/> t
+        left join goods2pack g2p on t.id = g2p.goods_id
+        where
+          t.status = 1
+          and g2p.`status` = 1
+          and g2p.son_pack_id = #{sonPackId}
+    </select>
+
+    <select id="findEntityByGoodsNo" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        <include refid="table"/>
+        t
+        where t.goods_no = #{goodsNo}
+    </select>
+
+    <select id="countSelectAll" resultType="java.lang.Integer" parameterType="java.util.Map">
+        select
+        count(*) as count
+        from
+        <include refid="table"/>t
+        left join customer ctm on t.customer_no = ctm.customer_no
+        left join delivery_company dc on dc.delivery_no = t.delivery_no
+        where
+        ctm.id = #{customerId}
+        and t.status = 1
+        <if test="commercialAreaId != null and commercialAreaId != ''">
+            and t.commercial_area_id = #{commercialAreaId}
+        </if>
+        <if test="deliveryOrderNo != null and deliveryOrderNo != '' ">
+            and t.delivery_order_no = #{deliveryOrderNo}
+        </if>
+        <if test="deliveryName != null and deliveryName != '' ">
+            and dc.delivery_name like concat('%',#{deliveryName},'%')
+        </if>
+        <if test="goodsName != null and goodsName != '' ">
+            and INSTR(goods_name,#{goodsName})>0
+        </if>
+        <if test="goodsType != null and goodsType != ''">
+            and t.goods_type = #{goodsType}
+        </if>
+        <if test="inStorageTime != null and inStorageTime != '' ">
+            and t.in_storage_time between #{startTime} and #{endTime}
+        </if>
+    </select>
+
+    <delete id="deleteByIds" parameterType="java.util.Map">
+        update
+        <include refid="table"/>
+        t
+        left join customer ctm on t.customer_no = ctm.customer_no
+        set t.status = 0
+        where ctm.id = #{customerId}
+        and
+        t.id in
+        <foreach collection="ids" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </delete>
+
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        update
+        <include refid="table"/>
+        t
+        left join customer ctm on t.customer_no = ctm.customer_no
+        set t.status = 0
+        where t.id = #{id} and t.goods_type = 3
+    </delete>
+
+    <select id="findGoodsNo" parameterType="java.lang.String" resultType="com.dwgj.mlxydedicatedline.vo.GoodsVo">
+        select
+        <include refid="VoSelectCols"/>
+        from
+        <include refid="table"/>
+        t
+        LEFT JOIN delivery_company as dc ON dc.delivery_no = t.delivery_no
+        left join goods2address g2a on g2a.goods_id = t.id and g2a.`status` = 1
+        left join customer_address cuta on cuta.id = t.address_id
+        where t.goods_no = #{goodsNo} and t.`status` = 1
+    </select>
+    <select id="findDeliveryOrderNo" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>,
+        cus.customer_name as customerName, cus.login_name as loginName
+        from
+        <include refid="table"/> t
+        left join customer cus on cus.customer_no = t.customer_no and cus.`status` = 1
+        where t.delivery_order_no = #{deliveryOrderNo} and t.`status` = 1
+    </select>
+    <select id="findDeliveryOrderNoAndCustomerId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        <include refid="table"/>
+        t
+        where t.`status` = 1 and t.delivery_order_no = #{deliveryOrderNo} and t.customer_no = #{customerNo}
+    </select>
+    <select id="selectPackWeight" resultType="java.lang.Double">
+        select ifnull(sum(kg),0) packWeight
+        from goods
+        where id in (
+          select goods_id
+          from ping_member
+          where
+              p_id = #{pid}
+              and status = 1
+          )
+    </select>
+
+    <update id="updateOfApplyPackGoodsTypeChangeByGoodsNo">
+        update
+        <include refid="table"/>
+        set
+        last_update_time = now(),
+        goods_type = 6
+        where `status` = 1
+        and
+        goods_no in
+        <foreach collection="goodsNos" item="goodsNo" open="(" close=")" separator=",">
+            #{goodsNo}
+        </foreach>
+    </update>
+
+    <update id="updateOfApplyPackGoodsTypeChangeByGoodsIds" parameterType="java.util.List">
+        update
+        <include refid="table"/>
+        set
+        last_update_time = now(),
+        goods_type = 6
+        where `status` = 1
+        and
+        id in
+        <foreach collection="goodsIds" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </update>
+
+    <update id="updateToConfirmShipment">
+        update
+        <include refid="table"/>
+        set
+        last_update_time = now(),
+        goods_type = 8
+        where `status` = 1
+        and
+        goods_no in
+        <foreach collection="goodsNos" item="goodsNo" open="(" close=")" separator=",">
+            #{goodsNo}
+        </foreach>
+    </update>
+
+    <update id="updateGoodsByIdListAndType">
+        update
+        <include refid="table"/>
+        set
+        last_update_time = now(),
+        goods_type = #{goodsType}
+        where `status` = 1
+        and
+        id in
+        <foreach collection="goodsIdList" item="goodsId" open="(" close=")" separator=",">
+            #{goodsId}
+        </foreach>
+    </update>
+
+    <update id="unpack" parameterType="java.util.List">
+        update
+        <include refid="table"/>
+        set
+        last_update_time = now(),
+        goods_type = 1
+        where `status` = 1
+        and
+        goods_no in
+        <foreach collection="goodsNos" item="goodsNo" open="(" close=")" separator=",">
+            #{goodsNo}
+        </foreach>
+    </update>
+
+    <update id="receipt" parameterType="java.util.List">
+        update
+        <include refid="table"/>
+        set
+        receipt_time = now(),
+        goods_type = 9
+        where `status` = 1
+        and id in
+        <foreach collection="goodsIdList" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </update>
+
+<!--  修改货物状态为拼团中  -->
+    <update id="updatePinByGoodsIds" parameterType="java.util.List">
+        update
+        <include refid="table"/>
+        set
+        last_update_time = now(),
+        goods_type = 4
+        where `status` = 1
+        and
+        id in
+        <foreach collection="list" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </update>
+
+    <!--  修改货物状态为入库  -->
+    <update id="updateInWarehouseByGoodsIds" parameterType="java.util.List">
+        update
+        <include refid="table"/>
+        set
+        last_update_time = now(),
+        goods_type = 2
+        where `status` = 1
+        and
+        id in
+        <foreach collection="list" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </update>
+
+    <update id="updateCustomerNo">
+        update goods
+        <set>
+            customer_no = #{customerNo}
+        </set>
+        <where>
+            status = 1
+            and id in
+            <foreach collection="goodsList" item="item" open="(" close=")" separator=",">
+                #{item.id}
+            </foreach>
+        </where>
+    </update>
+
+    <select id="findByPackId" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/>
+        from goods t
+        left join goods2pack g2p on g2p.goods_id = t.id
+        where
+        t.status = 1
+        and g2p.status = 1
+        and g2p.pack_id = #{packId}
+    </select>
+
+    <select id="selectGoodsLocationByCustomerNo" resultType="java.util.Map">
+        select count(id) as goodsSum, `location`
+        from goods
+        where status = 1
+        and goods_type = 1
+        and customer_no = #{customerNo}
+        group by `location`
+    </select>
+
+    <select id="selectGoodsByCustomerNo" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/>
+        from goods t
+        <where>
+            t.status = 1
+            and t.customer_no = #{customerNo}
+        </where>
+    </select>
+
+    <select id="getGoodsCommercialArea" resultType="java.util.Map">
+        select commercial_area_id as commercialAreaId, commercial_area_name as commercialAreaName
+        from goods
+        <where>
+            status = 1
+            and goods_type = 1
+            and customer_no = #{customerNo}
+        </where>
+        group by commercial_area_id, commercial_area_name
+    </select>
+
+    <sql id="VoSelectCols">
+        t.id, t.goods_no as goodsNo, t.goods_name as goodsName, t.commercial_area_id as commercialAreaId,
+        t.commercial_area_name as commercialAreaName, t.customer_no as customerNo,
+        t.delivery_order_no as deliveryOrderNo,
+        t.delivery_no as deliveryNo, t.package_type as packageType, t.`location`, t.scan_type as scanType, t.package_num
+        as packageNum,
+        DATE_FORMAT(t.in_storage_time,'%Y-%m-%d %k:%i:%s') as inStorageTime,
+        DATE_FORMAT(t.out_storage_time,'%Y-%m-%d %k:%i:%s') as outStorageTime, t.operator_code as operatorCode,
+        t.operator_name as operatorName, DATE_FORMAT(t.create_time,'%Y-%m-%d %k:%i:%s') as createTime, t.create_id as
+        createId,
+        DATE_FORMAT(t.last_update_time,'%Y-%m-%d %k:%i:%s') as lastUpdateTime, t.last_update_id as lastUpdateId,
+        t.`status`,
+        t.message, t.goods_type as goodsType, t.kg, t.vol, dc.delivery_name as deliveryName, t.version ,
+        DATE_FORMAT(t.pack_time,'%Y-%m-%d %k:%i:%s') as packTime, t.sort_type as sortType, t.length, t.width, t.height,
+        t.address_id as addressId, g2a.address as address, g2a.addressee, ctm.id as customerId
+    </sql>
+</mapper>

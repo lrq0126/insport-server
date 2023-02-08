@@ -2,8 +2,8 @@
 	<view style="background-color: #FFFFFF;">
 		<uni-nav-bar left-icon="back"
 		             left-text=""
-		             title="飞轮云仓-物流轨迹信息"
-		             backgroundColor="#fbc04a"
+		             title="小挎兜-物流轨迹信息"
+		             backgroundColor="#52c3ff"
 		             color="#fff"
 					 :fixed="true"
 		             @clickLeft="handleBack"></uni-nav-bar>

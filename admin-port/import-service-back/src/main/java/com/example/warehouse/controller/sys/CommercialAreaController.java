@@ -7,6 +7,7 @@ import com.example.warehouse.service.sys.CommercialAreaService;
 import com.example.warehouse.vo.sys.CommercialAreaReqVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -43,4 +44,9 @@ public class CommercialAreaController {
         return commercialAreaService.enableCommercialArea(id, isEnable);
     }
 
+
+    @GetMapping("/getCommercialAreaSelectList")
+    public ResponseEntity<ResultModel> getCommercialAreaSelectList(){
+        return commercialAreaService.getCommercialAreaSelectList();
+    }
 }

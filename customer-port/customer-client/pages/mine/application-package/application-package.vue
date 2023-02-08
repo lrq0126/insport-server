@@ -91,8 +91,8 @@
                                               @click="handleGo('./application-info/application-info', [item], 1)">单独打包</view>
                                         <view class="edit-goods" style="margin-left: 8px;"
                                               @click="handleEdit(item)">编辑包裹</view>
-										<view class="rejection" style="margin-left: 8px;"
-											  @click="checkPicture(item.deliveryOrderNo)">查看图片</view>
+										<!-- <view class="rejection" style="margin-left: 8px;"
+											  @click="checkPicture(item.deliveryOrderNo)">查看图片</view> -->
                                     </view>
                                 </view>
                             </td>

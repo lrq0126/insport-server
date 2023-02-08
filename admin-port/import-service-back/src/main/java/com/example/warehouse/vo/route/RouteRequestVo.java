@@ -9,6 +9,7 @@ import lombok.Data;
 public class RouteRequestVo extends PageVo {
 
     private Integer countryId;
+    private Integer isPin;
 
     private String country;
 

@@ -44,6 +44,10 @@ public class WarehouseAddress {
     private String abnormalRelation;
 	@ApiModelProperty(value = "公司名称")
     private String companyName;
+	@ApiModelProperty(value = "区域ID")
+    private Integer commercialAreaId;
+	@ApiModelProperty(value = "区域名称")
+    private String commercialAreaName;
 
 	@Override
     public boolean equals(Object that) {

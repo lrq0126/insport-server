@@ -31,4 +31,9 @@ public enum ImageType {
      * 订单打包图片
      */
     CustomerPackPicture,
+
+    /**
+     * 客户身份证信息
+     */
+    CustomerIdentityPicture,
 }

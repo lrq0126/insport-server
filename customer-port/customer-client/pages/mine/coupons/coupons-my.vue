@@ -4,7 +4,7 @@
                      left-text=""
                      right-text="领取优惠券"
                      title="我的优惠券"
-                     backgroundColor="#fbc04a"
+                     backgroundColor="#52c3ff"
                      color="#fff"
                      @clickLeft="handleBack"
                      @clickRight="goRouter"></uni-nav-bar>

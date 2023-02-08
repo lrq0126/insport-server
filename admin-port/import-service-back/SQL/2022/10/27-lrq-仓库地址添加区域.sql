@@ -1,0 +1,2 @@
+alter table `warehouse_address` add column `commercial_area_id` int default null comment '区域ID';
+alter table `warehouse_address` add column `commercial_area_name` varchar(250) default null comment '区域名称';

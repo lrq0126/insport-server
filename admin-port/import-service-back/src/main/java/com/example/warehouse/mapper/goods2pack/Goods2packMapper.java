@@ -1,5 +1,6 @@
 package com.example.warehouse.mapper.goods2pack;
 
+import com.example.warehouse.entity.CustomerPack;
 import com.example.warehouse.entity.Goods2pack;
 import com.example.warehouse.mapper.MyBatisBaseDao;
 import org.apache.ibatis.annotations.Param;
@@ -73,4 +74,6 @@ public interface Goods2packMapper extends MyBatisBaseDao<Goods2pack, Integer> {
     void resetInPacked(@Param("outPackGIds") List<Integer> outPackGIds);
 
     void insertList(@Param("goods2packList") List<Goods2pack> goods2packList);
+
+    List<Goods2pack> findByPackIds(@Param("customerPackIdList") List<String> customerPackIdList);
 }

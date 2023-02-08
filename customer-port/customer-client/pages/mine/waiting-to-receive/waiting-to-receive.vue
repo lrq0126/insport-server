@@ -4,7 +4,7 @@
 */
 <template>
 	<view class="waiting-to-receive">
-		<uni-nav-bar left-icon="back" left-text="" right-text="" title="待收货列表" backgroundColor="#fbc04a" color="#fff"
+		<uni-nav-bar left-icon="back" left-text="" right-text="" title="待收货列表" backgroundColor="#52c3ff" color="#fff"
 			@clickLeft="goBack"></uni-nav-bar>
 		<!-- 搜索 -->
 		<view class="package_stock">

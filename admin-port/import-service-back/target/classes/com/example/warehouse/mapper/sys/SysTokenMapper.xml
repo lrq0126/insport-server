@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.warehouse.mapper.sys.SysTokenMapper">
+    <resultMap id="BaseResultMap" type="com.example.warehouse.entity.sys.SysToken">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+    	
+	    <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="sys_token" jdbcType="VARCHAR" property="sysToken"/>
+        <result column="time_limit" jdbcType="INTEGER" property="timeLimit"/>
+    		
+    </resultMap>
+	
+	<!-- 字段 -->
+	<sql id="Base_Column_List">
+		id, create_time, status, sys_token, time_limit
+	</sql>
+	
+	<!-- 插入字段实际数值 -->
+	<sql id="Insert_Column_Values">
+		#{createTime},#{status},#{sysToken},#{timeLimit}
+	</sql>
+	
+	<!-- 插入字段（判空） -->
+	<sql id="Base_Column_List_NotNull">
+		<if test="createTime != null and createTime != ''">
+			create_time, 
+		</if>
+    	<if test="status != null and status != ''">
+			status, 
+		</if>
+    	<if test="sysToken != null and sysToken != ''">
+			sys_token, 
+		</if>
+    	<if test="timeLimit != null and timeLimit != ''">
+			time_limit, 
+		</if>
+    	
+	</sql>
+	
+	<!-- 插入字段实际数值(判空) -->
+	<sql id="Insert_Column_Values_NotNull">
+		<if test="createTime != null and createTime != ''">
+			#{createTime},
+		</if>
+    	<if test="status != null and status != ''">
+			#{status},
+		</if>
+    	<if test="sysToken != null and sysToken != ''">
+			#{sysToken},
+		</if>
+    	<if test="timeLimit != null and timeLimit != ''">
+			#{timeLimit},
+		</if>
+    	
+	</sql>
+	
+	<!-- 更新字段 -->
+	<sql id="Update_Column">
+		create_time = #{createTime},
+    	status = #{status},
+    	sys_token = #{sysToken},
+    	time_limit = #{timeLimit},
+    	
+	</sql>
+	
+	<!-- 更新字段（判空） -->
+	<sql id="Update_Column_NotNull">
+		<if test="createTime != null and createTime != ''">
+			create_time = #{createTime},
+		</if>
+    	<if test="status != null and status != ''">
+			status = #{status},
+		</if>
+    	<if test="sysToken != null and sysToken != ''">
+			sys_token = #{sysToken},
+		</if>
+    	<if test="timeLimit != null and timeLimit != ''">
+			time_limit = #{timeLimit},
+		</if>
+    	
+	</sql>
+	
+	<select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <trim suffixOverrides=",">
+        <include refid="Base_Column_List"/>
+        </trim>
+        from sys_token
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+	<select id="getUltramodernToken" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"/>
+		from sys_token
+		<where>
+			status = 1
+		</where>
+		order by create_time desc
+		limit 0, 1
+	</select>
+	<select id="getSysTokenByToken" resultMap="BaseResultMap">
+		select id,
+		sys_token,
+		time_limit,
+		DATE_FORMAT(create_time, '%Y-%m-%d %k:%i:%s') as create_time
+		from sys_token
+		<where>
+			status = 1
+			and sys_token = #{token}
+		</where>
+	</select>
+
+	<insert id="insert" parameterType="com.example.warehouse.entity.sys.SysToken">
+		insert into sys_token
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			create_time, 
+			status, 
+			sys_token, 
+			time_limit, 
+					</trim>
+		values
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<include refid="Insert_Column_Values"/>
+		</trim>
+	</insert>
+	
+	<insert id="insertSelective" parameterType="com.example.warehouse.entity.sys.SysToken">
+		insert into sys_token
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<include refid="Base_Column_List_NotNull"/>
+		</trim>
+		values
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<include refid="Insert_Column_Values_NotNull"/>
+		</trim>
+	</insert>
+	
+	<update id="updateByPrimaryKey" parameterType="com.example.warehouse.entity.sys.SysToken">
+		update sys_token
+		<set>
+			<include refid="Update_Column"/>
+		</set>
+		
+		<where>
+		id = #{id} and status = 1
+		</where>
+		
+	</update>
+	
+	<update id="updateByPrimaryKeySelective" parameterType="com.example.warehouse.entity.sys.SysToken">
+		update sys_token
+		<set>
+			<include refid="Update_Column_NotNull"/>
+		</set>
+		<where>
+		id = #{id} and status = 1
+		</where>
+	</update>
+
+	<!-- 删除数据（逻辑删除） -->
+	<update id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		update  sys_token
+		set `status` = 0
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	
+	<!-- 移除数据（物理删除） -->
+	<delete id="removeByPrimaryKey" parameterType="java.lang.Integer">
+		delete from sys_token
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	
+</mapper>

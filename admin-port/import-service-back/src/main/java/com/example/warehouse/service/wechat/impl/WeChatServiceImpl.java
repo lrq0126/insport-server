@@ -10,9 +10,11 @@ import com.example.warehouse.entity.Customer;
 import com.example.warehouse.entity.wx.WeChatMaterialDo;
 import com.example.warehouse.entity.wx.WechatOfficialAccountLog;
 import com.example.warehouse.entity.wx.WechatReply;
+import com.example.warehouse.entity.wx.WechatReplyLog;
 import com.example.warehouse.mapper.CustomerMapper;
 import com.example.warehouse.mapper.user.WxAccessTokenMapper;
 import com.example.warehouse.mapper.wx.WechatOfficialAccountLogMapper;
+import com.example.warehouse.mapper.wx.WechatReplyLogMapper;
 import com.example.warehouse.mapper.wx.WechatReplyMapper;
 import com.example.warehouse.model.ResultModel;
 import com.example.warehouse.service.CustomerService;
@@ -55,6 +57,8 @@ public class WeChatServiceImpl implements WeChatService {
 
     @Autowired
     private WechatReplyMapper wechatReplyMapper;
+    @Autowired
+    private WechatReplyLogMapper wechatReplyLogMapper;
     @Autowired
     private WechatOfficialAccountLogMapper wechatOfficialAccountLogMapper;
 
@@ -224,10 +228,10 @@ public class WeChatServiceImpl implements WeChatService {
             }else { // 如果不是扫描微信绑定的二维码，则进行关注/扫码关注流程
                 System.out.println("扫描客户分享的二维码进行关注");
                 // 扫描客户分享的二维码，关注自动注册账户，绑定相关微信号
-                customer = customerService.subscribe(wxMessageBean);
-                WechatReply wechatReply = wechatReplyMapper.selectByReplyRule("扫码关注后自动回复");
+//                customer = customerService.subscribe(wxMessageBean);// 屏蔽关注自动创建客户账号功能
+                WechatReply wechatReply = wechatReplyMapper.selectByReplyRule("关注后自动回复");
                 String message = wechatReply == null ? "暂无自动回复的内容哦" : wechatReply.getReplyContent();
-                message = message.replaceAll("LOGIN_NAME", customer.getLoginName());
+//                message = message.replaceAll("LOGIN_NAME", customer.getLoginName());
                 String returnStr = returnTestMessage.replaceAll("FROMUSERNAME", weChatMap.get("FromUserName"))
                         .replaceAll("TOUSERNAME", weChatMap.get("ToUserName"))
                         .replaceAll("CREATETIME", String.valueOf(createTime))
@@ -274,6 +278,15 @@ public class WeChatServiceImpl implements WeChatService {
         List<String> returnStrList = new ArrayList<>();
         // 客户发送的文本信息
         String userRequestMessage = weChatMap.get("Content");
+        String openID = weChatMap.get("FromUserName");
+
+        // 插入客户发送的信息内容
+        WechatReplyLog wechatReplyLog = new WechatReplyLog();
+        wechatReplyLog.setCreateTime(DateUtil.getDateFormate(new Date(), DateUtil.DEFAULT_TIMESTAMP_FORMAT));
+        wechatReplyLog.setKeyWord(userRequestMessage);
+        wechatReplyLog.setOpenId(openID);
+        wechatReplyLogMapper.insertSelective(wechatReplyLog);
+
         List<WechatReply> wechatReplyList = wechatReplyMapper.selectByKeyWord(userRequestMessage);
         if(CollectionUtils.isEmpty(wechatReplyList)){
             returnStrList.add(defaultResponse(weChatMap));

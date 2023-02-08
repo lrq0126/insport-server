@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.warehouse.mapper.commerical.CommericalInvoiceItemsDao">
+
+    <resultMap type="com.example.warehouse.entity.commerical.CommericalInvoiceItems" id="CommericalInvoiceItemsMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="commericalId" column="commerical_id" jdbcType="INTEGER"/>
+        <result property="descriptionOfGoods" column="description_of_goods" jdbcType="VARCHAR"/>
+        <result property="hsCode" column="hs_code" jdbcType="VARCHAR"/>
+        <result property="material" column="material" jdbcType="VARCHAR"/>
+        <result property="purpose" column="purpose" jdbcType="VARCHAR"/>
+        <result property="qty" column="qty" jdbcType="VARCHAR"/>
+        <result property="unitValue" column="unit_value" jdbcType="VARCHAR"/>
+        <result property="totalValue" column="total_value" jdbcType="VARCHAR"/>
+        <result property="sortNo" column="sort_no" jdbcType="INTEGER"/>
+        <result property="status" column="status" jdbcType="INTEGER"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="createId" column="create_id" jdbcType="INTEGER"/>
+        <result property="lastUpdateTime" column="last_update_time" jdbcType="TIMESTAMP"/>
+        <result property="lastUpdateId" column="last_update_id" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="CommericalInvoiceItemsMap">
+        select
+          id, commerical_id, description_of_goods, hs_code, material, purpose, qty, unit_value, total_value, sort_no, status, create_time, create_id, last_update_time, last_update_id
+        from commerical_invoice_items
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="CommericalInvoiceItemsMap">
+        select
+          id, commerical_id, description_of_goods, hs_code, material, purpose, qty, unit_value, total_value, sort_no, status, create_time, create_id, last_update_time, last_update_id
+        from commerical_invoice_items
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="CommericalInvoiceItemsMap">
+        select
+        id, commerical_id, description_of_goods, hs_code, material, purpose, qty, unit_value, total_value, sort_no,
+        status, create_time, create_id, last_update_time, last_update_id
+        from commerical_invoice_items
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="commericalId != null">
+                and commerical_id = #{commericalId}
+            </if>
+            <if test="descriptionOfGoods != null and descriptionOfGoods != ''">
+                and description_of_goods = #{descriptionOfGoods}
+            </if>
+            <if test="hsCode != null and hsCode != ''">
+                and hs_code = #{hsCode}
+            </if>
+            <if test="material != null and material != ''">
+                and material = #{material}
+            </if>
+            <if test="purpose != null and purpose != ''">
+                and purpose = #{purpose}
+            </if>
+            <if test="qty != null and qty != ''">
+                and qty = #{qty}
+            </if>
+            <if test="unitValue != null and unitValue != ''">
+                and unit_value = #{unitValue}
+            </if>
+            <if test="totalValue != null and totalValue != ''">
+                and total_value = #{totalValue}
+            </if>
+            <if test="sortNo != null">
+                and sort_no = #{sortNo}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="createId != null">
+                and create_id = #{createId}
+            </if>
+            <if test="lastUpdateTime != null">
+                and last_update_time = #{lastUpdateTime}
+            </if>
+            <if test="lastUpdateId != null">
+                and last_update_id = #{lastUpdateId}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="" useGeneratedKeys="true">
+        insert into commerical_invoice_items(id, commerical_id, description_of_goods, hs_code, material, purpose, qty, unit_value, total_value, sort_no, status, create_time, create_id, last_update_time, last_update_id)
+        values (#{id}, #{commericalId}, #{descriptionOfGoods}, #{hsCode}, #{material}, #{purpose}, #{qty}, #{unitValue}, #{totalValue}, #{sortNo}, #{status}, #{createTime}, #{createId}, #{lastUpdateTime}, #{lastUpdateId})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update commerical_invoice_items
+        <set>
+            <if test="id != null">
+                id = #{id},
+            </if>
+            <if test="commericalId != null">
+                commerical_id = #{commericalId},
+            </if>
+            <if test="descriptionOfGoods != null and descriptionOfGoods != ''">
+                description_of_goods = #{descriptionOfGoods},
+            </if>
+            <if test="hsCode != null and hsCode != ''">
+                hs_code = #{hsCode},
+            </if>
+            <if test="material != null and material != ''">
+                material = #{material},
+            </if>
+            <if test="purpose != null and purpose != ''">
+                purpose = #{purpose},
+            </if>
+            <if test="qty != null and qty != ''">
+                qty = #{qty},
+            </if>
+            <if test="unitValue != null and unitValue != ''">
+                unit_value = #{unitValue},
+            </if>
+            <if test="totalValue != null and totalValue != ''">
+                total_value = #{totalValue},
+            </if>
+            <if test="sortNo != null">
+                sort_no = #{sortNo},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="createId != null">
+                create_id = #{createId},
+            </if>
+            <if test="lastUpdateTime != null">
+                last_update_time = #{lastUpdateTime},
+            </if>
+            <if test="lastUpdateId != null">
+                last_update_id = #{lastUpdateId},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <select id="selectByParentId" parameterType="java.lang.Long" resultMap="CommericalInvoiceItemsMap">
+        select * from
+        commerical_invoice_items
+        where commerical_id = #{pId} and status = 1
+    </select>
+
+    <!--通过主键删除-->
+    <update id="deleteById">
+        update commerical_invoice_items
+        set status = 0
+        where id = #{id}
+    </update>
+
+    <insert id="insertList" parameterType="java.util.List">
+        insert into commerical_invoice_items
+        (description_of_goods, commerical_id, hs_code, material, purpose, qty, unit_value, total_value, sort_no, status,
+        create_time, create_id)
+        values
+        <foreach collection="commericalInvoiceItemsList" item="item" separator=",">
+            (#{item.descriptionOfGoods}, #{item.commericalId}, #{item.hsCode}, #{item.material}, #{item.purpose},
+            #{item.qty}, #{item.unitValue}, #{item.totalValue}, #{item.sortNo}, 1, now(), #{item.createId})
+        </foreach>
+    </insert>
+
+    <!--通过主键删除-->
+    <update id="deleteByInvoiceId">
+        update commerical_invoice_items
+        set status = 0
+        where commerical_id = #{commericalId}
+    </update>
+
+</mapper>

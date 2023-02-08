@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dwgj.mlxydedicatedline.mapper.customer.CustomerIntegralMapper">
+    <resultMap id="BaseResultMap" type="com.dwgj.mlxydedicatedline.entity.customer.CustomerIntegral">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+    	
+	    <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+        <result column="customer_id" jdbcType="INTEGER" property="customerId"/>
+        <result column="integral_type" jdbcType="VARCHAR" property="integralType"/>
+        <result column="from_id" jdbcType="INTEGER" property="fromId"/>
+        <result column="integrals" jdbcType="INTEGER" property="integrals"/>
+    		
+    </resultMap>
+	
+	<!-- 字段 -->
+	<sql id="Base_Column_List">
+		id, create_time, status, remark, customer_id, integral_type, from_id, integrals
+	</sql>
+	
+	<!-- 插入字段实际数值 -->
+	<sql id="Insert_Column_Values">
+		#{createTime}, #{status}, #{remark}, #{customerId}, #{integralType}, #{fromId}, #{integrals}
+	</sql>
+	
+	<!-- 插入字段（判空） -->
+	<sql id="Base_Column_List_NotNull">
+		<if test="createTime != null and createTime != ''">
+			create_time, 
+		</if>
+    	<if test="status != null and status != ''">
+			status, 
+		</if>
+    	<if test="remark != null and remark != ''">
+			remark, 
+		</if>
+    	<if test="customerId != null and customerId != ''">
+			customer_id, 
+		</if>
+    	<if test="integralType != null and integralType != ''">
+			integral_type, 
+		</if>
+    	<if test="fromId != null and fromId != ''">
+			from_id, 
+		</if>
+    	<if test="integrals != null and integrals != ''">
+			integrals, 
+		</if>
+    	
+	</sql>
+	
+	<!-- 插入字段实际数值(判空) -->
+	<sql id="Insert_Column_Values_NotNull">
+		<if test="createTime != null and createTime != ''">
+			#{createTime},
+		</if>
+    	<if test="status != null and status != ''">
+			#{status},
+		</if>
+    	<if test="remark != null and remark != ''">
+			#{remark},
+		</if>
+    	<if test="customerId != null and customerId != ''">
+			#{customerId},
+		</if>
+    	<if test="integralType != null and integralType != ''">
+			#{integralType},
+		</if>
+    	<if test="fromId != null and fromId != ''">
+			#{fromId},
+		</if>
+    	<if test="integrals != null and integrals != ''">
+			#{integrals},
+		</if>
+    	
+	</sql>
+	
+	<!-- 更新字段 -->
+	<sql id="Update_Column">
+		create_time = #{createTime},
+    	status = #{status},
+    	remark = #{remark},
+    	customer_id = #{customerId},
+    	integral_type = #{integralType},
+    	from_id = #{fromId},
+    	integrals = #{integrals},
+    	
+	</sql>
+	
+	<!-- 更新字段（判空） -->
+	<sql id="Update_Column_NotNull">
+		<if test="createTime != null and createTime != ''">
+			create_time = #{createTime},
+		</if>
+    	<if test="status != null and status != ''">
+			status = #{status},
+		</if>
+    	<if test="remark != null and remark != ''">
+			remark = #{remark},
+		</if>
+    	<if test="customerId != null and customerId != ''">
+			customer_id = #{customerId},
+		</if>
+    	<if test="integralType != null and integralType != ''">
+			integral_type = #{integralType},
+		</if>
+    	<if test="fromId != null and fromId != ''">
+			from_id = #{fromId},
+		</if>
+    	<if test="integrals != null and integrals != ''">
+			integrals = #{integrals},
+		</if>
+    	
+	</sql>
+	
+	<select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <trim suffixOverrides=",">
+        <include refid="Base_Column_List"/>
+        </trim>
+        from customer_integral
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+	
+	<insert id="insert" parameterType="com.dwgj.mlxydedicatedline.entity.customer.CustomerIntegral">
+		insert into customer_integral
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			create_time, 
+			status, 
+			remark, 
+			customer_id, 
+			integral_type, 
+			from_id, 
+			integrals, 
+					</trim>
+		values
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<include refid="Insert_Column_Values"/>
+		</trim>
+	</insert>
+	
+	<insert id="insertSelective" parameterType="com.dwgj.mlxydedicatedline.entity.customer.CustomerIntegral">
+		insert into customer_integral
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<include refid="Base_Column_List_NotNull"/>
+		</trim>
+		values
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<include refid="Insert_Column_Values_NotNull"/>
+		</trim>
+	</insert>
+	
+	<insert id="insertList">
+		insert into customer_integral (create_time, status, remark, customer_id, integral_type, from_id, integrals)
+		values
+		<foreach collection="customerIntegralList" item="item" separator=",">
+			(#{item.createTime}, #{item.status}, #{item.remark}, #{item.customerId},
+			#{item.integralType}, #{item.fromId}, #{item.integrals})
+		</foreach>
+	</insert>
+
+	<update id="updateByPrimaryKey" parameterType="com.dwgj.mlxydedicatedline.entity.customer.CustomerIntegral">
+		update customer_integral
+		<set>
+			<include refid="Update_Column"/>
+		</set>
+		
+		<where>
+		id = #{id} and status = 1
+		</where>
+		
+	</update>
+	
+	<update id="updateByPrimaryKeySelective" parameterType="com.dwgj.mlxydedicatedline.entity.customer.CustomerIntegral">
+		update customer_integral
+		<set>
+			<include refid="Update_Column_NotNull"/>
+		</set>
+		<where>
+		id = #{id} and status = 1
+		</where>
+	</update>
+
+	<!-- 删除数据（逻辑删除） -->
+	<update id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		update  customer_integral
+		set `status` = 0
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	
+	<!-- 移除数据（物理删除） -->
+	<delete id="removeByPrimaryKey" parameterType="java.lang.Integer">
+		delete from customer_integral
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+
+	<select id="selectIntegralSum" resultType="java.lang.Double">
+		select IFNULL(sum(integrals), 0)
+		from customer_integral
+		<where>
+			status = 1
+			and customer_id = #{customerId}
+		</where>
+	</select>
+
+	<select id="selectIntegralCount" resultType="java.lang.Integer">
+		select count(1)
+		from customer_integral
+		<where>
+			status = 1
+			and customer_id = #{customerId}
+		</where>
+	</select>
+
+	<select id="getIntegralsDetail" resultMap="BaseResultMap">
+		select
+		id, create_time, integral_type, from_id, integrals
+		from customer_integral
+		<where>
+			status = 1
+			and customer_id = #{customerId}
+		</where>
+		order by create_time desc
+		limit #{pageNumber}, #{pageSize}
+	</select>
+
+	<select id="selectPopularizeIntegralSum" resultType="java.lang.Double">
+		select IFNULL(sum(integrals), 0)
+		from customer_integral
+		<where>
+			status = 1
+			and customer_id = #{customerId}
+			and from_id = #{fromCustomerId}
+		</where>
+	</select>
+	
+</mapper>

@@ -2,7 +2,11 @@ package com.dwgj.mlxydedicatedline.utils;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.dwgj.mlxydedicatedline.commons.SequenceCode;
 import com.dwgj.mlxydedicatedline.entity.activityReward.ActivityPoster;
+import com.dwgj.mlxydedicatedline.entity.image.ImageType;
+import com.dwgj.mlxydedicatedline.entity.image.Images;
+import com.dwgj.mlxydedicatedline.resultType.ResultModel;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
@@ -10,20 +14,26 @@ import com.google.zxing.WriterException;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
+import net.coobird.thumbnailator.Thumbnails;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.URL;
 import java.nio.file.Path;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.List;
+
+import static com.dwgj.mlxydedicatedline.entity.image.ImageType.CustomerIdentityPicture;
+import static com.dwgj.mlxydedicatedline.enums.ResultStatus.FILE_MAX;
+import static com.dwgj.mlxydedicatedline.enums.ResultStatus.SYS_ERROR;
 
 @Configuration
 public class ImgUtil {
@@ -33,17 +43,29 @@ public class ImgUtil {
      * 上传文件路径
      */
     @Value("${upload.location}")
-    private String UPLOAD_LOCATION;
+    private static String UPLOAD_LOCATION;
 
     /**
      * 系统域名
      */
     @Value("${server.domain}")
-    private String DOMAIN;
+    private static String DOMAIN;
 
     private static String QRCODE_URL = "https://api.weixin.qq.com/cgi-bin/qrcode/create?access_token=";
     private static String CREATE_QRCODE_URL = "https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=";
 
+    /**
+     * 上传文件路径
+     */
+    @Value("${upload.location}")
+    public void setUploadLocation(String uploadLocation) {
+        ImgUtil.UPLOAD_LOCATION = uploadLocation;
+    }
+
+    @Value("${server.domain}")
+    public void setDomain(String domain) {
+        ImgUtil.DOMAIN = domain;
+    }
 
     public static void main(String[] args) {
 
@@ -227,6 +249,126 @@ public class ImgUtil {
         // 处理图片大小
         imageSetW_H(image, qrcodePath, multiple);
 
+    }
+
+    // 图片上传保存
+    public static List<Images> imagesUpload(MultipartFile[] multipartFiles, String imageType) throws IOException {
+        List<Images> imagesList = new ArrayList<>();
+        // 上传文件的地址
+        String filePath = UPLOAD_LOCATION + "/" + imageType + "/" + DateUtil.formatToStr(new Date(), "yyyy-MM");
+
+        File files = new File(filePath);
+        if (files.getParentFile() != null) {
+            //创建文件夹
+            files.mkdirs();
+        }
+
+        int i = 0;
+        for (MultipartFile mutFile : multipartFiles) {
+
+            if (mutFile.getSize() >= 10*1024*1024) {
+                System.out.println("文件不能大于10M");
+            }
+
+            String originalFilename = mutFile.getOriginalFilename();
+            String suffix = FileUtil.getSuffix2(originalFilename);
+            String fileSize = mutFile.getSize() + "";
+
+            String imageName = SequenceCode.gainSerialNo("IMG_") + suffix;
+
+            // 创建文件路径
+            File file = FileUtil.buildFileName(imageType, imageName);
+
+
+            String picurl = pictureZip(mutFile, filePath, imageName);
+            file = new File(picurl);
+
+            picurl = DOMAIN + "/" + file.getPath().substring(file.getPath().indexOf("upload"));
+            picurl = picurl.replaceAll("\\\\", "/");
+
+            Images images = TencentObjectMemory.uploadObject("flycloud", imageType, file);
+
+            images.setImageName(originalFilename);
+            images.setPicType(imageType);
+
+
+//            images.setPicUrl(picurl);
+            images.setImageSize(fileSize);
+            images.setSortNo(i);
+            images.setPath(images.getPicUrl());
+            images.setCreateTime(new Date());
+            images.setStatus(1);
+            imagesList.add(images);
+            i++;
+        }
+
+        // 上传到腾讯云存储服务器后删除本地文件夹
+        files.delete();
+
+        return imagesList;
+    }
+
+    /**
+     *
+     * @param imageFile 输入文件
+     * @param outPath 输出文件完整路径
+     * @param outFileName 输出文件名称
+     */
+    private static String pictureZip(MultipartFile imageFile, String outPath, String outFileName) {
+
+        // 去掉后缀中包含的.png字符串
+        if(outFileName.contains(".png")){
+            outFileName = outFileName.replace(".png", ".jpg");
+        }
+
+        InputStream inputStream = null;
+        FileOutputStream fileOutputStream = null;
+        // 输出文件完整路径
+        String outPathFile = outPath + "/" + outFileName;
+
+        File file = new File(outPathFile);
+        // 如果存在相同的图片，则删除后再重新添加
+        if(file.exists()){
+            file.delete();
+        }
+        try {
+            inputStream = imageFile.getInputStream();
+            fileOutputStream = new FileOutputStream(outPathFile);
+            IOUtils.copyLarge(inputStream, fileOutputStream);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (inputStream != null) {
+                    inputStream.close();
+                }
+                if (fileOutputStream != null) {
+                    fileOutputStream.flush();
+                    fileOutputStream.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        long size = imageFile.getSize();
+        double scale = 1.0d ;
+        // 修改
+        if(size > 500*1024){
+            scale = (500*1024f) / size ;
+        }
+
+        try {
+            if(size > 500*1024){
+                Thumbnails.of(outPathFile).scale(1f).outputQuality(scale).outputFormat("jpg").toFile(outPathFile);
+            }else {
+                Thumbnails.of(outPathFile).scale(1f).outputFormat("jpg").toFile(outPathFile);
+            }
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+
+        return outPathFile;
     }
 
 }

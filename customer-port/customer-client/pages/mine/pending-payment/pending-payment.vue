@@ -1,7 +1,7 @@
 /** * 待付款列表 * @return {type} {description} */
 <template>
 	<view class="pending-payment">
-		<uni-nav-bar left-icon="back" left-text="" right-text="" title="待付款列表" backgroundColor="#fbc04a" color="#fff"
+		<uni-nav-bar left-icon="back" left-text="" right-text="" title="待付款列表" backgroundColor="#52c3ff" color="#fff"
 			@clickLeft="goBack()"></uni-nav-bar>
 
 		<!-- 搜索 -->
@@ -11,6 +11,8 @@
 					<option value="0">请选择包裹状态</option>
 					<option value="1">未打包</option>
 					<option value="2">已打包</option>
+					
+					<option value="5">拼邮中</option>
 					<!-- <option value="3">未发货</option> -->
 					<!-- <option
 					v-for="(item, index) in deliveryCompanyData"
@@ -69,8 +71,8 @@
 													style="color: red; font-weight: bold;">未打包</text></text>
 											<text style="width: 50%;" v-if="item.packType == '2'">状态：<text
 													style="color: green; font-weight: bold;">已打包</text></text>
-											<text style="width: 50%;" v-if="item.packType == '3'">状态：<text
-													style="font-weight: bold;">未发货</text></text>
+											<text style="width: 50%;" v-if="item.packType == '5'">状态：<text
+													style="color: #246cd8;font-weight: bold;">拼邮中</text></text>
 										</p>
 										
 										<p style="display: flex; justify-content: space-between;">
@@ -108,11 +110,11 @@
 										</p>
 										
 										<p style="display: flex; justify-content: space-between;">
-											<text>
+											<!-- <text>
 												<text class="package_C_C_T">预报价：</text><text
 													style="color: red; font-weight: bold;"
 													v-if="item.preQuotedPrice">￥{{ item.preQuotedPrice }}</text>
-											</text>
+											</text> -->
 											<text style="width: 50%;">
 												<text class="package_C_C_T">实际价：</text><text
 													style="color: red; font-weight: bold;"
@@ -144,8 +146,7 @@
 										<view class="warning" @click="handleEditAddress(item.id)">更换地址</view>
 										<!-- <view class="rejection" v-if="item.packType != '1'"
 											@click="handleDelivery(item.businessNumber, item.actualPrice)">付款发货</view> -->
-										<view class="rejection" v-if="item.packType != '1'"
-											@click="packInfoGo(item.businessNumber)">付款发货</view>
+										<view class="rejection" v-if="item.packType == '2'" @click="packInfoGo(item.businessNumber)">付款发货</view>
 										<view class="look" @click="handleGo('./parcel-info/parcel-info', item)">查看包裹
 										</view>
 									</view>

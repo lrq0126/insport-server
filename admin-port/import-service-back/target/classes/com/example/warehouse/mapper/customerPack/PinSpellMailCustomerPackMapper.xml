@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.warehouse.mapper.customerPack.PinSpellMailCustomerPackMapper">
+    <resultMap id="BaseResultMap" type="com.example.warehouse.entity.customerPack.PinSpellMailCustomerPack">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+    	
+	    <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="pin_spell_mail_id" jdbcType="INTEGER" property="pinSpellMailId"/>
+        <result column="customer_pack_id" jdbcType="INTEGER" property="customerPackId"/>
+    		
+    </resultMap>
+	
+	<!-- 字段 -->
+	<sql id="Base_Column_List">
+		id, status, pin_spell_mail_id, customer_pack_id, 	
+	</sql>
+	
+	<!-- 插入字段实际数值 -->
+	<sql id="Insert_Column_Values">
+		#{status},#{pinSpellMailId},#{customerPackId},	
+	</sql>
+	
+	<!-- 插入字段（判空） -->
+	<sql id="Base_Column_List_NotNull">
+		<if test="status != null and status != ''">
+			status, 
+		</if>
+    	<if test="pinSpellMailId != null and pinSpellMailId != ''">
+			pin_spell_mail_id, 
+		</if>
+    	<if test="customerPackId != null and customerPackId != ''">
+			customer_pack_id, 
+		</if>
+    	
+	</sql>
+	
+	<!-- 插入字段实际数值(判空) -->
+	<sql id="Insert_Column_Values_NotNull">
+		<if test="status != null and status != ''">
+			#{status},
+		</if>
+    	<if test="pinSpellMailId != null and pinSpellMailId != ''">
+			#{pinSpellMailId},
+		</if>
+    	<if test="customerPackId != null and customerPackId != ''">
+			#{customerPackId},
+		</if>
+    	
+	</sql>
+	
+	<!-- 更新字段 -->
+	<sql id="Update_Column">
+		status = #{status},
+    	pin_spell_mail_id = #{pinSpellMailId},
+    	customer_pack_id = #{customerPackId},
+    	
+	</sql>
+	
+	<!-- 更新字段（判空） -->
+	<sql id="Update_Column_NotNull">
+		<if test="status != null and status != ''">
+			status = #{status},
+		</if>
+    	<if test="pinSpellMailId != null and pinSpellMailId != ''">
+			pin_spell_mail_id = #{pinSpellMailId},
+		</if>
+    	<if test="customerPackId != null and customerPackId != ''">
+			customer_pack_id = #{customerPackId},
+		</if>
+    	
+	</sql>
+	
+	<select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <trim suffixOverrides=",">
+        <include refid="Base_Column_List"/>
+        </trim>
+        from pin_spell_mail_customer_pack
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+	
+	<insert id="insert" parameterType="com.example.warehouse.entity.customerPack.PinSpellMailCustomerPack">
+		insert into pin_spell_mail_customer_pack
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			status, 
+			pin_spell_mail_id, 
+			customer_pack_id, 
+					</trim>
+		values
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<include refid="Insert_Column_Values"/>
+		</trim>
+	</insert>
+	
+	<insert id="insertSelective" parameterType="com.example.warehouse.entity.customerPack.PinSpellMailCustomerPack">
+		insert into pin_spell_mail_customer_pack
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<include refid="Base_Column_List_NotNull"/>
+		</trim>
+		values
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<include refid="Insert_Column_Values_NotNull"/>
+		</trim>
+	</insert>
+    <insert id="insertList">
+		insert into pin_spell_mail_customer_pack (status, pin_spell_mail_id, customer_pack_id)
+		values
+		<foreach collection="list" item="item" separator=",">
+			(#{item.status}, #{item.pinSpellMailId}, #{item.customerPackId})
+		</foreach>
+	</insert>
+
+    <update id="updateByPrimaryKey" parameterType="com.example.warehouse.entity.customerPack.PinSpellMailCustomerPack">
+		update pin_spell_mail_customer_pack
+		<set>
+			<include refid="Update_Column"/>
+		</set>
+		
+		<where>
+		id = #{id} and status = 1
+		</where>
+		
+	</update>
+	
+	<update id="updateByPrimaryKeySelective" parameterType="com.example.warehouse.entity.customerPack.PinSpellMailCustomerPack">
+		update pin_spell_mail_customer_pack
+		<set>
+			<include refid="Update_Column_NotNull"/>
+		</set>
+		<where>
+		id = #{id} and status = 1
+		</where>
+	</update>
+
+	<!-- 删除数据（逻辑删除） -->
+	<update id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		update  pin_spell_mail_customer_pack
+		set `status` = 0
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	
+	<!-- 移除数据（物理删除） -->
+	<delete id="removeByPrimaryKey" parameterType="java.lang.Integer">
+		delete from pin_spell_mail_customer_pack
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	
+</mapper>

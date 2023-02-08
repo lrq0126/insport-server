@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dwgj.mlxydedicatedline.mapper.user.LoginTokenMapper">
+  <resultMap id="BaseResultMap" type="com.dwgj.mlxydedicatedline.entity.user.LoginToken">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="customer_token" jdbcType="VARCHAR" property="customerToken" />
+    <result column="customer_no" jdbcType="VARCHAR" property="customerNo" />
+    <result column="customer_id" jdbcType="VARCHAR" property="customerId" />
+    <result column="os" jdbcType="VARCHAR" property="os" />
+    <result column="login_count" jdbcType="INTEGER" property="loginCount" />
+    <result column="login_time" jdbcType="VARCHAR" property="loginTime" />
+    <result column="first_login_time" jdbcType="VARCHAR" property="firstLoginTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, customer_token, customer_no, customer_id, os, login_count, login_time, first_login_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from logintoken
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from logintoken
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.dwgj.mlxydedicatedline.entity.user.LoginToken">
+    insert into logintoken (id, customer_token, customer_no,
+      customer_id, os, login_count,
+      login_time, first_login_time)
+    values (#{id,jdbcType=INTEGER}, #{customerToken,jdbcType=VARCHAR}, #{customerNo,jdbcType=VARCHAR},
+      #{customerId,jdbcType=VARCHAR}, #{os,jdbcType=VARCHAR}, #{loginCount,jdbcType=INTEGER},
+      #{loginTime,jdbcType=TIMESTAMP}, #{firstLoginTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dwgj.mlxydedicatedline.entity.user.LoginToken">
+    insert into logintoken
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="customerToken != null">
+        customer_token,
+      </if>
+      <if test="customerNo != null">
+        customer_no,
+      </if>
+      <if test="customerId != null">
+        customer_id,
+      </if>
+      <if test="os != null">
+        os,
+      </if>
+      <if test="loginCount != null">
+        login_count,
+      </if>
+      <if test="loginTime != null">
+        login_time,
+      </if>
+      <if test="firstLoginTime != null">
+        first_login_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="customerToken != null">
+        #{customerToken,jdbcType=VARCHAR},
+      </if>
+      <if test="customerNo != null">
+        #{customerNo,jdbcType=VARCHAR},
+      </if>
+      <if test="customerId != null">
+        #{customerId,jdbcType=VARCHAR},
+      </if>
+      <if test="os != null">
+        #{os,jdbcType=VARCHAR},
+      </if>
+      <if test="loginCount != null">
+        #{loginCount,jdbcType=INTEGER},
+      </if>
+      <if test="loginTime != null">
+        #{loginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="firstLoginTime != null">
+        #{firstLoginTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dwgj.mlxydedicatedline.entity.user.LoginToken">
+    update logintoken
+    <set>
+      <if test="customerToken != null">
+        customer_token = #{customerToken,jdbcType=VARCHAR},
+      </if>
+      <if test="customerNo != null">
+        customer_no = #{customerNo,jdbcType=VARCHAR},
+      </if>
+      <if test="customerId != null">
+        customer_id = #{customerId,jdbcType=VARCHAR},
+      </if>
+      <if test="os != null">
+        os = #{os,jdbcType=VARCHAR},
+      </if>
+      <if test="loginCount != null">
+        login_count = #{loginCount,jdbcType=INTEGER},
+      </if>
+      <if test="loginTime != null">
+        login_time = #{loginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="firstLoginTime != null">
+        first_login_time = #{firstLoginTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dwgj.mlxydedicatedline.entity.user.LoginToken">
+    update logintoken
+    set customer_token = #{customerToken,jdbcType=VARCHAR},
+      customer_no = #{customerNo,jdbcType=VARCHAR},
+      customer_id = #{customerId,jdbcType=VARCHAR},
+      os = #{os,jdbcType=VARCHAR},
+      login_count = #{loginCount,jdbcType=INTEGER},
+      login_time = #{loginTime,jdbcType=TIMESTAMP},
+      first_login_time = #{firstLoginTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <!-- 根据token查询用户信息 -->
+  <select id="getUser" resultType="com.dwgj.mlxydedicatedline.entity.Customer" parameterType="string">
+    SELECT
+	c.id,
+	c.customer_name as customerName,
+	c.customer_no as customerNo,
+	c.age as age,
+	c.gender as gender,
+	c.phone_number as phoneNumber,
+	c.login_name as loginName
+    FROM
+        customer c
+    INNER JOIN logintoken lt ON lt.customer_id = c.id
+    WHERE
+    c.status = 1
+    and lt.customer_token = #{value,jdbcType=VARCHAR}
+  </select>
+
+  <!-- 根据用户id或者token查询用户信息 -->
+  <select id="getLoginTokenByParam" resultMap="BaseResultMap" parameterType="map">
+    SELECT
+        <include refid="Base_Column_List" />
+    FROM
+        logintoken
+    WHERE 1=1
+      <if test="customerToken != null">
+        and customer_token = #{customerToken,jdbcType=VARCHAR}
+      </if>
+      <if test="customerNo != null">
+        and customer_no = #{customerNo,jdbcType=VARCHAR}
+      </if>
+      <if test="customerId != null">
+        and customer_id = #{customerId,jdbcType=VARCHAR}
+      </if>
+  </select>
+</mapper>

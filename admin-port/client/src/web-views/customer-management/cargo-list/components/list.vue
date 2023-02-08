@@ -42,6 +42,24 @@
         <el-input v-model="pageInfo.customerName" placeholder="请输入客户名称" @keyup.enter.native="handleSearch(1)"/>
       </el-form-item>
 
+      <el-form-item label="国家/地区">
+        <el-select
+          v-model="pageInfo.commercialAreaId"
+          placeholder="--请选择--"
+          clearable
+          filterable
+          style="width: 200px"
+          class="filter-item"
+        >
+          <el-option
+            v-for="item in commercialAreaData"
+            :key="item.id"
+            :value="item.id"
+            :label="item.commercialAreaName"
+          />
+        </el-select>
+      </el-form-item>
+
       <el-form-item label="快递公司">
         <el-select
           v-model="pageInfo.deliveryNo"
@@ -249,6 +267,13 @@
           <span>{{ scope.row.location | filterLocation }}</span>
         </template>
       </el-table-column>
+
+      <el-table-column
+        prop="commercialAreaName"
+        label="国家/地区"
+        min-width="160"
+        align="center"
+      ></el-table-column>
 
       <el-table-column
         prop="deliveryName"
@@ -498,6 +523,7 @@ export default {
       // this.customerData = this.selectData.customer
       this.deliveryCompanyData = this.selectData.deliveryCompany
       this.storageData = this.selectData.storage
+      this.commercialAreaData = this.selectData.commercialAreaData;
     },
   },
   filters: {
@@ -520,6 +546,9 @@ export default {
       customerData: [], // 客户信息
       deliveryCompanyData: [], // 快递公司
       storageData: [], // 区排
+
+      commercialAreaData: [],
+
       loading: false,
       tableData: [],
       pageInfo: {
@@ -539,7 +568,10 @@ export default {
         message: "",
         customerName: "",
         startKg:"",
-        endKg:""
+        endKg:"",
+
+        commercialAreaId: '',
+        commercialAreaName: ""
       }, // 页码传参数
       multipleSelection: [],
 

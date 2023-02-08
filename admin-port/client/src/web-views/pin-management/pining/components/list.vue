@@ -12,36 +12,10 @@
                  inline
                  label-width="75px">
 
-            <el-form-item label="拼团状态">
-                <el-select v-model="pageInfo.pingType"
-                           @change="queryLiist(1)">
-                    <el-option label="未成团"
-                               value="1"> </el-option>
-                    <el-option label="过期待确认"
-                               value="5"> </el-option>
-                </el-select>
-            </el-form-item>
-
             <el-form-item label="拼团订单号">
                 <el-input type="text"
                           v-model="pageInfo.orderNumber"
                           placeholder="请输入拼团订单号"
-                          @keyup.enter.native="queryLiist(1)" />
-            </el-form-item>
-
-            <el-form-item label="团长会员ID">
-                <el-input type="text"
-                          v-model="pageInfo.loginName"
-                          placeholder="请输入团长会员ID"
-                          @keyup.enter.native="queryLiist(1)" />
-            </el-form-item>
-
-            <el-form-item label="团长名称"
-                          label-width="105px">
-                <el-input v-model="pageInfo.leaderName"
-                          placeholder="请输入团长名称"
-                          style="width: 200px"
-                          class="filter-item"
                           @keyup.enter.native="queryLiist(1)" />
             </el-form-item>
 
@@ -53,7 +27,7 @@
             </el-form-item>
 
             <el-form-item label="国家">
-                <el-select v-model="pageInfo.countryId"
+                <el-select v-model="pageInfo.country"
                            placeholder="请选择"
                            filterable
                            clearable
@@ -61,7 +35,7 @@
                            class="filter-item">
                     <el-option v-for="(item, index) in countryData"
                                :key="index"
-                               :value="item.id"
+                               :value="item.sddName"
                                :label="item.sddName" />
                 </el-select>
             </el-form-item>
@@ -70,6 +44,10 @@
                 <el-button type="primary"
                            @click="queryLiist(1)">查 询</el-button>&nbsp;
                 <el-button @click="handleResetForm('searchForm')">重 置</el-button>
+            </el-form-item>
+            <br/>
+            <el-form-item>
+                <el-button type="success" @click="openPinDialog()">新增拼团订单</el-button>
             </el-form-item>
         </el-form>
 
@@ -83,26 +61,28 @@
                              width="50"
                              fixed="left"
                              align="center"></el-table-column>
-            <el-table-column prop="pinName"
+
+            <el-table-column prop="orderName"
                              label="拼团名称"
                              min-width="160"
                              align="center"
                              fixed="left"></el-table-column>
+
             <el-table-column prop="orderNumber"
                              label="拼团订单号"
                              min-width="150"
                              align="center"></el-table-column>
-
-            <el-table-column prop="loginName"
-                             label="团长会员id"
-                             min-width="120"
-                             align="center"></el-table-column>
-
-            <el-table-column prop="leaderName"
-                             label="团长名称"
-                             min-width="200"
-                             align="center"></el-table-column>
-
+            <el-table-column prop="pinType"
+                             label="状态"
+                             min-width="160"
+                             align="center">
+                                <template slot-scope="scope">
+                                    <el-tag type="success" v-if="scope.row.pinType == 1">装箱中</el-tag>
+                                    <el-tag type="primary" v-if="scope.row.pinType == 2">已打包</el-tag>
+                                    <el-tag type="danger" v-if="scope.row.pinType == 3">已发货</el-tag>
+                                    <el-tag type="danger" v-if="scope.row.pinType == 4">到站</el-tag>
+                                </template>
+                            </el-table-column>
             <el-table-column prop="createTime"
                              label="创建时间"
                              min-width="160"
@@ -118,55 +98,26 @@
                              min-width="160"
                              align="center"></el-table-column>
 
-            <el-table-column prop="targetWeight"
-                             label="目标重量"
-                             min-width="120"
-                             align="center"></el-table-column>
-
-            <el-table-column prop="targetUnitPrice"
-                             label="目标单价"
-                             min-width="120"
-                             align="center"></el-table-column>
-
-            <el-table-column prop="goodsSumKg"
+            <el-table-column prop="orderWeight"
                              label="当前重量"
                              min-width="120"
                              align="center"></el-table-column>
-
-            <el-table-column prop="isTop"
-                             label="置顶状态"
-                             min-width="120"
-                             align="center">
-
-                             <template slot-scope="scope">
-                                <el-tag v-if="scope.row.isTop == 1"
-                                        type="success">已置顶</el-tag>
-                                <el-tag v-if="scope.row.isTop == 0"
-                                        type="info">未置顶</el-tag>
-                            </template>
-                             
-                             </el-table-column>
 
             <el-table-column label="操作"
                              fixed="right"
                              width="260"
                              align="center">
                 <template slot-scope="scope">
+                    
                     <el-button type="primary"
-                               icon="el-icon-upload"
                                size="mini"
                                plain
                                @click="checkDetails(scope.row.id)">查看详情</el-button>
-                    <el-button type="success"
+
+                    <el-button type="info"
                                size="mini"
                                plain
-                               v-if="scope.row.isTop == 0"
-                               @click="topChange(scope.row.id, scope.row.isTop)">置 顶</el-button>
-                    <el-button type="danger"
-                               size="mini"
-                               plain
-                               v-if="scope.row.isTop == 1"
-                               @click="topChange(scope.row.id, scope.row.isTop)">取消置顶</el-button>
+                               @click="openPinDialog(scope.row.id)">编 辑</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -177,18 +128,22 @@
                     :current.sync="pageInfo.pageNumber"
                     :pageSize.sync="pageInfo.pageSize"
                     @pagination="pagination" />
+        
+
+        <ping-info-view ref="pingInfoView" @reQueryLiist="queryLiist(1)"/>
     </div>
 </template>
 
 <script>
 import Pagination from "@/components/Pagination";
-import { getPinList, getCountryList, topOperation } from "@/api/pin-management/pin-main";
+import { getPinSpellMailList, getCountryList } from "@/api/pin-management/pin-spell-mail";
+import PingInfoView from "./ping-info";
 
 export default {
     components: {
-        Pagination,
-        // PinDetailView
-    },
+    Pagination,
+    PingInfoView
+},
     data () {
         return {
             loading: false,
@@ -198,12 +153,12 @@ export default {
                 total: 0,
                 pageNumber: 1, // 当前页码
                 pageSize: 10, // 每页条数
+
                 orderNumber: "",
-                loginName: "",
-                leaderName: "",
+                orderName: "",
                 routeName: "",
-                countryId: "",
-                pingType: "1",
+                country: "",
+                pinType: 1,
             }, // 页码传参数
         };
     },
@@ -230,7 +185,9 @@ export default {
                 this.queryLiist(1);
             }
         },
-
+        openPinDialog(id){
+            this.$refs['pingInfoView'].openDialog(id);
+        },
         /**
          * 获取列表
          * @param  {number} pageNumber {初始化页码}
@@ -241,8 +198,7 @@ export default {
                 this.pageInfo.pageNumber = pageNumber;
             }
             this.loading = true;
-            getPinList(this.pageInfo)
-                .then((res) => {
+            getPinSpellMailList(this.pageInfo).then((res) => {
                     if (res.content) {
                         this.pinData = res.content;
                     } else {
@@ -255,7 +211,7 @@ export default {
                 .finally(() => {
                     setTimeout(() => {
                         this.loading = false;
-                    }, 1000);
+                    }, 400);
                 });
         },
 
@@ -281,28 +237,6 @@ export default {
             this.$router.push({ name: "PiningDetail", query: { id: pinId } });
         },
 
-        topChange (id, isTop) {
-            topOperation({id, isTop}).then((res) => {
-                if(res.code == 100){
-                    this.$message({
-                        message: res.content,
-                        type: "success",
-                        showClose: false,
-                        duration: 1000 * 1.5 * 2,
-                    });
-
-                    this.queryLiist(1);
-
-                }else{
-                    this.$message({
-                        message: res.content,
-                        type: "error",
-                        showClose: false,
-                        duration: 1000 * 1.5 * 2,
-                    });
-                }
-            });
-        },
 
         // 修改table tr行的背景色
         tableRowStyle ({ row, rowIndex }) {

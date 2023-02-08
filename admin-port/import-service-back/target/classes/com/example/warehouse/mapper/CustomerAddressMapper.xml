@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.warehouse.mapper.CustomerAddressMapper">
+  <sql id="table">customer_address</sql>
+
+  <sql id="selectCols">
+    t.id, t.address_no, t.customer_no, t.customer_id,
+    t.receiver_address, t.addressee, t.phone_number, t.call_number,
+    t.default_flag, t.message, t.status,
+    DATE_FORMAT(t.create_time,'%Y-%m-%d %k:%i:%s') as create_time,
+    t.create_id,
+    DATE_FORMAT(t.last_update_time,'%Y-%m-%d %k:%i:%s') as last_update_time,
+    t.last_update_id,t.code, t.provinces
+  </sql>
+
+  <sql id="condition_sql">
+    <if test="addressNo != null and addressNo !=''">and t.address_no like CONCAT('%',#{addressNo},'%')</if>
+    <if test="customerNo != null and customerNo !=''">and t.customer_no=#{customerNo}</if>
+    <if test="customerId != null and customerId !=''">and t.customer_id=#{customerId}</if>
+    <if test="receiverAddress != null and receiverAddress !=''">and t.receiver_address like CONCAT('%',#{receiverAddress},'%')</if>
+    <if test="addressee != null and addressee !=''">and t.addressee like CONCAT('%',#{addressee},'%')</if>
+    <if test="phoneNumber != null and phoneNumber !=''">and t.phone_number=#{phoneNumber}</if>
+    <if test="callNumber != null and callNumber !=''">and t.call_number=#{callNumber}</if>
+    <if test="defaultFlag != null and defaultFlag !=''">and t.default_flag =#{defaultFlag}</if>
+    <if test="createId != null and createId !=''">and t.create_id=#{createId}</if>
+    <if test="lastUpdateId != null and lastUpdateId !=''">and t.last_update_id=#{lastUpdateId}</if>
+  </sql>
+
+  <resultMap id="beanMap" type="com.example.warehouse.entity.CustomerAddress">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="address_no" jdbcType="VARCHAR" property="addressNo" />
+    <result column="customer_no" jdbcType="VARCHAR" property="customerNo" />
+    <result column="customer_id" jdbcType="VARCHAR" property="customerId" />
+    <result column="receiver_address" jdbcType="VARCHAR" property="receiverAddress" />
+    <result column="addressee" jdbcType="VARCHAR" property="addressee" />
+    <result column="phone_number" jdbcType="VARCHAR" property="phoneNumber" />
+    <result column="call_number" jdbcType="VARCHAR" property="callNumber" />
+    <result column="default_flag" jdbcType="VARCHAR" property="defaultFlag" />
+    <result column="message" jdbcType="VARCHAR" property="message" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="create_id" jdbcType="INTEGER" property="createId" />
+    <result column="last_update_time" jdbcType="TIMESTAMP" property="lastUpdateTime" />
+    <result column="last_update_id" jdbcType="INTEGER" property="lastUpdateId" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="provinces" jdbcType="VARCHAR" property="provinces" />
+  </resultMap>
+
+  <insert id="insert" parameterType="com.example.warehouse.entity.CustomerAddress">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into customer_address (id, address_no, customer_no,
+      customer_id, receiver_address, addressee, phone_number, call_number,
+      default_flag, message, `status`,
+      create_time, create_id, last_update_time,
+      last_update_id,code,provinces)
+    values (#{id,jdbcType=INTEGER}, #{addressNo,jdbcType=VARCHAR}, #{customerNo,jdbcType=VARCHAR}, #{customerId,jdbcType=INTEGER},
+      #{receiverAddress,jdbcType=VARCHAR}, #{addressee,jdbcType=VARCHAR}, #{phoneNumber,jdbcType=VARCHAR}, #{callNumber,jdbcType=VARCHAR},
+      #{defaultFlag,jdbcType=VARCHAR}, #{message,jdbcType=VARCHAR}, 1, now(), #{createId,jdbcType=INTEGER}, #{lastUpdateTime,jdbcType=TIMESTAMP},
+      #{lastUpdateId,jdbcType=INTEGER},#{code,jdbcType=VARCHAR},#{provinces,jdbcType=VARCHAR})
+  </insert>
+
+  <update id="updateByPrimaryKey" parameterType="com.example.warehouse.entity.CustomerAddress">
+    update customer_address
+    set address_no = #{addressNo,jdbcType=VARCHAR},
+      customer_no = #{customerNo,jdbcType=VARCHAR},
+      customer_id = #{customerId,jdbcType=INTEGER},
+      receiver_address = #{receiverAddress,jdbcType=VARCHAR},
+      addressee = #{addressee,jdbcType=VARCHAR},
+      phone_number = #{phoneNumber,jdbcType=VARCHAR},
+      call_number = #{callNumber,jdbcType=VARCHAR},
+      default_flag = #{defaultFlag,jdbcType=VARCHAR},
+      message = #{message,jdbcType=VARCHAR},
+      `status` = #{status,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      create_id = #{createId,jdbcType=INTEGER},
+      last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+      last_update_id = #{lastUpdateId,jdbcType=INTEGER},
+      code = #{code,jdbcType=VARCHAR},
+      provinces = #{provincesjdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.warehouse.entity.CustomerAddress">
+    update customer_address
+    <set>
+      <if test="addressNo != null">
+        address_no = #{addressNo,jdbcType=VARCHAR},
+      </if>
+      <if test="customerNo != null">
+        customer_no = #{customerNo,jdbcType=VARCHAR},
+      </if>
+      <if test="receiverAddress != null">
+        receiver_address = #{receiverAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneNumber != null">
+        phone_number = #{phoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="callNumber != null">
+        call_number = #{callNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="defaultFlag != null">
+        default_flag = #{defaultFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="message != null">
+        message = #{message,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null">
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="provinces != null and provinces != ''">
+        provinces = #{provinces,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        create_id = #{createId,jdbcType=INTEGER},
+      </if>
+      <if test="lastUpdateTime != null">
+        last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateId != null">
+        last_update_id = #{lastUpdateId,jdbcType=INTEGER},
+      </if>
+      <if test="customerId != null">
+        customer_id = #{customerId,jdbcType=INTEGER},
+      </if>
+      <if test="addressee != null">
+        addressee = #{addressee,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectAll" resultMap="beanMap" parameterType="java.util.Map">
+    select
+    <include refid="selectCols"/>
+    from
+    <include refid="table"/>t
+    <where>
+      <include refid="condition_sql"/>
+      and
+      t.status = 1
+    </where>
+    ORDER BY t.create_time desc
+    LIMIT #{pageNumber},#{pageSize}
+  </select>
+
+  <select id="countSelectAll" resultType="java.lang.Integer" parameterType="java.util.Map">
+    select
+    count(*) as count
+    from
+    <include refid="table"/>t
+    <where>
+      <include refid="condition_sql"/>
+      and
+      t.status = 1
+    </where>
+  </select>
+
+  <update id="del" >
+    update
+    customer_address
+    set
+    status = 0
+    where
+    id = #{addressId}
+  </update>
+
+  <update id="deleteByCustomerNo" >
+    update customer_address
+    set
+    status = 0 and last_update_id = #{userId}
+    where customer_no = #{customerNo}
+  </update>
+
+  <select id="findById" resultMap="beanMap">
+    select
+    <include refid="selectCols"/>
+    from
+    <include refid="table"/> t
+    <where>
+      t.id = #{id}
+      and t.status = 1
+    </where>
+  </select>
+
+  <select id="find" parameterType="java.util.Map" resultMap="beanMap">
+    select
+    <include refid="selectCols"/>
+    from
+    <include refid="table"/> t
+    <where>
+      <include refid="condition_sql"/>
+      and t.status = 1
+    </where>
+  </select>
+
+
+  <select id="findByCustomerId" resultMap="beanMap">
+    select
+    <include refid="selectCols"/>
+    from
+    <include refid="table"/> t
+    <where>
+      t.customer_id = #{customerId}
+      and t.status = 1
+    </where>
+    order by t.create_time desc
+  </select>
+
+  <select id="getCustomerAddressById" parameterType="com.example.warehouse.entity.CustomerAddress" resultType="com.example.warehouse.entity.CustomerAddress">
+        select <include refid="selectCols"/> from customer_address t
+        <where>
+          <include refid="condition_sql"/>
+          and t.status = 1
+        </where>
+    </select>
+
+</mapper>

@@ -56,7 +56,23 @@
           />
         </el-select> -->
       </el-form-item>
-
+      <el-form-item label="国家/地区">
+        <el-select
+          v-model="pageInfo.commercialAreaId"
+          placeholder="--请选择--"
+          clearable
+          filterable
+          style="width: 200px"
+          class="filter-item"
+        >
+          <el-option
+            v-for="item in commercialAreaData"
+            :key="item.id"
+            :value="item.id"
+            :label="item.commercialAreaName"
+          />
+        </el-select>
+      </el-form-item>
       <el-form-item label="快递公司">
         <el-select
           v-model="pageInfo.deliveryNo"
@@ -110,6 +126,13 @@
       <el-table-column
         prop="loginName"
         label="会员id"
+        min-width="160"
+        align="center"
+      ></el-table-column>
+
+      <el-table-column
+        prop="commercialAreaName"
+        label="国家/地区"
         min-width="160"
         align="center"
       ></el-table-column>
@@ -260,8 +283,10 @@ export default {
   watch: {
     selectData() {
       // this.customerData = this.selectData.customer
-      // this.deliveryCompanyData = this.selectData.deliveryCompany
+      this.deliveryCompanyData = this.selectData.deliveryCompany
       // this.storageData = this.selectData.storage
+      
+      this.commercialAreaData = this.selectData.commercialAreaData;
     },
   },
   filters: {
@@ -296,6 +321,7 @@ export default {
       bool: true,
       customerData: [], // 客户信息
       deliveryCompanyData: [], // 快递公司
+      commercialAreaData: [],
       storageData: [], // 区排
       loading: false,
       tableData: [],

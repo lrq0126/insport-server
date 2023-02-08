@@ -19,7 +19,7 @@ import {
   expressManagement,
   channelManagement,
   packageManagement,
-  // pinManagement,
+  pinManagement,
   financialManagement,
   receiptManagement,
   trackManagement,
@@ -146,7 +146,7 @@ export const asyncRoutes = [
   expressManagement, //快递公司管理
   channelManagement, //渠道管理
   packageManagement, //打包任务管理\
-  // pinManagement, // 拼团管理
+  pinManagement, // 拼团管理
   financialManagement, //财务管理
   receiptManagement,  //签收管理
   // trackManagement, // 轨迹管理

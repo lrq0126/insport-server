@@ -304,6 +304,7 @@ public class ApplyPackServiceImpl implements ApplyPackService {
             customerPackReceiverAddress.setProvinces(customerAddress.getProvinces());
             customerPackReceiverAddress.setPhoneNumber(customerAddress.getPhoneNumber());
             customerPackReceiverAddress.setCode(customerAddress.getCode());
+            customerPackReceiverAddress.setAddressId(customerAddress.getId());
             customerPackReceiverAddressDao.insert(customerPackReceiverAddress);
 
             List<Integer> goodsIdList = goodsVoList.stream().map(GoodsVo::getId).collect(Collectors.toList());

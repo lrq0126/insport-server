@@ -23,6 +23,13 @@
                     <reply-list-pane ref="replyListPane"/>
                 </keep-alive>
             </el-tab-pane>
+
+            <el-tab-pane label="用户信息记录"
+                         name="replyLogList">
+                <keep-alive>
+                    <reply-log-list-pane ref="replyLogListPane"/>
+                </keep-alive>
+            </el-tab-pane>
         </el-tabs>
     </div>
 </template>
@@ -30,9 +37,10 @@
 <script>
 import menuListPane from './components/menu-list'
 import replyListPane from './components/reply-list'
+import replyLogListPane from './components/reply-log-list'
 export default {
     name: 'Tab',
-    components: { menuListPane, replyListPane},
+    components: { menuListPane, replyListPane, replyLogListPane},
     data () {
         return {
             activeName: 'menuList',
@@ -43,8 +51,10 @@ export default {
         handTabClick (data) {
             if (data.name === 'menuList') {
                 this.$refs['menuListPane'].handleSearch(1);
-            }else{
+            }else if(data.name === 'replyListPane'){
                 this.$refs['replyListPane'].handleSearch(1);
+            }else{
+                this.$refs['replyLogListPane'].handleSearch(1);
             }
         }
     }

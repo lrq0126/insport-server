@@ -33,13 +33,15 @@
         <el-table-column align="center" label="电话" prop="phoneNumber" width="180px"/>
         <el-table-column align="center" label="疑问联系电话" prop="abnormalRelation" width="200px"/>
         <el-table-column align="center" label="邮编" prop="postcode" width="180px"/>
-        <el-table-column align="center" label="收件地址" prop="address" width="350px"/>
-        <el-table-column align="center" label="状态" width="100px" fixed="right">
+        <el-table-column align="center" label="收件地址" prop="address"/>
+
+        <el-table-column align="center" label="状态" width="150px" fixed="right">
             <template slot-scope="scope">
                 <el-tag v-if="scope.row.isEnable == 1" type="success">启用中</el-tag>
                 <el-tag v-else type="danger">停用中</el-tag>
             </template>
         </el-table-column>
+
         <el-table-column align="center" label="操作" width="300px" fixed="right">
             <template slot-scope="scope">
                 <el-button v-if="scope.row.isEnable == 1" type="warning" plain @click="unableWarehouseAddress(scope.row.id)">停 用</el-button>
@@ -58,7 +60,11 @@
 
     <el-dialog :visible.sync="editDialog" title="编辑仓库收件地址" width="50%" :close-on-click-modal="false">
         <el-form ref="form" :model="formItem" label-width="160px" :rules="formItemRules">
-
+            <el-form-item label="区域" prop="commercialAreaId">
+                <el-select v-model="formItem.commercialAreaId" filterable clearable>
+                    <el-option v-for="item in commercialAreaData" :key="item.id" :label="item.commercialAreaName" :value="item.id"/>
+                </el-select>
+            </el-form-item>
             <el-form-item label="公司名称:" prop="companyName">
                 <el-input v-model="formItem.companyName" style="width: 300px"/>
             </el-form-item>
@@ -95,6 +101,7 @@
 <script>
 import Pagination from "@/components/Pagination";
 import {getWarehouseAddressList, saveWarehouseAddress, deleteWarehouseAddress, enable, unable} from '@/api/warehouse-management/warehouse-address'
+import {getCommercialAreaSelectList} from '@/api/rights-manage/commercial-area'
 export default {
     components:{
         Pagination
@@ -124,7 +131,11 @@ export default {
                 postcode:"",
                 address:"",
             },
+            commercialAreaData: [],
             formItemRules: {
+                commercialAreaId: [
+                    { required: true, message: '请选择仓库的所在区域', trigger: 'blur' },
+                ],
                 companyName: [
                     { required: true, message: '公司名不能为空', trigger: 'blur' },
                 ],
@@ -161,6 +172,11 @@ export default {
                 this.pageInfo.limit = pageObj.limit
                 this.handleSearch(1)
             }
+        },
+        getCommercialAreaList(){
+            getCommercialAreaSelectList().then((res) => {
+                this.commercialAreaData = res.content
+            });
         },
         /**
          * 查询
@@ -248,6 +264,7 @@ export default {
         }
     },
     mounted(){
+        this.getCommercialAreaList();
         this.handleSearch(1);
     }
 }

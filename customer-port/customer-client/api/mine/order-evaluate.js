@@ -63,15 +63,4 @@ export function getEvaluateDetail({
  */
 export function comfirmEvaluate(data, files, mintor){
 	return http.uploadFile(data, '/orderEvaluate/evaluate', files, mintor)	
- //  return uni.request({
- //    url: config.baseUrl.dev + "/orderEvaluate/evaluate",
- //    method: "post",
- //    header: {
- //      "Content-Type": "application/x-www-form-urlencoded", //自定义请求头信息
- //      Authorization: getToken() + "_" + getCustomerNo() //自定义请求头信息
- //    },
- //    data: {
-	// 	packId: packId
-	// }
- //  });
 }

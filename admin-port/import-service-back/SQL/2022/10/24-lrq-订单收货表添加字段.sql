@@ -1,0 +1,1 @@
+alter table `customer_pack_receiver_address` add column `address_id` int default null comment '收件地址ID';

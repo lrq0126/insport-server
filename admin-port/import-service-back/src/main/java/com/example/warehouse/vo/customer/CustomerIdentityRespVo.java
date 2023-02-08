@@ -9,5 +9,7 @@ import java.util.List;
 @Data
 public class CustomerIdentityRespVo extends CustomerIdentity {
 
+    private String imageIds;
+
     private List<Images> images;
 }

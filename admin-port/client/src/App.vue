@@ -2,7 +2,7 @@
     <div id="app">
         <router-view />
         <div class="footer">
-            <div>©2008-2021 广州飞轮云仓物流科技有限公司 版权所有</div>
+            <div>©2008-2021 广州小挎兜物流科技有限公司 版权所有</div>
         </div>
     </div>
 </template>

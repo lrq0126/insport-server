@@ -11,6 +11,7 @@ import com.dwgj.mlxydedicatedline.resultType.PageHelp;
 import com.dwgj.mlxydedicatedline.resultType.PageResultModel;
 import com.dwgj.mlxydedicatedline.resultType.ResultModel;
 import com.dwgj.mlxydedicatedline.utils.ImgUtil;
+import com.dwgj.mlxydedicatedline.utils.TencentObjectMemory;
 import com.dwgj.mlxydedicatedline.vo.PageVo;
 import com.dwgj.mlxydedicatedline.vo.customer.CustomerIdentityRespVo;
 import org.apache.shiro.SecurityUtils;
@@ -23,11 +24,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
+import static com.dwgj.mlxydedicatedline.entity.image.ImageType.CustomerIdentityPicture;
 
 
 /**
@@ -68,15 +68,7 @@ public class CustomerIdentityServiceImpl implements CustomerIdentityService {
                 customerIdentityMapper.updateByPrimaryKeySelective(customerIdentity);
             }
 
-            List<Images> imagesList = new ArrayList<>(4);
-            File file = null;
-            for (MultipartFile multipartFile : multipartFiles) {
-                String path = ImgUtil.imageProcess(fileStr, customerIdentity.getCustomerId() + "_"+ new Date().getTime());
-                file = new File(path);
-                Images images = TencentObjectMemory.uploadObject("flycloud", CustomerIdentityPicture.toString(), file);
-                images.setStatus(1);
-                imagesList.add(images);
-            }
+            List<Images> imagesList = ImgUtil.imagesUpload(multipartFiles, CustomerIdentityPicture.toString());
 
             for (Images images : imagesList) {
                 images.setContentId(String.valueOf(customerIdentity.getId()));
@@ -118,7 +110,12 @@ public class CustomerIdentityServiceImpl implements CustomerIdentityService {
             pageVo.setPageNumber(pageData.getPageNumber());
             customerIdentityRespVoList = customerIdentityMapper.getIdentityList(customerId, pageVo);
         }
-        return new ResponseEntity<>(PageResultModel.ok(customerIdentityRespVoList, pageData), HttpStatus.OK);
+        Map<String ,Object> pageMap = new HashMap<>();
+        pageMap.put("number", pageData.getNumber());
+        pageMap.put("limit", pageData.getPageSize());
+        pageMap.put("total", pageData.getTotal());
+        return new ResponseEntity<>(PageResultModel.ok(customerIdentityRespVoList, pageMap), HttpStatus.OK);
     }
+
 
 }

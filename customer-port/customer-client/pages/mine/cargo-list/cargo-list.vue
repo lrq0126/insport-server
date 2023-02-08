@@ -117,11 +117,11 @@
                                             <text class="package_C_C_T">备注信息：</text><text style="color: red;">{{item.message}}</text>
                                         </p>
                                     </view>
-									<view style="height: 70upx;">
+									<!-- <view style="height: 70upx;">
 										<view class="chaeck-picture-calss" @click="checkPicture(item.deliveryOrderNo)">
 											查看图片
 										</view>
-									</view>
+									</view> -->
                                 </view>
                             </td>
                         </tr>

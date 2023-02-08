@@ -154,8 +154,8 @@ public class GoodsController {
             //设置货物仓库位置
             newGoods.setLocation(location);
 
-            newGoods.setCommercialAreaId(commercialAreaId);
-            newGoods.setCommercialAreaName(commercialAreaName);
+//            newGoods.setCommercialAreaId(commercialAreaId);
+//            newGoods.setCommercialAreaName(commercialAreaName);
 
             int i = goodsService.save(newGoods, params.get("type").toString());
             if (i < 1) {

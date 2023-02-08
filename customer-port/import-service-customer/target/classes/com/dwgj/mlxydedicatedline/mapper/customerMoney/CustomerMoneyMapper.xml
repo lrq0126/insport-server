@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dwgj.mlxydedicatedline.mapper.customerMoney.CustomerMoneyMapper">
+    <resultMap id="BaseResultMap" type="com.dwgj.mlxydedicatedline.entity.CustomerMoney">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="customer_id" jdbcType="VARCHAR" property="customerId"/>
+        <result column="customer_name" jdbcType="VARCHAR" property="customerName"/>
+        <result column="amount" jdbcType="DECIMAL" property="amount"/>
+        <result column="last_update_time" jdbcType="TIMESTAMP" property="lastUpdateTime"/>
+        <result column="version" jdbcType="INTEGER" property="version"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, customer_id, customer_name, amount, last_update_time, version, `status`
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from customer_money
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from customer_money
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.dwgj.mlxydedicatedline.entity.CustomerMoney"
+            useGeneratedKeys="true">
+        insert into customer_money (customer_id, customer_name, amount,
+        last_update_time, version, `status`
+        )
+        values (#{customerId,jdbcType=VARCHAR}, #{customerName,jdbcType=VARCHAR}, #{amount,jdbcType=DECIMAL},
+        #{lastUpdateTime,jdbcType=TIMESTAMP}, #{version,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}
+        )
+    </insert>
+    <insert id="insertSelective" keyColumn="id" keyProperty="id"
+            parameterType="com.dwgj.mlxydedicatedline.entity.CustomerMoney" useGeneratedKeys="true">
+        insert into customer_money
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="customerId != null and customerId != ''">
+                customer_id,
+            </if>
+            <if test="customerName != null and customerName != ''">
+                customer_name,
+            </if>
+            amount,
+            <if test="lastUpdateTime != null and lastUpdateTime != ''">
+                last_update_time,
+            </if>
+            version,
+            `status`,
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="customerId != null and customerId != ''">
+                #{customerId,jdbcType=VARCHAR},
+            </if>
+            <if test="customerName != null and customerName != ''">
+                #{customerName,jdbcType=VARCHAR},
+            </if>
+            0,
+            <if test="lastUpdateTime != null and lastUpdateTime != ''">
+                #{lastUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+            1,
+            1,
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.dwgj.mlxydedicatedline.entity.CustomerMoney">
+        update customer_money
+        <set>
+            <if test="customerId != null and customerId != ''">
+                customer_id = #{customerId,jdbcType=VARCHAR},
+            </if>
+            <if test="customerName != null and customerName != ''">
+                customer_name = #{customerName,jdbcType=VARCHAR},
+            </if>
+            <if test="amount != null and amount != ''">
+                amount = #{amount,jdbcType=DECIMAL},
+            </if>
+            last_update_time = now(),
+            version = #{version,jdbcType=INTEGER} + 1,
+            <if test="status != null and status != ''">
+                `status` = #{status,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER} and version = #{version}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.dwgj.mlxydedicatedline.entity.CustomerMoney">
+        update customer_money
+        set customer_id = #{customerId,jdbcType=VARCHAR},
+        customer_name = #{customerName,jdbcType=VARCHAR},
+        amount = #{amount,jdbcType=DECIMAL},
+        last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+        version = #{version,jdbcType=INTEGER},
+        `status` = #{status,jdbcType=INTEGER}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <update id="deleteByCustomerId" parameterType="int">
+        update customer_money
+        set
+        `status` = 0
+        where customer_id = #{value,jdbcType=VARCHAR}
+    </update>
+
+    <select id="selectByCustomerNo" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from customer_money
+        where customer_id = #{customerNo}
+    </select>
+
+    <update id="updateMoneyByPrimaryKeySelective" parameterType="com.dwgj.mlxydedicatedline.entity.CustomerMoney">
+        update customer_money
+        <set>
+            <if test="customerId != null and customerId != ''">
+                customer_id = #{customerId,jdbcType=VARCHAR},
+            </if>
+            <if test="customerName != null and customerName != ''">
+                customer_name = #{customerName,jdbcType=VARCHAR},
+            </if>
+            amount = #{amount,jdbcType=DECIMAL},
+            last_update_time = now(),
+            version = #{version,jdbcType=INTEGER} + 1,
+            <if test="status != null and status != ''">
+                `status` = #{status,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER} and version = #{version}
+    </update>
+
+    <update id="updateCustomerNo">
+        update customer_money
+        <set>
+            status = 0
+        </set>
+        <where>
+            customer_id != #{customerNo}
+            and id in
+            <foreach collection="customerMoneyList" item="item" open="(" close=")" separator=",">
+                #{item.id}
+            </foreach>
+        </where>
+    </update>
+
+</mapper>

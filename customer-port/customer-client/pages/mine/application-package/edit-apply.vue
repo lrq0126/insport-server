@@ -416,7 +416,7 @@ export default {
         height: 94upx;
         width: 100%;
         color: #fff;
-        background: #fbbd43f5;
+        background: #52c3ff;
         button {
             border: 0;
             width: 100%;

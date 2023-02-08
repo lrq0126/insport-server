@@ -6,7 +6,7 @@ import com.example.warehouse.entity.customerPack.CustomerPackPriceDetail;
 import com.example.warehouse.entity.ping.PingMainOrder;
 import com.example.warehouse.entity.ping.PingPack;
 import com.example.warehouse.vo.GoodsVo;
-import com.example.warehouse.vo.customer.CustomerPackNumberVo;
+import com.example.warehouse.vo.customerPack.CustomerPackNumberVo;
 import com.example.warehouse.vo.detailedListVo.GoodsDetailedListVo;
 import com.example.warehouse.vo.packVo.PackSonVo;
 import com.example.warehouse.vo.route.RouteVo;

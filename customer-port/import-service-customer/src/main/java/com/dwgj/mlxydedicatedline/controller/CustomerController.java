@@ -9,6 +9,7 @@ import com.dwgj.mlxydedicatedline.controller.wx.WXMessageBean;
 import com.dwgj.mlxydedicatedline.entity.Customer;
 import com.dwgj.mlxydedicatedline.entity.DeliveryCompany;
 import com.dwgj.mlxydedicatedline.entity.Goods;
+import com.dwgj.mlxydedicatedline.entity.customer.CustomerIdentity;
 import com.dwgj.mlxydedicatedline.resultType.PageData;
 import com.dwgj.mlxydedicatedline.resultType.PageHelp;
 import com.dwgj.mlxydedicatedline.resultType.PageResultModel;
@@ -18,9 +19,12 @@ import com.dwgj.mlxydedicatedline.service.CustomerService;
 
 import com.dwgj.mlxydedicatedline.service.DeliveryCompanyService;
 import com.dwgj.mlxydedicatedline.service.GoodsService;
+import com.dwgj.mlxydedicatedline.service.customer.CustomerIdentityService;
 import com.dwgj.mlxydedicatedline.vo.GoodsVo;
+import com.dwgj.mlxydedicatedline.vo.PageVo;
 import com.dwgj.mlxydedicatedline.vo.customer.CustomerReqVo;
 import com.dwgj.mlxydedicatedline.vo.customer.PopularizeDetailReqVo;
+import io.swagger.annotations.ApiParam;
 import org.apache.ibatis.annotations.Param;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
@@ -28,6 +32,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -52,7 +57,8 @@ public class CustomerController {
     private GoodsService goodsService;
     @Autowired
     private DeliveryCompanyService deliveryCompanyService;
-
+    @Autowired
+    private CustomerIdentityService customerIdentityService;
 
     @GetMapping("/selectBaseInfoById")
     public ResponseEntity<ResultModel> selectBaseInfoById() {
@@ -251,4 +257,34 @@ public class CustomerController {
     public ResponseEntity<ResultModel> getCustomerWareAddress(int commercialAreaId, HttpServletRequest request){
         return customerService.getCustomerWareAddress(commercialAreaId,request);
     }
+
+    /**
+     * 客户分身证信息
+     */
+    @PostMapping("/getIdentityList")
+    @ResponseBody
+    public ResponseEntity<PageResultModel> getIdentityList(int customerId, PageVo pageVo){
+        return customerIdentityService.getIdentityList(customerId, pageVo);
+    }
+
+    @PostMapping("/getIdentityInfo")
+    @ResponseBody
+    public ResponseEntity<ResultModel> getIdentityInfo(int customerIdentityId){
+        return customerIdentityService.getIdentityInfo(customerIdentityId);
+    }
+
+    @PostMapping("/saveIdentity")
+    @ResponseBody
+    public ResponseEntity<ResultModel> saveIdentity(
+            @ApiParam(name="file",value="图片组",required=true) @RequestParam("file") MultipartFile[] multipartFiles,
+            @ApiParam(name="customerIdentity",value="客户实体",required=true) CustomerIdentity customerIdentity){
+        return customerIdentityService.saveIdentity(customerIdentity, multipartFiles);
+    }
+
+    @PostMapping("/deleteIdentity")
+    @ResponseBody
+    public ResponseEntity<ResultModel> deleteIdentity(int customerIdentityId){
+        return customerIdentityService.deleteIdentity(customerIdentityId);
+    }
+
 }

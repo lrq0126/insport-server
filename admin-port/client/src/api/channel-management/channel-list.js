@@ -12,6 +12,7 @@ import request from "@/utils/request";
 export function getChannelList({
   page,
   limit,
+  isPin,
   routeName,
   transportType,
   englishName,
@@ -25,6 +26,7 @@ export function getChannelList({
     data: {
       pageNumber: page, // 当前页码
       pageSize: limit, //每页条数
+      isPin: isPin,
       routeName: routeName,
       transportType: transportType,
       englishName: englishName,

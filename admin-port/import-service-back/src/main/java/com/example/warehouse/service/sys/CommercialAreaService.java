@@ -17,4 +17,7 @@ public interface CommercialAreaService {
     ResponseEntity<ResultModel> deleteCommercialArea(int id);
 
     ResponseEntity<ResultModel> enableCommercialArea(int id, int isEnable);
+
+    ResponseEntity<ResultModel> getCommercialAreaSelectList();
+
 }

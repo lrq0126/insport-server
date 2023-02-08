@@ -358,6 +358,13 @@
               <el-col :span="22" style="margin-left: 20px">
                 <el-form-item label="" label-width="0">
                   <el-button
+                    type="success"
+                    style="margin-bottom: 5px"
+                    icon="el-icon-circle-plus-outline"
+                    @click="addOrder"
+                    >订单分箱</el-button
+                  > 
+                  <el-button
                     type="primary"
                     plain
                     style="margin-bottom: 5px"
@@ -844,7 +851,8 @@ import {
   editPackMessage,
   confirmPack,
   getWaitPackDetail,
-  updatePackValuation
+  updatePackValuation,
+  orderSplit
 } from "@/api/package-management/unpackaged-task";
 import quillConfig from "@/utils/quill-config.js";
 import channelListModal from "./channel-list-modal";
@@ -1329,93 +1337,21 @@ export default {
       this.multipleSelection = val;
     },
 
-    /**
-     * 点击选择快递【包裹】
-     * @return {type} {description}
-     */
-    // handlePackages(index) {
-    //   this.multipleSelection = [];
-    //   this.loading = true;
-    //   this.saving = true;
-    //   this.formItem.packageList = [];
-    //   this.formItem.goodsData.forEach((goods) => {
-    //     if (goods.sortType == 1) {
-    //       this.formItem.packageList.push(goods);
-    //     }
-    //   });
-
-    //   if (this.selectedPackageList.length > 0) {
-    //     // 踢出已选中的货物
-    //     let differeData = [...this.formItem.packageList].filter((x) =>
-    //       [...this.selectedPackageList].every((y) => y.id !== x.id)
-    //     );
-    //     this.formItem.packageList = differeData;
-
-    //     // 加上当前箱子已选中的货物
-    //     if (this.formItem.sonPack[index].packagesInfo.length > 0) {
-    //       this.formItem.sonPack[index].packagesInfo.forEach((ele) => {
-    //         this.formItem.packageList.push(ele);
-    //         this.multipleSelection.push(ele);
-    //         setTimeout(() => {
-    //           this.$refs.multipleTable.toggleRowSelection(ele);
-    //         });
-    //       });
-    //     }
-    //   }
-
-    //   this.$nextTick(() => {
-    //     this.dialogInfo = true;
-    //     this.sonPackIndex = index; // 大箱子索引值
-    //     setTimeout(() => {
-    //       this.loading = false;
-    //     }, 800);
-    //   });
-
-    //   this.saving = false;
-    // },
-
-    /**
-     * 选中快递
-     * @return {type} {description}
-     */
-    // handleSelectPackages() {
-    //   if (this.multipleSelection.length > 0) {
-    //     let packagesInfo =
-    //       this.formItem.sonPack[this.sonPackIndex].packagesInfo;
-
-    //     // 选中记录,去除之前选择的数据，后面再重新装载
-    //     if (this.selectedPackageList.length > 0) {
-    //       let differeData = [...this.selectedPackageList].filter((x) =>
-    //         [...packagesInfo].every((y) => y.id !== x.id)
-    //       );
-
-    //       this.selectedPackageList = differeData;
-    //     }
-    //     // 每次确定重置箱子内的货物信息，然后再从新装载, 防止数量叠加
-    //     this.formItem.sonPack[this.sonPackIndex].packagesInfo = [];
-    //     let goodsIds = "";
-    //     this.multipleSelection.forEach((ele) => {
-    //       this.selectedPackageList.push(ele);
-    //       goodsIds = goodsIds == "" ? ele.id : goodsIds + "," + ele.id;
-    //       this.formItem.sonPack[this.sonPackIndex].packagesInfo.push(ele);
-    //     });
-    //     this.formItem.sonPack[this.sonPackIndex].goodsIds = goodsIds;
-    //     this.formItem.sonPack[this.sonPackIndex].bool = true;
-
-    //     this.saving = false;
-    //     // 确定箱子的货物之后，将箱子索引重置为空
-    //     this.sonPackIndex = "";
-    //     // 最后隐藏弹窗
-    //     this.dialogInfo = false;
-    //   } else {
-    //     this.$message({
-    //       message: "至少勾选一个快递包裹!",
-    //       type: "warning",
-    //       showClose: true,
-    //       duration: 1000 * 1.5 * 3,
-    //     });
-    //   }
-    // },
+    addOrder(){
+      orderSplit(this.formItem.id).then((res) => {
+        if(res.code == 100){
+          this.$message({
+            message: "订单分箱成功，已复制订单",
+            type: "success"
+          })
+        }else{
+          this.$message({
+            message: "订单分箱失败",
+            type: "error"
+          })
+        }
+      })
+    },
 
     /**
      * 编辑备注信息

@@ -22,6 +22,10 @@ public class PageResultModel extends ResultModel {
         super(code,message,content);
         this.map = map;
     }
+    public PageResultModel(int code, String message, Object content, PageData pageData){
+        super(code,message,content);
+        this.data = pageData;
+    }
 
     public PageResultModel(int code, String message) {
         super(code,message);
@@ -57,7 +61,7 @@ public class PageResultModel extends ResultModel {
     }
 
     public static PageResultModel ok(Object object, PageData data){
-        return new PageResultModel(ResultStatus.SUCCESS,object,data);
+        return new PageResultModel(ResultStatus.SUCCESS, object, data);
     }
 
     public Map<String, Object> getMap() {

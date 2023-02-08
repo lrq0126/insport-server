@@ -10,7 +10,7 @@
                  style="margin-top:15px;"
                  type="border-card"
                  @tab-click="handTabClick">
-            <el-tab-pane label="已成团列表"
+            <el-tab-pane label="已打包列表"
                          name="list">
                 <keep-alive>
                     <list-pane ref="listPane"
@@ -18,37 +18,18 @@
                                :hiddendanger-statusdata="hiddendangerStatus" />
                 </keep-alive>
             </el-tab-pane>
-
-            <el-tab-pane label="已打包"
-                         name="packedList">
-                         <keep-alive>
-                    <packed-list-pane ref="packedListPane"/>
-                </keep-alive>
-            </el-tab-pane>
-
-            <el-tab-pane label="已付款"
-                         name="paymentedList">
-                         <keep-alive>
-                    <paymented-list-pane ref="paymentedListPane"/>
-                </keep-alive>
-            </el-tab-pane>
-
         </el-tabs>
     </div>
 </template>
 
 <script>
 import listPane from './components/list'
-import packedListPane from './components/packed-list'
-import paymentedListPane from './components/paymented-list'
 import { getBaseDictByType } from '@/api/basic-info'
 
 export default {
     name: 'HiddendangerTreatment',
     components: { 
         listPane,
-        packedListPane,
-        paymentedListPane
     },
     data () {
         return {

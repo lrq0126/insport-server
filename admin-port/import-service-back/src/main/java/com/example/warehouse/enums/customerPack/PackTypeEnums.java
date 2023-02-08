@@ -7,10 +7,12 @@ public enum PackTypeEnums {
     WAIT_DELIVERY(3, "已付款"), // 待出库
     OUT_WARE_HOUSE(4, "已出库"),
 
+    PIN_SPELL_MAILING(5, "拼邮中"),
 
     WAIT_UNPACKING(7, "待拆包"),
     SIGN_IN(9, "已收货"),
     TO_BE_WEIGHED(10, "待称重"),
+
     ;
     PackTypeEnums(int value, String name){
         this.name = name;
