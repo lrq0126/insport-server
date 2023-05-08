@@ -73,5 +73,5 @@ public interface TransportationRouteMapper extends MyBatisBaseDao<Transportation
     int prohibitRoute(int id);
 
 
-
+    List<RouteVo> findRouteByCountryId(Integer countryId);
 }

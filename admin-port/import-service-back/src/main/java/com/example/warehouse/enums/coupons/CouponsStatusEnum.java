@@ -1,6 +1,5 @@
 package com.example.warehouse.enums.coupons;
 
-import com.itextpdf.text.pdf.PRIndirectReference;
 import lombok.Getter;
 
 // 优惠券使用状态

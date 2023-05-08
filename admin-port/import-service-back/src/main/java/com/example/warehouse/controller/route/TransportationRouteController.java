@@ -1,14 +1,9 @@
 package com.example.warehouse.controller.route;
 
-import com.example.warehouse.common.PageData;
-import com.example.warehouse.common.PageHelp;
-import com.example.warehouse.entity.TransportationRoute;
-import com.example.warehouse.enums.ResultStatus;
 import com.example.warehouse.log.SysLog;
 import com.example.warehouse.model.ResultModel;
 import com.example.warehouse.service.TransportationRouteService;
 import com.example.warehouse.vo.route.RouteRequestVo;
-import com.example.warehouse.vo.route.RouteVo;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,8 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import static com.example.warehouse.enums.ResultStatus.*;
@@ -148,4 +141,8 @@ public class TransportationRouteController {
         return new ResponseEntity<>(ResultModel.ok(),HttpStatus.OK);
     }
 
+    @PostMapping("/getTransportationRouteList")
+    public ResponseEntity<ResultModel> getTransportationRouteList(Integer countryId){
+        return routeService.getTransportationRouteList(countryId);
+    }
 }

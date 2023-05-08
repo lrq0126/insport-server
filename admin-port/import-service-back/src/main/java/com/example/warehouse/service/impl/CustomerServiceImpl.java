@@ -9,12 +9,9 @@ import com.example.warehouse.entity.activityReward.ActivityPoster;
 import com.example.warehouse.entity.activityReward.ActivityReward;
 import com.example.warehouse.entity.coupons.CustomerCoupons;
 import com.example.warehouse.entity.coupons.SysCoupons;
-import com.example.warehouse.entity.customer.CustomerIdentity;
 import com.example.warehouse.entity.customer.CustomerIntegral;
 import com.example.warehouse.entity.customer.CustomerIntegralRule;
 import com.example.warehouse.entity.customerGroup.CustomerGroupLink;
-import com.example.warehouse.entity.image.ImageType;
-import com.example.warehouse.entity.image.Images;
 import com.example.warehouse.entity.sys.CommercialArea;
 import com.example.warehouse.entity.wechat.WxAccessToken;
 import com.example.warehouse.mapper.*;
@@ -50,7 +47,6 @@ import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 import org.springframework.util.CollectionUtils;
-import org.springframework.web.multipart.MultipartFile;
 import sun.misc.BASE64Encoder;
 
 import javax.servlet.http.HttpServletRequest;
@@ -63,7 +59,6 @@ import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.example.warehouse.entity.image.ImageType.CustomerIdentityPicture;
 import static com.example.warehouse.enums.ResultStatus.*;
 
 @Service("customerService")

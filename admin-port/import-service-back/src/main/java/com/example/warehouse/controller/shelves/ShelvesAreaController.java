@@ -1,18 +1,15 @@
 package com.example.warehouse.controller.shelves;
 
-import com.example.warehouse.entity.shelves.ShelvesArea;
 import com.example.warehouse.entity.shelves.ShelvesRow;
 import com.example.warehouse.model.PageResultModel;
 import com.example.warehouse.model.ResultModel;
 import com.example.warehouse.service.shelves.ShelvesAreaService;
 import com.example.warehouse.vo.shelves.ShelvesReqVo;
 import com.example.warehouse.vo.shelves.ShelvesRespVo;
-import com.example.warehouse.vo.storage.StorageCodeVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @RestController
 @RequestMapping("/shelvesArea")

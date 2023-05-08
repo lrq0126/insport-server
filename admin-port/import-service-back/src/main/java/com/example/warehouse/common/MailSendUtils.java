@@ -1,6 +1,5 @@
 package com.example.warehouse.common;
 
-import com.example.warehouse.enums.customer.MailTypeEnum;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 

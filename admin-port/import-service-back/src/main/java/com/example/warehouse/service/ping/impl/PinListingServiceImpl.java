@@ -4,10 +4,6 @@ import com.example.warehouse.common.PackUtils;
 import com.example.warehouse.common.PdfUtils;
 import com.example.warehouse.common.SequenceCode;
 import com.example.warehouse.entity.CustomerPackReceiverAddress;
-import com.example.warehouse.entity.SysDictDetail;
-import com.example.warehouse.entity.TransportationRoute;
-import com.example.warehouse.entity.ping.PingMain;
-import com.example.warehouse.entity.ping.PingMainOrder;
 import com.example.warehouse.entity.ping.PingMember;
 import com.example.warehouse.mapper.GoodsMapper;
 import com.example.warehouse.mapper.customerPack.CustomerPackMapper;
@@ -15,7 +11,6 @@ import com.example.warehouse.mapper.customerPackReceiverAddress.CustomerPackRece
 import com.example.warehouse.mapper.ping.PingMainMapper;
 import com.example.warehouse.mapper.ping.PingMainOrderMapper;
 import com.example.warehouse.model.ResultModel;
-import com.example.warehouse.service.detailedList.DetailedListService;
 import com.example.warehouse.service.ping.PinListingService;
 import com.example.warehouse.vo.GoodsVo;
 import com.example.warehouse.vo.customer.CustomerPackVo;

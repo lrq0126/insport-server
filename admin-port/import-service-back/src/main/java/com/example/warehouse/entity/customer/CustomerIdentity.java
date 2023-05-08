@@ -1,13 +1,10 @@
 package com.example.warehouse.entity.customer;
 
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
 import lombok.Data;
-import org.springframework.web.multipart.MultipartFile;
 
 /**
  * 客户身份证信息(CustomerIdentity)表实体类

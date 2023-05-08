@@ -1,5 +1,7 @@
 package com.example.warehouse.entity.wechat;
 
+import lombok.Data;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -7,6 +9,7 @@ import java.util.Date;
  * wx_access_token
  * @author
  */
+@Data
 public class WxAccessToken implements Serializable {
     private Integer id;
 
@@ -14,6 +17,10 @@ public class WxAccessToken implements Serializable {
      * 微信access_token
      */
     private String accessToken;
+    /**
+     * 微信access_token
+     */
+    private String jsapiTicket;
 
     /**
      * 有效时长
@@ -37,54 +44,6 @@ public class WxAccessToken implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getAccessToken() {
-        return accessToken;
-    }
-
-    public void setAccessToken(String accessToken) {
-        this.accessToken = accessToken;
-    }
-
-    public String getExpire() {
-        return expire;
-    }
-
-    public void setExpire(String expire) {
-        this.expire = expire;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -99,6 +58,7 @@ public class WxAccessToken implements Serializable {
         WxAccessToken other = (WxAccessToken) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
             && (this.getAccessToken() == null ? other.getAccessToken() == null : this.getAccessToken().equals(other.getAccessToken()))
+            && (this.getJsapiTicket() == null ? other.getJsapiTicket() == null : this.getJsapiTicket().equals(other.getJsapiTicket()))
             && (this.getExpire() == null ? other.getExpire() == null : this.getExpire().equals(other.getExpire()))
             && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
             && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()))
@@ -111,6 +71,7 @@ public class WxAccessToken implements Serializable {
         int result = 1;
         result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
         result = prime * result + ((getAccessToken() == null) ? 0 : getAccessToken().hashCode());
+        result = prime * result + ((getJsapiTicket() == null) ? 0 : getJsapiTicket().hashCode());
         result = prime * result + ((getExpire() == null) ? 0 : getExpire().hashCode());
         result = prime * result + ((getCreateTime() == null) ? 0 : getCreateTime().hashCode());
         result = prime * result + ((getUpdateTime() == null) ? 0 : getUpdateTime().hashCode());
@@ -126,6 +87,7 @@ public class WxAccessToken implements Serializable {
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
         sb.append(", accessToken=").append(accessToken);
+        sb.append(", getJsapiTicket=").append(jsapiTicket);
         sb.append(", expire=").append(expire);
         sb.append(", createTime=").append(createTime);
         sb.append(", updateTime=").append(updateTime);

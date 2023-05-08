@@ -1,7 +1,6 @@
 package com.example.warehouse.controller.common;
 
 import com.example.warehouse.common.DateUtil;
-import com.example.warehouse.common.SequenceCode;
 import com.example.warehouse.entity.sys.Trajectory;
 import com.example.warehouse.entity.sys.TrajectoryLog;
 import com.example.warehouse.service.sys.TrajectoryService;

@@ -1,7 +1,6 @@
 package com.example.warehouse.entity;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * 仓库信息表

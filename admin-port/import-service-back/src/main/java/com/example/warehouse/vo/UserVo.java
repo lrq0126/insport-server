@@ -21,6 +21,8 @@ public class UserVo implements Serializable {
     private String createTime;
     private Integer level;
     private String loginName;
+    private Integer countryId; // 国家ID
+    private String country; // 国家
     private Integer commercialAreaId;//区域仓库ID
     private String commercialAreaName;//区域仓库名称
     private Integer roleId;

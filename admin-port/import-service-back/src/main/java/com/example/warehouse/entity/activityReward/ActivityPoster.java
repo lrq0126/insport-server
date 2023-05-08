@@ -1,10 +1,8 @@
 package com.example.warehouse.entity.activityReward;
 
-import java.util.Date;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
 import lombok.Data;
-import org.springframework.web.multipart.MultipartFile;
 
 /**
  * 活动海报(ActivityPoster)表实体类

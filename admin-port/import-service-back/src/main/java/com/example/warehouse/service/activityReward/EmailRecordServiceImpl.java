@@ -11,7 +11,6 @@ import com.example.warehouse.entity.wx.WechatMessage;
 import com.example.warehouse.enums.ResultStatus;
 import com.example.warehouse.mapper.CustomerMapper;
 import com.example.warehouse.mapper.activityReward.EmailRecordMapper;
-import com.example.warehouse.mapper.customerGroup.CustomerGroupLinkMapper;
 import com.example.warehouse.mapper.wx.WechatMessageMapper;
 import com.example.warehouse.model.PageResultModel;
 import com.example.warehouse.model.ResultModel;

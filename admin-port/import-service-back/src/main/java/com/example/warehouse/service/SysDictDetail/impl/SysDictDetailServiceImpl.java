@@ -1,12 +1,8 @@
 package com.example.warehouse.service.SysDictDetail.impl;
 
-import com.alibaba.fastjson.JSONArray;
-import com.example.warehouse.common.DateUtil;
 import com.example.warehouse.common.PageData;
 import com.example.warehouse.common.PageHelp;
-import com.example.warehouse.entity.CustomerPackNumber;
 import com.example.warehouse.entity.SysDictDetail;
-import com.example.warehouse.entity.TransportationRoute;
 import com.example.warehouse.entity.User;
 import com.example.warehouse.enums.ResultStatus;
 import com.example.warehouse.mapper.SysDictDetailMapper;
@@ -15,7 +11,6 @@ import com.example.warehouse.model.PageResultModel;
 import com.example.warehouse.model.ResultModel;
 import com.example.warehouse.service.SysDictDetail.SysDictDetailService;
 import com.example.warehouse.vo.backlogVo.BacklogTypeVo;
-import com.example.warehouse.vo.route.RouteVo;
 import com.example.warehouse.vo.sys.DictReqVo;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +23,6 @@ import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.*;
 
 /**

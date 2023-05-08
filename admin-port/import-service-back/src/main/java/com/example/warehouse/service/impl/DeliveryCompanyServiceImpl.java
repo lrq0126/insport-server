@@ -2,8 +2,6 @@ package com.example.warehouse.service.impl;
 
 import com.example.warehouse.common.SequenceCode;
 import com.example.warehouse.entity.DeliveryCompany;
-import com.example.warehouse.entity.Goods;
-import com.example.warehouse.entity.Storage;
 import com.example.warehouse.entity.User;
 import com.example.warehouse.mapper.DeliveryCompanyMapper;
 import com.example.warehouse.mapper.GoodsMapper;

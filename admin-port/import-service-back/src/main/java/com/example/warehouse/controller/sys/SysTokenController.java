@@ -1,6 +1,5 @@
 package com.example.warehouse.controller.sys;
 
-import com.example.warehouse.entity.sys.SysToken;
 import com.example.warehouse.model.ResultModel;
 import com.example.warehouse.service.sys.SysTokenService;
 import org.springframework.beans.factory.annotation.Autowired;

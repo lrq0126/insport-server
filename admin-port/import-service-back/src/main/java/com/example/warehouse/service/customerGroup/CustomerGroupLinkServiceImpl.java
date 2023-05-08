@@ -1,7 +1,6 @@
 package com.example.warehouse.service.customerGroup;
 
 import com.example.warehouse.common.DateUtil;
-import com.example.warehouse.entity.CustomerPack;
 import com.example.warehouse.entity.User;
 import com.example.warehouse.entity.customerGroup.CustomerGroupLink;
 import com.example.warehouse.enums.ResultStatus;

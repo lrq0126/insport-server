@@ -3,19 +3,14 @@ package com.example.warehouse.controller.common;
 
 import com.example.warehouse.common.DateUtil;
 import com.example.warehouse.common.SequenceCode;
-import com.example.warehouse.entity.AgentOrder;
 import com.example.warehouse.entity.Goods;
-import com.example.warehouse.entity.User;
-import com.example.warehouse.mapper.AgentOrderMapper;
 import com.example.warehouse.mapper.CustomerMapper;
 import com.example.warehouse.mapper.GoodsMapper;
-import com.example.warehouse.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.PostConstruct;
-import java.math.BigDecimal;
 import java.util.*;
 
 /**

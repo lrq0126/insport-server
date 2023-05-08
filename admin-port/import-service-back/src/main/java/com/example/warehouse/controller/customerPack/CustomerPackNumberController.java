@@ -2,7 +2,6 @@ package com.example.warehouse.controller.customerPack;
 
 import com.example.warehouse.common.PageData;
 import com.example.warehouse.common.PageHelp;
-import com.example.warehouse.entity.CustomerPackNumber;
 import com.example.warehouse.model.ResultModel;
 import com.example.warehouse.service.CustomerPackNumberService;
 import com.example.warehouse.vo.GoodsVo;

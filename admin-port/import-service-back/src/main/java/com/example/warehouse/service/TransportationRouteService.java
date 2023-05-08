@@ -94,4 +94,5 @@ public interface TransportationRouteService {
      */
     void deleteRoutePriceByPriceNo(String priceNo);
 
+    ResponseEntity<ResultModel> getTransportationRouteList(Integer countryId);
 }

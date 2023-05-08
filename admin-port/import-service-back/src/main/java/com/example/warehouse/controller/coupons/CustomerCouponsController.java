@@ -1,6 +1,5 @@
 package com.example.warehouse.controller.coupons;
 
-import com.example.warehouse.entity.coupons.CustomerCoupons;
 import com.example.warehouse.model.PageResultModel;
 import com.example.warehouse.model.ResultModel;
 import com.example.warehouse.service.coupons.CustomerCouponsService;

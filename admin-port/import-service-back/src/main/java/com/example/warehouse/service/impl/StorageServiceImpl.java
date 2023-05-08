@@ -2,8 +2,6 @@ package com.example.warehouse.service.impl;
 
 import com.example.warehouse.common.PdfUtils;
 import com.example.warehouse.common.SequenceCode;
-import com.example.warehouse.entity.Customer;
-import com.example.warehouse.entity.Goods;
 import com.example.warehouse.entity.Storage;
 import com.example.warehouse.entity.User;
 import com.example.warehouse.mapper.GoodsMapper;
@@ -14,7 +12,6 @@ import com.example.warehouse.service.StorageService;
 import com.example.warehouse.vo.storage.StorageCodeVo;
 import com.example.warehouse.vo.storage.StorageLocationsRespVo;
 import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.pdf.*;
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +24,6 @@ import org.springframework.stereotype.Service;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 

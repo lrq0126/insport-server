@@ -1,10 +1,18 @@
 package com.example.warehouse.controller.common;
 
+import com.example.warehouse.common.CommonUtil;
 import com.example.warehouse.common.FileUtil;
+import com.example.warehouse.model.ResultModel;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -101,4 +109,23 @@ public class CommonController {
             e1.printStackTrace();
         }
     }
+
+    @Value("${tencent.appid}")
+    private String APPID;
+    @Value("${tencent.secret-id}")
+    private String SECRET_ID;
+    @Value("${tencent.secret-key}")
+    private String SECRET_KEY;
+    @Value("${tencent.bucket-name}")
+    private String BUCKET_NAME;
+
+    @Autowired
+    private CommonUtil commonUtil;
+
+    @PostMapping("/getJSAPI")
+    public ResponseEntity<ResultModel> getJSAPI(@RequestParam("requestUrl") String requestUrl){
+
+        return new ResponseEntity<>(ResultModel.ok(commonUtil.getJsApi(requestUrl)), HttpStatus.OK);
+    }
+
 }

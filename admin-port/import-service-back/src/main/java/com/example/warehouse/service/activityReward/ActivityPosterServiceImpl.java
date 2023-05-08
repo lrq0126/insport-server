@@ -1,14 +1,11 @@
 package com.example.warehouse.service.activityReward;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.example.warehouse.common.DateUtil;
 import com.example.warehouse.common.ImgUtil;
 import com.example.warehouse.common.PageData;
 import com.example.warehouse.common.PageHelp;
 import com.example.warehouse.entity.User;
 import com.example.warehouse.entity.activityReward.ActivityPoster;
-import com.example.warehouse.enums.ResultStatus;
 import com.example.warehouse.mapper.activityReward.ActivityPosterMapper;
 import com.example.warehouse.mapper.user.WxAccessTokenMapper;
 import com.example.warehouse.model.PageResultModel;
@@ -21,14 +18,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 

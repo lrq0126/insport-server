@@ -1,6 +1,5 @@
 package com.example.warehouse.entity;
 
-import java.util.Date;
 import com.alibaba.fastjson.JSON;
 import lombok.Data;
 

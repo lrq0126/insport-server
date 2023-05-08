@@ -11,7 +11,6 @@ import com.example.warehouse.enums.customerPack.PackTypeEnums;
 import com.example.warehouse.enums.ping.PingPackType;
 import com.example.warehouse.enums.ping.PingTypeEnums;
 import com.example.warehouse.enums.route.SettleType;
-import com.example.warehouse.enums.route.TransportType;
 import com.example.warehouse.mapper.CustomerMapper;
 import com.example.warehouse.mapper.GoodsMapper;
 import com.example.warehouse.mapper.customerPack.CustomerPackMapper;

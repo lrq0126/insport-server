@@ -3,10 +3,8 @@ package com.example.warehouse.service.webLog;
 import com.example.warehouse.common.DateUtil;
 import com.example.warehouse.common.PageData;
 import com.example.warehouse.common.PageHelp;
-import com.example.warehouse.common.PageUtils;
 import com.example.warehouse.entity.User;
 import com.example.warehouse.entity.webLog.CustomerContactLog;
-import com.example.warehouse.enums.ResultStatus;
 import com.example.warehouse.mapper.webLog.CustomerContactLogMapper;
 import com.example.warehouse.model.PageResultModel;
 import com.example.warehouse.model.ResultModel;
@@ -18,7 +16,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.security.Security;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

@@ -3,7 +3,6 @@ package com.example.warehouse.entity.sys;
 import com.example.warehouse.log.SysLog;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * log_operation

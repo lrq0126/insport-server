@@ -1,7 +1,5 @@
 package com.example.warehouse.service.role.impl;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.example.warehouse.entity.role.Permission;
 import com.example.warehouse.entity.role.RolePermission;
 import com.example.warehouse.entity.role.UpdateRolePermission;
@@ -14,9 +12,7 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
-import sun.misc.GC;
 
 import java.util.*;
 

@@ -1,4 +1,4 @@
-package com.example.warehouse.service.agentApplyPack.impl;
+package com.example.warehouse.service.agentApplyPack;
 
 import com.example.warehouse.common.CalculationUtils;
 import com.example.warehouse.common.DateUtil;

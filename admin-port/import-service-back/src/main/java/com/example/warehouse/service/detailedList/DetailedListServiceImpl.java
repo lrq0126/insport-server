@@ -1,6 +1,5 @@
 package com.example.warehouse.service.detailedList;
 
-import com.example.warehouse.common.DateUtil;
 import com.example.warehouse.common.PackUtils;
 import com.example.warehouse.common.PdfUtils;
 import com.example.warehouse.common.SequenceCode;
@@ -31,15 +30,11 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.*;
 import java.util.List;
 
 import static com.example.warehouse.common.PdfUtils.getPdfChineseFont;
-import static com.example.warehouse.common.PdfUtils.getSystemPath;
 import static com.example.warehouse.enums.ResultStatus.ERROR;
-import static com.example.warehouse.enums.ResultStatus.PACK_ERROR;
 
 /**
  * 2020年03月17日13:20

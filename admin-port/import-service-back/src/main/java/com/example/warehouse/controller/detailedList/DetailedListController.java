@@ -6,7 +6,6 @@ import com.example.warehouse.model.ResultModel;
 import com.example.warehouse.service.detailedList.DetailedListService;
 import com.example.warehouse.vo.detailedListVo.PrintOrderReqVo;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -14,11 +13,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.example.warehouse.common.PdfUtils.getSystemPath;
 import static com.example.warehouse.enums.ResultStatus.*;
 
 /**

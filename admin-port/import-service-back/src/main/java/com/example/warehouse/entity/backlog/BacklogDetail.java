@@ -1,6 +1,5 @@
 package com.example.warehouse.entity.backlog;
 
-import java.util.Date;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
 import lombok.Data;
