@@ -1,11 +1,9 @@
 package com.example.warehouse.controller.role;
 
 import com.example.warehouse.entity.User;
-import com.example.warehouse.entity.role.UserRole;
 import com.example.warehouse.model.ResultModel;
 import com.example.warehouse.service.UserService;
 import com.example.warehouse.service.role.RolePermissionService;
-import com.example.warehouse.vo.UserVo;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;

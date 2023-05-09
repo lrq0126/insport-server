@@ -9,7 +9,6 @@ import com.example.warehouse.entity.User;
 import com.example.warehouse.entity.coupons.CustomerCoupons;
 import com.example.warehouse.entity.coupons.CustomerCouponsCenter;
 import com.example.warehouse.entity.coupons.SysCoupons;
-import com.example.warehouse.entity.customerGroup.CustomerGroupLink;
 import com.example.warehouse.enums.ResultStatus;
 import com.example.warehouse.mapper.CustomerMapper;
 import com.example.warehouse.mapper.coupons.CustomerCouponsCenterMapper;
@@ -29,9 +28,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
-import java.math.BigDecimal;
 import java.util.*;
-import java.util.stream.Collectors;
 
 import static com.example.warehouse.enums.ResultStatus.*;
 

@@ -2,7 +2,6 @@ package com.example.warehouse.controller.customerPack;
 
 import com.example.warehouse.log.SysLog;
 import com.example.warehouse.model.ResultModel;
-import com.example.warehouse.service.GoodsService;
 import com.example.warehouse.service.agentApplyPack.ApplyPackService;
 import com.example.warehouse.vo.applyPack.GoodsPackingVo;
 import com.example.warehouse.vo.applyPack.GoodsRequestVo;

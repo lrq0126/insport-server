@@ -5,17 +5,17 @@ import com.example.warehouse.common.SequenceCode;
 import com.example.warehouse.entity.User;
 import com.example.warehouse.entity.role.Permission;
 import com.example.warehouse.entity.role.UserRole;
+import com.example.warehouse.entity.sys.CommercialArea;
 import com.example.warehouse.enums.ResultStatus;
 import com.example.warehouse.mapper.UserMapper;
 import com.example.warehouse.mapper.role.PermissionMapper;
 import com.example.warehouse.mapper.role.UserRoleMapper;
+import com.example.warehouse.mapper.sys.CommercialAreaMapper;
 import com.example.warehouse.model.ResultModel;
 import com.example.warehouse.service.UserService;
 import com.example.warehouse.vo.UserVo;
 import com.example.warehouse.vo.role.PermissionVo;
 import com.example.warehouse.vo.role.UserRolePermissionVo;
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,12 +25,9 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
-import org.springframework.transaction.annotation.Isolation;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service("userService")
@@ -44,7 +41,8 @@ public class UserServiceImpl implements UserService {
     private PermissionMapper permissionMapper;
     @Autowired
     private DataSourceTransactionManager transactionManager;
-
+    @Autowired
+    private CommercialAreaMapper commercialAreaMapper;
     @Override
     public int save(User user) {
         // TODO 添加 user_code
@@ -231,6 +229,16 @@ public class UserServiceImpl implements UserService {
         userVo.setCommercialAreaId(user.getCommercialAreaId());
         userVo.setCommercialAreaName(user.getCommercialAreaName());
         userVo.setRoleId(user.getRoleId());
+        userVo.setCommercialAreaId(user.getCommercialAreaId());
+        userVo.setCommercialAreaName(user.getCommercialAreaName());
+
+        // 查询用户所在的国家
+        CommercialArea commercialArea = commercialAreaMapper.selectByPrimaryKey(user.getCommercialAreaId());
+        if(commercialArea != null){
+            userVo.setCountry(commercialArea.getCountry());
+            userVo.setCountryId(commercialArea.getCountryId());
+        }
+
         UserRole userRole = userRoleMapper.selectByPrimaryKey(user.getRoleId());
         userVo.setRoleName(userRole.getRoleName());
         // 获取这个用户的角色和菜单/页面的展示权限

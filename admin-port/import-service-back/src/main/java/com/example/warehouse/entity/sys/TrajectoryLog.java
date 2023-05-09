@@ -1,7 +1,6 @@
 package com.example.warehouse.entity.sys;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * trajectory_log

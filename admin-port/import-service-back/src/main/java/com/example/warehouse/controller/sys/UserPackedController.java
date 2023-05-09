@@ -1,6 +1,5 @@
 package com.example.warehouse.controller.sys;
 
-import com.example.warehouse.entity.sys.UserPacked;
 import com.example.warehouse.model.PageResultModel;
 import com.example.warehouse.service.sys.UserPackedService;
 import com.example.warehouse.vo.sys.UserPackedReqVo;

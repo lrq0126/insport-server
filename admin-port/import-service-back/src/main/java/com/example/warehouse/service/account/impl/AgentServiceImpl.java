@@ -1,10 +1,8 @@
 package com.example.warehouse.service.account.impl;
 
 import com.example.warehouse.common.DateUtil;
-import com.example.warehouse.common.SequenceCode;
 import com.example.warehouse.entity.Agent;
 import com.example.warehouse.entity.AgentOrder;
-import com.example.warehouse.entity.AgentOrderAccount;
 import com.example.warehouse.entity.User;
 import com.example.warehouse.enums.ResultStatus;
 import com.example.warehouse.mapper.AgentMapper;

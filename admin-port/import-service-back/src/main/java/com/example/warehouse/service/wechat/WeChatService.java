@@ -13,4 +13,5 @@ public interface WeChatService {
 
     ResponseEntity<ResultModel> getMaterial(String type, int offset, int count);
 
+
 }

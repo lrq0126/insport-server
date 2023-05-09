@@ -6,7 +6,6 @@ import com.example.warehouse.common.DateUtil;
 import com.example.warehouse.common.PageData;
 import com.example.warehouse.common.PageHelp;
 import com.example.warehouse.entity.Customer;
-import com.example.warehouse.enums.ResultStatus;
 import com.example.warehouse.mapper.CustomerMapper;
 import com.example.warehouse.mapper.customerPack.OrderEvaluateMapper;
 import com.example.warehouse.model.PageResultModel;

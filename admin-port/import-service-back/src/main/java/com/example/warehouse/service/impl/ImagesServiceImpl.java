@@ -2,7 +2,6 @@ package com.example.warehouse.service.impl;
 
 import com.example.warehouse.entity.image.ImageType;
 import com.example.warehouse.entity.image.Images;
-import com.example.warehouse.enums.ResultStatus;
 import com.example.warehouse.mapper.image.ImagesMapper;
 import com.example.warehouse.model.ResultModel;
 import com.example.warehouse.service.ImagesService;

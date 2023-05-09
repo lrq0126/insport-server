@@ -4,13 +4,14 @@
   <resultMap id="BaseResultMap" type="com.example.warehouse.entity.wechat.WxAccessToken">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="access_token" jdbcType="VARCHAR" property="accessToken" />
+    <result column="jsapi_ticket" jdbcType="VARCHAR" property="jsapiTicket" />
     <result column="expire" jdbcType="VARCHAR" property="expire" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="status" jdbcType="VARCHAR" property="status" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, access_token, expire, create_time, update_time, `status`
+    id, access_token, expire, create_time, update_time, `status`, jsapi_ticket
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select
@@ -24,10 +25,10 @@
   </delete>
   <insert id="insert" parameterType="com.example.warehouse.entity.wechat.WxAccessToken">
     insert into wx_access_token (id, access_token, expire,
-      create_time, update_time, `status`
+      create_time, update_time, `status`, jsapi_ticket
       )
     values (#{id,jdbcType=INTEGER}, #{accessToken,jdbcType=VARCHAR}, #{expire,jdbcType=VARCHAR},
-      now(), #{updateTime,jdbcType=TIMESTAMP}, 1
+      now(), #{updateTime,jdbcType=TIMESTAMP}, 1, #{jsapiTicket,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.example.warehouse.entity.wechat.WxAccessToken">

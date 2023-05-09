@@ -1,13 +1,9 @@
 package com.example.warehouse.service.dwReceipt.impl;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import com.example.warehouse.common.DateUtil;
 import com.example.warehouse.common.ExcelUtil;
 import com.example.warehouse.common.PageData;
 import com.example.warehouse.common.PageHelp;
-import com.example.warehouse.entity.CustomerPackNumber;
 import com.example.warehouse.entity.DwReceipt;
 import com.example.warehouse.entity.DwReciptReject;
 import com.example.warehouse.entity.User;
@@ -15,12 +11,7 @@ import com.example.warehouse.mapper.dwReceipt.DwReceiptDao;
 import com.example.warehouse.model.PageResultModel;
 import com.example.warehouse.model.ResultModel;
 import com.example.warehouse.service.dwReceipt.DwReceiptService;
-import com.example.warehouse.vo.detailedListVo.GoodsDetailedListVo;
 import com.example.warehouse.vo.receipt.DwReceiptVo;
-import com.itextpdf.text.*;
-import com.itextpdf.text.pdf.PdfPCell;
-import com.itextpdf.text.pdf.PdfPTable;
-import com.itextpdf.text.pdf.PdfWriter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;
@@ -37,13 +28,10 @@ import org.springframework.transaction.support.DefaultTransactionDefinition;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.FileOutputStream;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.List;
 
-import static com.example.warehouse.common.PdfUtils.getPdfChineseFont;
 import static com.example.warehouse.enums.ResultStatus.*;
 
 /**

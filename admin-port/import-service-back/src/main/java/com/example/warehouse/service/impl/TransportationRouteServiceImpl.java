@@ -19,7 +19,6 @@ import com.example.warehouse.service.TransportationRouteService;
 import com.example.warehouse.vo.route.PackageRoutePriceVo;
 import com.example.warehouse.vo.route.RouteRequestVo;
 import com.example.warehouse.vo.route.RouteVo;
-import com.example.warehouse.vo.route.SmallPackageRoutePriceVo;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,7 +30,6 @@ import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
-import java.rmi.Remote;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -170,22 +168,6 @@ public class TransportationRouteServiceImpl implements TransportationRouteServic
                 routePrice.setPackageType(2);
                 //价格代码
                 routePrice.setPriceNo(SequenceCode.gainSerialNo("rpc"));
-                //大于这个重量需要 叉车费
-//                routePrice.setGreaterWeight(packageRoutePrice.getGreaterWeight());
-//                //叉车费
-//                routePrice.setForkliftFee(packageRoutePrice.getForkliftFee());
-//                //重量上限
-//                routePrice.setUpperLimitWeight(packageRoutePrice.getUpperLimitWeight());
-//                //第一长度上限
-//                routePrice.setFirstLength(packageRoutePrice.getFirstLength());
-//                //第二长度上限
-//                routePrice.setSecondLength(packageRoutePrice.getSecondLength());
-//                //敏感货物
-//                routePrice.setSensitivePrice(packageRoutePrice.getSensitivePrice());
-//                //单立方上线
-//                routePrice.setCubeUpper(packageRoutePrice.getCubeUpper());
-//                //体积重换算数 如果用户填0，则默认6000，防止报错
-//                routePrice.setVolConversion(packageRoutePrice.getVolConversion().compareTo(0.0) == 0 ? 6000.0 : packageRoutePrice.getVolConversion());
 
                 //价格
                 routePrice.setPrice(packageRoutePrice.getPrice());
@@ -364,5 +346,11 @@ public class TransportationRouteServiceImpl implements TransportationRouteServic
     @Override
     public void deleteRoutePriceByPriceNo(String priceNo) {
         priceMapper.deleteByPriceNo(priceNo);
+    }
+
+    @Override
+    public ResponseEntity<ResultModel> getTransportationRouteList(Integer countryId) {
+        List<RouteVo> routeVoList = routeMapper.findRouteByCountryId(countryId);
+        return new ResponseEntity<>(ResultModel.ok(routeVoList), HttpStatus.OK);
     }
 }

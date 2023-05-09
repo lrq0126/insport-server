@@ -18,7 +18,6 @@ import com.example.warehouse.model.ResultModel;
 import com.example.warehouse.service.wechat.WechatMenuService;
 import com.example.warehouse.vo.wechat.WechatMenuReqVo;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.http.HttpException;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,13 +27,10 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
-import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.example.warehouse.enums.ResultStatus.*;
-import static com.example.warehouse.enums.weChat.WeChatMenuTypeEnum.*;
 
 
 /**

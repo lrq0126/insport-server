@@ -1,7 +1,6 @@
 package com.example.warehouse.common;
 
 import com.example.warehouse.vo.PageVo;
-import com.example.warehouse.vo.wechat.WechatMenuReqVo;
 import com.github.pagehelper.util.StringUtil;
 import lombok.extern.slf4j.Slf4j;
 

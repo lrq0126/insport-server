@@ -1,6 +1,5 @@
 package com.example.warehouse.entity.commerical;
 
-import com.example.warehouse.vo.GoodsVo;
 import com.example.warehouse.vo.detailedListVo.GoodsDetailedListVo;
 import lombok.Data;
 

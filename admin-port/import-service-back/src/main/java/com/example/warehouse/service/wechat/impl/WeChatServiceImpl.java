@@ -1,7 +1,6 @@
 package com.example.warehouse.service.wechat.impl;
 
 import com.alibaba.fastjson.JSON;
-import com.baidu.speech.restapi.json.JSONObject;
 import com.example.warehouse.common.DateUtil;
 import com.example.warehouse.common.HttpUtilManager;
 import com.example.warehouse.controller.weChat.WXMessageBean;
@@ -30,9 +29,7 @@ import org.springframework.util.StringUtils;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 @Slf4j

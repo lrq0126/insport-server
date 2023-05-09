@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Random;
 
 /**
  * 获取累增流水号
@@ -143,5 +144,18 @@ public class SequenceCode {
 		String count = String.valueOf(current);
 		count = count.substring(2, count.length() - 3);
 		return "P" + count + (int)(Math.random()*10);
+	}
+
+
+	public static String generateSigningKey() {
+		char [] en = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
+		StringBuilder salt = new StringBuilder();
+		Random random = new Random();
+		int i;
+		while (salt.length() < 12){
+			i = random.nextInt(35);
+			salt.append(en[i]);
+		}
+		return salt.toString();
 	}
 }

@@ -1,7 +1,6 @@
 package com.example.warehouse.entity;
 
 import com.example.warehouse.vo.route.PackageRoutePriceVo;
-import com.example.warehouse.vo.route.SmallPackageRoutePriceVo;
 import lombok.Data;
 
 import java.io.Serializable;

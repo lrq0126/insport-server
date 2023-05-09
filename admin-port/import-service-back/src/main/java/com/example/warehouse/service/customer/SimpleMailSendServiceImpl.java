@@ -1,6 +1,5 @@
 package com.example.warehouse.service.customer;
 
-import com.example.warehouse.common.MailAuthenticator;
 import com.example.warehouse.common.MailSendUtils;
 import org.springframework.stereotype.Service;
 

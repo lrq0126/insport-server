@@ -2,7 +2,6 @@ package com.example.warehouse.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Date;
 
 /**
  * agent_order

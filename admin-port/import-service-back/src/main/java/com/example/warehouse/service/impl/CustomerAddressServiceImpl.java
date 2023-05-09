@@ -3,7 +3,6 @@ package com.example.warehouse.service.impl;
 import com.example.warehouse.common.DateUtil;
 import com.example.warehouse.common.SequenceCode;
 import com.example.warehouse.entity.CustomerAddress;
-import com.example.warehouse.entity.User;
 import com.example.warehouse.mapper.CustomerAddressMapper;
 import com.example.warehouse.mapper.GoodsMapper;
 import com.example.warehouse.mapper.UserMapper;

@@ -1,9 +1,6 @@
 package com.example.warehouse.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.example.warehouse.common.PageData;
-import com.example.warehouse.common.PageHelp;
-import com.example.warehouse.common.SequenceCode;
 import com.example.warehouse.entity.DwReceipt;
 import com.example.warehouse.entity.DwReciptReject;
 import com.example.warehouse.model.PageResultModel;
@@ -20,9 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import static com.example.warehouse.enums.ResultStatus.*;

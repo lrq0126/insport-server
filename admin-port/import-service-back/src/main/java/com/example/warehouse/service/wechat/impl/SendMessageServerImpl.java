@@ -5,7 +5,6 @@ import com.example.warehouse.common.DateUtil;
 import com.example.warehouse.common.HttpUtilManager;
 import com.example.warehouse.entity.*;
 import com.example.warehouse.entity.annualReport.AnnualReport;
-import com.example.warehouse.entity.coupons.CustomerCoupons;
 import com.example.warehouse.entity.coupons.SysCoupons;
 import com.example.warehouse.entity.ping.PingMain;
 import com.example.warehouse.entity.sys.TrajectoryLog;

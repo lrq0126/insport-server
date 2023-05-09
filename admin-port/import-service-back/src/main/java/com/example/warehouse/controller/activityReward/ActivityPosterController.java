@@ -5,11 +5,9 @@ import com.example.warehouse.model.PageResultModel;
 import com.example.warehouse.model.ResultModel;
 import com.example.warehouse.service.activityReward.ActivityPosterService;
 import com.example.warehouse.vo.activity.ActivityPosterReqVo;
-import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/ActivityPoster")

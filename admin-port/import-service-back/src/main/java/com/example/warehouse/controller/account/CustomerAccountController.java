@@ -1,13 +1,8 @@
 package com.example.warehouse.controller.account;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.example.warehouse.common.DateUtil;
-import com.example.warehouse.common.PageData;
-import com.example.warehouse.common.PageHelp;
 import com.example.warehouse.entity.CustomerAccount;
-import com.example.warehouse.entity.CustomerAccountVo;
-import com.example.warehouse.entity.User;
 import com.example.warehouse.log.SysLog;
 import com.example.warehouse.model.PageResultModel;
 import com.example.warehouse.model.ResultModel;
@@ -22,10 +17,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.math.BigDecimal;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import static com.example.warehouse.enums.ResultStatus.*;

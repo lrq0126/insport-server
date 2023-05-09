@@ -705,6 +705,28 @@
         limit #{pageNumber},#{pageSize}
     </select>
 
+    <select id="findRouteByCountryId" resultMap="routeVo">
+        select
+            t.id, t.is_available, t.route_name, t.operation_id,
+            t.route_type, t.originating_place, t.destination, t.english_name,
+            t.note_type, t.transportation_time,t.remote_fee, t.remarks,
+            t.transport_type, t.country_id, t.pack_attention,
+            t.is_per_ticket_pack, t.currency, t.is_pin, t.side_length_limit,
+            t.upper_limit_weight, t.first_length, t.second_length,
+            t.sensitive_price, t.greater_weight, t.forklift_fee,
+            t.before_weight_carry, t.before_weight_carry_type, t.after_weight_carry,
+            t.after_weight_carry_type, t.cube_upper, t.vol_conversion,
+            t.customer_requirements, t.is_tariffs, t.tariffs, t.is_insurance, t.insurance_id,
+            sdd.sdd_name, sdd.sdd_remark,
+            ins.insurance_name
+        from
+        <include refid="table"/> t
+            left join sys_dict_detail sdd on sdd.id = t.country_id
+            left join insurance ins on ins.id = t.insurance_id
+        where
+            t.`status` = 1 and t.country_id = #{countryId}
+    </select>
+
 
     <update id="deleteByIds">
         update <include refid="table"/> t
