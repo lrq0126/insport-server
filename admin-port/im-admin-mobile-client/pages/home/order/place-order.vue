@@ -41,8 +41,8 @@
 				<view style="width: 84%; height: 56upx; float: left; margin-left: 1%; border-bottom: 1px solid #c1c1c1;">
 					<input v-model="thisBarCode" placeholder="请输入或扫描条形码" @confirm="scanSuccess()"/>
 				</view>	
-				<!-- scanSuccess -->
-				<view style="width: 15%; float: left;" @click="scanSuccess()"> 
+				<!-- scanSuccess --  scan-->
+				<view style="width: 15%; float: left;" @click="scan()"> 
 					<view style="margin-top: 5upx;">
 						<img src="../../../static/icon/scanCode.png"></img>
 					</view>
@@ -76,12 +76,12 @@
 					<view class="commodity-info-title">商品价格：</view>
 					<view class="commodity-info-value" style="border-bottom: none; display: flex;">
 						<view style="width: 40%; border: 2upx solid #c1c1c1; border-radius: 8upx;">
-							<input type="number" v-model="item.price" style="padding-left: 8upx;" @confirm="countCommodityPrice()"/>
+							<input type="number" v-model="item.price" style="padding-left: 8upx; height: 48upx; float: left;" @input="countCommodityPrice()"/>
 						</view>
 						<view style="width: 45%; ">
-							<select v-model="currency" placeholder="请选择币种" class="select-class">
-								<option v-for="(item, index) in currencyData" :key="index" :value="item.currency">
-									{{item.currency}}
+							<select v-model="currencyId" placeholder="请选择币种" class="select-class">
+								<option v-for="item) in currencyData" :key="item.id" :value="item.id">
+									{{item.sddName}}
 								</option>
 							</select>
 						</view>
@@ -186,9 +186,12 @@
 				</view>
 			</view>
 		</view>
+		<view style="height: 100upx;">
+			<span style="color: #FFFFFF;">--已经到底啦--</span>
+		</view>
 		
 		<view class="commfirm-button-class">
-			<view @click="comfirm()">
+			<view style="padding-top: 10upx;" @click="comfirm()">
 				确 定
 			</view>
 		</view>
@@ -219,7 +222,7 @@
 						
 						<view style="width: 100%; float: left; height: 80upx;">
 							<view class="commodity-info-title">商品归属：</view>
-							<view class="commodity-info-value" style="border-bottom: none;">
+							<view class="commodity-info-value" style="border-bottom: none; font-size: 28upx; padding-top: 3upx;">
 								<span>{{commodityInfo.handing}} > {{commodityInfo.subclass}} > {{commodityInfo.productClass}}</span>
 							</view>
 						</view>
@@ -260,16 +263,19 @@
 							</view>
 						</view>
 					
-						<view style="margin-top: 15upx; width: 100%; float: left; height: 80upx;">
+						<view style="margin-top: 15upx; width: 100%; float: left; height: 80upx; ">
 							<view class="commodity-info-title">详情描述：</view>
-							<view class="commodity-info-value" style="padding-left: 8upx; border: 2upx solid #c1c1c1; border-radius: 8upx; height: 150upx; width: 95%; font-size: 18upx;">
+						</view>
+						<view style="float: left; width: 100%;">
+							<view style="margin-left: 5%; height: 150upx; width: 90%; font-size: 18upx; border: 2upx solid #c1c1c1; border-radius: 8upx; ">
 								{{commodityInfo.message}}
 							</view>
 						</view>
 					</view>
 				</view>
+				
 				<!-- 底部按钮 -->
-				<view style="display: flex; height: 60upx;">
+				<view style="display: flex; height: 60upx; padding-top: 20upx;">
 					<view class="tankuang-button-class" style="background-color: #c6c6c6;">关 闭</view>
 					<view class="tankuang-button-class" style="margin-left: 20%; background-color: #007AFF;" @click="addCommodity()">确 定</view>
 				</view>
@@ -283,6 +289,7 @@
 	import { wxConfig } from '@/common/js/weixin/wxUtil.js'
 	import { getParentAssort, comfirmCommodity, getCommodityInfo } from '@/api/mine/commodity.js'
 	import { uploadImage } from '@/api/mine/images.js'
+	import { getCurrencyData } from '@/api/mine/sys-dict.js'
 	import { getToken, getCustomerNo } from "@/utils/auth";
 	export default {
 		data() {
@@ -292,10 +299,12 @@
 				file: [],
 				delbtn: false,
 				thisBarCode: "",
+				
 				currency: "",
-				currencyData: [
-					{id: 1, currency: "元"}, {id: 2, currency: "美元"}, {id: 3, currency: "泰铢"}, 
-				],
+				currencyId: "",
+				exchangeRate: "",
+				
+				currencyData: [],
 				
 				commodityPrice:"",
 				
@@ -375,6 +384,7 @@
 			init(){
 				// uni.removeStorageSync('transportChannels');
 				console.log("初始化");
+				
 				let url = (window.location.href).split('#')[0];
 				// let url = location.href;
 				wxConfig(url);
@@ -396,6 +406,18 @@
 				wx.error(function (res) {
 					console.log("wxConfig error：", res);
 				})
+				
+				getCurrencyData().then((res) => {
+					this.currencyData = res[1].data.content
+				})
+				
+				let userInfo = uni.getStorageSync('info')
+				this.currency = userInfo.currency
+				this.currencyId = userInfo.currencyId
+				this.exchangeRate = userInfo.exchangeRate
+				
+				uni.removeStorageSync('transportChannels');
+				this.resetOrderParam();
 			},
 			
 			uploadImageM(file){
@@ -735,6 +757,42 @@
 				}
 			},
 			
+			resetOrderParam(){
+				
+				
+				this.currency = ""
+				this.currencyId = ""
+				this.exchangeRate = ""
+				
+				this.commodityPrice = ""
+				
+				this.commodityData = []
+				
+				this.transportChannelsInfo = {
+					routeId: "",
+					routeName: "",
+					routeType: "",
+					originatingPlace: "",
+					destination: "",
+					transportationTime: "",
+					remarks: "",
+					isTariffs: "",
+					tariffs: ""
+				},
+				
+				this.idcradFile = []
+				this.imageUrls = []
+				
+				this.address = {
+					idCardCode: "",
+					idCardName: "",
+					age: "",
+					addressee: "",
+					phone: "",
+					address: "",
+				}
+			}
+			
 		},
 		
 		mounted() {
@@ -759,7 +817,7 @@
 				display: flex;
 				height: 60upx;
 				.selected-route-button{
-					height: 50upx;
+					height: 52upx;
 					font-size: 30upx;
 					text-align: center; 
 					color: #f5f5f5;
@@ -813,6 +871,7 @@
 			}
 			
 			.select-class{
+				float: left;
 				margin-left: 5%;
 				outline: none;
 				background-color: #f7f7f7;
@@ -852,27 +911,27 @@
 			display: flex;
 			background-color: #aaaaff;
 		}
+		
 		.address-info-class{
-			width: 95%; 
-			padding-left: 4%;
+			width: 100%; 
 			float: left; 
-			 
-			
+			margin-bottom: 200upx;
 			.address-info-row-class{
 				height: 66upx;
 				display: flex;
 				
 				.address-info-row-title-class{
-					width: 20%; 
+					width: 25%; 
 					text-align: right;
 				}
 				
 				.address-info-row-value-class{
 					height: 46upx;
-					width: 65%;
+					width: 70%;
 					float: left;
 					border-bottom: 1px solid #c1c1c1;
 				}
+				
 			}
 			
 			.not-id-button-class{
@@ -1040,7 +1099,7 @@
 					.commodity-info-title {
 						color: #747474;
 						font-size: 30upx;
-						width: 25%;
+						width: 30%;
 						text-align: right;
 						float: left;
 					}
@@ -1048,13 +1107,12 @@
 					.commodity-info-value {
 						height: 56upx;
 						font-size: 30upx;
-						width: 75%;
+						width: 70%;
 						// padding-right: 5%;
 						float: left;
 						// border-radius: 10upx;
 						border-bottom: 1px solid #c1c1c1;
 					}
-				
 				}
 				
 				.tankuang-button-class{ 
@@ -1064,6 +1122,7 @@
 					font-size: 30upx;
 					text-align: center; 
 					border-radius: 10upx; 
+					padding-top: 5upx;
 				}
 			}
 			

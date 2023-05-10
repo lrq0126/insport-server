@@ -3520,26 +3520,6 @@ public class CustomerPackServiceImpl implements CustomerPackService {
             pingPack.setCustomerId(pingMainOrder.getCustomerId());
         });
         pingPackMapper.insertList(pingPackList);
-//        现在不用做箱子和货物的关联关联，故屏蔽此段代码
-//        List<PingPackRespVo> pingPackRespVoList = pingPackMapper.selectByPmIdAndCustomerId(pingMainOrder.getId(), pingMainOrder.getCustomerId());
-//
-//        List<PingPackGoods> insertPinPackGoods = new ArrayList<>();
-//        customerPackNumberList.forEach(customerPackNumberVo -> {
-//            pingPackRespVoList.forEach(pingPackRespVo -> {
-//                if (pingPackRespVo.getPackOrder().equals(customerPackNumberVo.getPackOrder())) {
-//                    customerPackNumberVo.getGoodsVoList().forEach(goodsVo -> {
-//                        PingPackGoods pingPackGoods = new PingPackGoods();
-//                        pingPackGoods.setpPackId(pingPackRespVo.getId());
-//                        pingPackGoods.setGoodsId(goodsVo.getId());
-//                        insertPinPackGoods.add(pingPackGoods);
-//                    });
-//
-//                }
-//            });
-//        });
-//
-//        // 插入箱子货物关联表
-//        pingPackGoodsMapper.insertList(insertPinPackGoods);
     }
 
     /**

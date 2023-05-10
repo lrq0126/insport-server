@@ -13,10 +13,10 @@ export default {
    * @description api请求基础路径
    */
   baseUrl: {
-    //  dev: "http://localhost:8620",
+     dev: "http://localhost:8620",
 
-    dev: "http://www.bainligou.com:8620", // 小挎兜
-    pro: "http://www.bainligou.com:8620", // 小挎兜
+    // dev: "http://www.bainligou.com:8620", // 小挎兜
+    // pro: "http://www.bainligou.com:8620", // 小挎兜
   },
   /**
    * @description 默认打开的首页的路由name值，默认为home

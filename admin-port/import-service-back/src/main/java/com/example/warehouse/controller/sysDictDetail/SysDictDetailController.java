@@ -4,7 +4,7 @@ import com.example.warehouse.entity.SysDictDetail;
 import com.example.warehouse.model.PageResultModel;
 import com.example.warehouse.model.ResultModel;
 import com.example.warehouse.service.SysDictDetail.SysDictDetailService;
-import com.example.warehouse.vo.sys.DictReqVo;
+import com.example.warehouse.vo.sys.SysDictReqVo;
 import org.apache.ibatis.annotations.Param;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,6 +61,15 @@ public class SysDictDetailController {
     }
 
     /**
+     * 获取 国家 分页列表
+     * @return
+     */
+    @GetMapping("/getCountriesPageList")
+    public ResponseEntity<PageResultModel> getCountriesPageList(SysDictReqVo sysDictReqVo){
+        return sysDictDetailService.getCountriesPageList(sysDictReqVo);
+    }
+
+    /**
      * 创建 国家
      * @param paramMap
      * @return
@@ -77,20 +86,25 @@ public class SysDictDetailController {
     }
 
     /**
-     * 修改
-     * @param paramMap
+     * 修改 国家信息
+     * @param sysDictDetail
      * @return
      */
     @RequiresPermissions("country:update")
     @PostMapping("/update/country")
-    public ResponseEntity<ResultModel> updateCountry(@RequestParam Map<String, Object> paramMap){
-        int i =  sysDictDetailService.update(paramMap);
-        if(i > 0){
-            return new ResponseEntity<>(ResultModel.ok(),HttpStatus.OK);
-        }
-        return new ResponseEntity<>(ResultModel.error(ERROR),HttpStatus.OK);
+    public ResponseEntity<ResultModel> updateCountry(SysDictDetail sysDictDetail){
+        return sysDictDetailService.updateCountry(sysDictDetail);
     }
 
+    /**
+     * 获取 国家基础信息
+     * @param id
+     * @return
+     */
+    @PostMapping("/getCountryInfo")
+    public ResponseEntity<ResultModel> getCountryInfo(Integer id){
+        return sysDictDetailService.getCountryInfo(id);
+    }
     /**
      * 删除
      * @param id
@@ -111,8 +125,8 @@ public class SysDictDetailController {
 
 
     @PostMapping("getDictList")
-    public ResponseEntity<PageResultModel> getDictList(DictReqVo dictReqVo){
-        return sysDictDetailService.getDictList(dictReqVo);
+    public ResponseEntity<PageResultModel> getDictList(SysDictReqVo sysDictReqVo){
+        return sysDictDetailService.getDictList(sysDictReqVo);
     }
 
     @PostMapping("/getDictDetail")

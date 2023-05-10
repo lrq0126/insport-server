@@ -79,17 +79,18 @@
                 </template>
               </el-form-item>
 
-              <el-form-item
-                v-if="formItem.isTariffs == 1"
-                label="预付关税："
-                prop="tariffs"
-              >
-                <el-input
-                  v-model="formItem.tariffs"
-                  placeholder="请输入预付关税："
-                  type="number"
-                  ><template slot="append">%</template></el-input
-                >
+              <el-form-item v-if="formItem.isTariffs == 1" label="起付金额：" prop="tariffsStart" >
+                <div style="display: flex;">
+                  <span style="width: 100px; text-align: right;">货物总价超：</span>
+                  <el-input v-model="formItem.tariffsStart" placeholder="请输起付金额" type="number" style="width: 200px"></el-input>
+                  <span style="width: 160px; text-align: left;">&nbsp; 需要预付关税</span>
+                </div>
+              </el-form-item>
+
+              <el-form-item v-if="formItem.isTariffs == 1" label="预付关税：" prop="tariffs">
+                <el-input v-model="formItem.tariffs" placeholder="请输入预付关税：" type="number" >
+                  <template slot="append">%</template>
+                </el-input>
               </el-form-item>
             </el-col>
             <el-col :span="8">
@@ -578,6 +579,7 @@ export default {
 
         isTariffs: "0",
         tariffs: "",
+        tariffsStart: "",
         currency:"CENY000000001",
         isInsurance: "0",
         insuranceId: "",
@@ -594,15 +596,8 @@ export default {
         isPerTicketPack: "0",
         smallPackagePrice: [
           {
-            smallPackageWeight: 0,
             smallPrice: 0,
             smallRemarks: 0,
-            // firstLength: 0,
-            // greaterWeight: 0,
-            // forkliftFee: 0,
-            // secondLength: 0,
-            // upperLimitWeight: 0,
-            // smallWeightCarryType: 0,
           },
         ],
         packagePrice: [
@@ -611,19 +606,18 @@ export default {
             endWeight: "",
             price: "",
             remarks: "",
-            // firstLength: '',
-            // greaterWeight: '',
-            // forkliftFee: '',
-            // secondLength: '',
-            // upperLimitWeight: '',
-            // weightCarryType: '',
-            // volConversion: '',
           },
         ],
       },
       formItemRules: {
         routeName: [
           { required: true, message: "渠道名称不能为空", trigger: "blur" },
+        ],
+        tariffsStart: [
+          { required: true, message: "请输入起付关税价格", trigger: "blur" },
+        ],
+        tariffs: [
+          { required: true, message: "请输入关税比例", trigger: "blur" },
         ],
         originatingPlace: [
           { required: true, message: "始发仓不能为空", trigger: "blur" },
@@ -679,21 +673,6 @@ export default {
             trigger: "blur",
           },
         ],
-        // smallPackageWeight: [
-        //     { required: true, message: '重量不能为空', trigger: 'blur' },
-        // ],
-        // smallPrice: [
-        //     { required: true, message: '价格不能为空', trigger: 'blur' },
-        // ],
-        // startWeight: [
-        //     { required: true, message: '起始重量不能为空', trigger: 'blur' },
-        // ],
-        // endWeight: [
-        //     { required: true, message: '结尾重量不能为空', trigger: 'blur' },
-        // ],
-        // price: [
-        //     { required: true, message: '单位价格不能为空', trigger: 'blur' },
-        // ]
       },
     };
   },
@@ -822,35 +801,6 @@ export default {
     },
 
     /**
-     * 新增小包裹
-     * @return {type} {description}
-     */
-    addTopicSmall() {
-      const obj = {
-        smallPackageWeight: "",
-        smallPrice: "",
-        smallRemarks: "",
-        // smallWeightCarryType: '',
-        // firstLength: '',
-        // greaterWeight: '',
-        // forkliftFee: '',
-        // secondLength: '',
-        // upperLimitWeight: '',
-      };
-      this.formItem.smallPackagePrice.push(obj);
-    },
-
-    /**
-     * 删除小包裹
-     * @return {type} {description}
-     */
-    deleteTopicSmall(index) {
-      if (index > -1) {
-        this.formItem.smallPackagePrice.splice(index, 1);
-      }
-    },
-
-    /**
      * 新增大包裹
      * @return {type} {description}
      */
@@ -861,12 +811,6 @@ export default {
         endWeight: "",
         price: "",
         remarks: "",
-        // weightCarryType: '',
-        // firstLength: '',
-        // forkliftFee: '',
-        // greaterWeight: '',
-        // secondLength: '',
-        // upperLimitWeight: '',
       };
       this.formItem.packagePrice.push(obj);
     },

@@ -11,7 +11,8 @@ import com.example.warehouse.model.PageResultModel;
 import com.example.warehouse.model.ResultModel;
 import com.example.warehouse.service.SysDictDetail.SysDictDetailService;
 import com.example.warehouse.vo.backlogVo.BacklogTypeVo;
-import com.example.warehouse.vo.sys.DictReqVo;
+import com.example.warehouse.vo.sys.SysDictCountryRespVo;
+import com.example.warehouse.vo.sys.SysDictReqVo;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,6 +25,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import java.util.*;
+
+import static com.example.warehouse.enums.ResultStatus.ERROR;
+import static com.example.warehouse.enums.ResultStatus.THIS_DICT_NAME_REPEAT_ERROR;
 
 /**
  * @author lrq
@@ -75,6 +79,8 @@ public class SysDictDetailServiceImpl implements SysDictDetailService {
             sysDictDetail.setSddName(paramMap.get("sddName").toString());
             sysDictDetail.setIsEnable(1);
             sysDictDetail.setStatus(1);
+            // 指向 汇率的 数据字典ID
+            sysDictDetail.setAlternateField(paramMap.get("currency").toString());
             // 排序
             sysDictDetail.setSddSeq(sysDictDetails.size() + 1);
             // 备注
@@ -90,23 +96,21 @@ public class SysDictDetailServiceImpl implements SysDictDetailService {
 
     @Override
     @Transactional
-    public int update(Map<String, Object> paramMap) {
-        DefaultTransactionDefinition def = new DefaultTransactionDefinition();
-        def.setName("修改操作");
-        def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
-        TransactionStatus status = transactionManager.getTransaction(def);
+    public ResponseEntity<ResultModel> updateCountry(SysDictDetail sysDictDetail) {
         try{
-            SysDictDetail sysDictDetail = sysDictDetailMapper.selectByPrimaryKey(Integer.valueOf(paramMap.get("id").toString()));
-            // 名称
-            sysDictDetail.setSddName(paramMap.get("sddName").toString());
-            // 备注
-            sysDictDetail.setSddRemark(paramMap.get("sddRemark").toString());
-            int i = sysDictDetailMapper.updateByPrimaryKey(sysDictDetail);
-            transactionManager.commit(status);
-            return i;
+            // 检验 重名
+            int repeatCount = sysDictDetailMapper.checkSddName(sysDictDetail.getId(), sysDictDetail.getSddName());
+            if(repeatCount > 0){
+                return new ResponseEntity<>(ResultModel.error(THIS_DICT_NAME_REPEAT_ERROR),HttpStatus.OK);
+            }
+            int i = sysDictDetailMapper.updateByPrimaryKeySelective(sysDictDetail);
+            if(i > 0){
+                return new ResponseEntity<>(ResultModel.ok(),HttpStatus.OK);
+            }
+            return new ResponseEntity<>(ResultModel.error(ERROR),HttpStatus.OK);
         }catch (Exception e){
-            transactionManager.rollback(status);
-            return -1;
+            e.printStackTrace();
+            return new ResponseEntity<>(ResultModel.error(ERROR),HttpStatus.OK);
         }
 
     }
@@ -154,7 +158,7 @@ public class SysDictDetailServiceImpl implements SysDictDetailService {
             // 查询字典是否重复;根据字典类型和字典名称匹配
             int count = sysDictDetailMapper.selectDictRepeat(sysDictDetail);
             if(count > 0){
-                return new ResponseEntity<>(ResultModel.error(ResultStatus.THIS_DICT_NAME_REPEAT_ERROR), HttpStatus.OK);
+                return new ResponseEntity<>(ResultModel.error(THIS_DICT_NAME_REPEAT_ERROR), HttpStatus.OK);
             }
             count = sysDictDetailMapper.selectDictRemarkRepeat(sysDictDetail);
             if(count > 0){
@@ -185,13 +189,13 @@ public class SysDictDetailServiceImpl implements SysDictDetailService {
     }
 
     @Override
-    public ResponseEntity<PageResultModel> getDictList(DictReqVo dictReqVo) {
-        PageData pageData = PageHelp.editPage(dictReqVo.getPageNumber().toString(), dictReqVo.getPageSize().toString());
-        int count = sysDictDetailMapper.selectCount(dictReqVo);
+    public ResponseEntity<PageResultModel> getDictList(SysDictReqVo sysDictReqVo) {
+        PageData pageData = PageHelp.editPage(sysDictReqVo.getPageNumber().toString(), sysDictReqVo.getPageSize().toString());
+        int count = sysDictDetailMapper.selectCount(sysDictReqVo);
         pageData.setTotal(count);
         if(count > 0){
-            dictReqVo.setPageNumber(pageData.getPageNumber());
-            List<SysDictDetail> sysDictDetailList = sysDictDetailMapper.selectDictList(dictReqVo);
+            sysDictReqVo.setPageNumber(pageData.getPageNumber());
+            List<SysDictDetail> sysDictDetailList = sysDictDetailMapper.selectDictList(sysDictReqVo);
             return new ResponseEntity<>(PageResultModel.ok(sysDictDetailList, pageData), HttpStatus.OK);
         }
         return new ResponseEntity<>(PageResultModel.ok(new ArrayList<>(), pageData), HttpStatus.OK);
@@ -250,5 +254,37 @@ public class SysDictDetailServiceImpl implements SysDictDetailService {
     public ResponseEntity<ResultModel> getDictListBySdmCode(String sdmCode) {
         List<Map<String, Object>> dictList = sysDictDetailMapper.getDictListBySdmCode(sdmCode);
         return new ResponseEntity<>(ResultModel.ok(dictList), HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<PageResultModel> getCountriesPageList(SysDictReqVo sysDictReqVo) {
+        PageData pageData = PageHelp.editPage(sysDictReqVo);
+        int total = sysDictDetailMapper.getCountryCount(sysDictReqVo);
+        pageData.setTotal(total);
+        List<SysDictCountryRespVo> sysDictCountryRespVoList = new ArrayList<>();
+        if(total > 0){
+            sysDictReqVo.setPageNumber(pageData.getPageNumber());
+            sysDictCountryRespVoList = sysDictDetailMapper.getCountryDictPageList(sysDictReqVo);
+            for (SysDictCountryRespVo country : sysDictCountryRespVoList) {
+                if(country.getCurrencyData() != null){
+                    country.setCurrencyId(country.getCurrencyData().getId());
+                    country.setCurrency(country.getCurrencyData().getSddName());
+                    country.setExchangeRate(Double.valueOf(country.getCurrencyData().getAlternateField()));
+                }
+            }
+            return new ResponseEntity<>(PageResultModel.ok(sysDictCountryRespVoList, pageData), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(PageResultModel.ok(sysDictCountryRespVoList, pageData), HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<ResultModel> getCountryInfo(Integer id) {
+        SysDictCountryRespVo countryInfo = sysDictDetailMapper.getDictCountryInfo(id);
+        if(countryInfo.getCurrencyData() != null){
+            countryInfo.setCurrencyId(countryInfo.getCurrencyData().getId());
+            countryInfo.setCurrency(countryInfo.getCurrencyData().getSddName());
+            countryInfo.setExchangeRate(Double.valueOf(countryInfo.getCurrencyData().getAlternateField()));
+        }
+        return new ResponseEntity<>(ResultModel.ok(countryInfo), HttpStatus.OK);
     }
 }

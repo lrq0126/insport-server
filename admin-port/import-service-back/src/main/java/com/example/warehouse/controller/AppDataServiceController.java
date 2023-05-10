@@ -13,13 +13,12 @@ import com.example.warehouse.model.ResultModel;
 import com.example.warehouse.service.sys.AnalysisService;
 import com.example.warehouse.service.sys.TrajectoryService;
 import com.example.warehouse.service.wechat.SendMessageServer;
-import com.example.warehouse.vo.order.Track17ReqVo;
+import com.example.warehouse.vo.appDataService.Track17ReqVo;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -33,7 +32,7 @@ import java.util.*;
 /**
  * 查询转单轨迹
  */
-public class OrderController {
+public class AppDataServiceController {
 
     @Autowired
     private LogRequestMapper logRequestMapper;

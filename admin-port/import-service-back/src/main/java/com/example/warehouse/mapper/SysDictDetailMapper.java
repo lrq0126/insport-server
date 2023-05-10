@@ -2,7 +2,8 @@ package com.example.warehouse.mapper;
 
 import com.example.warehouse.entity.SysDictDetail;
 import com.example.warehouse.vo.backlogVo.BacklogTypeVo;
-import com.example.warehouse.vo.sys.DictReqVo;
+import com.example.warehouse.vo.sys.SysDictCountryRespVo;
+import com.example.warehouse.vo.sys.SysDictReqVo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -33,9 +34,9 @@ public interface SysDictDetailMapper extends MyBatisBaseDao<SysDictDetail, Integ
      */
 	List<SysDictDetail> selectDictByType(Map<String, Object> map);
 
-    int selectCount(DictReqVo dictReqVo);
+    int selectCount(SysDictReqVo sysDictReqVo);
 
-    List<SysDictDetail> selectDictList(DictReqVo dictReqVo);
+    List<SysDictDetail> selectDictList(SysDictReqVo sysDictReqVo);
 
     // 查询字典是否重复
     int selectDictRepeat(SysDictDetail sysDictDetail);
@@ -56,4 +57,24 @@ public interface SysDictDetailMapper extends MyBatisBaseDao<SysDictDetail, Integ
     int getBacklogTypeCount();
 
     List<Map<String, Object>> getDictListBySdmCode(@Param("sdmCode") String sdmCode);
+
+    // 查询 国家分页 列表接口
+    int getCountryCount(SysDictReqVo sysDictReqVo);
+
+    List<SysDictCountryRespVo> getCountryDictPageList(SysDictReqVo sysDictReqVo);
+
+    SysDictDetail selectCountryExchangeRate(Integer id);
+
+    int checkSddName(@Param("id") Integer id, @Param("sddName") String sddName);
+
+    SysDictCountryRespVo getDictCountryInfo(Integer id);
+    // 查询 国家分页 列表接口 end
+
+    /**
+     * 查询 当前国家使用的货币
+     * @param countryId
+     * @return
+     */
+    SysDictDetail selectCountryCurrency(Integer countryId);
+
 }

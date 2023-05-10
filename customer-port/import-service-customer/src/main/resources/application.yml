@@ -24,18 +24,20 @@ upload:
 ## 腾讯云对象存储配置
 tencent:
   #  正式腾讯云对象存储
-  appid: 1253561272
-  secret-id: AKIDDF0VjgLksjIacvxhBOKyMTJs9AuNZU9X
-  secret-key: 80buwhBOO7amgJfkY5LL3UfZCXbOu97n
+  appid: 1259586164
+  secret-id: AKIDFI6duxkHXWDdmeFaeRyGJ5aomUx96mBJ
+  secret-key: tVquhEUTUMyJNAiz0SiikVzDAqFOHsCG
   #存储对象桶名称
-  bucket-name: xkdcloud
+  bucket-name: commodity
 
 ## 微信公众号配置
+###  测试站点
 wechat:
-  appid: wx41baa8dfc1dae72b
-  appsecret: 8d5b1a036d81714ac5b5e3d29fff1419
-  token: xiaokuadou
-  aeskey: ZdNbXndyXvbf75SzRMEuCajc2hqAOu6NjPUQfkGWZ1e
+  appid: wx0b9a53ec48a455a4
+  appsecret: af4c0be07ab37c3677d4dbca5a065c2d
+  token: manKanDian
+  aeskey: R4X9a2zoUmTneQEQCeMMxWWIRy7InGkBiuzH6CsHaVb
+
   template_url: https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=
   ##提示申请打包的订单受理成功
   apply_pack_id: 0byxomtbJhDmE99I62DELR-m9BZirTMZwpf9dhNz0gI

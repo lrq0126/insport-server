@@ -184,6 +184,7 @@ public class TransportationRoute implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Integer isTariffs;
+    private Double tariffsStart;
     private Double tariffs;
     private Integer isInsurance;
     private Integer insuranceId;

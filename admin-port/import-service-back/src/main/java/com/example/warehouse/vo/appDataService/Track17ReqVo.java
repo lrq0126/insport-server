@@ -1,4 +1,4 @@
-package com.example.warehouse.vo.order;
+package com.example.warehouse.vo.appDataService;
 
 import com.example.warehouse.vo.PageVo;
 import lombok.Data;

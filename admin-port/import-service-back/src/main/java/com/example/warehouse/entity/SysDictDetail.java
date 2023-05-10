@@ -77,7 +77,7 @@ public class SysDictDetail implements Serializable {
     private Integer isEnable;
 
     /**
-     * 备用字段 此用来存储货币的汇率
+     * 备用字段 此用来存储货币的汇率 如果sdmCode = country ，则值指向 汇率的数据字典ID
      */
     private String alternateField;
 

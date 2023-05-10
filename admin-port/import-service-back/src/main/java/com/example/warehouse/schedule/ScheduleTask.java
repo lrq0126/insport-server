@@ -5,12 +5,15 @@ import com.example.warehouse.controller.weChat.WechatMenuController;
 import com.example.warehouse.entity.coupons.SysCoupons;
 import com.example.warehouse.entity.sys.SysScheduleTask;
 import com.example.warehouse.mapper.sys.SysScheduleTaskMapper;
+import com.example.warehouse.mapper.user.WxAccessTokenMapper;
 import com.example.warehouse.service.activityReward.ActivityPosterService;
 import com.example.warehouse.service.coupons.SysCouponsService;
 import com.example.warehouse.service.shelves.ShelvesAreaService;
 import com.example.warehouse.service.sys.StatisticService;
 import com.example.warehouse.service.sys.SysTokenService;
 import com.example.warehouse.service.wechat.SendMessageServer;
+import com.example.warehouse.service.wechat.WeChatService;
+import com.example.warehouse.service.wechat.WxAccessTokenService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -40,13 +43,10 @@ public class ScheduleTask {
     private SysTokenService sysTokenService;
 
     @Autowired
-    private ShelvesAreaService shelvesAreaService;
-
-    @Autowired
     private SysScheduleTaskMapper sysScheduleTaskMapper;
 
-    @Resource
-    private WechatMenuController wechatMenuController;
+    @Autowired
+    private WxAccessTokenService wxAccessTokenService;
     /**
      * 每日凌晨0点0分10秒统计仓库数据
      * “10 0 0 * * ?” 每日凌晨0点00分10秒触发任务
@@ -125,13 +125,13 @@ public class ScheduleTask {
     }
 
     /**
-     * 更新微信AccessToken信息
-     * 每1个小时更新一次
+     * 更新微信token信息
+     * 每1.5小时更新一次
      */
-    @Scheduled(cron="0 0 * * * ?")
-    public void getAccessToken(){
+    @Scheduled(cron="0 */90 * * * ?")
+    public void updateWxAccessToken(){
         log.info("--------------更新微信AccessToken信息-----------");
-        wechatMenuController.getAccessToken();
+        wxAccessTokenService.updateWxAccessToken();
     }
 
     /**

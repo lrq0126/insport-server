@@ -34,8 +34,14 @@
                              width="50"
                              align="center"></el-table-column>
 
-            <el-table-column prop="sddName"
+            <el-table-column prop="sddName" align="center"
                              label="国家名称"></el-table-column>
+
+            <el-table-column prop="currency" align="center"
+                             label="使用货币"></el-table-column>
+
+            <el-table-column prop="exchangeRate" align="center"
+                             label="汇率"></el-table-column>
 
             <el-table-column prop="sddRemark"
                              align="center"
@@ -45,10 +51,10 @@
                              align="center"
                              width="180">
                 <template slot-scope="scope">
-                    <!-- <el-button type="info"
+                    <el-button type="info"
                                size="mini"
                                plain
-                               @click="handleModal(scope.row.noticeContent)">编辑</el-button> -->
+                               @click="handleModal(scope.row)">编辑</el-button>
                     <el-button v-if="filterPermissions('删除通知')"
                                type="danger"
                                size="mini"
@@ -67,14 +73,14 @@
                     @pagination="pagination" />
         <!-- 弹窗信息 -->
         <model-view ref="modelView"
-                    @updateList="handleSearch" />
+                    @updateList="handleSearch" :currencyData="currencyData"/>
     </div>
 </template>
 
 <script>
 import Pagination from "@/components/Pagination";
 import ModelView from './model';
-import { getCountriesList, removeCountriesList } from '@/api/channel-management/countries-list'
+import { getCountriesPageList, removeCountriesList } from '@/api/channel-management/countries-list'
 import { getAllRoles } from '@/api/permissi';
 import { setTimeout } from 'timers';
 
@@ -82,6 +88,14 @@ export default {
     components: {
         Pagination,
         ModelView
+    },
+    props:{
+        currencyData: {
+            type: Array,
+            default() {
+                return [];
+            },
+        }
     },
     data () {
         return {
@@ -121,11 +135,11 @@ export default {
                 this.pageInfo.page = page
             }
             this.loading = true
-            getCountriesList(this.pageInfo).then(res => {
-                this.tableData = res.content.country
-                // this.pageInfo.total = parseInt(res.content.page.total)
-                // this.pageInfo.page = parseInt(res.content.page.number)
-                // this.pageInfo.limit = parseInt(res.content.page.pageSize)
+            getCountriesPageList(this.pageInfo).then(res => {
+                this.tableData = res.content
+                this.pageInfo.total = parseInt(res.data.total)
+                this.pageInfo.page = parseInt(res.data.number)
+                this.pageInfo.limit = parseInt(res.data.pageSize)
             }).finally(() => {
                 setTimeout(() => {
                     this.loading = false
@@ -147,7 +161,7 @@ export default {
          * @return {type} {description}
          */
         handleModal (row) {
-            this.$refs['modelView'].handEditInfoModel(row);
+            this.$refs['modelView'].handEditInfoModel(row.id);
         },
 
         /**

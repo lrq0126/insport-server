@@ -70,6 +70,7 @@ wechat:
   appsecret: 8d5b1a036d81714ac5b5e3d29fff1419
   token: xiaokuadou
   aeskey: ZdNbXndyXvbf75SzRMEuCajc2hqAOu6NjPUQfkGWZ1e
+
   template_url: https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=
   ## 包裹仓储即将到期，提醒发货通知
   goods_overtime: ZItrwqAESGTaBi9wwkpZilF7P81QcxFFZ46vwBO9Nt4

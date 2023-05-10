@@ -387,6 +387,7 @@ export function airTransportAddChannelList({
   isPin,
 
   isTariffs,
+  tariffsStart,
   tariffs,
   isInsurance,
   insuranceId,
@@ -426,6 +427,7 @@ export function airTransportAddChannelList({
     isPin: isPin,
 
     isTariffs: isTariffs,
+    tariffsStart: tariffsStart,
     tariffs: tariffs,
     isInsurance: isInsurance,
     insuranceId: insuranceId,
@@ -478,6 +480,7 @@ export function airTransportUpdataChannelList({
   isPin,
 
   isTariffs,
+  tariffsStart,
   tariffs,
   isInsurance,
   insuranceId,
@@ -519,6 +522,7 @@ export function airTransportUpdataChannelList({
     isPin: isPin,
 
     isTariffs: isTariffs,
+    tariffsStart: tariffsStart,
     tariffs: tariffs,
     isInsurance: isInsurance,
     insuranceId: insuranceId,

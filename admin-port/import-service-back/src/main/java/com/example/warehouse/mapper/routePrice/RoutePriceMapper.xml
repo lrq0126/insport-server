@@ -20,7 +20,6 @@
         <result column="end_volume" jdbcType="DOUBLE" property="endVolume"/>
         <result column="price" jdbcType="DECIMAL" property="price"/>
         <result column="price_no" jdbcType="VARCHAR" property="priceNo"/>
-        <result column="small_package_weight" jdbcType="DOUBLE" property="smallPackageWeight"/>
         <result column="remarks" jdbcType="VARCHAR" property="remarks"/>
         <result column="weight_carry_type" jdbcType="INTEGER" property="weightCarryType"/>
         <result column="greater_weight" jdbcType="DOUBLE" property="greaterWeight"/>
@@ -36,7 +35,7 @@
     <sql id="Base_Column_List">
     t.id, t.create_time, t.create_id, t.create_name, t.update_time, t.update_id, t.version, t.is_available,
     t.`status`, t.route_id, t.route_type, t.count_type, t.start_weight, t.end_weight, t.start_volume,
-    t.end_volume, t.price, t.price_no, t.small_package_weight, t.remarks, t.weight_carry_type,
+    t.end_volume, t.price, t.price_no, t.remarks, t.weight_carry_type,
     t.greater_weight, t.forklift_fee, t.package_type, t.upper_limit_weight, t.first_length, t.second_length,
     t.sensitive_price, t.cube_upper, t.vol_conversion
   </sql>
@@ -57,7 +56,7 @@
       is_available, `status`, route_id,
       route_type, count_type, start_weight,
       end_weight, start_volume, end_volume,
-      price, price_no, small_package_weight,
+      price, price_no,
       remarks, weight_carry_type,
       greater_weight, forklift_fee, package_type, upper_limit_weight,
       first_length, second_length, sensitive_price, cube_upper, vol_conversion)
@@ -66,7 +65,7 @@
       #{isAvailable,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{routeId,jdbcType=INTEGER},
       #{routeType,jdbcType=INTEGER}, #{countType,jdbcType=INTEGER}, #{startWeight,jdbcType=DOUBLE},
       #{endWeight,jdbcType=DOUBLE}, #{startVolume,jdbcType=DOUBLE}, #{endVolume,jdbcType=DOUBLE},
-      #{price,jdbcType=DOUBLE}, #{priceNo,jdbcType=VARCHAR}, #{smallPackageWeight,jdbcType=DOUBLE},
+      #{price,jdbcType=DOUBLE}, #{priceNo,jdbcType=VARCHAR},
       #{remarks,jdbcType=VARCHAR}, #{weightCarryType,jdbcType=INTEGER},
       #{greaterWeight,jdbcType=DOUBLE}, #{forkliftFee,jdbcType=INTEGER}, #{packageType,jdbcType=INTEGER},
       #{upperLimitWeight},#{firstLength}, #{secondLength}, #{sensitivePrice}, #{cubeUpper}, #{volConversion} )
@@ -123,9 +122,6 @@
             </if>
             <if test="priceNo != null and priceNo != ''">
                 price_no,
-            </if>
-            <if test="smallPackageWeight != null and smallPackageWeight != ''">
-                small_package_weight,
             </if>
             <if test="remarks != null and remarks != ''">
                 remarks,
@@ -212,9 +208,6 @@
             <if test="priceNo != null and priceNo != ''">
                 #{priceNo},
             </if>
-            <if test="smallPackageWeight != null and smallPackageWeight != ''">
-                #{smallPackageWeight},
-            </if>
             <if test="remarks != null and remarks != ''">
                 #{remarks},
             </if>
@@ -300,9 +293,6 @@
             <if test="priceNo != null and priceNo != ''">
                 price_no = #{priceNo,jdbcType=VARCHAR},
             </if>
-            <if test="smallPackageWeight != null and smallPackageWeight != ''">
-                small_package_weight = #{smallPackageWeight,jdbcType=DOUBLE},
-            </if>
             <if test="remarks != null and remarks != ''">
                 remarks = #{remarks,jdbcType=VARCHAR},
             </if>
@@ -358,7 +348,6 @@
       end_volume = #{endVolume,jdbcType=DOUBLE},
       price = #{price,jdbcType=DOUBLE},
       price_no = #{priceNo,jdbcType=VARCHAR},
-      small_package_weight = #{smallPackageWeight,jdbcType=DOUBLE},
       remarks = #{remarks,jdbcType=VARCHAR},
       weight_carry_type = #{weightCarryType,jdbcType=INTEGER},
       greater_weight = #{greaterWeight,jdbcType=DOUBLE},
@@ -427,15 +416,6 @@
         where t.`status` = 1 and t.route_id = #{routeId} and #{weight} &gt;= t.start_weight and #{weight} &lt;= t.end_weight
     </select>
 
-    <select id="findSmallPackPriceByWeight" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from
-        <include refid="table"/>
-        t
-        where t.`status` = 1 and t.route_id = #{routeId} and #{weight} = t.small_package_weight
-    </select>
-
     <select id="findByVol" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
@@ -481,24 +461,6 @@
         where t.price_no = #{priceNo}
     </update>
 
-    <select id="findAirSmallPackPrice" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-        select <include refid="Base_Column_List"/>
-        from <include refid="table"/> t
-        left join transportation_route tr on tr.id = t.route_id
-        <where>
-            t.status = 1 and t.route_type = 1 and t.package_type = 1 and tr.id = #{routeId}
-        </where>
-        order by t.small_package_weight
-    </select>
-    <select id="findAirSmallPackPriceDesc" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-        select <include refid="Base_Column_List"/>
-        from <include refid="table"/> t
-        left join transportation_route tr on tr.id = t.route_id
-        <where>
-            t.status = 1 and t.route_type = 1 and t.package_type = 1 and tr.id = #{routeId}
-        </where>
-        order by t.small_package_weight desc
-    </select>
 
     <select id="findAirBigPackPrice" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select <include refid="Base_Column_List"/>
@@ -559,7 +521,7 @@
         t.forklift_fee as forkliftFee, t.package_type as smallPackageType, t.weight_carry_type as smallWeightCarryType,
         t.start_weight as smallStartWeight, t.end_weight as smallEndWeight, t.price as smallPrice, t.remarks as smallRemarks,
         t.first_length as firstLength, t.second_length as secondLength, t.upper_limit_weight as upperLimitWeight,
-        t.small_package_weight as smallPackageWeight, t.price_no as smallPriceNo, t.sensitive_price as sensitivePrice,
+        t.price_no as smallPriceNo, t.sensitive_price as sensitivePrice,
         t.cube_upper as cubeUpper, t.vol_conversion as volConversion
     </sql>
 

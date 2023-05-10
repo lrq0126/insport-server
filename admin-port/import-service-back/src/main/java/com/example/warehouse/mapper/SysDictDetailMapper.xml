@@ -187,6 +187,16 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
+    <select id="checkSddName" resultType="java.lang.Integer">
+        select count(1)
+        from <include refid="table"/>
+        <where>
+            status = 1
+            and id != #{id}
+            and sdd_name = #{sddName}
+        </where>
+    </select>
+
     <select id="selectOfTrans" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
@@ -323,6 +333,71 @@
             status = 1 and sdm_code = #{sdmCode}
         </where>
     </select>
+
+    <select id="getCountryCount" resultType="java.lang.Integer">
+        select count(1)
+        from sys_dict_detail
+        <where>
+            status = 1
+            and sdm_code = 'country'
+            <if test="sddName != null and sddName != ''">
+                and sdd_name = #{sddName}
+            </if>
+        </where>
+    </select>
+
+    <select id="getCountryDictPageList" resultMap="SysDictCountryRespVo">
+        select id, sdd_code, sdd_name, alternate_field, sdd_seq, sdd_remark
+        from sys_dict_detail
+        <where>
+            status = 1
+            and sdm_code = 'country'
+            <if test="sddName != null and sddName != ''">
+                and sdd_name = #{sddName}
+            </if>
+        </where>
+        limit #{pageNumber}, #{pageSize}
+    </select>
+
+    <select id="selectCountryExchangeRate" resultType="com.example.warehouse.entity.SysDictDetail">
+        select sdd_name as sddName, alternate_field as alternateField
+        from sys_dict_detail
+        <where>
+            status = 1 and sdm_code = 'currency' and id = #{id}
+        </where>
+    </select>
+
+    <select id="getDictCountryInfo" resultMap="SysDictCountryRespVo">
+        select id, sdd_code, sdd_name, alternate_field, sdd_seq, sdd_remark
+        from sys_dict_detail
+        <where>
+            status = 1
+            and sdm_code = 'country'
+            and id = #{id}
+        </where>
+    </select>
+
+    <select id="selectCountryCurrency" resultMap="BaseResultMap">
+        select currency.id, currency.sdd_code, currency.sdd_name, currency.alternate_field
+        from sys_dict_detail t
+        left join sys_dict_detail currency on currency.id = t.alternate_field and currency.sdm_code = 'currency'
+        <where>
+            t.status = 1
+            and t.sdm_code = 'country'
+            and t.id = #{id}
+        </where>
+    </select>
+
+    <resultMap id="SysDictCountryRespVo" type="com.example.warehouse.vo.sys.SysDictCountryRespVo">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="sdd_code" jdbcType="VARCHAR" property="sddCode"/>
+        <result column="sdd_name" jdbcType="VARCHAR" property="sddName"/>
+        <result column="sdd_seq" jdbcType="INTEGER" property="sddSeq"/>
+        <result column="sdd_remark" jdbcType="VARCHAR" property="sddRemark"/>
+<!--        <result column="is_enable" jdbcType="INTEGER" property="isEnable"/>-->
+        <result column="alternate_field" jdbcType="VARCHAR" property="currencyId"/>
+        <collection property="currencyData" column="alternate_field" select="com.example.warehouse.mapper.SysDictDetailMapper.selectCountryExchangeRate"/>
+    </resultMap>
 
     <sql id="table">sys_dict_detail</sql>
 

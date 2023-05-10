@@ -83,17 +83,18 @@
                     </template>
                   </el-form-item>
 
-                  <el-form-item
-                    v-if="formItem.isTariffs == 1"
-                    label="预付关税："
-                    prop="tariffs"
-                  >
-                    <el-input
-                      v-model="formItem.tariffs"
-                      placeholder="请输入预付关税："
-                      type="number"
-                      ><template slot="append">%</template></el-input
-                    >
+                  <el-form-item v-if="formItem.isTariffs == 1" label="起付金额：" prop="tariffsStart" >
+                    <div style="display: flex;">
+                      <span style="width: 100px; text-align: right;">货物总价超：</span>
+                      <el-input v-model="formItem.tariffsStart" placeholder="请输起付金额" type="number" style="width: 200px"></el-input>
+                      <span style="width: 160px; text-align: left;">&nbsp; 需要预付关税</span>
+                    </div>
+                  </el-form-item>
+
+                  <el-form-item v-if="formItem.isTariffs == 1" label="关税比例：" prop="tariffs">
+                    <el-input v-model="formItem.tariffs" placeholder="请输入关税比例" type="number">
+                      <template slot="append">%</template>
+                      </el-input>
                   </el-form-item>
                 </el-col>
                 <el-col :span="8">
@@ -605,6 +606,7 @@ export default {
 
         isTariffs: "",
         tariffs: "",
+        tariffsStart: "",
         isInsurance: "",
         insuranceId: "",
 
@@ -616,15 +618,8 @@ export default {
         volConversion: "",
         smallPackagePrice: [
           {
-            smallPackageWeight: 0,
             smallPrice: 0,
             smallRemarks: 0,
-            // smallWeightCarryType: 0,
-            // firstLength: 0,
-            // greaterWeight: 0,
-            // forkliftFee: 0,
-            // secondLength: 0,
-            // upperLimitWeight: 0,
           },
         ],
         packagePrice: [],
@@ -632,6 +627,12 @@ export default {
       formItemRules: {
         routeName: [
           { required: true, message: "渠道名称不能为空", trigger: "blur" },
+        ],
+        tariffsStart: [
+          { required: true, message: "请输入起付关税价格", trigger: "blur" },
+        ],
+        tariffs: [
+          { required: true, message: "请输入关税比例", trigger: "blur" },
         ],
         originatingPlace: [
           { required: true, message: "始发仓不能为空", trigger: "blur" },
@@ -780,29 +781,6 @@ export default {
           ? config.baseUrl.dev
           : config.baseUrl.pro;
       window.location.href = baseUrl + "/api/common/downloadChannelTemplateExcel";
-    },
-
-    /**
-     * 新增小包裹
-     * @return {type} {description}
-     */
-    addTopicSmall() {
-      const obj = {
-        smallPackageWeight: "",
-        smallPrice: "",
-        smallRemarks: "",
-      };
-      this.formItem.smallPackagePrice.push(obj);
-    },
-
-    /**
-     * 删除小包裹
-     * @return {type} {description}
-     */
-    deleteTopicSmall(index) {
-      if (index > -1) {
-        this.formItem.smallPackagePrice.splice(index, 1);
-      }
     },
 
     /**

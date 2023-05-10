@@ -4,7 +4,7 @@ import com.example.warehouse.vo.PageVo;
 import lombok.Data;
 
 @Data
-public class DictReqVo extends PageVo {
+public class SysDictReqVo extends PageVo {
 
     private String sdmCode;
 

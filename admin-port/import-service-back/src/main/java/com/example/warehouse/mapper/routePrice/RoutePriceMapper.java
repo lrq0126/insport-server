@@ -82,16 +82,6 @@ public interface RoutePriceMapper extends MyBatisBaseDao<RoutePrice, Integer> {
      */
     void deleteByPriceNo(String priceNo);
 
-    /**
-     * 查询 空运 小包裹 实例 正序
-     * @return
-     */
-    List<RoutePrice> findAirSmallPackPrice(int routeId);
-    /**
-     * 查询 空运 小包裹实例 倒序
-     * @return
-     */
-    List<RoutePrice> findAirSmallPackPriceDesc(int routeId);
 
     /**
      * 查询 空运 大包裹实例
@@ -99,7 +89,6 @@ public interface RoutePriceMapper extends MyBatisBaseDao<RoutePrice, Integer> {
      */
     List<RoutePrice> findAirBigPackPrice(int routeId);
 
-    RoutePrice findSmallPackPriceByWeight(@Param("routeId")int routeId, @Param("weight")Double weight);
     /**
      * 查询 海运 小包裹的实例 正序
      * @return

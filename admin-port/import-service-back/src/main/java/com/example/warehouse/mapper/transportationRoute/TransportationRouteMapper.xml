@@ -43,6 +43,7 @@
         <result column="customer_requirements" jdbcType="VARCHAR" property="customerRequirements"/>
 
         <result column="is_tariffs" jdbcType="DOUBLE" property="isTariffs"/>
+        <result column="tariffs_start" jdbcType="DOUBLE" property="tariffsStart"/>
         <result column="tariffs" jdbcType="DOUBLE" property="tariffs"/>
         <result column="is_insurance" jdbcType="DOUBLE" property="isInsurance"/>
         <result column="insurance_id" jdbcType="DOUBLE" property="insuranceId"/>
@@ -59,7 +60,7 @@
     t.sensitive_price, t.greater_weight, t.forklift_fee,
     t.before_weight_carry, t.before_weight_carry_type, t.after_weight_carry,
     t.after_weight_carry_type, t.cube_upper, t.vol_conversion,
-    t.customer_requirements, t.is_tariffs, t.tariffs, t.is_insurance, t.insurance_id
+    t.customer_requirements, t.is_tariffs, t.tariffs_start, t.tariffs, t.is_insurance, t.insurance_id
   </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
@@ -85,7 +86,7 @@
       sensitive_price, greater_weight, forklift_fee,
       before_weight_carry, before_weight_carry_type, after_weight_carry,
       after_weight_carry_type, cube_upper, vol_conversion,
-      customer_requirements, is_tariffs, tariffs, is_insurance, insurance_id
+      customer_requirements, is_tariffs, tariffs_start, tariffs, is_insurance, insurance_id
       )
     values (
       #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER},
@@ -99,7 +100,7 @@
       #{greaterWeight},#{forkliftFee},#{beforeWeightCarry},
       #{beforeWeightCarryType},#{afterWeightCarry},#{afterWeightCarryType},
       #{cubeUpper},#{volConversion},#{customerRequirements},
-      #{isTariffs}, #{tariffs}, #{isInsurance}, #{insuranceId}
+      #{isTariffs}, #{tariffsStart}, #{tariffs}, #{isInsurance}, #{insuranceId}
       )
   </insert>
     <insert id="insertSelective" keyColumn="id" keyProperty="id"
@@ -207,6 +208,9 @@
 
             <if test="isTariffs != null">
                 is_tariffs,
+            </if>
+            <if test="tariffsStart != null">
+                tariffs_start,
             </if>
             <if test="tariffs != null">
                 tariffs,
@@ -320,6 +324,9 @@
 
             <if test="isTariffs != null">
                 #{isTariffs},
+            </if>
+            <if test="tariffsStart != null">
+                #{tariffsStart},
             </if>
             <if test="tariffs != null">
                 #{tariffs},
@@ -437,6 +444,9 @@
             <if test="isTariffs != null">
                 is_tariffs = #{isTariffs},
             </if>
+            <if test="tariffsStart != null">
+                tariffs_start = #{tariffsStart},
+            </if>
             <if test="tariffs != null">
                 tariffs = #{tariffs},
             </if>
@@ -489,6 +499,7 @@
       vol_conversion = #{volConversion},
       customer_requirements = #{customerRequirements},
       is_tariffs = #{isTariffs},
+      tariffs_start = #{tariffsStart},
       tariffs = #{tariffs},
       is_insurance = #{isInsurance},
       insurance_id = #{insuranceId}
@@ -653,7 +664,7 @@
         t.sensitive_price, t.greater_weight, t.forklift_fee,
         t.before_weight_carry, t.before_weight_carry_type, t.after_weight_carry,
         t.after_weight_carry_type, t.cube_upper, t.vol_conversion,
-        t.customer_requirements, t.is_tariffs, t.tariffs, t.is_insurance, t.insurance_id,
+        t.customer_requirements, t.is_tariffs, t.tariffs_start, t.tariffs, t.is_insurance, t.insurance_id,
         sdd.sdd_name, sdd.sdd_remark,
         ins.insurance_name
         from
@@ -716,7 +727,7 @@
             t.sensitive_price, t.greater_weight, t.forklift_fee,
             t.before_weight_carry, t.before_weight_carry_type, t.after_weight_carry,
             t.after_weight_carry_type, t.cube_upper, t.vol_conversion,
-            t.customer_requirements, t.is_tariffs, t.tariffs, t.is_insurance, t.insurance_id,
+            t.customer_requirements, t.is_tariffs, t.tariffs_start,  t.tariffs, t.is_insurance, t.insurance_id,
             sdd.sdd_name, sdd.sdd_remark,
             ins.insurance_name
         from
@@ -756,24 +767,24 @@
     t.route_type as routeType, t.originating_place as originatingPlace, t.destination, t.english_name as englishName,
     t.note_type as noteType, t.transportation_time as transportationTime,t.remote_fee as remoteFee, t.remarks, t.is_pin as isPin,
     t.transport_type as transportType, t.country_id as countryId, sdd.sdd_name as country,t.pack_attention as packAttention,
-    t.is_tariffs as isTariffs, t.tariffs, t.is_insurance as isInsurance, t.insurance_id as insuranceId
+    t.is_tariffs as isTariffs, t.tariffs_start as tariffsStart, t.tariffs, t.is_insurance as isInsurance, t.insurance_id as insuranceId
     </sql>
 
     <sql id="VoColumns">
-    t.id,
-    DATE_FORMAT(t.create_time,'%Y-%m-%d %k:%i:%s') as create_time,
-    DATE_FORMAT(t.update_time,'%Y-%m-%d %k:%i:%s') as update_time,
-    t.`status`, t.is_available, t.version, t.route_name, t.operation_id,
-    t.route_type, t.originating_place, t.destination, t.english_name,
-    t.note_type, t.transportation_time,t.remote_fee, t.remarks,
-    t.transport_type, t.country_id, sdd.sdd_name, t.pack_attention,
-    t.is_per_ticket_pack, t.currency, t.is_pin, t.side_length_limit,
-    t.upper_limit_weight, t.first_length, t.second_length,
-    t.sensitive_price, t.greater_weight, t.forklift_fee,
-    t.before_weight_carry, t.before_weight_carry_type, t.after_weight_carry,
-    t.after_weight_carry_type, t.cube_upper, t.vol_conversion,
-    t.customer_requirements, t.is_tariffs, t.tariffs, t.is_insurance, t.insurance_id,
-    ins.insurance_name
+        t.id,
+        DATE_FORMAT(t.create_time,'%Y-%m-%d %k:%i:%s') as create_time,
+        DATE_FORMAT(t.update_time,'%Y-%m-%d %k:%i:%s') as update_time,
+        t.`status`, t.is_available, t.version, t.route_name, t.operation_id,
+        t.route_type, t.originating_place, t.destination, t.english_name,
+        t.note_type, t.transportation_time,t.remote_fee, t.remarks,
+        t.transport_type, t.country_id, sdd.sdd_name, t.pack_attention,
+        t.is_per_ticket_pack, t.currency, t.is_pin, t.side_length_limit,
+        t.upper_limit_weight, t.first_length, t.second_length,
+        t.sensitive_price, t.greater_weight, t.forklift_fee,
+        t.before_weight_carry, t.before_weight_carry_type, t.after_weight_carry,
+        t.after_weight_carry_type, t.cube_upper, t.vol_conversion,
+        t.customer_requirements, t.is_tariffs, t.tariffs_start, t.tariffs, t.is_insurance, t.insurance_id,
+        ins.insurance_name
     </sql>
 
     <resultMap id="routeVo" extends="BaseResultMap" type="com.example.warehouse.vo.route.RouteVo">

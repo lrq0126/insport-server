@@ -1,15 +1,15 @@
 <template>
     <div>
-        <el-dialog :visible.sync="dictDialog" :close-on-click-modal="false" width="50%">
+        <el-dialog :visible.sync="dictDialog" :close-on-click-modal="false" width="50%" append-to-body>
             <el-form ref="form" label-width="100px" :model="formItem" :rules="formItemRules">
-                <el-form-item label="字典名称" prop="sddName">
+                <el-form-item label="货币名称" prop="sddName">
                     <el-input v-model="formItem.sddName"/>
                 </el-form-item>
 
                 <el-form-item label="字典类型" prop="sdmCode">
-                    <el-select v-model="formItem.sdmCode" clearable placeholder="请选择" :disabled="isEdit">
+                    <el-select v-model="formItem.sdmCode" clearable placeholder="请选择">
                         <el-option v-for="item in sdmCodes" 
-                            :key="item.value"
+                            :key="item.sdmCode"
                             :label="item.name"
                             :value="item.sdmCode">
                         </el-option>
@@ -20,13 +20,13 @@
                     <el-input v-model="formItem.sddRemark"/>
                 </el-form-item>
                 
-                <el-form-item v-else label="类型代码" prop="sddRemark">
+                <el-form-item v-else label="类型代码">
                     <el-input type="textarea" v-model="formItem.sddRemark"/>
                 </el-form-item>
 
                 <el-form-item v-if="formItem.sdmCode == 'currency'" label="汇率" prop="alternateField">
                     <el-input-number :precision="3" :step="0.01" v-model="formItem.alternateField"/>
-                    <el-tooltip class="item" effect="dark" content="汇率是指1元当前货币能兑换多少元人民币" placement="right">
+                    <el-tooltip class="item" effect="dark" content="汇率是指当前货币能兑换多少人民币" placement="right">
                         <i class="el-icon-warning"></i>
                     </el-tooltip>
                 </el-form-item>
@@ -51,11 +51,11 @@ export default {
             dictDialog: false,
             isEdit: false,
             formItem:{
-                sdmCode:"",
-                sddCode:"",
-                sddName:"",
-                sddRemark:"",
-                alternateField:""
+                sdmCode: "currency",
+                sddCode: "",
+                sddName: "",
+                sddRemark: "",
+                alternateField: ""
             },
 
             formItemRules: {
@@ -74,65 +74,20 @@ export default {
             },
 
             sdmCodes:[
-                {   
-                    name:"渠道类型",
-                    vaule:"1",
-                    sdmCode:"trans_type",
-                    sddCode: "TST"
-                },{
-                    name:"进位规则",
-                    vaule:"2",
-                    sdmCode:"weight_rule",
-                },
-                // {
-                //     name:"国家",
-                //     vaule:"3",
-                //     sdmCode:"country",
-                //     sddCode: "CTRY"
-                // },
                 {
                     name:"货币",
                     vaule:"4",
                     sdmCode:"currency",
                     sddCode: "CENY"
-                },{
-                    name:"待办类型",
-                    vaule:"5",
-                    sdmCode:"backlog_type",
-                    sddCode: "BLTYPE"
-                },{
-                    name:"积分类型",
-                    vaule:"6",
-                    sdmCode:"integral_type",
-                    sddCode: "ITGTYPE"
-                },{
-                    name:"活动类型",
-                    vaule:"7",
-                    sdmCode:"activity_type",
-                    sddCode: "ACTVTYPE"
-                },{
-                    name:"海报类型",
-                    vaule:"8",
-                    sdmCode:"poster_type",
-                    sddCode: "POSTTYPE"
-                }
+                },
             ],
         }
     },
 
     methods:{
-        openDictInfo(dictId){
+        openDictInfo(){
             this.reSetForm();
-            if(dictId){
-                getDictDetail(dictId).then((res) => {
-                    if(res.code == 100){
-                        this.formItem = res.content;
-                        this.isEdit = true;
-                    }
-                })
-            }
             this.dictDialog = true;
-
         },
 
         submitCreateDict(form){
@@ -147,10 +102,10 @@ export default {
                         if(res.code == 100){
                             this.$message({
                                 type:"success",
-                                message: "新增数据字典成功"
+                                message: "新增货币类型成功"
                             });
                             this.dictDialog = false;
-                            this.$emit("reSelect");
+                            this.$emit("uploadCurrencyData");
                             this.reSetForm();
                         }else{
                             this.$message({

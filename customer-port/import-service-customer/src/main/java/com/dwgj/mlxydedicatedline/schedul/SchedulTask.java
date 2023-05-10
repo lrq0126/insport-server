@@ -60,7 +60,7 @@ public class SchedulTask {
     /**
      * 每90分钟取一次微信access_token,一天最多取2000次
      */
-    @Scheduled(cron="0 */90 * * * ? ")
+//    @Scheduled(cron="0 */90 * * * ? ")
     public void getNewAccessToken(){
         log.info("--------------微信定时任务开始，获取access_token-----------");
         JSONObject result=  getAccessToken();

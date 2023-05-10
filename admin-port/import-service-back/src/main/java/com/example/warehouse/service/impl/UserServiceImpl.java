@@ -2,11 +2,13 @@ package com.example.warehouse.service.impl;
 
 import com.example.warehouse.common.DateUtil;
 import com.example.warehouse.common.SequenceCode;
+import com.example.warehouse.entity.SysDictDetail;
 import com.example.warehouse.entity.User;
 import com.example.warehouse.entity.role.Permission;
 import com.example.warehouse.entity.role.UserRole;
 import com.example.warehouse.entity.sys.CommercialArea;
 import com.example.warehouse.enums.ResultStatus;
+import com.example.warehouse.mapper.SysDictDetailMapper;
 import com.example.warehouse.mapper.UserMapper;
 import com.example.warehouse.mapper.role.PermissionMapper;
 import com.example.warehouse.mapper.role.UserRoleMapper;
@@ -43,6 +45,9 @@ public class UserServiceImpl implements UserService {
     private DataSourceTransactionManager transactionManager;
     @Autowired
     private CommercialAreaMapper commercialAreaMapper;
+    @Autowired
+    private SysDictDetailMapper sysDictDetailMapper;
+
     @Override
     public int save(User user) {
         // TODO 添加 user_code
@@ -237,6 +242,13 @@ public class UserServiceImpl implements UserService {
         if(commercialArea != null){
             userVo.setCountry(commercialArea.getCountry());
             userVo.setCountryId(commercialArea.getCountryId());
+            SysDictDetail currency = sysDictDetailMapper.selectCountryCurrency(commercialArea.getCountryId());
+            if(currency != null){
+                userVo.setCurrencyId(currency.getId());
+                userVo.setCurrency(currency.getSddName());
+                userVo.setExchangeRate(currency.getAlternateField());
+            }
+
         }
 
         UserRole userRole = userRoleMapper.selectByPrimaryKey(user.getRoleId());

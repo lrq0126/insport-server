@@ -5,7 +5,7 @@ import com.example.warehouse.entity.sys.Trajectory;
 import com.example.warehouse.entity.sys.TrajectoryLog;
 import com.example.warehouse.model.PageResultModel;
 import com.example.warehouse.model.ResultModel;
-import com.example.warehouse.vo.order.Track17ReqVo;
+import com.example.warehouse.vo.appDataService.Track17ReqVo;
 import org.springframework.http.ResponseEntity;
 
 import javax.servlet.http.HttpServletRequest;

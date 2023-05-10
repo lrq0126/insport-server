@@ -3,7 +3,7 @@ package com.example.warehouse.service.SysDictDetail;
 import com.example.warehouse.entity.SysDictDetail;
 import com.example.warehouse.model.PageResultModel;
 import com.example.warehouse.model.ResultModel;
-import com.example.warehouse.vo.sys.DictReqVo;
+import com.example.warehouse.vo.sys.SysDictReqVo;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
@@ -45,7 +45,7 @@ public interface SysDictDetailService {
      * @param paramMap
      * @return
      */
-    int update(Map<String,Object> paramMap);
+    ResponseEntity<ResultModel> updateCountry(SysDictDetail sysDictDetail);
 
     /**
      * 删除
@@ -56,7 +56,7 @@ public interface SysDictDetailService {
 
     ResponseEntity<ResultModel> saveDict(SysDictDetail sysDictDetail, boolean isUpdate);
 
-    ResponseEntity<PageResultModel> getDictList(DictReqVo dictReqVo);
+    ResponseEntity<PageResultModel> getDictList(SysDictReqVo sysDictReqVo);
 
     ResponseEntity<ResultModel> getDictDetail(int id);
 
@@ -67,4 +67,8 @@ public interface SysDictDetailService {
     ResponseEntity<ResultModel> addBacklogType(SysDictDetail sysDictDetail);
 
     ResponseEntity<ResultModel> getDictListBySdmCode(String sdmCode);
+
+    ResponseEntity<PageResultModel> getCountriesPageList(SysDictReqVo sysDictReqVo);
+
+    ResponseEntity<ResultModel> getCountryInfo(Integer id);
 }

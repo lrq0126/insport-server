@@ -9,17 +9,38 @@ import request from "@/utils/request";
  * 获取国家列表
  * @return {type} {description}
  */
-export function getCountriesList ({ sddName }) {
+export function getCountriesList ({ 
+    sddName
+}) {
     return request({
         url: "sysDictDetail/find/country/list",
         method: "get",
         params: {
-            // pageNumber: page, // 当前页码
-            // pageSize: limit, //每页条数
             sddName: sddName
         }
     });
 }
+
+/**
+ * 获取国家分页列表
+ * @return {type} {description}
+ */
+export function getCountriesPageList ({ 
+    sddName, 
+    page,
+    limit
+}) {
+    return request({
+        url: "sysDictDetail/getCountriesPageList",
+        method: "get",
+        params: {
+            pageNumber: page, // 当前页码
+            pageSize: limit, //每页条数
+            sddName: sddName
+        }
+    });
+}
+
 
 /**
  * 获取国家列表 无参数
@@ -32,12 +53,22 @@ export function getCountriesList ({ sddName }) {
     });
 }
 
+export function getCountryInfo(id){
+    return request({
+        url: "sysDictDetail/getCountryInfo",
+        method: "post",
+        data: {
+            id: id
+        }
+    });
+}
 /**
  * 新增
  * @return {type} {description}
  */
 export function addCountriesList ({
     sddName,
+    alternateField,
     sddRemark,
 }) {
     return request({
@@ -45,6 +76,29 @@ export function addCountriesList ({
         method: "post",
         data: {
             sddName: sddName,
+            alternateField: alternateField,
+            sddRemark: sddRemark,
+        }
+    });
+}
+
+/**
+ * 编辑
+ * @return {type} {description}
+ */
+export function updateCountry ({
+    id,
+    sddName,
+    currencyId,
+    sddRemark,
+}) {
+    return request({
+        url: "sysDictDetail/update/country",
+        method: "post",
+        data: {
+            id: id,
+            sddName: sddName,
+            alternateField: currencyId,
             sddRemark: sddRemark,
         }
     });
