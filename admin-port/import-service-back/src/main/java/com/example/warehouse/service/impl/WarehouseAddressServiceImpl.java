@@ -5,7 +5,10 @@ import com.example.warehouse.common.PageData;
 import com.example.warehouse.common.PageHelp;
 import com.example.warehouse.entity.User;
 import com.example.warehouse.entity.WarehouseAddress;
+import com.example.warehouse.entity.sys.CommercialArea;
+import com.example.warehouse.enums.ResultStatus;
 import com.example.warehouse.mapper.WarehouseAddressMapper;
+import com.example.warehouse.mapper.sys.CommercialAreaMapper;
 import com.example.warehouse.model.PageResultModel;
 import com.example.warehouse.model.ResultModel;
 import com.example.warehouse.service.WarehouseAddressService;
@@ -35,6 +38,8 @@ public class WarehouseAddressServiceImpl implements WarehouseAddressService {
      */
     @Resource
     private WarehouseAddressMapper warehouseAddressMapper;
+    @Resource
+    private CommercialAreaMapper commercialAreaMapper;
 
     @Override
     public ResponseEntity<PageResultModel> getWarehouseAddressList(WarehouseAddressReqVo warehouseAddressReqVo) {
@@ -74,12 +79,17 @@ public class WarehouseAddressServiceImpl implements WarehouseAddressService {
         if(!warehouseAddress.getAddressee().contains("LOGIN_NAME")){
             return new ResponseEntity<>(ResultModel.error(WAREHOUSE_ADDRESS_LOGIN_NAME_NULL_ERROR), HttpStatus.OK);
         }
+        CommercialArea commercialArea = commercialAreaMapper.selectByPrimaryKey(warehouseAddress.getCommercialAreaId());
+        if(commercialArea == null){
+            return new ResponseEntity<>(ResultModel.error(USER_NOT_COMMERCIAL_AREA), HttpStatus.OK);
+        }
+        warehouseAddress.setCommercialAreaName(commercialArea.getCommercialAreaName());
         if(warehouseAddress.getId() != null){
             warehouseAddress.setUpdateTime(DateUtil.getDateFormate(new Date(), DateUtil.DEFAULT_TIMESTAMP_FORMAT));
             warehouseAddressMapper.updateByPrimaryKeySelective(warehouseAddress);
-        }else {
+        } else {
             if(warehouseAddress.getIsEnable() == 1){
-                int commercialAreaId = user.getCommercialAreaId();
+                int commercialAreaId = warehouseAddress.getCommercialAreaId();
                 warehouseAddressMapper.unableWarehouseAddressAll(commercialAreaId);
             }
             warehouseAddress.setCreateId(user.getId());
@@ -108,8 +118,9 @@ public class WarehouseAddressServiceImpl implements WarehouseAddressService {
         if(user.getCommercialAreaId() == null){
             return new ResponseEntity<>(PageResultModel.error(USER_NOT_COMMERCIAL_AREA, null), HttpStatus.OK);
         }
-        int commercialAreaId = user.getCommercialAreaId();
-        warehouseAddressMapper.unableWarehouseAddressAll(commercialAreaId);
+        WarehouseAddress warehouseAddress = warehouseAddressMapper.selectByPrimaryKey(id);
+//        int commercialAreaId = user.getCommercialAreaId();
+        warehouseAddressMapper.unableWarehouseAddressAll(warehouseAddress.getCommercialAreaId());
         warehouseAddressMapper.enableWarehouseAddress(id);
         return new ResponseEntity<>(ResultModel.ok(), HttpStatus.OK);
     }

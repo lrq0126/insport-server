@@ -14,4 +14,6 @@ public interface WechatReplyService {
     ResponseEntity<ResultModel> saveReply(WechatReply wechatReply);
 
     ResponseEntity<ResultModel> deleteReply(int id);
+
+    ResponseEntity<PageResultModel> getReplyLogList(WechatReplyReqVo wechatReplyReqVo);
 }

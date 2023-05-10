@@ -3,7 +3,7 @@ package com.example.warehouse.service;
 import com.example.warehouse.entity.CustomerPackNumber;
 import com.example.warehouse.model.ResultModel;
 import com.example.warehouse.vo.GoodsVo;
-import com.example.warehouse.vo.customer.CustomerPackNumberVo;
+import com.example.warehouse.vo.customerPack.CustomerPackNumberVo;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;

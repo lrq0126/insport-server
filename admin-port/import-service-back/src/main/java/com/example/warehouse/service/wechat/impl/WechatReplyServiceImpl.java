@@ -6,6 +6,7 @@ import com.example.warehouse.common.PageHelp;
 import com.example.warehouse.entity.User;
 import com.example.warehouse.entity.wx.WechatReply;
 import com.example.warehouse.enums.ResultStatus;
+import com.example.warehouse.mapper.wx.WechatReplyLogMapper;
 import com.example.warehouse.mapper.wx.WechatReplyMapper;
 import com.example.warehouse.model.PageResultModel;
 import com.example.warehouse.model.ResultModel;
@@ -28,6 +29,8 @@ public class WechatReplyServiceImpl implements WechatReplyService {
 
     @Autowired
     private WechatReplyMapper wechatReplyMapper;
+    @Autowired
+    private WechatReplyLogMapper wechatReplyLogMapper;
 
     @Override
     public ResponseEntity<PageResultModel> getReplyList(WechatReplyReqVo wechatReplyReqVo) {
@@ -104,5 +107,27 @@ public class WechatReplyServiceImpl implements WechatReplyService {
     public ResponseEntity<ResultModel> deleteReply(int id) {
         wechatReplyMapper.deleteByPrimaryKey(id);
         return new ResponseEntity<>(ResultModel.ok(), HttpStatus.OK);
+    }
+
+
+    /**
+     * 查看客户发送信息的记录
+     * @param wechatReplyReqVo
+     * @return
+     */
+    @Override
+    public ResponseEntity<PageResultModel> getReplyLogList(WechatReplyReqVo wechatReplyReqVo) {
+        PageData pageData = PageHelp.editPage(wechatReplyReqVo);
+
+        int count = wechatReplyLogMapper.getReplyLogListCount(wechatReplyReqVo);
+        pageData.setTotal(count);
+        if(count > 0){
+            wechatReplyReqVo.setPageNumber(pageData.getPageNumber());
+            List<WechatReply> wechatReplyList = wechatReplyLogMapper.getReplyLogList(wechatReplyReqVo);
+            return new ResponseEntity<>(PageResultModel.ok(wechatReplyList, pageData), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(PageResultModel.ok(new ArrayList<>(), pageData), HttpStatus.OK);
+
+
     }
 }

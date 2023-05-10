@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.warehouse.mapper.ping.PingMainAuditMapper">
+    <resultMap id="BaseResultMap" type="com.example.warehouse.entity.ping.PingMainAudit">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <id column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <id column="create_id" jdbcType="INTEGER" property="createId"/>
+        <id column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <id column="update_id" jdbcType="INTEGER" property="updateId"/>
+        <id column="status" jdbcType="INTEGER" property="status"/>
+        <id column="version" jdbcType="INTEGER" property="version"/>
+        <id column="auditor_id" jdbcType="INTEGER" property="auditorId"/>
+        <id column="auditor_name" jdbcType="VARCHAR" property="auditorName"/>
+        <id column="p_id" jdbcType="INTEGER" property="pId"/>
+        <id column="p_order" jdbcType="VARCHAR" property="pOrder"/>
+        <id column="audit_result" jdbcType="INTEGER" property="auditResult"/>
+        <id column="audit_opinion" jdbcType="VARCHAR" property="auditOpinion"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+	  id, create_time, create_id, update_time, update_id, status, version, auditor_id, auditor_name, p_id, p_order, audit_result, audit_opinion
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from ping_main_audit
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from ping_main
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+
+    <insert id="insert" parameterType="com.example.warehouse.entity.ping.PingMainAudit">
+		insert into ping_main_audit (
+            id, create_time, create_id, update_time,
+            update_id, status, version, auditor_id,
+            auditor_name, p_id, p_order,
+            audit_result, audit_opinion)
+		values (
+            #{id,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{createId,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP},
+            #{updateId,jdbcType=INTEGER}, 1, 0, #{auditorId,jdbcType=INTEGER},
+            #{auditorName,jdbcType=VARCHAR}, #{pId,jdbcType=INTEGER}, #{pOrder,jdbcType=VARCHAR},
+            #{auditResult,jdbcType=INTEGER}, #{auditOpinion,jdbcType=VARCHAR})
+	</insert>
+
+    <insert id="insertSelective" parameterType="com.example.warehouse.entity.ping.PingMainAudit">
+        insert into ping_main
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="createId != null">
+                create_id,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="updateId != null">
+                update_id,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="version != null">
+                version,
+            </if>
+            <if test="auditorId != null">
+                auditor_id,
+            </if>
+            <if test="auditorName != null">
+                auditor_name,
+            </if>
+            <if test="pId != null">
+                p_id,
+            </if>
+            <if test="pOrder != null">
+                p_order,
+            </if>
+            <if test="auditResult != null">
+                audit_result,
+            </if>
+            <if test="auditOpinion != null">
+                audit_opinion,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{create_time,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createId != null">
+                #{create_id,jdbcType=INTEGER},
+            </if>
+            <if test="updateTime != null">
+                #{update_time,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateId != null">
+                #{update_id,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=INTEGER},
+            </if>
+            <if test="version != null">
+                #{version,jdbcType=INTEGER},
+            </if>
+            <if test="auditorId != null">
+                #{auditor_id,jdbcType=INTEGER},
+            </if>
+            <if test="auditorName != null">
+                #{auditor_name,jdbcType=VARCHAR},
+            </if>
+            <if test="pId != null">
+                #{p_id,jdbcType=INTEGER},
+            </if>
+            <if test="pOrder != null">
+                #{p_order,jdbcType=VARCHAR},
+            </if>
+            <if test="auditResult != null">
+                #{audit_result,jdbcType=INTEGER},
+            </if>
+            <if test="auditOpinion != null">
+                #{audit_opinion,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.example.warehouse.entity.ping.PingMain">
+        update ping_main
+        <set>
+            <if test="id != null">
+                id = #{id,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createId != null">
+                create_id = #{createId,jdbcType=INTEGER},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateId != null">
+                update_id = #{updateId,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="version != null">
+                version = #{version,jdbcType=INTEGER},
+            </if>
+            <if test="auditorId != null">
+                auditor_id = #{auditorId,jdbcType=INTEGER},
+            </if>
+            <if test="auditorName != null">
+                auditor_name = #{auditorName,jdbcType=VARCHAR},
+            </if>
+            <if test="pId != null">
+                p_id = #{pId,jdbcType=INTEGER},
+            </if>
+            <if test="pOrder != null">
+                p_order = #{pOrder,jdbcType=VARCHAR},
+            </if>
+            <if test="auditResult != null">
+                audit_result = #{auditResult,jdbcType=INTEGER},
+            </if>
+            <if test="auditOpinion != null">
+                audit_opinion = #{auditOpinion,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.example.warehouse.entity.ping.PingMain">
+        update ping_main
+        <set>
+            id = #{id,jdbcType=INTEGER},
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+            create_id = #{createId,jdbcType=INTEGER},
+            update_time = #{updateTime,jdbcType=TIMESTAMP},
+            update_id = #{updateId,jdbcType=INTEGER},
+            status = #{status,jdbcType=INTEGER},
+            version = #{version,jdbcType=INTEGER},
+            auditor_id = #{auditorId,jdbcType=INTEGER},
+            auditor_name = #{auditorName,jdbcType=VARCHAR},
+            p_id = #{pId,jdbcType=INTEGER},
+            p_order = #{pOrder,jdbcType=VARCHAR},
+            audit_result = #{auditResult,jdbcType=INTEGER},
+            audit_opinion = #{auditOpinion,jdbcType=VARCHAR},
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <select id="selectByPid" resultType="java.lang.Integer" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/>
+        from ping_main_audit
+        where status = 1
+        and p_id = #{pid}
+    </select>
+</mapper>

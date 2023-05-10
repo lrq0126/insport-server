@@ -13,11 +13,11 @@
 
             <div class="title-container"
                  style="text-align: center">
-                <img src="../../assets/images/login_logo.png"
+                <img src="../../assets/images/logo.png"
                      alt=""
-                     style="width: 110px;height: 90px;margin-top: 20px;">
-                <h3 class="title">云仓管理系统</h3>
-                <p style="text-align: center;font-size: 13px;color: #999;">广州飞轮云仓物流科技有限公司</p>
+                     style="width: 110px; height: 110px; margin-top: 20px; border-radius: 55px;">
+                <h3 class="title">小挎兜管理系统</h3>
+                <p style="text-align: center;font-size: 13px;color: #999;">广州小挎兜物流科技有限公司</p>
             </div>
 
             <el-form-item prop="username">
@@ -293,7 +293,7 @@ $light_gray: #333;
     width: 100%;
     min-height: 100%;
     // background-image: linear-gradient(to left, #2d9bfd 30%, #5cc1d4 100%);
-    background-image: url(../../assets/images/timg-1.jpg);
+    background-image: url(../../assets/images/login-bg.jpg);
     background-size: cover;
     background-position: center;
     position: relative;

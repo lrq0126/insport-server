@@ -6,6 +6,7 @@ import com.example.warehouse.common.PageHelp;
 import com.example.warehouse.entity.CustomerPack;
 import com.example.warehouse.entity.CustomerPackNumber;
 import com.example.warehouse.log.SysLog;
+import com.example.warehouse.model.PageResultModel;
 import com.example.warehouse.model.ResultModel;
 import com.example.warehouse.service.CustomerPackNumberService;
 import com.example.warehouse.service.CustomerPackService;
@@ -13,10 +14,11 @@ import com.example.warehouse.service.GoodsService;
 import com.example.warehouse.service.sys.TrajectoryService;
 import com.example.warehouse.service.wechat.SendMessageServer;
 import com.example.warehouse.vo.GoodsVo;
-import com.example.warehouse.vo.customer.CustomerPackNumberVo;
-import com.example.warehouse.vo.customer.CustomerPackVo;
+import com.example.warehouse.vo.customerPack.CustomerPackNumberVo;
+import com.example.warehouse.vo.customerPack.CustomerPackVo;
 import com.example.warehouse.vo.customer.OrderAmountChangeReqVo;
 import com.example.warehouse.vo.customer.OrderPayReqVo;
+import com.example.warehouse.vo.customerPack.RouteCustomerPackReqVo;
 import com.example.warehouse.vo.mobile.PackSortReqVo;
 import com.example.warehouse.vo.packVo.PackConditionsQueryReqVo;
 import com.example.warehouse.vo.packVo.PackedReqVo;
@@ -756,9 +758,52 @@ public class CustomerPackController {
         customerPackService.printInvoice(requestMap, request, response);
     }
 
+    /**
+     * 查看当前订单的身份证信息
+     * @param customerPackId
+     * @return
+     */
+    @PostMapping("/getCustomerPackIdentity")
+    @ResponseBody
+    public ResponseEntity<ResultModel> getCustomerPackIdentity(Integer customerPackId) {
+        return customerPackService.getCustomerPackIdentity(customerPackId);
+    }
+
+    /**
+     * 查看订单货物明细
+     * @param customerPackId
+     * @return
+     */
+    @PostMapping("/getGoodsList")
+    @ResponseBody
+    public ResponseEntity<ResultModel> getGoodsList(Integer customerPackId) {
+        return customerPackService.getGoodsList(customerPackId);
+    }
+
+    /**
+     * 查看订单货物明细
+     * @param routeCustomerPackReqVo
+     * @return
+     */
+    @PostMapping("/getCustomerPackList")
+    @ResponseBody
+    public ResponseEntity<PageResultModel> getCustomerPackList(RouteCustomerPackReqVo routeCustomerPackReqVo) {
+        return customerPackService.getRouteCustomerPackList(routeCustomerPackReqVo);
+    }
+
+    /**
+     * 订单分箱
+     * @param id
+     * @return
+     */
+    @PostMapping("/orderSplit")
+    @ResponseBody
+    public ResponseEntity<ResultModel> orderSplit(int id) {
+        return customerPackService.orderSplit(id);
+    }
 
 
-
+    // ===================分拣机接口====================
     @PostMapping("/ocr/uploadOrderPicture")
     @ResponseBody
     public ResponseEntity<ResultModel> ocrUploadOrderPicture(@RequestParam String orderNumber,

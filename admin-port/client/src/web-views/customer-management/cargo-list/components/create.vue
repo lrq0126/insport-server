@@ -201,11 +201,29 @@
             </el-col>
           </el-col>
 
+
           <el-col :span="24">
             <el-col :span="5" style="width: 365px">
-              <el-form-item label="区：">
-                <!-- prop="storageArea"> -->
-                <el-select
+              <el-form-item label="国家/地区：" prop="commercialAreaId" v-if="cookiesAreaId == 1">
+                <el-select v-model="formItem.commercialAreaName"
+                  placeholder="请选择国家/地区"
+                  @change="changeCommercialArea(formItem.commercialAreaName)"
+                  style="width: 420px">
+                  <el-option
+                    v-for="item in commercialAreaData"
+                    :key="item.commercialAreaName"
+                    :value="item.commercialAreaName"
+                    :label="item.commercialAreaName"
+                  />
+                </el-select>
+              </el-form-item>
+            </el-col>
+          </el-col>
+
+          <el-col :span="24">
+            <el-col :span="5" style="width: 365px">
+              <el-form-item label="区：" prop="storageArea" >
+                <el-select filterable
                   v-model="formItem.storageArea"
                   placeholder="请选择区号"
                   @change="changeSelect"
@@ -221,18 +239,17 @@
               </el-form-item>
             </el-col>
             <el-col :span="6">
-              <el-form-item label="排：" label-width="75px">
-                <!-- prop="storageRow" -->
+              <el-form-item label="排：" label-width="75px" prop="storageRow">
                 <el-select
                   v-model="formItem.storageRow"
                   placeholder="请选择排号"
                   style="width: 180px"
                 >
                   <el-option
-                    v-for="item in storageRowData"
-                    :key="item"
-                    :value="item"
-                    :label="item"
+                    v-for="(item, index) in storageRowData"
+                    :key="index"
+                    :value="item.shelvesRow"
+                    :label="item.shelvesRow"
                   />
                 </el-select>
               </el-form-item>
@@ -356,6 +373,7 @@ export default {
     selectData() {
       this.deliveryCompanyData = this.selectData.deliveryCompany;
       this.storageAreaData = this.selectData.storage;
+      this.commercialAreaData = this.selectData.commercialAreaData;
     },
   },
   data() {
@@ -414,7 +432,13 @@ export default {
       saving: false,
       noticeType: [], // 通知公告
       customerGoodsData: [],
+
+      commercialAreaData: [],
+
       audioUrl1: "http://www.wennever.cn/upload/pdf/warein.mp3",
+
+      cookiesAreaId : Cookies.get("commercialAreaId"),
+
       formItem: {
         goodsName: "客户未预报名称",
         storageArea: "",
@@ -436,10 +460,15 @@ export default {
         message: "",
         type: "1", // type == 1 是入仓 type == 2 是预录入
         operatorName: Cookies.get("userName"),
+      
         goodsNo: "",
         customerNoTest: "",
         loginNameTest: "",
+        
+        commercialAreaId: Cookies.get("commercialAreaId"),
+        commercialAreaName: Cookies.get("commercialAreaName"),
       },
+
       formItemRules: {
         deliveryOrderNo: [
           { required: true, message: "快递单号/唛头不能为空", trigger: "blur" },
@@ -462,6 +491,9 @@ export default {
         // packageType: [
         //     { required: true, message: '请选择包装类型', trigger: 'change' },
         // ],
+        commercialAreaId: [
+            { required: true, message: '国家/地区不能为空', trigger: 'change' },
+        ],
         packageNum: [
           { required: true, message: "请输入货物件数", trigger: "blur" },
         ],
@@ -475,12 +507,12 @@ export default {
         width: [{ required: true, message: "货物宽度不能为空", trigger: "change" }],
         height: [{ required: true, message: "货物高度不能为空", trigger: "change" }],
         kg: [{ required: true, message: "货物重量不能为空", trigger: "change" }],
-        // storageArea: [
-        //     { required: true, message: '请选择区号', trigger: 'change' },
-        // ],
-        // storageRow: [
-        //     { required: true, message: '请选择排号', trigger: 'change' },
-        // ],
+        storageArea: [
+            { required: true, message: '请选择区号', trigger: 'change' },
+        ],
+        storageRow: [
+            { required: true, message: '请选择排号', trigger: 'change' },
+        ],
       },
     };
   },
@@ -703,10 +735,21 @@ export default {
       this.formItem.storageRow = "";
       this.storageAreaData.forEach((ele) => {
         if (ele.storageArea == value) {
-          this.storageRowData = Number(ele.storageRow);
+          this.storageRowData = ele.storageRow;
         }
       });
     },
+
+    changeCommercialArea(value){
+      this.formItem.commercialAreaName = ""
+      this.commercialAreaData.forEach((ele) => {
+        if (ele.commercialAreaName == value) {
+          this.formItem.commercialAreaId = ele.id;
+          this.formItem.commercialAreaName = ele.commercialAreaName;
+        }
+      });
+    },
+
 
     /**
      * 重置
@@ -725,6 +768,7 @@ export default {
       this.formItem.message = "";
       this.formItem.operatorCode = Cookies.get("usercode");
       this.formItem.operatorName = Cookies.get("userName");
+      this.formItem.commercialAreaId = Cookies.get("commercialAreaId");
       this.formItem.customerNo = "";
       this.formItem.loginName = "";
       this.formItem.customerNoTest = "";
@@ -753,14 +797,11 @@ export default {
               this.formItem.customerNo = "";
               this.formItem.deliveryNo = "";
               this.formItem.packageNum = 1;
-              // this.formItem.kg =
               this.formItem.vol = this.formItem.length = 1;
               this.formItem.width = 1;
               this.formItem.height = 1;
-              // this.formItem.packageType = "袋子";
               this.formItem.message = "";
               this.formItem.goodsNo = "";
-              // this.formItem.deliveryOrderNo = res.content.deliveryOrderNo
               this.storageRowData = []; // 初始化值
               var elInput = document.getElementById("loginNameFu"); //根据id选择器选中对象
               elInput.focus();

@@ -67,7 +67,7 @@ public class FileUtil {
             strBuilder.append(fileType);
             strBuilder.append(separator);
         }
-        strBuilder.append(DateUtil.getYMStr());
+        strBuilder.append(DateUtil.formatToStr(new Date(), "yyyy-MM"));
         strBuilder.append(separator);
         if (StringUtils.isNotBlank(fileName)) {
             strBuilder.append(fileName);

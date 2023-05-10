@@ -2,14 +2,12 @@ package com.example.warehouse.service;
 
 import com.example.warehouse.controller.weChat.WXMessageBean;
 import com.example.warehouse.entity.Customer;
-import com.example.warehouse.entity.customer.CustomerIdentity;
 import com.example.warehouse.model.PageResultModel;
 import com.example.warehouse.model.ResultModel;
-import com.example.warehouse.vo.customer.CustomerOrderReqVo;
+import com.example.warehouse.vo.customerPack.CustomerOrderReqVo;
 import com.example.warehouse.vo.customer.CustomerReqVo;
 import com.example.warehouse.vo.customer.PopularizeDetailReqVo;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

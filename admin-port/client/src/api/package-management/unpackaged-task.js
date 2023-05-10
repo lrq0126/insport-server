@@ -461,3 +461,59 @@ export function updatePackValuation({
   });
 }
 
+
+ export function getCustomerPackIdentity(customerPackId){
+  return request({
+    url: "customerPack/getCustomerPackIdentity",
+    method: "post",
+    data:{
+      customerPackId: customerPackId
+    }
+  });
+}
+
+
+
+export function getGoodsList(customerPackId){
+  return request({
+    url: "customerPack/getGoodsList",
+    method: "post",
+    data:{
+      customerPackId: customerPackId
+    }
+  });
+}
+
+export function getCustomerPackList({
+  page,
+  limit,
+  customerName,
+  loginName,
+  routeId,
+  customerPackIds,
+  businessNumber
+}){
+  return request({
+    url: "/customerPack/getCustomerPackList",
+    method: "post",
+    data:{
+      pageNumber: page,
+      pageSize: limit,
+      customerName: customerName,
+      loginName: loginName,
+      routeId: routeId,
+      customerPackIds: customerPackIds,
+      businessNumber: businessNumber
+    }
+  });
+}
+
+export function orderSplit(id){
+  return request({
+    url: "/customerPack/orderSplit",
+    method: "post",
+    data:{
+      id: id
+    }
+  });
+}

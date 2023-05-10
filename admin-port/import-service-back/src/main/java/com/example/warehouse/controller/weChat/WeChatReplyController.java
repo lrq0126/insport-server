@@ -39,4 +39,9 @@ public class WeChatReplyController {
         return wechatReplyService.deleteReply(id);
     }
 
+
+    @PostMapping("getReplyLogList")
+    private ResponseEntity<PageResultModel> getReplyLogList(WechatReplyReqVo wechatReplyReqVo){
+        return wechatReplyService.getReplyLogList(wechatReplyReqVo);
+    }
 }

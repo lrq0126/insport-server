@@ -28,6 +28,17 @@ export function getSelectCargoList () {
 }
 
 /**
+ * 查询国家/区域列表
+ * @return {type} {description}
+ */
+export function getCommercialArea() {
+  return request({
+    url: "commercialArea/getCommercialAreaSelectList",
+    method: "get"
+  });
+}
+
+/**
  * 查询快递公司列表
  * @return {type} {description}
  */
@@ -58,6 +69,7 @@ export function getCargoList ({
   customerName,
   startKg,
   endKg,
+  commercialAreaId,
 }) {
   return request({
     url: "goods/find/all",
@@ -79,6 +91,8 @@ export function getCargoList ({
       customerName: customerName,
       startKg: startKg,
       endKg: endKg,
+
+      commercialAreaId: commercialAreaId
     }
   });
 }
@@ -145,6 +159,7 @@ export function getInAdvanceEntryCargoList ({
   goodsType,
   loginName,
   customerName,
+  commercialAreaId
 }) {
   return request({
     url: "goods/find/allRe",
@@ -158,7 +173,8 @@ export function getInAdvanceEntryCargoList ({
       deliveryOrderNo: deliveryOrderNo,
       goodsType: goodsType,
       loginName: loginName,
-      customerName: customerName
+      customerName: customerName,
+      commercialAreaId: commercialAreaId
     }
   });
 }
@@ -230,7 +246,10 @@ export function addCargoList ({
   message,
   type,
   operatorName,
-  goodsNo
+  goodsNo,
+  
+  commercialAreaId,
+  commercialAreaName,
 }) {
   const data = {
     goodsName: goodsName,
@@ -251,7 +270,9 @@ export function addCargoList ({
     type: type, // type == 1 是入仓 type == 2 是预录入
     operatorName: operatorName,
     message: message,
-    goodsNo: goodsNo
+    goodsNo: goodsNo,
+    commercialAreaId: commercialAreaId,
+    commercialAreaName: commercialAreaName,
   };
   return request({
     url: "goods/create",

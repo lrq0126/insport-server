@@ -164,6 +164,7 @@ public class TimeLimitActivityServiceImpl implements TimeLimitActivityService {
             CustomerPackReceiverAddress customerPackReceiverAddress = new CustomerPackReceiverAddress();
             customerPackReceiverAddress.setAddressee(customerAddress.getAddressee());
             customerPackReceiverAddress.setCustomerPackId(customerPack.getId());
+            customerPackReceiverAddress.setAddressId(customerAddress.getId());
             customerPackReceiverAddress.setPhoneNumber(customerAddress.getPhoneNumber());
             customerPackReceiverAddress.setReceiverAddress(customerAddress.getReceiverAddress());
             customerPackReceiverAddress.setStatus(1);

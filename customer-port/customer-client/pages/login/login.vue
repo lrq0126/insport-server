@@ -37,13 +37,13 @@
                                   @click="handleGo('../login/register')">没有账号，立即注册</view>
                         </view> -->
                     </form>
-                    <view v-if="is_weixin()" class="menber-list-butt">
+                    <!-- <view v-if="is_weixin()" class="menber-list-butt">
                         <view @click="handleWX">
                             <img src="../../static/checkin-1.jpg" />
                             <text id="authLogin">微信登录</text>
                         </view>
                     </view>
-					<!-- <view v-else class="facebook-butt">
+					<view v-else class="facebook-butt">
 						<view @click="facebookLogin">
 							<img src="../../static/icon/facebook.png"/>
 							<text>Facebook</text>
@@ -383,7 +383,7 @@ export default {
         handleWX () {
 			let url = 'https://open.weixin.qq.com/connect/oauth2/authorize';
 			let appid = 'wxfe820ab4d2e99546';
-			let redirect_uri = 'http://jiyun.flycloudstorage.com/client/jiyun/#/pages/mine/index';
+			let redirect_uri = 'http://jiyun.bainligou.com/client/jiyun/#/pages/mine/index';
 			let scope = 'snsapi_userinfo';
 			let state = 'WeChat';
 			redirect_uri = encodeURIComponent(redirect_uri);
@@ -395,7 +395,7 @@ export default {
 		facebookLogin(){
 			let clientId = "wxfe820ab4d2e99546";
 			let scope = "";
-            window.location.href = 'https://www.facebook.com/v3.3/dialog/oauth?client_id='+clientId+'&redirect_uri=http://jiyun.flycloudstorage.com/client/jiyun&scope='+scope+'&response_type=code&state=FaceBook'		
+            window.location.href = 'https://www.facebook.com/v3.3/dialog/oauth?client_id='+clientId+'&redirect_uri=http://jiyun.bainligou.com/client/jiyun&scope='+scope+'&response_type=code&state=FaceBook'		
 		}
     }
 }

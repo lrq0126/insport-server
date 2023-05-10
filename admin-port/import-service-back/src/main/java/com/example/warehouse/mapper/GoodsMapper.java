@@ -3,7 +3,7 @@ package com.example.warehouse.mapper;
 import com.example.warehouse.entity.Goods;
 import com.example.warehouse.vo.GoodsVo;
 import com.example.warehouse.vo.applyPack.GoodsRequestVo;
-import com.example.warehouse.vo.customer.CustomerOrderReqVo;
+import com.example.warehouse.vo.customerPack.CustomerOrderReqVo;
 import com.example.warehouse.vo.detailedListVo.GoodsDetailedListVo;
 import com.example.warehouse.vo.goods.GoodsReqVo;
 import org.apache.ibatis.annotations.Param;
@@ -305,4 +305,5 @@ public interface GoodsMapper {
     List<Goods> selectGoodsByGoodsType(int goodsType);
 
     int getGoodsSum(String customerNo);
+
 }

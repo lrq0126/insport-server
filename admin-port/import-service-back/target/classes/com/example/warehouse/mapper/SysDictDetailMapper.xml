@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.warehouse.mapper.SysDictDetailMapper">
+    <resultMap id="BaseResultMap" type="com.example.warehouse.entity.SysDictDetail">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="sdm_id" jdbcType="INTEGER" property="sdmId"/>
+        <result column="sdm_code" jdbcType="VARCHAR" property="sdmCode"/>
+        <result column="sdd_code" jdbcType="VARCHAR" property="sddCode"/>
+        <result column="sdd_name" jdbcType="VARCHAR" property="sddName"/>
+        <result column="sdd_seq" jdbcType="INTEGER" property="sddSeq"/>
+        <result column="sdd_remark" jdbcType="VARCHAR" property="sddRemark"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="create_id" jdbcType="INTEGER" property="createId"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="last_update_id" jdbcType="INTEGER" property="lastUpdateId"/>
+        <result column="last_update_time" jdbcType="TIMESTAMP" property="lastUpdateTime"/>
+        <result column="is_enable" jdbcType="INTEGER" property="isEnable"/>
+        <result column="alternate_field" jdbcType="VARCHAR" property="alternateField"/>
+    </resultMap>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_dict_detail
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sys_dict_detail
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.example.warehouse.entity.SysDictDetail"
+            useGeneratedKeys="true">
+    insert into sys_dict_detail (sdm_id, sdm_code, sdd_code,
+      sdd_name, sdd_seq, sdd_remark,
+      `status`, create_id, create_time,
+      last_update_id, last_update_time, is_enable, alternate_field
+      )
+    values (#{sdmId,jdbcType=INTEGER}, #{sdmCode,jdbcType=VARCHAR}, #{sddCode,jdbcType=VARCHAR},
+      #{sddName,jdbcType=VARCHAR}, #{sddSeq,jdbcType=INTEGER}, #{sddRemark,jdbcType=VARCHAR},
+      #{status,jdbcType=INTEGER}, #{createId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP},
+      #{lastUpdateId,jdbcType=INTEGER}, #{lastUpdateTime,jdbcType=TIMESTAMP}, #{isEnable,jdbcType=INTEGER},
+      #{alternateField,jdbcType=VARCHAR}
+      )
+  </insert>
+    <insert id="insertSelective" keyColumn="id" keyProperty="id"
+            parameterType="com.example.warehouse.entity.SysDictDetail" useGeneratedKeys="true">
+        insert into sys_dict_detail
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="sdmId != null">
+                sdm_id,
+            </if>
+            <if test="sdmCode != null">
+                sdm_code,
+            </if>
+            <if test="sddCode != null">
+                sdd_code,
+            </if>
+            <if test="sddName != null">
+                sdd_name,
+            </if>
+            <if test="sddSeq != null">
+                sdd_seq,
+            </if>
+            <if test="sddRemark != null">
+                sdd_remark,
+            </if>
+            <if test="status != null">
+                `status`,
+            </if>
+            <if test="createId != null">
+                create_id,
+            </if>
+                create_time,
+            <if test="lastUpdateId != null">
+                last_update_id,
+            </if>
+            <if test="lastUpdateTime != null">
+                last_update_time,
+            </if>
+            <if test="isEnable != null">
+                is_enable,
+            </if>
+            <if test="alternateField != null and alternateField != ''">
+                alternate_field,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="sdmId != null">
+                #{sdmId,jdbcType=INTEGER},
+            </if>
+            <if test="sdmCode != null">
+                #{sdmCode,jdbcType=VARCHAR},
+            </if>
+            <if test="sddCode != null">
+                #{sddCode,jdbcType=VARCHAR},
+            </if>
+            <if test="sddName != null">
+                #{sddName,jdbcType=VARCHAR},
+            </if>
+            <if test="sddSeq != null">
+                #{sddSeq,jdbcType=INTEGER},
+            </if>
+            <if test="sddRemark != null">
+                #{sddRemark,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=INTEGER},
+            </if>
+            <if test="createId != null">
+                #{createId,jdbcType=INTEGER},
+            </if>
+                now(),
+            <if test="lastUpdateId != null">
+                #{lastUpdateId,jdbcType=INTEGER},
+            </if>
+            <if test="lastUpdateTime != null">
+                #{lastUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isEnable != null">
+                #{isEnable,jdbcType=INTEGER},
+            </if>
+            <if test="alternateField != null and alternateField != ''">
+                #{alternateField,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.example.warehouse.entity.SysDictDetail">
+        update sys_dict_detail
+        <set>
+            <if test="sdmId != null">
+                sdm_id = #{sdmId,jdbcType=INTEGER},
+            </if>
+            <if test="sdmCode != null">
+                sdm_code = #{sdmCode,jdbcType=VARCHAR},
+            </if>
+            <if test="sddCode != null">
+                sdd_code = #{sddCode,jdbcType=VARCHAR},
+            </if>
+            <if test="sddName != null">
+                sdd_name = #{sddName,jdbcType=VARCHAR},
+            </if>
+            <if test="sddSeq != null">
+                sdd_seq = #{sddSeq,jdbcType=INTEGER},
+            </if>
+            <if test="sddRemark != null">
+                sdd_remark = #{sddRemark,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                `status` = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="createId != null">
+                create_id = #{createId,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastUpdateId != null">
+                last_update_id = #{lastUpdateId,jdbcType=INTEGER},
+            </if>
+            <if test="lastUpdateTime != null">
+                last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isEnable != null">
+                is_enable = #{isEnable,jdbcType=INTEGER},
+            </if>
+            <if test="alternateField != null and alternateField != ''">
+                alternate_field = #{alternateField,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.example.warehouse.entity.SysDictDetail">
+    update sys_dict_detail
+    set sdm_id = #{sdmId,jdbcType=INTEGER},
+      sdm_code = #{sdmCode,jdbcType=VARCHAR},
+      sdd_code = #{sddCode,jdbcType=VARCHAR},
+      sdd_name = #{sddName,jdbcType=VARCHAR},
+      sdd_seq = #{sddSeq,jdbcType=INTEGER},
+      sdd_remark = #{sddRemark,jdbcType=VARCHAR},
+      `status` = #{status,jdbcType=INTEGER},
+      create_id = #{createId,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      last_update_id = #{lastUpdateId,jdbcType=INTEGER},
+      last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+      is_enable = #{isEnable,jdbcType=INTEGER},
+      alternate_field = #{alternateField,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+    <select id="selectOfTrans" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        <include refid="table"/>
+        where sdm_code = 'trans_type' and is_enable = 1
+    </select>
+    <select id="selectOfWeightRule" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        <include refid="table"/>
+        where sdm_code = 'weight_rule' and is_enable = 1
+    </select>
+
+    <select id="selectDictByType" resultMap="BaseResultMap" parameterType="java.util.Map">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        <include refid="table"/>
+        where is_enable = 1 and status = 1
+        <if test="sdmCode!= null and sdmCode!=''">
+            and sdm_code = #{sdmCode,jdbcType=VARCHAR}
+        </if>
+        <if test="sddName!= null and sddName!=''">
+            and sdd_name regexp #{sddName}
+        </if>
+        order by sdd_seq asc
+    </select>
+
+    <select id="selectCount" resultType="java.lang.Integer">
+        select count(id)
+        from sys_dict_detail
+        <where>
+            `status` = 1
+            <if test="sdmCode != null and sdmCode != ''">
+                and sdm_code = #{sdmCode}
+            </if>
+            <if test="sddName != null and sddName != ''">
+                and sdd_name regexp #{sddName}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectDictList" resultMap="BaseResultMap">
+        select
+          <include refid="Base_Column_List"/>
+        from sys_dict_detail
+        <where>
+            `status` = 1
+            <if test="sdmCode != null and sdmCode != ''">
+                and sdm_code = #{sdmCode}
+            </if>
+            <if test="sddName != null and sddName != ''">
+                and sdd_name regexp #{sddName}
+            </if>
+        </where>
+        limit #{pageNumber}, #{pageSize}
+    </select>
+
+    <select id="selectDictRepeat" resultType="java.lang.Integer">
+        select count(id)
+        from sys_dict_detail
+        <where>
+            `status` = 1
+            <if test="sddName != null and sddName != ''">
+                and sdd_name = #{sddName}
+            </if>
+            <if test="sddCode != null and sddCode != ''">
+                and sdd_code != #{sddCode}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectDictRemarkRepeat" resultType="java.lang.Integer">
+        select count(id)
+        from sys_dict_detail
+        <where>
+            `status` = 1
+            <if test="sddRemark != null and sddRemark != ''">
+                and sdd_remark = #{sddRemark}
+            </if>
+            <if test="sddCode != null and sddCode != ''">
+                and sdd_code != #{sddCode}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectDictBySdmCode" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_dict_detail
+        <where>
+            `status` = 1
+            and sdm_code = #{sdmCode}
+        </where>
+    </select>
+
+    <select id="selectDictBySddCode" resultMap="BaseResultMap">
+        select
+        id, sdm_id, sdm_code, sdd_code, sdd_name, sdd_seq, sdd_remark, alternate_field
+        from sys_dict_detail
+        <where>
+            `status` = 1
+            and is_enable = 1
+            and sdd_code = #{sddCode}
+        </where>
+
+    </select>
+
+    <select id="getBacklogType" resultType="com.example.warehouse.vo.backlogVo.BacklogTypeVo">
+        select
+        id, sdd_name as `name`, alternate_field as `value`
+        from sys_dict_detail
+        <where>
+            `status` = 1
+            and is_enable = 1
+            and sdm_code = 'backlog_type'
+        </where>
+    </select>
+
+    <select id="getBacklogTypeCount" resultType="java.lang.Integer">
+        select
+          count(1)
+        from sys_dict_detail
+        <where>
+            sdm_code = 'backlog_type'
+        </where>
+    </select>
+    <select id="getDictListBySdmCode" resultType="map">
+        select id, sdd_code as sddCode, sdd_name as name, sdd_remark as `value`, alternate_field as alternateField
+        from sys_dict_detail
+        <where>
+            status = 1 and sdm_code = #{sdmCode}
+        </where>
+    </select>
+
+    <sql id="table">sys_dict_detail</sql>
+
+    <sql id="Base_Column_List">
+    id, sdm_id, sdm_code, sdd_code, sdd_name, sdd_seq, sdd_remark, `status`, create_id,
+    create_time, last_update_id, last_update_time, is_enable, alternate_field
+  </sql>
+</mapper>

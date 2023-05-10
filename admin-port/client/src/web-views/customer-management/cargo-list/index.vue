@@ -28,14 +28,14 @@
             <el-tab-pane label="入仓列表"
                          name="listPane">
                 <keep-alive>
-                    <list-pane ref="listPane" />
+                    <list-pane ref="listPane" :select-data="selectData"/>
                 </keep-alive>
             </el-tab-pane>
 
             <el-tab-pane label="预录入列表"
                          name="inAdvanceEntryList">
                 <keep-alive>
-                    <in-advance-entry-list ref="inAdvanceEntryList" />
+                    <in-advance-entry-list ref="inAdvanceEntryList" :select-data="selectData"/>
                 </keep-alive>
             </el-tab-pane>
 
@@ -70,7 +70,7 @@ import createPane from './components/create'
 import shelves from './components/shelves'
 import shelvesTest from './components/shelves-test'
 import WarehouseSorting from './components/warehouse-sorting'
-import { getStorageList, getSelectCargoList, getDeliveryCompany } from '@/api/customer-management/cargo-list'
+import { getStorageList, getSelectCargoList, getDeliveryCompany, getCommercialArea } from '@/api/customer-management/cargo-list'
 import sweepCodeOutbound from './components/sweep-code-outbound'
 
 export default {
@@ -101,12 +101,12 @@ export default {
         handleSearch () {
             const p1 = getStorageList()
             const p2 = getDeliveryCompany();
-            Promise.all([p1,p2]).then(res => {
+            const p3 = getCommercialArea();
+            Promise.all([p1,p2,p3]).then(res => {
                 this.selectData = res[0].content
                 this.selectData.deliveryCompany = res[1].content.deliveryCompany
+                this.selectData.commercialAreaData = res[2].content
             })
-
-            console.log( "selectData:" , this.selectData );
         },
 
         handTabClick (data) {

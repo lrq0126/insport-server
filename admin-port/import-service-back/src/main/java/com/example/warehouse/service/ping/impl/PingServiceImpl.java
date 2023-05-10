@@ -1,5 +1,6 @@
 package com.example.warehouse.service.ping.impl;
 
+import com.example.warehouse.common.DateUtil;
 import com.example.warehouse.common.PageData;
 import com.example.warehouse.common.PageHelp;
 import com.example.warehouse.entity.*;
@@ -30,7 +31,7 @@ import com.example.warehouse.service.ping.PingService;
 import com.example.warehouse.common.PingUtil;
 import com.example.warehouse.service.wechat.SendMessageServer;
 import com.example.warehouse.vo.GoodsVo;
-import com.example.warehouse.vo.customer.CustomerPackVo;
+import com.example.warehouse.vo.customerPack.CustomerPackVo;
 import com.example.warehouse.vo.ping.requestVo.AuditRequestVo;
 import com.example.warehouse.vo.ping.requestVo.PingRequestVo;
 import com.example.warehouse.vo.ping.responseVo.PingMainOrderRespVo;
@@ -742,7 +743,7 @@ public class PingServiceImpl implements PingService {
             return new ResponseEntity<>(ResultModel.error(TRANSPORT_ROUTE_PRICE_ERROR), HttpStatus.OK);
         }
 
-        pingMainRespVo = pingMainEnhance(pingMainRespVo);
+//        pingMainRespVo = pingMainEnhance(pingMainRespVo);
 
         // 如果是待审核状态的，直接返回（只需要基础信息）
         if (pingMainRespVo.getPType() == WAITING_FOR_AUDIT.getValue()) {
@@ -832,6 +833,28 @@ public class PingServiceImpl implements PingService {
         pingMainMapper.updateByShipped(id);
         return new ResponseEntity<>(ResultModel.ok(), HttpStatus.OK);
     }
+
+    @Override
+    public ResponseEntity<ResultModel> savePin(PingMain pingMain) {
+        User user = (User) SecurityUtils.getSubject().getPrincipal();
+        if(user == null){
+            return new ResponseEntity<>(ResultModel.error(USER_NOT_LOGIN), HttpStatus.OK);
+        }
+        if(pingMain.getId() == null){
+            pingMain.setPType(1);
+            pingMain.setStatus(1);
+            pingMain.setCreateId(user.getId());
+            pingMain.setCreateTime(DateUtil.getDateFormate(new Date(), DateUtil.DEFAULT_TIMESTAMP_FORMAT));
+            pingMainMapper.insertSelective(pingMain);
+        }else {
+            pingMain.setLastUpdateId(user.getId());
+            pingMain.setLastUpdateTime(DateUtil.getDateFormate(new Date(), DateUtil.DEFAULT_TIMESTAMP_FORMAT));
+            pingMainMapper.updateByPrimaryKeySelective(pingMain);
+        }
+        return new ResponseEntity<>(ResultModel.ok(), HttpStatus.OK);
+    }
+
+
 
     private boolean cheekPingOrderIsPay(List<PingMainOrderRespVo> pingMainOrderRespVoList) {
         for (PingMainOrderRespVo pingMainOrderRespVo : pingMainOrderRespVoList) {

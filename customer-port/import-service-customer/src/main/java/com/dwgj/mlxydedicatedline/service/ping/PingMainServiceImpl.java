@@ -250,6 +250,7 @@ public class PingMainServiceImpl implements PingMainService {
 
         CustomerPackReceiverAddress customerPackReceiverAddress = new CustomerPackReceiverAddress();
         customerPackReceiverAddress.setAddressee(customerAddress.getAddressee());
+        customerPackReceiverAddress.setAddressId(customerAddress.getId());
         customerPackReceiverAddress.setReceiverAddress(customerAddress.getReceiverAddress());
         customerPackReceiverAddress.setPhoneNumber(customerAddress.getPhoneNumber());
         customerPackReceiverAddress.setCode(customerAddress.getCode());
@@ -1020,6 +1021,7 @@ public class PingMainServiceImpl implements PingMainService {
     private CustomerPackReceiverAddress cpraSetting(int packId, CustomerPackReceiverAddress customerPackReceiverAddress) {
         CustomerPackReceiverAddress insertAddress = new CustomerPackReceiverAddress();
         insertAddress.setCustomerPackId(packId);
+        insertAddress.setAddressId(customerPackReceiverAddress.getAddressId());
         insertAddress.setAddressee(customerPackReceiverAddress.getAddressee());
         insertAddress.setCode(customerPackReceiverAddress.getCode());
         insertAddress.setPhoneNumber(customerPackReceiverAddress.getPhoneNumber());

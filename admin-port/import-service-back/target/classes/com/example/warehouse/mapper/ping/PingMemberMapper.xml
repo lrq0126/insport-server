@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.warehouse.mapper.ping.PingMemberMapper">
+    <resultMap id="BaseResultMap" type="com.example.warehouse.entity.ping.PingMember">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="p_id" jdbcType="INTEGER" property="pId"/>
+        <result column="customer_id" jdbcType="INTEGER" property="customerId"/>
+        <result column="goods_id" jdbcType="INTEGER" property="goodsId"/>
+        <result column="add_time" jdbcType="TIMESTAMP" property="addTime"/>
+        <result column="pick_time" jdbcType="TIMESTAMP" property="pickTime"/>
+        <result column="is_picked" jdbcType="INTEGER" property="isPicked"/>
+        <result column="sort_no" jdbcType="INTEGER" property="sortNo"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="create_id" jdbcType="INTEGER" property="createId"/>
+        <result column="last_update_time" jdbcType="TIMESTAMP" property="lastUpdateTime"/>
+        <result column="last_update_id" jdbcType="INTEGER" property="lastUpdateId"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, p_id, customer_id, goods_id, add_time, pick_time, is_picked, sort_no, `status`,
+    create_time, create_id, last_update_time, last_update_id
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from ping_member
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from ping_member
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.example.warehouse.entity.ping.PingMember">
+    insert into ping_member (id, p_id, customer_id,
+      goods_id, add_time, pick_time,
+      is_picked, sort_no, `status`,
+      create_time, create_id, last_update_time,
+      last_update_id)
+    values (#{id,jdbcType=INTEGER}, #{pId,jdbcType=INTEGER}, #{customerId,jdbcType=INTEGER},
+      #{goodsId,jdbcType=INTEGER}, #{addTime,jdbcType=TIMESTAMP}, #{pickTime,jdbcType=TIMESTAMP},
+      #{isPicked,jdbcType=INTEGER}, #{sortNo,jdbcType=INTEGER}, #{status,jdbcType=INTEGER},
+      #{createTime,jdbcType=TIMESTAMP}, #{createId,jdbcType=INTEGER}, #{lastUpdateTime,jdbcType=TIMESTAMP},
+      #{lastUpdateId,jdbcType=INTEGER})
+  </insert>
+    <insert id="insertSelective" parameterType="com.example.warehouse.entity.ping.PingMember">
+        insert into ping_member
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="pId != null">
+                p_id,
+            </if>
+            <if test="customerId != null">
+                customer_id,
+            </if>
+            <if test="goodsId != null">
+                goods_id,
+            </if>
+            <if test="addTime != null">
+                add_time,
+            </if>
+            <if test="pickTime != null">
+                pick_time,
+            </if>
+            <if test="isPicked != null">
+                is_picked,
+            </if>
+            <if test="sortNo != null">
+                sort_no,
+            </if>
+            <if test="status != null">
+                `status`,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="createId != null">
+                create_id,
+            </if>
+            <if test="lastUpdateTime != null">
+                last_update_time,
+            </if>
+            <if test="lastUpdateId != null">
+                last_update_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="pId != null">
+                #{pId,jdbcType=INTEGER},
+            </if>
+            <if test="customerId != null">
+                #{customerId,jdbcType=INTEGER},
+            </if>
+            <if test="goodsId != null">
+                #{goodsId,jdbcType=INTEGER},
+            </if>
+            <if test="addTime != null">
+                #{addTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="pickTime != null">
+                #{pickTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isPicked != null">
+                #{isPicked,jdbcType=INTEGER},
+            </if>
+            <if test="sortNo != null">
+                #{sortNo,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createId != null">
+                #{createId,jdbcType=INTEGER},
+            </if>
+            <if test="lastUpdateTime != null">
+                #{lastUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastUpdateId != null">
+                #{lastUpdateId,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.example.warehouse.entity.ping.PingMember">
+        update ping_member
+        <set>
+            <if test="pId != null">
+                p_id = #{pId,jdbcType=INTEGER},
+            </if>
+            <if test="customerId != null">
+                customer_id = #{customerId,jdbcType=INTEGER},
+            </if>
+            <if test="goodsId != null">
+                goods_id = #{goodsId,jdbcType=INTEGER},
+            </if>
+            <if test="addTime != null">
+                add_time = #{addTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="pickTime != null">
+                pick_time = #{pickTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isPicked != null">
+                is_picked = #{isPicked,jdbcType=INTEGER},
+            </if>
+            <if test="sortNo != null">
+                sort_no = #{sortNo,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                `status` = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createId != null">
+                create_id = #{createId,jdbcType=INTEGER},
+            </if>
+            <if test="lastUpdateTime != null">
+                last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastUpdateId != null">
+                last_update_id = #{lastUpdateId,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.example.warehouse.entity.ping.PingMember">
+    update ping_member
+    set p_id = #{pId,jdbcType=INTEGER},
+      customer_id = #{customerId,jdbcType=INTEGER},
+      goods_id = #{goodsId,jdbcType=INTEGER},
+      add_time = #{addTime,jdbcType=TIMESTAMP},
+      pick_time = #{pickTime,jdbcType=TIMESTAMP},
+      is_picked = #{isPicked,jdbcType=INTEGER},
+      sort_no = #{sortNo,jdbcType=INTEGER},
+      `status` = #{status,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      create_id = #{createId,jdbcType=INTEGER},
+      last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+      last_update_id = #{lastUpdateId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+    <select id="selectPingMemberByPid" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from ping_member
+        <where>
+            status = 1
+            and p_id = #{pid}
+        </where>
+    </select>
+
+    <select id="selectPingMemberByPidList" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from ping_member
+        <where>
+            status = 1
+            and p_id in
+            <foreach collection="pidList" item="pid" open="(" close=")" separator=",">
+                #{pid}
+            </foreach>
+        </where>
+    </select>
+
+    <select id="selectPingMemberByPidAndCustomerId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from ping_member
+        <where>
+            status = 1
+            and p_id = #{pid}
+            and customer_id = #{customerId}
+        </where>
+    </select>
+
+    <update id="updateList" parameterType="java.util.List">
+        <foreach collection="pingMemberList" item="pingMember" separator=";">
+            update ping_member
+            set p_id = #{pingMember.pId,jdbcType=INTEGER},
+            customer_id = #{pingMember.customerId,jdbcType=INTEGER},
+            goods_id = #{pingMember.goodsId,jdbcType=INTEGER},
+            add_time = #{pingMember.addTime,jdbcType=TIMESTAMP},
+            pick_time = #{pingMember.pickTime,jdbcType=TIMESTAMP},
+            is_picked = #{pingMember.isPicked,jdbcType=INTEGER},
+            sort_no = #{pingMember.sortNo,jdbcType=INTEGER},
+            `status` = #{pingMember.status,jdbcType=INTEGER},
+            create_time = #{pingMember.createTime,jdbcType=TIMESTAMP},
+            create_id = #{pingMember.createId,jdbcType=INTEGER},
+            last_update_time = #{pingMember.lastUpdateTime,jdbcType=TIMESTAMP},
+            last_update_id = #{pingMember.lastUpdateId,jdbcType=INTEGER}
+            where id = #{pingMember.id,jdbcType=INTEGER}
+        </foreach>
+    </update>
+
+    <update id="removeList" parameterType="java.util.List">
+        <foreach collection="pingMemberList" item="pingMember" separator=";">
+            update ping_member
+            <set>
+                last_update_time = #{pingMember.lastUpdateTime,jdbcType=TIMESTAMP},
+                last_update_id = #{pingMember.lastUpdateId,jdbcType=INTEGER},
+                status = 0
+            </set>
+            where id = #{pingMember.id,jdbcType=INTEGER}
+        </foreach>
+    </update>
+
+    <update id="removeMember" parameterType="com.example.warehouse.entity.ping.PingMember">
+        update ping_member
+        <set>
+            `status` = 0,
+            <if test="lastUpdateTime != null">
+                last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastUpdateId != null">
+                last_update_id = #{lastUpdateId,jdbcType=INTEGER},
+            </if>
+        </set>
+        <where>
+            p_id = #{pId}
+            and goods_id = #{goodsId}
+            and customer_id = #{customerId}
+        </where>
+    </update>
+
+    <insert id="insertList">
+       insert into ping_member (p_id, customer_id,
+          goods_id, add_time, pick_time,
+          is_picked, sort_no, `status`,
+          create_time, create_id)
+        values
+        <foreach collection="pingMemberList" item="item" separator=",">
+            (#{item.pId,jdbcType=INTEGER}, #{item.customerId,jdbcType=INTEGER},
+            #{item.goodsId,jdbcType=INTEGER}, #{item.addTime,jdbcType=TIMESTAMP}, #{item.pickTime,jdbcType=TIMESTAMP},
+            #{item.isPicked,jdbcType=INTEGER}, #{item.sortNo,jdbcType=INTEGER}, #{item.status,jdbcType=INTEGER},
+            now(), #{item.createId,jdbcType=INTEGER})
+        </foreach>
+
+    </insert>
+</mapper>

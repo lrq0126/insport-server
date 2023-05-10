@@ -552,146 +552,166 @@ export const channelManagement = {
  * @param  {type} const rightsRouter {description}
  * @return {type} {description}
  */
-// export const pinManagement = {
-//   path: "/pin-management",
-//   component: Layout,
-//   hidden: filterRouter("打包任务管理"),
-//   redirect: "/pin-management/apply-pin",
-//   name: "PinManagement",
-//   systemTab: "BackstageManage",
-//   meta: {
-//     title: "拼团管理",
-//     icon: require("../assets/images/icon/class-upgrade.png")
-//   },
-//   children: [
-//     {
-//       path: "apply-pin",
-//       component: () =>
-//         import("@/web-views/pin-management/apply-pin/index"),
-//       name: "ApplyPin",
-//       hidden: false,
-//       meta: {
-//         title: "待审核",
-//         noCache: true,
-//         icon: require("../assets/images/icon/evaluation-results-query.png")
-//       }
-//     },
-//     {
-//       path: "pin-detail",
-//       component: () =>
-//         import("@/web-views/pin-management/apply-pin/components/pin-detail"),
-//       name: "PinDetail",
-//       hidden: false
-//     },
-//     // 15322321650
-//     {
-//       path: "pining",
-//       component: () =>
-//         import("@/web-views/pin-management/pining/index"),
-//       name: "Pining",
-//       hidden: false,
-//       meta: {
-//         title: "拼团中",
-//         noCache: true,
-//         icon: require("../assets/images/icon/evaluation-results-query.png")
-//       }
-//     },
-//     {
-//       path: "pining-detail",
-//       component: () =>
-//         import("@/web-views/pin-management/pining/components/pining-detail"),
-//       name: "PiningDetail",
-//       hidden: false
-//     },
-//     {
-//       path: "complete-pin",
-//       component: () =>
-//         import("@/web-views/pin-management/complete-pin/index"),
-//       name: "CompletePin",
-//       hidden: false,
-//       meta: {
-//         title: "已成团",
-//         noCache: true,
-//         icon: require("../assets/images/icon/evaluation-results-query.png")
-//       }
-//     },
-//     {
-//       path: "complete-pin-detail",
-//       component: () =>
-//         import("@/web-views/pin-management/complete-pin/components/complete-pin-detail"),
-//       name: "CompletePinDetail",
-//       hidden: false
-//     },
-//     {
-//       path: "packed-list",
-//       component: () =>
-//         import("@/web-views/pin-management/complete-pin/components/packed-list"),
-//       name: "PackedList",
-//       hidden: false,
-//     },
-//     {
-//       path: "packed-detail",
-//       component: () =>
-//         import("@/web-views/pin-management/complete-pin/components/packed-detail"),
-//       name: "PackedDetail",
-//       hidden: false
-//     },
-//     {
-//       path: "paymented-list",
-//       component: () =>
-//         import("@/web-views/pin-management/complete-pin/components/paymented-list"),
-//       name: "PaymentedList",
-//       hidden: false,
-//     },
-//     {
-//       path: "paymented-detail",
-//       component: () =>
-//         import("@/web-views/pin-management/complete-pin/components/paymented-detail"),
-//       name: "PaymentedDetail",
-//       hidden: false
-//     },
-//     {
-//       path: "order-packing",
-//       component: () =>
-//         import("@/web-views/pin-management/complete-pin/components/order-packing"),
-//       name: "OrderPacking",
-//       hidden: false
-//     },
-//     {
-//       path: "shipped-pin",
-//       component: () =>
-//         import("@/web-views/pin-management/shipped-pin/index"),
-//       name: "ShippedPin",
-//       hidden: false,
-//       meta: {
-//         title: "已发货",
-//         noCache: true,
-//         icon: require("../assets/images/icon/evaluation-results-query.png")
-//       }
-//     },
+export const pinManagement = {
+  path: "/pin-management",
+  component: Layout,
+  hidden: filterRouter("打包任务管理"),
+  redirect: "/pin-management/apply-pin",
+  name: "PinManagement",
+  systemTab: "BackstageManage",
+  meta: {
+    title: "拼邮管理",
+    icon: require("../assets/images/icon/class-upgrade.png")
+  },
+  children: [
+    // {
+    //   path: "apply-pin",
+    //   component: () =>
+    //     import("@/web-views/pin-management/apply-pin/index"),
+    //   name: "ApplyPin",
+    //   hidden: false,
+    //   meta: {
+    //     title: "待审核",
+    //     noCache: true,
+    //     icon: require("../assets/images/icon/evaluation-results-query.png")
+    //   }
+    // },
+    // {
+    //   path: "pin-detail",
+    //   component: () =>
+    //     import("@/web-views/pin-management/apply-pin/components/pin-detail"),
+    //   name: "PinDetail",
+    //   hidden: false
+    // },
+    // 15322321650
+    {
+      path: "pining",
+      component: () =>
+        import("@/web-views/pin-management/pining/index"),
+      name: "Pining",
+      hidden: false,
+      meta: {
+        title: "拼邮中",
+        noCache: true,
+        icon: require("../assets/images/icon/evaluation-results-query.png")
+      }
+    },
+    {
+      path: "pining-detail",
+      component: () =>
+        import("@/web-views/pin-management/pining/components/pining-detail"),
+      name: "PiningDetail",
+      hidden: false
+    },
+    {
+      path: "complete-pin",
+      component: () =>
+        import("@/web-views/pin-management/complete-pin/index"),
+      name: "CompletePin",
+      hidden: false,
+      meta: {
+        title: "已打包",
+        noCache: true,
+        icon: require("../assets/images/icon/evaluation-results-query.png")
+      }
+    },
+    {
+      path: "complete-pin-detail",
+      component: () =>
+        import("@/web-views/pin-management/complete-pin/components/complete-pin-detail"),
+      name: "CompletePinDetail",
+      hidden: false
+    },
+    // {
+    //   path: "packed-list",
+    //   component: () =>
+    //     import("@/web-views/pin-management/complete-pin/components/packed-list"),
+    //   name: "PackedList",
+    //   hidden: false,
+    // },
+    // {
+    //   path: "packed-detail",
+    //   component: () =>
+    //     import("@/web-views/pin-management/complete-pin/components/packed-detail"),
+    //   name: "PackedDetail",
+    //   hidden: false
+    // },
+    // {
+    //   path: "paymented-list",
+    //   component: () =>
+    //     import("@/web-views/pin-management/complete-pin/components/paymented-list"),
+    //   name: "PaymentedList",
+    //   hidden: false,
+    // },
+    // {
+    //   path: "paymented-detail",
+    //   component: () =>
+    //     import("@/web-views/pin-management/complete-pin/components/paymented-detail"),
+    //   name: "PaymentedDetail",
+    //   hidden: false
+    // },
+    // {
+    //   path: "order-packing",
+    //   component: () =>
+    //     import("@/web-views/pin-management/complete-pin/components/order-packing"),
+    //   name: "OrderPacking",
+    //   hidden: false
+    // },
+    {
+      path: "shipped-pin",
+      component: () =>
+        import("@/web-views/pin-management/shipped-pin/index"),
+      name: "ShippedPin",
+      hidden: false,
+      meta: {
+        title: "已发货",
+        noCache: true,
+        icon: require("../assets/images/icon/evaluation-results-query.png")
+      }
+    },
 
-//     {
-//       path: "shipped-pin-detail",
-//       component: () =>
-//         import("@/web-views/pin-management/shipped-pin/components/shipped-pin-detail"),
-//       name: "ShippedPinDetail",
-//       hidden: false
-//     },
+    {
+      path: "shipped-pin-detail",
+      component: () =>
+        import("@/web-views/pin-management/shipped-pin/components/shipped-pin-detail"),
+      name: "ShippedPinDetail",
+      hidden: false
+    },
 
-//     {
-//       path: "overdue-pin",
-//       component: () =>
-//         import("@/web-views/pin-management/overdue-pin/index"),
-//       name: "OverduePin",
-//       hidden: false,
-//       meta: {
-//         title: "已失效",
-//         noCache: true,
-//         icon: require("../assets/images/icon/evaluation-results-query.png")
-//       }
-//     },
-//   ]
-// };
+    {
+      path: "arrival-pin",
+      component: () =>
+        import("@/web-views/pin-management/arrival-pin/index"),
+      name: "ArrivalPin",
+      hidden: false,
+      meta: {
+        title: "已到站",
+        noCache: true,
+        icon: require("../assets/images/icon/evaluation-results-query.png")
+      }
+    },
+
+    {
+      path: "arrival-pin-detail",
+      component: () =>
+        import("@/web-views/pin-management/arrival-pin/components/arrival-pin-detail"),
+      name: "ArrivalPinDetail",
+      hidden: false
+    },
+    // {
+    //   path: "overdue-pin",
+    //   component: () =>
+    //     import("@/web-views/pin-management/overdue-pin/index"),
+    //   name: "OverduePin",
+    //   hidden: false,
+    //   meta: {
+    //     title: "已失效",
+    //     noCache: true,
+    //     icon: require("../assets/images/icon/evaluation-results-query.png")
+    //   }
+    // },
+  ]
+};
 
 /**
  * 打包任务管理

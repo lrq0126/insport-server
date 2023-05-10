@@ -49,6 +49,7 @@ public enum ResultStatus implements CodeEnum {
     ENABLE_WAREHOUSE_ADDRESS_NULL_ERROR(-1010, "暂无启用中的仓库收货地址，请联系客服人员"),
 
     ROUTE_IS_TARIFFS_PLEASE_INPUT_PACK_VALUATION(-1150, "当前渠道存在预付关税，请先填写产品货值"),
+    PLEASE_SELECTED_IDENTITY(-1151, "请选择身份证信息"),
 
     ACTIVITY_REPEAT_ERROR(-1201, "您已参与过该活动"),
     ACTIVITY_PACK_UNPACK_ERROR(-1202, "活动包裹无法拆包，敬请谅解"),

@@ -5,16 +5,22 @@ import com.example.warehouse.entity.Customer;
 import com.example.warehouse.entity.DeliveryCompany;
 import com.example.warehouse.entity.Storage;
 import com.example.warehouse.entity.customer.CustomerIdentity;
+import com.example.warehouse.entity.shelves.ShelvesArea;
+import com.example.warehouse.entity.sys.CommercialArea;
+import com.example.warehouse.mapper.shelves.ShelvesAreaMapper;
 import com.example.warehouse.model.PageResultModel;
 import com.example.warehouse.model.ResultModel;
 import com.example.warehouse.service.CustomerService;
 import com.example.warehouse.service.DeliveryCompanyService;
 import com.example.warehouse.service.StorageService;
 import com.example.warehouse.service.customer.CustomerIdentityService;
+import com.example.warehouse.service.shelves.ShelvesAreaService;
+import com.example.warehouse.service.sys.CommercialAreaService;
 import com.example.warehouse.vo.PageVo;
-import com.example.warehouse.vo.customer.CustomerOrderReqVo;
+import com.example.warehouse.vo.customerPack.CustomerOrderReqVo;
 import com.example.warehouse.vo.customer.CustomerReqVo;
 import com.example.warehouse.vo.customer.PopularizeDetailReqVo;
+import com.example.warehouse.vo.shelves.ShelvesReqVo;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.annotations.Param;
@@ -23,7 +29,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -43,7 +48,11 @@ public class CustomerController {
     @Autowired
     private StorageService storageService;
     @Autowired
+    private CommercialAreaService commercialAreaService;
+    @Autowired
     private CustomerIdentityService customerIdentityService;
+    @Autowired
+    private ShelvesAreaService shelvesAreaService;
 
     @RequestMapping(value = "/find/all",method = RequestMethod.POST)
     @ResponseBody
@@ -166,23 +175,23 @@ public class CustomerController {
     @GetMapping("/list/storage")
     @ResponseBody
     public ResponseEntity<ResultModel> findStorage(){
-        log.info("查询货架地址列表开始,参数：{}");
-        Map<String,Object> pam = new HashMap<>();
-        List<Storage> storageList = storageService.find(pam);//TODO 查询条件我放了一个空Map2019年4月25日15:52:38
-        List<Map> newStorage = new ArrayList<>();
-        for (Storage storage : storageList) {
-            Map<String, Object> map = new HashMap<>();
-            map.put("storageName",storage.getStorageName());
-            map.put("storageCode",storage.getStorageCode());
-            map.put("storageArea",storage.getStorageArea());
-            map.put("storageRow",storage.getStorageRow());
-            newStorage.add(map);
-        }
-        Map newMap = new HashMap();
-        newMap.put("storage",newStorage);
-        return new ResponseEntity<>(ResultModel.ok(newMap),HttpStatus.OK);
+        log.info("查询货架地址列表开始");
+//        Map<String,Object> pam = new HashMap<>();
+//        List<Storage> storageList = storageService.find(pam);//TODO 查询条件我放了一个空Map2019年4月25日15:52:38
+//        List<Map> newStorage = new ArrayList<>();
+//        for (Storage storage : storageList) {
+//            Map<String, Object> map = new HashMap<>();
+//            map.put("storageName",storage.getStorageName());
+//            map.put("storageCode",storage.getStorageCode());
+//            map.put("storageArea",storage.getStorageArea());
+//            map.put("storageRow",storage.getStorageRow());
+//            newStorage.add(map);
+//        }
+//        Map newMap = new HashMap();
+//        newMap.put("storage",newStorage);
+//        return new ResponseEntity<>(ResultModel.ok(newMap),HttpStatus.OK);
+        return shelvesAreaService.getShelvesAreaDropdownList();
     }
-
     @GetMapping("/list/getDeliveryCompany")
     @ResponseBody
     public ResponseEntity<ResultModel> getDeliveryCompany(){
@@ -269,8 +278,6 @@ public class CustomerController {
     /**
      * 客户分身证信息
      */
-
-
     @PostMapping("/getIdentityList")
     @ResponseBody
     public ResponseEntity<PageResultModel> getIdentityList(int customerId, PageVo pageVo){

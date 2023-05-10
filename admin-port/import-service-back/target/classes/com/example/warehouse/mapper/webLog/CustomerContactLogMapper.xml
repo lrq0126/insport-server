@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.warehouse.mapper.webLog.CustomerContactLogMapper">
+    <resultMap id="BaseResultMap" type="com.example.warehouse.entity.webLog.CustomerContactLog">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="customer_name" jdbcType="VARCHAR" property="customerName"/>
+        <result column="phone_number" jdbcType="VARCHAR" property="phoneNumber"/>
+        <result column="email" jdbcType="VARCHAR" property="email"/>
+        <result column="txt_content" jdbcType="VARCHAR" property="txtContent"/>
+        <result column="is_complete" jdbcType="INTEGER" property="isComplete"/>
+        <result column="complete_id" jdbcType="VARCHAR" property="completeId"/>
+        <result column="complete_name" jdbcType="VARCHAR" property="completeName"/>
+        <result column="complete_time" jdbcType="TIMESTAMP" property="completeTime"/>
+
+    </resultMap>
+
+    <!-- 字段 -->
+    <sql id="Base_Column_List">
+		id, create_time, customer_name, phone_number,
+		email, txt_content, is_complete, complete_id,
+		complete_name, complete_time
+	</sql>
+
+    <!-- 插入字段实际数值 -->
+    <sql id="Insert_Column_Values">
+		#{createTime},#{customerName},#{phoneNumber},#{email},#{txtContent},#{isComplete},#{completeId},#{completeName},#{completeTime}
+	</sql>
+
+    <!-- 插入字段（判空） -->
+    <sql id="Base_Column_List_NotNull">
+        <if test="createTime != null and createTime != ''">
+            create_time,
+        </if>
+        <if test="customerName != null and customerName != ''">
+            customer_name,
+        </if>
+        <if test="phoneNumber != null and phoneNumber != ''">
+            phone_number,
+        </if>
+        <if test="email != null and email != ''">
+            email,
+        </if>
+        <if test="txtContent != null and txtContent != ''">
+            txt_content,
+        </if>
+        <if test="isComplete != null and isComplete != ''">
+            is_complete,
+        </if>
+        <if test="completeId != null and completeId != ''">
+            complete_id,
+        </if>
+        <if test="completeName != null and completeName != ''">
+            complete_name,
+        </if>
+        <if test="completeTime != null and completeTime != ''">
+            complete_time,
+        </if>
+
+    </sql>
+
+    <!-- 插入字段实际数值(判空) -->
+    <sql id="Insert_Column_Values_NotNull">
+        <if test="createTime != null and createTime != ''">
+            #{createTime},
+        </if>
+        <if test="customerName != null and customerName != ''">
+            #{customerName},
+        </if>
+        <if test="phoneNumber != null and phoneNumber != ''">
+            #{phoneNumber},
+        </if>
+        <if test="email != null and email != ''">
+            #{email},
+        </if>
+        <if test="txtContent != null and txtContent != ''">
+            #{txtContent},
+        </if>
+        <if test="isComplete != null and isComplete != ''">
+            #{isComplete},
+        </if>
+        <if test="completeId != null and completeId != ''">
+            #{completeId},
+        </if>
+        <if test="completeName != null and completeName != ''">
+            #{completeName},
+        </if>
+        <if test="completeTime != null and completeTime != ''">
+            #{completeTime},
+        </if>
+
+    </sql>
+
+    <!-- 更新字段 -->
+    <sql id="Update_Column">
+		create_time = #{createTime},
+    	customer_name = #{customerName},
+    	phone_number = #{phoneNumber},
+    	email = #{email},
+    	txt_content = #{txtContent},
+    	is_complete = #{isComplete},
+    	complete_id = #{completeId},
+    	complete_name = #{completeName},
+    	complete_time = #{completeTime},
+    	
+	</sql>
+
+    <!-- 更新字段（判空） -->
+    <sql id="Update_Column_NotNull">
+        <if test="createTime != null and createTime != ''">
+            create_time = #{createTime},
+        </if>
+        <if test="customerName != null and customerName != ''">
+            customer_name = #{customerName},
+        </if>
+        <if test="phoneNumber != null and phoneNumber != ''">
+            phone_number = #{phoneNumber},
+        </if>
+        <if test="email != null and email != ''">
+            email = #{email},
+        </if>
+        <if test="txtContent != null and txtContent != ''">
+            txt_content = #{txtContent},
+        </if>
+        <if test="isComplete != null and isComplete != ''">
+            is_complete = #{isComplete},
+        </if>
+        <if test="completeId != null and completeId != ''">
+            complete_id = #{completeId},
+        </if>
+        <if test="completeName != null and completeName != ''">
+            complete_name = #{completeName},
+        </if>
+        <if test="completeTime != null and completeTime != ''">
+            complete_time = #{completeTime},
+        </if>
+
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <trim suffixOverrides=",">
+            <include refid="Base_Column_List"/>
+        </trim>
+        from customer_contact_log
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="getCount" resultType="java.lang.Integer">
+        select count(1)
+        from customer_contact_log
+        <where>
+            <if test="customerName != null and customerName != ''">
+                and customer_name = #{customerName}
+            </if>
+            <if test="phoneNumber != null and phoneNumber != ''">
+                and phone_number = #{phoneNumber}
+            </if>
+            <if test="email != null and email != ''">
+                and email = #{email}
+            </if>
+            <if test="txtContent != null and txtContent != ''">
+                and txt_content regexp #{txtContent}
+            </if>
+            <if test="isComplete != null">
+                and is_complete = #{isComplete}
+            </if>
+            <if test="completeName != null and completeName != ''">
+                and complete_name regexp #{completeName}
+            </if>
+            <if test="completeStartTime != null and completeStartTime != ''">
+                and complete_time BETWEEN #{completeStartTime} and #{completeEndTime}
+            </if>
+            <if test="startTime != null and startTime != ''">
+                and create_time BETWEEN #{startTime} and #{endTime}
+            </if>
+        </where>
+    </select>
+    <select id="getLogList" resultMap="BaseResultMap">
+        select
+        id,
+        DATE_FORMAT(create_time, '%Y-%m-%d %k:%i:%s') AS create_time,
+        customer_name, phone_number, email, txt_content,
+        is_complete, complete_id, complete_name,
+        DATE_FORMAT(complete_time, '%Y-%m-%d %k:%i:%s') AS complete_time
+        from customer_contact_log
+        <where>
+            <if test="customerName != null and customerName != ''">
+                and customer_name = #{customerName}
+            </if>
+            <if test="phoneNumber != null and phoneNumber != ''">
+                and phone_number = #{phoneNumber}
+            </if>
+            <if test="email != null and email != ''">
+                and email = #{email}
+            </if>
+            <if test="txtContent != null and txtContent != ''">
+                and txt_content = #{txtContent}
+            </if>
+            <if test="isComplete != null">
+                and is_complete = #{isComplete}
+            </if>
+            <if test="completeName != null and completeName != ''">
+                and complete_name regexp #{completeName}
+            </if>
+            <if test="startTime != null and startTime != ''">
+                and create_time BETWEEN #{startTime} and #{endTime}
+            </if>
+        </where>
+        order by create_time desc
+        limit #{pageNumber}, #{pageSize}
+    </select>
+
+    <insert id="insert" parameterType="com.example.warehouse.entity.webLog.CustomerContactLog">
+        insert into customer_contact_log
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            create_time,
+            customer_name,
+            phone_number,
+            email,
+            txt_content,
+            is_complete,
+            complete_id,
+            complete_name,
+            complete_time,
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <include refid="Insert_Column_Values"/>
+        </trim>
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.example.warehouse.entity.webLog.CustomerContactLog">
+        insert into customer_contact_log
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <include refid="Base_Column_List_NotNull"/>
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <include refid="Insert_Column_Values_NotNull"/>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKey" parameterType="com.example.warehouse.entity.webLog.CustomerContactLog">
+        update customer_contact_log
+        <set>
+            <include refid="Update_Column"/>
+        </set>
+
+        <where>
+            id = #{id}
+        </where>
+
+    </update>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.example.warehouse.entity.webLog.CustomerContactLog">
+        update customer_contact_log
+        <set>
+            <include refid="Update_Column_NotNull"/>
+        </set>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+
+    <!-- 删除数据（逻辑删除） -->
+    <update id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		update  customer_contact_log
+		set `status` = 0
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+
+    <!-- 移除数据（物理删除） -->
+    <delete id="removeByPrimaryKey" parameterType="java.lang.Integer">
+		delete from customer_contact_log
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+
+</mapper>

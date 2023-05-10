@@ -8,7 +8,7 @@ import com.example.warehouse.entity.ping.PingPack;
 import com.example.warehouse.entity.ping.PingPackGoods;
 import com.example.warehouse.model.ResultModel;
 import com.example.warehouse.vo.GoodsVo;
-import com.example.warehouse.vo.customer.CustomerPackNumberVo;
+import com.example.warehouse.vo.customerPack.CustomerPackNumberVo;
 import com.example.warehouse.vo.ping.responseVo.PingPackRespVo;
 import com.example.warehouse.vo.route.RouteVo;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,0 +1,1075 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.warehouse.mapper.CustomerAccountMapper">
+    <resultMap id="BaseResultMap" type="com.example.warehouse.entity.CustomerAccount">
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="customer_no" jdbcType="VARCHAR" property="customerNo" />
+        <result column="customer_name" jdbcType="VARCHAR" property="customerName" />
+        <result column="business_number" jdbcType="VARCHAR" property="businessNumber" />
+        <result column="order_number" jdbcType="VARCHAR" property="orderNumber" />
+        <result column="goods_sum" jdbcType="INTEGER" property="goodsSum" />
+        <result column="route_name" jdbcType="VARCHAR" property="routeName" />
+        <result column="address" jdbcType="VARCHAR" property="address" />
+        <result column="cost_type" jdbcType="VARCHAR" property="costType" />
+        <result column="amount" jdbcType="DECIMAL" property="amount" />
+        <result column="currency" jdbcType="VARCHAR" property="currency" />
+        <result column="channel" jdbcType="VARCHAR" property="channel" />
+        <result column="message" jdbcType="VARCHAR" property="message" />
+        <result column="version" jdbcType="VARCHAR" property="version" />
+        <result column="status" jdbcType="INTEGER" property="status" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="create_id" jdbcType="VARCHAR" property="createId" />
+        <result column="create_name" jdbcType="VARCHAR" property="createName" />
+        <result column="last_update_time" jdbcType="TIMESTAMP" property="lastUpdateTime" />
+        <result column="last_update_id" jdbcType="INTEGER" property="lastUpdateId" />
+        <result column="ymt" jdbcType="DECIMAL" property="ymt" />
+        <result column="login_name" jdbcType="VARCHAR" property="loginName" />
+
+<!--        临时字段添加-->
+        <result column="paidMoney" jdbcType="VARCHAR" property="paidMoney" />
+        <result column="agentNumber" jdbcType="VARCHAR" property="agentNumber" />
+        <result column="paidTime" jdbcType="VARCHAR" property="paidTime" />
+        <result column="operatorName" jdbcType="VARCHAR" property="operatorName" />
+        <result column="agentName" jdbcType="VARCHAR" property="agentName" />
+        <result column="profit" jdbcType="DECIMAL" property="profit" />
+
+        <result column="customer_remarks" jdbcType="VARCHAR" property="customerRemarks" />
+    </resultMap>
+
+    <resultMap id="CustomerAccountVoMap" type="com.example.warehouse.entity.CustomerAccountVo">
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="customerNo" jdbcType="VARCHAR" property="customerNo" />
+        <result column="customerName" jdbcType="VARCHAR" property="customerName" />
+        <result column="loginName" jdbcType="VARCHAR" property="loginName" />
+        <result column="ymt" jdbcType="DECIMAL" property="ymt" />
+        <result column="message" jdbcType="VARCHAR" property="message" />
+
+        <collection property="accountTopVo" column="id" select="com.example.warehouse.mapper.CustomerAccountMapper.selectAccountTop"/>
+        <collection property="accountDeductionVo" column="id" select="com.example.warehouse.mapper.CustomerAccountMapper.selectAccountDeduction"/>
+
+        <!--<collection property="rechargeTotal" column="id" select="com.example.warehouse.mapper.CustomerAccountMapper.selectRechargeTotal"/>-->
+        <!--<collection property="rechargeTime" column="id" select="com.example.warehouse.mapper.CustomerAccountMapper.selectRechargeTime"/>-->
+        <!--<collection property="amountAll" column="id" select="com.example.warehouse.mapper.CustomerAccountMapper.selectAmountAll"/>-->
+
+        <!--<collection property="orderTotal" column="id" select="com.example.warehouse.mapper.CustomerAccountMapper.selectOrderTotal"/>-->
+        <!--<collection property="orderTime" column="id" select="com.example.warehouse.mapper.CustomerAccountMapper.selectOrderTime"/>-->
+
+
+        <!--<result column="rechargeTotal" jdbcType="INTEGER" property="rechargeTotal" />-->
+        <!--<result column="rechargeTime" jdbcType="VARCHAR" property="rechargeTime" />-->
+        <!--<result column="amountAll" jdbcType="DECIMAL" property="amountAll" />-->
+
+        <!--<result column="orderTotal" jdbcType="INTEGER" property="orderTotal" />-->
+        <!--<result column="orderTime" jdbcType="VARCHAR" property="orderTime" />-->
+
+    </resultMap>
+
+    <resultMap id="AgentOrderAccountMap" type="com.example.warehouse.entity.AgentOrderAccount">
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="customerNo" jdbcType="VARCHAR" property="customerNo" />
+        <result column="customerName" jdbcType="VARCHAR" property="customerName" />
+        <result column="orderNumber" jdbcType="VARCHAR" property="orderNumber" />
+        <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+        <result column="message" jdbcType="VARCHAR" property="message" />
+        <result column="createTime" jdbcType="VARCHAR" property="createTime" />
+        <result column="loginName" jdbcType="VARCHAR" property="loginName" />
+        <result column="agentNumber" jdbcType="VARCHAR" property="agentNumber" />
+        <result column="agentName" jdbcType="VARCHAR" property="agentName" />
+        <result column="agentId" jdbcType="DECIMAL" property="agentId" />
+        <result column="money" jdbcType="DECIMAL" property="money" />
+        <result column="amount" jdbcType="DECIMAL" property="amount" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+    id, customer_no, customer_name, business_number, order_number, goods_sum, route_name,
+    address, cost_type, abs(amount) as amount, currency, channel, message, version, `status`,create_time,
+    create_id, create_name, last_update_time, last_update_id,login_name
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from customer_account
+        where id = #{id,jdbcType=INTEGER}
+        AND STATUS = 1
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    UPDATE customer_account SET status = 0
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.example.warehouse.entity.CustomerAccount">
+    insert into customer_account (id, customer_no, customer_name,
+      business_number, order_number, goods_sum,
+      route_name, address, cost_type,
+      amount, currency, channel,
+      message, version, status,
+      create_time, create_id, create_name,
+      last_update_time, last_update_id,login_name)
+    values (#{id,jdbcType=INTEGER}, #{customerNo,jdbcType=VARCHAR}, #{customerName,jdbcType=VARCHAR},
+      #{businessNumber,jdbcType=VARCHAR}, #{orderNumber,jdbcType=VARCHAR}, #{goodsSum,jdbcType=INTEGER},
+      #{routeName,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{costType,jdbcType=VARCHAR},
+      #{amount,jdbcType=DECIMAL}, #{currency,jdbcType=VARCHAR}, #{channel,jdbcType=VARCHAR},
+      #{message,jdbcType=VARCHAR}, #{version,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER},
+      #{createTime,jdbcType=TIMESTAMP}, #{createId,jdbcType=VARCHAR}, #{createName,jdbcType=VARCHAR},
+      #{lastUpdateTime,jdbcType=TIMESTAMP}, #{lastUpdateId,jdbcType=INTEGER},#{loginName,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.example.warehouse.entity.CustomerAccount">
+        insert into customer_account
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="customerNo != null">
+                customer_no,
+            </if>
+            <if test="customerName != null">
+                customer_name,
+            </if>
+            <if test="businessNumber != null">
+                business_number,
+            </if>
+            <if test="orderNumber != null">
+                order_number,
+            </if>
+            <if test="goodsSum != null">
+                goods_sum,
+            </if>
+            <if test="routeName != null">
+                route_name,
+            </if>
+            <if test="address != null">
+                address,
+            </if>
+            <if test="costType != null">
+                cost_type,
+            </if>
+            <if test="amount != null">
+                amount,
+            </if>
+            <if test="currency != null">
+                currency,
+            </if>
+            <if test="channel != null">
+                channel,
+            </if>
+            <if test="message != null">
+                message,
+            </if>
+                version,
+                `status`,
+                create_time,
+            <if test="createId != null">
+                create_id,
+            </if>
+            <if test="createName != null">
+                create_name,
+            </if>
+            <if test="lastUpdateTime != null">
+                last_update_time,
+            </if>
+            <if test="lastUpdateId != null">
+                last_update_id,
+            </if>
+            <if test="loginName != null">
+                login_name,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="customerNo != null">
+                #{customerNo,jdbcType=VARCHAR},
+            </if>
+            <if test="customerName != null">
+                #{customerName,jdbcType=VARCHAR},
+            </if>
+            <if test="businessNumber != null">
+                #{businessNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="orderNumber != null">
+                #{orderNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsSum != null">
+                #{goodsSum,jdbcType=INTEGER},
+            </if>
+            <if test="routeName != null">
+                #{routeName,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="costType != null">
+                #{costType,jdbcType=VARCHAR},
+            </if>
+            <if test="amount != null">
+                #{amount,jdbcType=DECIMAL},
+            </if>
+            <if test="currency != null">
+                #{currency,jdbcType=VARCHAR},
+            </if>
+            <if test="channel != null">
+                #{channel,jdbcType=VARCHAR},
+            </if>
+            <if test="message != null">
+                #{message,jdbcType=VARCHAR},
+            </if>
+                1,
+                1,
+                now(),
+            <if test="createId != null">
+                #{createId,jdbcType=VARCHAR},
+            </if>
+            <if test="createName != null">
+                #{createName,jdbcType=VARCHAR},
+            </if>
+            <if test="lastUpdateTime != null">
+                #{lastUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastUpdateId != null">
+                #{lastUpdateId,jdbcType=INTEGER},
+            </if>
+            <if test="loginName != null">
+                #{loginName,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.example.warehouse.entity.CustomerAccount">
+        update customer_account
+        <set>
+            <if test="customerNo != null">
+                customer_no = #{customerNo,jdbcType=VARCHAR},
+            </if>
+            <if test="customerName != null">
+                customer_name = #{customerName,jdbcType=VARCHAR},
+            </if>
+            <if test="businessNumber != null">
+                business_number = #{businessNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="orderNumber != null">
+                order_number = #{orderNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsSum != null">
+                goods_sum = #{goodsSum,jdbcType=INTEGER},
+            </if>
+            <if test="routeName != null">
+                route_name = #{routeName,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                address = #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="costType != null">
+                cost_type = #{costType,jdbcType=VARCHAR},
+            </if>
+            <if test="amount != null">
+                amount = #{amount,jdbcType=DECIMAL},
+            </if>
+            <if test="currency != null">
+                currency = #{currency,jdbcType=VARCHAR},
+            </if>
+            <if test="channel != null">
+                channel = #{channel,jdbcType=VARCHAR},
+            </if>
+            <if test="message != null">
+                message = #{message,jdbcType=VARCHAR},
+            </if>
+            <if test="version != null">
+                version = #{version,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                `status` = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createId != null">
+                create_id = #{createId,jdbcType=VARCHAR},
+            </if>
+            <if test="createName != null">
+                create_name = #{createName,jdbcType=VARCHAR},
+            </if>
+            <if test="lastUpdateTime != null">
+                last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastUpdateId != null">
+                last_update_id = #{lastUpdateId,jdbcType=INTEGER},
+            </if>
+            <if test="loginName != null">
+                login_name = #{loginName,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.example.warehouse.entity.CustomerAccount">
+    update customer_account
+    set customer_no = #{customerNo,jdbcType=VARCHAR},
+      customer_name = #{customerName,jdbcType=VARCHAR},
+      business_number = #{businessNumber,jdbcType=VARCHAR},
+      order_number = #{orderNumber,jdbcType=VARCHAR},
+      goods_sum = #{goodsSum,jdbcType=INTEGER},
+      route_name = #{routeName,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      cost_type = #{costType,jdbcType=VARCHAR},
+      amount = #{amount,jdbcType=DECIMAL},
+      currency = #{currency,jdbcType=VARCHAR},
+      channel = #{channel,jdbcType=VARCHAR},
+      message = #{message,jdbcType=VARCHAR},
+      version = #{version,jdbcType=VARCHAR},
+      `status` = #{status,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      create_id = #{createId,jdbcType=VARCHAR},
+      create_name = #{createName,jdbcType=VARCHAR},
+      last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+      last_update_id = #{lastUpdateId,jdbcType=INTEGER},
+       login_name = #{loginName,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+    <select id="selectCustomerAccountList" parameterType="map" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from customer_account
+        where customer_no = #{customerNo,jdbcType=VARCHAR}
+        AND status = 1
+        <if test="businessNumber != null and businessNumber != ''">
+            AND business_number like concat('%',#{businessNumber,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="orderNumber != null and orderNumber != ''">
+            AND order_number like concat('%',#{orderNumber,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="routeName != null and routeName != ''">
+            AND route_name = #{routeName,jdbcType=VARCHAR}
+        </if>
+        <if test="address != null and address != ''">
+            AND address like concat('%',#{address,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="costType != null and costType != ''">
+            AND cost_type = #{costType,jdbcType=VARCHAR}
+        </if>
+        <if test="channel != null and channel != ''">
+            AND channel = #{channel,jdbcType=VARCHAR}
+        </if>
+        <if test="loginName != null and loginName != ''">
+            AND login_name = #{loginName,jdbcType=VARCHAR}
+        </if>
+        order by create_time
+        LIMIT #{pageNumber},#{pageSize}
+    </select>
+
+    <select id="countSelectCustomerAccountList" parameterType="map" resultType="int">
+        select
+        count(*)
+        from customer_account
+        where customer_no = #{customerNo,jdbcType=VARCHAR}
+        AND status = 1
+        <if test="businessNumber != null and businessNumber != ''">
+            AND business_number like concat('%',#{businessNumber,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="orderNumber != null and orderNumber != ''">
+            AND order_number like concat('%',#{orderNumber,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="routeName != null and routeName != ''">
+            AND route_name = #{routeName,jdbcType=VARCHAR}
+        </if>
+        <if test="address != null and address != ''">
+            AND address like concat('%',#{address,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="costType != null and costType != ''">
+            AND cost_type = #{costType,jdbcType=VARCHAR}
+        </if>
+        <if test="channel != null and channel != ''">
+            AND channel = #{channel,jdbcType=VARCHAR}
+        </if>
+        <if test="loginName != null and loginName != ''">
+            AND login_name = #{loginName,jdbcType=VARCHAR}
+        </if>
+    </select>
+
+    <!-- 财务账单列表 -->
+    <!--<select id="accountStatisticList" parameterType="map" resultMap="CustomerAccountVoMap">-->
+        <!--SELECT-->
+        <!--c.id,-->
+        <!--c.customer_name as customerName,-->
+        <!--c.customer_no as customerNo,-->
+        <!--c.login_name as loginName,-->
+        <!--(-->
+        <!--SELECT-->
+        <!--count(*)-->
+        <!--FROM-->
+        <!--goods g-->
+        <!--WHERE-->
+        <!--g.customer_no = c.customer_no-->
+        <!--and g.status = 1-->
+        <!--) AS orderTotal,-->
+        <!--(-->
+        <!--SELECT-->
+        <!--create_time-->
+        <!--FROM-->
+        <!--customer_account-->
+        <!--WHERE-->
+        <!--customer_no = c.id-->
+        <!--AND cost_type = 1-->
+        <!--AND STATUS = 1-->
+        <!--ORDER BY-->
+        <!--create_time DESC-->
+        <!--LIMIT 1-->
+        <!--) AS rechargeTime,-->
+        <!--(-->
+        <!--SELECT-->
+        <!--create_time-->
+        <!--FROM-->
+        <!--customer_account-->
+        <!--WHERE-->
+        <!--customer_no = c.id-->
+        <!--AND cost_type = 2-->
+        <!--AND STATUS = 1-->
+        <!--ORDER BY-->
+        <!--create_time DESC-->
+        <!--LIMIT 1-->
+        <!--) AS orderTime,-->
+        <!--(-->
+        <!--SELECT-->
+        <!--sum(cc.amount)-->
+        <!--FROM-->
+        <!--customer_account cc-->
+        <!--WHERE-->
+        <!--cc.customer_no = c.id-->
+        <!--AND cc.`status` = 1-->
+        <!--) AS ymt,-->
+        <!--(-->
+        <!--SELECT-->
+        <!--count(*)-->
+        <!--FROM-->
+        <!--customer_account cc-->
+        <!--WHERE-->
+        <!--cc.customer_no = c.id-->
+        <!--AND cc.cost_type = 1-->
+        <!--and cc.status = 1-->
+        <!--) AS rechargeTotal,-->
+        <!--(-->
+        <!--SELECT-->
+        <!--sum(cc.amount)-->
+        <!--FROM-->
+        <!--customer_account cc-->
+        <!--WHERE-->
+        <!--cc.customer_no = c.id-->
+        <!--AND cc.cost_type = 1-->
+        <!--and cc.status = 1-->
+        <!--) AS amountAll-->
+        <!--FROM-->
+        <!--customer c-->
+        <!--where c.status = 1-->
+        <!--<if test="ymtStart != null and ymtStart != ''">-->
+            <!--and (-->
+            <!--SELECT-->
+            <!--sum(cc.amount)-->
+            <!--FROM-->
+            <!--customer_account cc-->
+            <!--WHERE-->
+            <!--cc.customer_no = c.id-->
+            <!--AND cc.`status` = 1-->
+            <!--) >= #{ymtStart}-->
+        <!--</if>-->
+        <!--<if test="ymtEnd != null and ymtEnd != ''">-->
+            <!--and (-->
+            <!--SELECT-->
+            <!--sum(cc.amount)-->
+            <!--FROM-->
+            <!--customer_account cc-->
+            <!--WHERE-->
+            <!--cc.customer_no = c.id-->
+            <!--AND cc.`status` = 1-->
+            <!--) <![CDATA[-->
+				<!--<= #{ymtEnd}-->
+			<!--]]>-->
+        <!--</if>-->
+        <!--<if test="customerName != null and customerName != ''">-->
+            <!--and c.customer_name regexp #{customerName,jdbcType=VARCHAR}-->
+        <!--</if>-->
+        <!--<if test="loginName != null and loginName != ''">-->
+            <!--and c.login_name regexp #{loginName,jdbcType=VARCHAR}-->
+        <!--</if>-->
+        <!--<if test="orderStartTime != null and '' != orderStartTime ">-->
+            <!--<![CDATA[ and DATE_FORMAT((-->
+          <!--SELECT-->
+              <!--create_time-->
+          <!--FROM-->
+              <!--customer_account-->
+          <!--WHERE-->
+              <!--customer_no = c.id-->
+          <!--AND cost_type = 2-->
+          <!--AND STATUS = 1-->
+          <!--ORDER BY-->
+              <!--create_time DESC-->
+          <!--LIMIT 1-->
+      <!--),'%Y-%m-%d') >= #{orderStartTime}-->
+        <!--]]>-->
+        <!--</if>-->
+        <!--<if test=" orderEndTime != null and '' != orderEndTime ">-->
+            <!--<![CDATA[-->
+				<!--and DATE_FORMAT((-->
+          <!--SELECT-->
+              <!--create_time-->
+          <!--FROM-->
+              <!--customer_account-->
+          <!--WHERE-->
+              <!--customer_no = c.id-->
+          <!--AND cost_type = 2-->
+          <!--AND STATUS = 1-->
+          <!--ORDER BY-->
+              <!--create_time DESC-->
+          <!--LIMIT 1-->
+      <!--),'%Y-%m-%d') <= #{orderEndTime}-->
+			<!--]]>-->
+        <!--</if>-->
+        <!--ORDER BY-->
+        <!--rechargeTime desc,orderTime desc-->
+        <!--LIMIT #{pageNumber},#{pageSize}-->
+    <!--</select>-->
+
+    <select id="accountStatisticList" parameterType="map" resultMap="CustomerAccountVoMap">
+        select
+        a.id as id,
+        a.customerName,
+        a.customerNo,
+        a.loginName,
+        a.ymt,
+        a.createTime
+        from (
+        SELECT
+        t.id AS id,
+        t.customer_name AS customerName,
+        t.customer_no AS customerNo,
+        t.login_name AS loginName,
+        sum( cusa.amount ) AS ymt,
+        max( cusa.create_time ) AS createTime
+        FROM
+        customer t
+        LEFT JOIN (
+        select ca.customer_no, SUM(ca.amount) as amount, MAX(ca.create_time) AS create_time
+        from customer_account ca
+        where ca.`status` = 1 GROUP BY customer_no ) cusa ON cusa.customer_no = t.id
+        WHERE
+        t.STATUS = 1
+        <if test="customerName != null and customerName != ''">
+            and t.customer_name regexp #{customerName,jdbcType=VARCHAR}
+        </if>
+        <if test="loginName != null and loginName != ''">
+            and t.login_name = #{loginName,jdbcType=VARCHAR}
+        </if>
+        GROUP BY id, customerName, customerNo, loginName
+        ) a
+        <where>
+            <if test="ymtStart != null and ymtStart != ''">
+                and ymt &gt; #{ymtStart}
+            </if>
+            <if test="ymtEnd != null and ymtEnd != ''">
+                and ymt &lt; #{ymtEnd}
+            </if>
+        </where>
+        order by createTime desc
+        LIMIT #{pageNumber},#{pageSize}
+    </select>
+
+    <select id="selectAccountTop" resultType="com.example.warehouse.vo.account.customerAccount.AccountTopVo">
+        select
+            count(id) as rechargeTotal,
+            sum(amount) as amountAll,
+            DATE_FORMAT(max(create_time), '%Y-%m-%d %k:%i:%s') as rechargeTime
+        from customer_account
+        where
+            `status` = 1
+            and cost_type = 1
+            and customer_no = #{id}
+    </select>
+
+    <select id="selectAccountDeduction" resultType="com.example.warehouse.vo.account.customerAccount.AccountDeductionVo">
+        select
+            count(id) as orderTotal,
+            DATE_FORMAT(max(create_time), '%Y-%m-%d %k:%i:%s') as orderTime
+        from customer_account
+        where `status` = 1 and cost_type = 2 and customer_no = #{id}
+    </select>
+
+    <!--<select id="countAccountStatisticList" parameterType="map" resultType="int">-->
+        <!--SELECT-->
+        <!--count(*)-->
+        <!--from  customer c where c.status = 1-->
+        <!--<if test="ymtStart != null and ymtStart != ''">-->
+            <!--and (-->
+            <!--SELECT-->
+            <!--sum(cc.amount)-->
+            <!--FROM-->
+            <!--customer_account cc-->
+            <!--WHERE-->
+            <!--cc.customer_no = c.id-->
+            <!--AND cc.`status` = 1-->
+            <!--) >= #{ymtStart}-->
+        <!--</if>-->
+        <!--<if test="ymtEnd != null and ymtEnd != ''">-->
+            <!--and (-->
+            <!--SELECT-->
+            <!--sum(cc.amount)-->
+            <!--FROM-->
+            <!--customer_account cc-->
+            <!--WHERE-->
+            <!--cc.customer_no = c.id-->
+            <!--AND cc.`status` = 1-->
+            <!--) <![CDATA[-->
+				<!--<= #{ymtEnd}-->
+			<!--]]>-->
+        <!--</if>-->
+        <!--<if test="customerName != null and customerName != ''">-->
+            <!--and c.customer_name regexp #{customerName,jdbcType=VARCHAR}-->
+        <!--</if>-->
+        <!--<if test="loginName != null and loginName != ''">-->
+            <!--and c.login_name regexp #{loginName,jdbcType=VARCHAR}-->
+        <!--</if>-->
+        <!--<if test="orderStartTime != null and '' != orderStartTime ">-->
+            <!--<![CDATA[ and DATE_FORMAT((-->
+          <!--SELECT-->
+              <!--create_time-->
+          <!--FROM-->
+              <!--customer_account-->
+          <!--WHERE-->
+              <!--customer_no = c.id-->
+          <!--AND cost_type = 2-->
+          <!--AND STATUS = 1-->
+          <!--ORDER BY-->
+              <!--create_time DESC-->
+          <!--LIMIT 1-->
+      <!--),'%Y-%m-%d') >= #{orderStartTime}-->
+        <!--]]>-->
+        <!--</if>-->
+        <!--<if test=" orderEndTime != null and '' != orderEndTime ">-->
+            <!--<![CDATA[-->
+				<!--and DATE_FORMAT((-->
+          <!--SELECT-->
+              <!--create_time-->
+          <!--FROM-->
+              <!--customer_account-->
+          <!--WHERE-->
+              <!--customer_no = c.id-->
+          <!--AND cost_type = 2-->
+          <!--AND STATUS = 1-->
+          <!--ORDER BY-->
+              <!--create_time DESC-->
+          <!--LIMIT 1-->
+      <!--),'%Y-%m-%d') <= #{orderEndTime}-->
+			<!--]]>-->
+        <!--</if>-->
+    <!--</select>-->
+
+    <select id="countAccountStatisticList" parameterType="map" resultType="int">
+        SELECT
+          count(1)
+        from
+          (select
+            t.id,
+            sum( cusa.amount ) AS ymt
+            FROM
+              customer t
+            LEFT JOIN (
+                select ca.customer_no, SUM(ca.amount) as amount
+                from customer_account ca
+                where ca.`status` = 1 GROUP BY customer_no ) cusa ON cusa.customer_no = t.id
+            WHERE
+            t.STATUS = 1
+            <if test="customerName != null and customerName != ''">
+                and t.customer_name regexp #{customerName,jdbcType=VARCHAR}
+            </if>
+            <if test="loginName != null and loginName != ''">
+                and t.login_name = #{loginName,jdbcType=VARCHAR}
+            </if>
+            group by t.id) a
+        <where>
+            <if test="ymtStart != null and ymtStart != ''">
+                and ymt &gt; #{ymtStart}
+            </if>
+            <if test="ymtEnd != null and ymtEnd != ''">
+                and ymt &lt; #{ymtEnd}
+            </if>
+        </where>
+    </select>
+
+    <!-- 统计客户列表的总余额 -->
+    <!--<select id="countCustomerAmount" parameterType="map" resultType="float">-->
+        <!--SELECT-->
+        <!--ifnull(sum(amount),0)-->
+        <!--from customer_account where status = 1 and customer_no IN (-->
+        <!--SELECT-->
+        <!--c.id-->
+        <!--FROM-->
+        <!--customer c-->
+        <!--WHERE-->
+        <!--c. STATUS = 1-->
+        <!--<if test="ymtStart != null and ymtStart != ''">-->
+            <!--and (-->
+            <!--SELECT-->
+            <!--sum(cc.amount)-->
+            <!--FROM-->
+            <!--customer_account cc-->
+            <!--WHERE-->
+            <!--cc.customer_no = c.id-->
+            <!--AND cc.`status` = 1-->
+            <!--) >= #{ymtStart}-->
+        <!--</if>-->
+        <!--<if test="ymtEnd != null and ymtEnd != ''">-->
+            <!--and (-->
+            <!--SELECT-->
+            <!--sum(cc.amount)-->
+            <!--FROM-->
+            <!--customer_account cc-->
+            <!--WHERE-->
+            <!--cc.customer_no = c.id-->
+            <!--AND cc.`status` = 1-->
+            <!--) <![CDATA[-->
+				<!--<= #{ymtEnd}-->
+			<!--]]>-->
+        <!--</if>-->
+        <!--<if test="customerName != null and customerName != ''">-->
+            <!--and c.customer_name like concat('%',#{customerName,jdbcType=VARCHAR},'%')-->
+        <!--</if>-->
+        <!--<if test="loginName != null and loginName != ''">-->
+            <!--and c.login_name =#{loginName,jdbcType=VARCHAR}-->
+        <!--</if>-->
+        <!--<if test="orderStartTime != null and '' != orderStartTime ">-->
+            <!--<![CDATA[ and DATE_FORMAT((-->
+          <!--SELECT-->
+              <!--create_time-->
+          <!--FROM-->
+              <!--customer_account-->
+          <!--WHERE-->
+              <!--customer_no = c.id-->
+          <!--AND cost_type = 2-->
+          <!--AND STATUS = 1-->
+          <!--ORDER BY-->
+              <!--create_time DESC-->
+          <!--LIMIT 1-->
+      <!--),'%Y-%m-%d') >= #{orderStartTime}-->
+        <!--]]>-->
+        <!--</if>-->
+        <!--<if test=" orderEndTime != null and '' != orderEndTime ">-->
+            <!--<![CDATA[-->
+				<!--and DATE_FORMAT((-->
+          <!--SELECT-->
+              <!--create_time-->
+          <!--FROM-->
+              <!--customer_account-->
+          <!--WHERE-->
+              <!--customer_no = c.id-->
+          <!--AND cost_type = 2-->
+          <!--AND STATUS = 1-->
+          <!--ORDER BY-->
+              <!--create_time DESC-->
+          <!--LIMIT 1-->
+      <!--),'%Y-%m-%d') <= #{orderEndTime}-->
+			<!--]]>-->
+        <!--</if>-->
+        <!--)-->
+    <!--</select>-->
+    <select id="countCustomerAmount" parameterType="map" resultType="float">
+        select
+          ifnull(sum(a.ymt), 0)
+        from (
+            SELECT
+            t.id AS id,
+            sum( cusa.amount ) AS ymt
+            FROM
+            customer t
+            LEFT JOIN (
+                select ca.customer_no, SUM(ca.amount) as amount
+                from customer_account ca
+                where ca.`status` = 1 GROUP BY customer_no ) cusa ON cusa.customer_no = t.id
+            WHERE
+            t.STATUS = 1
+            <if test="customerName != null and customerName != ''">
+                and t.customer_name regexp #{customerName,jdbcType=VARCHAR}
+            </if>
+            <if test="loginName != null and loginName != ''">
+                and t.login_name = #{loginName,jdbcType=VARCHAR}
+            </if>
+            GROUP BY id
+        ) a
+        <where>
+            <if test="ymtStart != null and ymtStart != ''">
+                and ymt &gt; #{ymtStart}
+            </if>
+            <if test="ymtEnd != null and ymtEnd != ''">
+                and ymt &lt; #{ymtEnd}
+            </if>
+        </where>
+    </select>
+
+
+    <!--<select id="countCustomerAmount" parameterType="map" resultType="float">-->
+        <!--SELECT-->
+        <!--ifnull(sum( cusa.amount ),0)-->
+        <!--FROM-->
+        <!--customer t-->
+        <!--LEFT JOIN customer_account cusa ON cusa.customer_no = t.id-->
+        <!--AND cusa.`status` = 1-->
+        <!--WHERE-->
+        <!--t.STATUS = 1-->
+        <!--<if test="customerName != null and customerName != ''">-->
+            <!--and t.customer_name regexp #{customerName,jdbcType=VARCHAR}-->
+        <!--</if>-->
+        <!--<if test="loginName != null and loginName != ''">-->
+            <!--and t.login_name = #{loginName,jdbcType=VARCHAR}-->
+        <!--</if>-->
+    <!--</select>-->
+
+    <!-- 查询某个客户历史充值和扣费记录 -->
+    <!-- 屏蔽的字段  -->
+    <select id="selectSingleCustomerAccountList"  parameterType="map" resultMap="BaseResultMap">
+        SELECT
+        t.id, t.customer_no, t.customer_name, t.business_number, t.order_number, t.goods_sum, t.route_name,
+        t.address, t.cost_type, t.amount, t.currency, t.channel, t.message, t.version, t.`status`,t.create_time,
+        t.create_id, t.create_name, t.last_update_time, t.last_update_id,t.login_name,
+        cus.customer_remarks,
+        (select sum(amount) from customer_account where customer_no = #{customerNo,jdbcType=VARCHAR}) ymt
+        FROM
+        customer_account t
+        left join `user` u on u.id = t.create_id and u.status = 1
+        left join customer cus on cus.id = t.customer_no
+        <where>
+            t.`status` = 1
+            <if test="commercialAreaId != null and commercialAreaId != ''">
+                AND u.commercial_area_id = #{commercialAreaId,jdbcType=INTEGER}
+            </if>
+            <if test="customerNo != null and customerNo != ''">
+                AND t.customer_no = #{customerNo,jdbcType=VARCHAR}
+            </if>
+            <if test="customerName != null and customerName != ''">
+                and t.customer_name like concat('%',#{customerName,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="orderNumber != null and orderNumber != ''">
+                AND t.order_number = #{orderNumber,jdbcType=VARCHAR}
+            </if>
+            <if test="costType != null and costType != ''">
+                AND t.cost_type = #{costType,jdbcType=VARCHAR}
+            </if>
+            <if test="channel != null and channel != ''">
+                AND t.channel = #{channel,jdbcType=VARCHAR}
+            </if>
+            <if test="loginName != null and loginName != ''">
+                AND t.login_name = #{loginName,jdbcType=VARCHAR}
+            </if>
+            <if test="startTime != null and '' != startTime ">
+                AND t.create_time between #{startTime} and #{endTime}
+            </if>
+            <if test="routeName != null and routeName != ''">
+                AND t.route_name regexp #{routeName}
+            </if>
+        </where>
+        ORDER BY
+        t.create_time DESC
+        <if test="pageNumber != null">
+            LIMIT #{pageNumber},#{pageSize}
+        </if>
+    </select>
+    <select id="countSelectSingleCustomerAccountList"  parameterType="map" resultType="int">
+        SELECT
+        count(t.id)
+        FROM customer_account t
+        left join `user` u on u.id = t.create_id and u.status = 1
+        left join customer cus on cus.id = t.customer_no
+        <where>
+            t.`status` = 1
+            <if test="commercialAreaId != null and commercialAreaId != ''">
+                AND u.commercial_area_id = #{commercialAreaId,jdbcType=INTEGER}
+            </if>
+            <if test="customerNo != null and customerNo != ''">
+                AND t.customer_no = #{customerNo,jdbcType=VARCHAR}
+            </if>
+            <if test="customerName != null and customerName != ''">
+                and t.customer_name like concat('%',#{customerName,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="orderNumber != null and orderNumber != ''">
+                AND t.order_number = #{orderNumber,jdbcType=VARCHAR}
+            </if>
+            <if test="costType != null and costType != ''">
+                AND t.cost_type = #{costType,jdbcType=VARCHAR}
+            </if>
+            <if test="channel != null and channel != ''">
+                AND t.channel = #{channel,jdbcType=VARCHAR}
+            </if>
+            <if test="loginName != null and loginName != ''">
+                AND t.login_name = #{loginName,jdbcType=VARCHAR}
+            </if>
+            <if test="startTime != null and '' != startTime ">
+                t.create_time between #{startTime} and #{endTime}
+            </if>
+            <if test="routeName != null and routeName != ''">
+                AND t.route_name regexp #{routeName}
+            </if>
+        </where>
+    </select>
+    <!--根据条件查询客户总余额-->
+    <select id="sumSingleYmt" parameterType="map" resultType="java.math.BigDecimal">
+        select sum(amount) from customer_account where
+        `status` = 1
+        <if test="customerNo != null and customerNo != ''">
+            AND customer_no = #{customerNo,jdbcType=VARCHAR}
+        </if>
+        <if test="customerName != null and customerName != ''">
+            and customer_name like concat('%',#{customerName,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="orderNumber != null and orderNumber != ''">
+            AND order_number = #{orderNumber,jdbcType=VARCHAR}
+        </if>
+        <if test="costType != null and costType != ''">
+            AND cost_type = #{costType,jdbcType=VARCHAR}
+        </if>
+        <if test="loginName != null and loginName != ''">
+            AND login_name = #{loginName,jdbcType=VARCHAR}
+        </if>
+        <if test="startTime != null and '' != startTime ">
+            <![CDATA[ and DATE_FORMAT(create_time,'%Y-%m-%d') >= #{startTime}
+        ]]>
+        </if>
+        <if test=" endTime != null and '' != endTime ">
+            <![CDATA[
+				and DATE_FORMAT(create_time,'%Y-%m-%d') <= #{endTime}
+			]]>
+        </if>
+        <if test="routeName != null and routeName != ''">
+            AND route_name like CONCAT('%',#{routeName},'%')
+        </if>
+    </select>
+
+<!--   查询已支付的订单 -->
+    <select id="selectHavePaidList" parameterType="map" resultMap="BaseResultMap">
+        select
+        ca.id, ca.customer_no, ca.customer_name, ca.business_number, ca.order_number, ca.goods_sum, ca.route_name,
+        ca.address, ca.cost_type, abs(ca.amount) as amount, ca.currency, ca.channel, ca.message, ca.version, ca.`status`,ca.create_time,
+        ca.create_id, ca.create_name, ca.last_update_time, ca.last_update_id,ca.login_name,
+        abs(ca.amount + ao.money)as profit,
+        ao.money as paidMoney,ao.agent_number as agentNumber,ao.create_time as paidTime,
+        u.username operatorName,
+        ag.agent_name as agentName
+        from customer_account ca
+        left join customer cus on cus.id = ca.customer_no
+        LEFT JOIN agent_order ao ON ca.order_number = ao.order_number and ao.status = 1
+        LEFT JOIN user u ON u.id = ao.create_id and u.status = 1
+        LEFT JOIN agent ag ON ag.agent_code = ao.agent_id and ag.status = 1
+        WHERE
+        ca.cost_type = 2
+        AND ca.`status` = 1
+        <if test="isPaid != null and isPaid == 1">
+            and ao.order_number is not null
+        </if>
+        <if test="isPaid != null and isPaid != '' and isPaid == 0">
+            and ao.order_number is null
+        </if>
+        <if test="customerNo != null and customerNo != ''">
+            AND ca.customer_no = #{customerNo,jdbcType=VARCHAR}
+        </if>
+        <if test="customerName != null and customerName != ''">
+            and ca.customer_name like concat('%',#{customerName,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="orderNumber != null and orderNumber != ''">
+            AND ca.order_number = #{orderNumber,jdbcType=VARCHAR}
+        </if>
+        <if test="loginName != null and loginName != ''">
+            AND ca.login_name = #{loginName,jdbcType=VARCHAR}
+        </if>
+        <if test="startTime != null and '' != startTime ">
+            <![CDATA[ and DATE_FORMAT(ca.create_time,'%Y-%m-%d') >= #{startTime}
+        ]]>
+        </if>
+        <if test=" endTime != null and '' != endTime ">
+            <![CDATA[
+				and DATE_FORMAT(ca.create_time,'%Y-%m-%d') <= #{endTime}
+			]]>
+        </if>
+        <if test="routeName != null and routeName != ''">
+            AND ca.route_name like CONCAT('%',#{routeName},'%')
+        </if>
+        <choose>
+            <when test="haveSettledPage != null and haveSettledPage != ''">
+                ORDER BY
+                ao.create_time DESC
+            </when>
+            <otherwise>
+                ORDER BY
+                ca.create_time DESC
+            </otherwise>
+        </choose>
+        LIMIT #{pageNumber},#{pageSize}
+    </select>
+
+    <select id="countHavePaidList" parameterType="map" resultType="int">
+        select count(1)
+        from customer_account ca
+        left join customer cus on cus.id = ca.customer_no
+        LEFT JOIN agent_order ao ON ca.order_number = ao.order_number and ao.status = 1
+        LEFT JOIN user u ON u.id = ao.create_id and u.status = 1
+        LEFT JOIN agent ag ON ag.agent_code = ao.agent_id and ag.status = 1
+        WHERE
+        ca.cost_type = 2
+        AND ca.`status` = 1
+        <if test="isPaid != null and isPaid == 1">
+            and ao.order_number is not null
+        </if>
+        <if test="isPaid != null and isPaid != '' and isPaid == 0">
+            and ao.order_number is null
+        </if>
+        <if test="customerNo != null and customerNo != ''">
+            AND ca.customer_no = #{customerNo,jdbcType=VARCHAR}
+        </if>
+        <if test="customerName != null and customerName != ''">
+            and ca.customer_name like concat('%',#{customerName,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="orderNumber != null and orderNumber != ''">
+            AND ca.order_number = #{orderNumber,jdbcType=VARCHAR}
+        </if>
+        <if test="loginName != null and loginName != ''">
+            AND ca.login_name = #{loginName,jdbcType=VARCHAR}
+        </if>
+        <if test="startTime != null and '' != startTime ">
+            <![CDATA[ and DATE_FORMAT(ca.create_time,'%Y-%m-%d') >= #{startTime}
+        ]]>
+        </if>
+        <if test=" endTime != null and '' != endTime ">
+            <![CDATA[
+				and DATE_FORMAT(ca.create_time,'%Y-%m-%d') <= #{endTime}
+			]]>
+        </if>
+        <if test="routeName != null and routeName != ''">
+            AND ca.route_name like CONCAT('%',#{routeName},'%')
+        </if>
+    </select>
+
+    <select id="getSingleSettleMentOrder" parameterType="string" resultMap="AgentOrderAccountMap">
+        SELECT
+            c.login_name as loginName,
+            c.customer_name as customerName,
+            c.customer_no as customerNo,
+            ca.order_number as orderNumber,
+            ca.create_time as createTime,
+            abs(ca.amount) as amount,
+            cp.international_transshipment_no as agentNumber,
+            cp.remarks as remarks,
+            ao.money as money,
+            ag.agent_name as agentName,
+            ao.agent_id as agentId
+        FROM
+            customer_account ca
+        LEFT JOIN agent_order ao ON ao.order_number = ca.order_number
+            AND ao. STATUS = 1
+        LEFT JOIN agent ag ON ag.agent_code = ao.agent_id
+            AND ag. STATUS = 1
+        LEFT JOIN customer c ON c.id = ca.customer_no
+            AND c. STATUS = 1
+        LEFT JOIN customer_pack cp ON ca.order_number = cp.order_number
+            AND cp. STATUS = 1
+        WHERE
+            ca. STATUS = 1
+            AND ca.order_number = #{orderNumber,jdbcType=VARCHAR}
+    </select>
+
+    <select id="getAmountByLoginName" resultType="float" parameterType="string">
+        select ifnull(sum(amount),0) from customer_account where login_name = #{loginName,jdbcType=VARCHAR} and status = 1
+    </select>
+
+</mapper>

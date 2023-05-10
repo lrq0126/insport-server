@@ -10,7 +10,7 @@
                     <text style="font-size:30upx;"></text>
                 </view>
                 <view>
-                    <text style="font-size:30upx;">　　联系人：飞轮国际</text>
+                    <text style="font-size:30upx;">　　联系人：小挎兜</text>
                 </view>
                 <view>
                     <text style="font-size:30upx;">　　联系电话：13434114290</text>
@@ -22,7 +22,7 @@
                     <text style="font-size:30upx;">　　联系QQ：1037506428</text>
                 </view>
                 <view>
-                    <text style="font-size:30upx;">　　详细地址：广州市白云区嘉禾街道新科下村橙园街2号国际仓转飞轮</text>
+                    <text style="font-size:30upx;">　　详细地址：广州市白云区嘉禾街道新科下村橙园街2号国际仓转小挎兜</text>
                 </view>
                 <view>
                     <text style="font-size:30upx;"></text>

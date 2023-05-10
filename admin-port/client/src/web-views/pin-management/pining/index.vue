@@ -10,7 +10,7 @@
                  style="margin-top:15px;"
                  type="border-card"
                  @tab-click="handTabClick">
-            <el-tab-pane label="拼团中列表"
+            <el-tab-pane label="拼邮列表"
                          name="list">
                 <keep-alive>
                     <list-pane ref="listPane"

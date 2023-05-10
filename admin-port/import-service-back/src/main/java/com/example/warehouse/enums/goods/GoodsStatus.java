@@ -6,8 +6,9 @@ public enum GoodsStatus {
     INTO_WARE(1,"入库"),
     OUT_WARE(2,"出库"),
     RE_INTO_WARE(3,"预录入"),
-    PING_TUAN(4, "拼团"),
+    PING_TUAN(4, "拼邮中"),
 
+    GOODS_PIN_SPELL_MAILING(5, "拼邮中"),
     WAIT_PACKING(6,"待打包"),
     GOODS_PACKED(7,"已打包"),
     GOODS_WAIT_DELIVERY(8,"待发货"),

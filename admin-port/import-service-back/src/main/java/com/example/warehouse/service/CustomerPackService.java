@@ -1,11 +1,13 @@
 package com.example.warehouse.service;
 
 import com.example.warehouse.entity.CustomerPack;
+import com.example.warehouse.model.PageResultModel;
 import com.example.warehouse.model.ResultModel;
-import com.example.warehouse.vo.customer.CustomerPackVo;
+import com.example.warehouse.vo.customerPack.CustomerPackVo;
 import com.example.warehouse.vo.GoodsVo;
 import com.example.warehouse.vo.customer.OrderAmountChangeReqVo;
 import com.example.warehouse.vo.customer.OrderPayReqVo;
+import com.example.warehouse.vo.customerPack.RouteCustomerPackReqVo;
 import com.example.warehouse.vo.mobile.PackSortReqVo;
 import com.example.warehouse.vo.packVo.PackConditionsQueryReqVo;
 import com.example.warehouse.vo.packVo.PackedReqVo;
@@ -253,4 +255,12 @@ public interface CustomerPackService {
 
 
     void printInvoice(Map<String, Object> requestMap, HttpServletRequest request, HttpServletResponse response);
+
+    ResponseEntity<ResultModel> getCustomerPackIdentity(Integer customerPackId);
+
+    ResponseEntity<ResultModel> getGoodsList(Integer customerPackId);
+
+    ResponseEntity<PageResultModel> getRouteCustomerPackList(RouteCustomerPackReqVo routeCustomerPackReqVo);
+
+    ResponseEntity<ResultModel> orderSplit(int id);
 }

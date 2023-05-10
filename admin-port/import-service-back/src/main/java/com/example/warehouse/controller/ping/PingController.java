@@ -1,6 +1,7 @@
 package com.example.warehouse.controller.ping;
 
 import com.example.warehouse.entity.Goods2pack;
+import com.example.warehouse.entity.ping.PingMain;
 import com.example.warehouse.enums.ping.PingTypeEnums;
 import com.example.warehouse.mapper.GoodsMapper;
 import com.example.warehouse.mapper.goods2pack.Goods2packMapper;
@@ -74,6 +75,7 @@ public class PingController {
         pingRequestVo.setPingType(WAITING_FOR_AUDIT.getValue());
         return pingService.getPingMainList(pingRequestVo);
     }
+
 
     // 审核
     @PostMapping(value = "/operationTeamAudit")
@@ -174,6 +176,21 @@ public class PingController {
     @GetMapping(value = "/printPingMain")
     public ResponseEntity<ResultModel> printPingMain(@RequestParam("pid") int pid) {
         return pinListingService.printPingMain(pid);
+    }
+
+
+    /**====================新版拼邮接口======================*/
+
+
+    /**
+     * 创建拼邮订单
+     * @param pingMain
+     * @return
+     */
+    @PostMapping("/savePin")
+    public ResponseEntity<ResultModel> savePin(PingMain pingMain) {
+        log.info("创建拼邮订单------>>>>>>");
+        return pingService.savePin(pingMain);
     }
 
 }

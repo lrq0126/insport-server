@@ -615,6 +615,9 @@
             <if test="commercialAreaId!= null">
                 and u.commercial_area_id = #{commercialAreaId}
             </if>
+            <if test="isPin != null">
+                and t.is_pin = #{isPin}
+            </if>
             <if test="routeType != null and routeType != ''">
                 and t.route_type = #{routeType}
             </if>
@@ -672,6 +675,9 @@
             t.`status` = 1
             <if test="commercialAreaId!= null">
                 and u.commercial_area_id = #{commercialAreaId}
+            </if>
+            <if test="isPin != null">
+                and t.is_pin = #{isPin}
             </if>
             <if test="routeType != null and routeType != ''">
                 and t.route_type = #{routeType}

@@ -76,6 +76,8 @@ public class WarehouseAddress {
      */
     private Integer isEnable;
 
+    private Integer commercialAreaId;
+
     private String commercialAreaName;
 
     @Override

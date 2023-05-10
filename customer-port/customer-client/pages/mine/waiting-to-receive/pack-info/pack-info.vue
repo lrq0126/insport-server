@@ -363,7 +363,7 @@
 									</view>
 									
 									
-									<view class="goods-buttom-class" @click="checkPicture(item.deliveryOrderNo)">查看</view>
+									<!-- <view class="goods-buttom-class" @click="checkPicture(item.deliveryOrderNo)">查看</view> -->
 								</view>
 								
 							</tr>

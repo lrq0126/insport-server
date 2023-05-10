@@ -45,4 +45,10 @@ public interface ImagesMapper {
 
     List<Images> getEvaluateImagesByContentId(String contentId);
     List<Images> getImagesByTypeAndContentId(@Param("picType") String picType, @Param("contentId") String contentId);
+
+    List<Images> getCustomerIdentityPicture(int customerIdentityId);
+
+    void deleteImages(@Param("imageIdList") List<Integer> imageIdList);
+
+    List<Images> getImagesByIdList(@Param("imageIdList") List<Integer> imagesIdList);
 }

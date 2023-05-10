@@ -20,7 +20,7 @@
                               class="filter-item" />
                 </el-form-item>
 
-                <!-- <el-form-item label="国家">
+                <el-form-item label="国家">
                     <el-select v-model="pageInfo.countryId"
                                placeholder="请选择"
                                filterable
@@ -31,7 +31,7 @@
                                    :label="item.sddName"
                                    :value="item.id" />
                     </el-select>
-                </el-form-item> -->
+                </el-form-item>
 
                 <el-form-item>
                     <el-button type="primary"

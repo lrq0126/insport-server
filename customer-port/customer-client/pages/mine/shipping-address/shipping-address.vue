@@ -32,7 +32,7 @@
                         <view v-if="item.defaultFlag == '1'">
                             <radio value="1"
                                    checked="checked"
-                                   color="#FFCC33"
+                                   color="#00007f"
                                    style="transform:scale(0.7)" />
                         </view>
                         <view class="manage_ip_09 manage_ip_09_01"
@@ -430,7 +430,7 @@ export default {
                 display: block;
                 width: 80%;
                 height: 72upx;
-                background: #fbbd43f5;
+                background: #0856fff5;
                 margin: 0.5rem auto;
                 border-radius: 50px;
                 text-align: center;

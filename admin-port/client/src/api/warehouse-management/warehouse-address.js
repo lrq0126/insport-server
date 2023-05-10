@@ -47,7 +47,8 @@
     abnormalRelation,
     postcode,
     address,
-    isEnable
+    isEnable,
+    commercialAreaId
 }) {
    return request({
      url: "/warehouseAddress/saveWarehouseAddress",
@@ -60,7 +61,8 @@
         abnormalRelation: abnormalRelation,
         postcode: postcode,
         address: address,
-        isEnable: isEnable
+        isEnable: isEnable,
+        commercialAreaId: commercialAreaId
      }
    });
  }

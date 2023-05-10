@@ -1,11 +1,14 @@
 package com.dwgj.mlxydedicatedline.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.dwgj.mlxydedicatedline.commons.DateUtil;
 import com.dwgj.mlxydedicatedline.commons.SequenceCode;
 import com.dwgj.mlxydedicatedline.config.UserThreadContext;
 import com.dwgj.mlxydedicatedline.entity.*;
+import com.dwgj.mlxydedicatedline.entity.customer.CustomerIdentity;
+import com.dwgj.mlxydedicatedline.entity.customerPack.CustomerPackIdentity;
 import com.dwgj.mlxydedicatedline.entity.customerPack.CustomerPackPriceDetail;
 import com.dwgj.mlxydedicatedline.entity.customerPack.PackInsurancePrice;
 import com.dwgj.mlxydedicatedline.entity.customerPack.PackValuation;
@@ -14,7 +17,10 @@ import com.dwgj.mlxydedicatedline.entity.image.Images;
 import com.dwgj.mlxydedicatedline.entity.insurance.Insurance;
 import com.dwgj.mlxydedicatedline.entity.insurance.InsurancePrice;
 import com.dwgj.mlxydedicatedline.entity.sys.CommercialArea;
+import com.dwgj.mlxydedicatedline.entity.user.User;
 import com.dwgj.mlxydedicatedline.mapper.*;
+import com.dwgj.mlxydedicatedline.mapper.customer.CustomerIdentityMapper;
+import com.dwgj.mlxydedicatedline.mapper.customerPack.CustomerPackIdentityMapper;
 import com.dwgj.mlxydedicatedline.mapper.customerPack.CustomerPackPriceDetailMapper;
 import com.dwgj.mlxydedicatedline.mapper.customerPack.PackInsurancePriceMapper;
 import com.dwgj.mlxydedicatedline.mapper.customerPack.PackValuationMapper;
@@ -26,6 +32,7 @@ import com.dwgj.mlxydedicatedline.mapper.insurance.InsurancePriceMapper;
 import com.dwgj.mlxydedicatedline.mapper.sys.CommercialAreaMapper;
 import com.dwgj.mlxydedicatedline.mapper.sysDictDetail.SysDictDetailDao;
 import com.dwgj.mlxydedicatedline.mapper.user.LoginTokenMapper;
+import com.dwgj.mlxydedicatedline.mapper.user.UserMapper;
 import com.dwgj.mlxydedicatedline.resultType.ResultModel;
 import com.dwgj.mlxydedicatedline.service.GoodsService;
 import com.dwgj.mlxydedicatedline.service.wechat.SendMessageServer;
@@ -33,6 +40,7 @@ import com.dwgj.mlxydedicatedline.utils.CalculationUtils;
 import com.dwgj.mlxydedicatedline.utils.CustomerPackUtil;
 import com.dwgj.mlxydedicatedline.utils.GoodsUtil;
 import com.dwgj.mlxydedicatedline.vo.GoodsVo;
+import com.dwgj.mlxydedicatedline.vo.customer.CustomerIdentityRespVo;
 import com.dwgj.mlxydedicatedline.vo.goods.ConfirmPackReqVo;
 import com.dwgj.mlxydedicatedline.vo.insurance.InsuranceRespVo;
 import com.dwgj.mlxydedicatedline.vo.route.RouteQuotationVo;
@@ -60,6 +68,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static com.dwgj.mlxydedicatedline.enums.ResultStatus.*;
 
@@ -92,6 +101,10 @@ public class GoodsServiceImpl implements GoodsService {
     private PackInsurancePriceMapper packInsurancePriceMapper;
     @Autowired
     private CommercialAreaMapper commercialAreaMapper;
+    @Autowired
+    private CustomerIdentityMapper customerIdentityMapper;
+    @Autowired
+    private CustomerPackIdentityMapper customerPackIdentityMapper;
 
     @Resource
     private CalculationUtils calculationUtils;
@@ -109,6 +122,8 @@ public class GoodsServiceImpl implements GoodsService {
     private SysDictDetailDao sysDictDetailDao;
     @Autowired
     private LoginTokenMapper loginTokenMapper;
+    @Autowired
+    private UserMapper userMapper;
 
 
     @Override
@@ -609,6 +624,7 @@ public class GoodsServiceImpl implements GoodsService {
 
             // 申请打包发送消息给客户
             sendMessageServer.sendMessageForApplyPack(customerPack);
+
             // 插入收货地址信息到发货表
             CustomerPackReceiverAddress customerPackReceiverAddress = new CustomerPackReceiverAddress();
             customerPackReceiverAddress.setReceiverAddress(customerAddress.getReceiverAddress());
@@ -617,19 +633,37 @@ public class GoodsServiceImpl implements GoodsService {
             customerPackReceiverAddress.setAddressee(customerAddress.getAddressee());
             customerPackReceiverAddress.setCode(customerAddress.getCode());
             customerPackReceiverAddress.setProvinces(customerAddress.getProvinces());
+            customerPackReceiverAddress.setAddressId(customerAddress.getId());
             customerPackReceiverAddressDao.insert(customerPackReceiverAddress);
+
+            if(confirmPackReqVo.getCustomerIdentityId() != null){
+                // 插入身份证信息表
+                CustomerIdentityRespVo customerIdentity = customerIdentityMapper.getIdentityInfo(confirmPackReqVo.getCustomerIdentityId());
+                List<Integer> imagesList = customerIdentity.getImages().stream().map(Images::getId).collect(Collectors.toList());
+
+                CustomerPackIdentity customerPackIdentity = new CustomerPackIdentity();
+                customerPackIdentity.setCustomerIdentityId(customerIdentity.getId());
+                customerPackIdentity.setImagesId(imagesList.toString());
+                customerPackIdentity.setCustomerPackId(customerPack.getId());
+                customerPackIdentity.setIdentityName(customerIdentity.getIdentityName());
+                customerPackIdentity.setIdentityCode(customerIdentity.getIdentityCode());
+                customerPackIdentity.setCreateTime(DateUtil.dateToString(new Date(), DateUtil.DEFAULT_TIMESTAMP_FORMAT));
+                customerPackIdentity.setCreateId(customer.getId());
+                customerPackIdentity.setCreateName(customer.getCustomerName());
+                customerPackIdentityMapper.insertSelective(customerPackIdentity);
+            }
 
             customerPack.setAddressId(customerPackReceiverAddress.getId());
             customerPackMapper.updateByPrimaryKeySelective(customerPack);
 
             goodsMapper.updateOfApplyPackGoodsTypeChangeByGoodsNo(goodsNos);
 
-            // 加入中间表
-            List<GoodsVo> goodsVo2PackList = goodsMapper.findByGoodsNos(goodsNos);
+//            List<GoodsVo> goodsVo2PackList = goodsMapper.findByGoodsNos(goodsNos);
 
+            // 加入中间表
             List<Goods2pack> goods2packList = new ArrayList<>();
 
-            for (GoodsVo goodsVo : goodsVo2PackList) {
+            for (GoodsVo goodsVo : goodsVoList) {
                 Goods2pack goods2pack = new Goods2pack();
                 goods2pack.setGoodsId(goodsVo.getId());
                 goods2pack.setPackId(customerPack.getId());
@@ -695,6 +729,5 @@ public class GoodsServiceImpl implements GoodsService {
         map.put("endTime", time2);
         return map;
     }
-
 
 }

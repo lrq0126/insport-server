@@ -11,8 +11,8 @@ import com.example.warehouse.mapper.transportationRoute.TransportationRouteMappe
 import com.example.warehouse.model.ResultModel;
 import com.example.warehouse.service.CustomerPackNumberService;
 import com.example.warehouse.vo.GoodsVo;
-import com.example.warehouse.vo.customer.CustomerPackNumberVo;
-import com.example.warehouse.vo.customer.CustomerPackVo;
+import com.example.warehouse.vo.customerPack.CustomerPackNumberVo;
+import com.example.warehouse.vo.customerPack.CustomerPackVo;
 import com.example.warehouse.vo.route.RouteVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

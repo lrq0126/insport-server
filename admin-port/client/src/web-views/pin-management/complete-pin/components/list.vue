@@ -11,35 +11,11 @@
                  :model="pageInfo"
                  inline
                  label-width="75px">
-            <!-- <el-form-item label="订单状态">
-        <el-select v-model="pageInfo.isPacked" @change="queryLiist(1)">
-          <el-option label="未打包" value="0"> </el-option>
-          <el-option label="已打包" value="1"> </el-option>
-          <el-option label="未发货" value="3"> </el-option>
-          <el-option label="已发货" value="4"> </el-option>
-        </el-select>
-      </el-form-item> -->
 
             <el-form-item label="拼团订单号">
                 <el-input type="text"
                           v-model="pageInfo.orderNumber"
                           placeholder="请输入拼团订单号"
-                          @keyup.enter.native="queryLiist(1)" />
-            </el-form-item>
-
-            <el-form-item label="团长会员ID">
-                <el-input type="text"
-                          v-model="pageInfo.loginName"
-                          placeholder="请输入团长会员ID"
-                          @keyup.enter.native="queryLiist(1)" />
-            </el-form-item>
-
-            <el-form-item label="团长名称"
-                          label-width="105px">
-                <el-input v-model="pageInfo.leaderName"
-                          placeholder="请输入团长名称"
-                          style="width: 200px"
-                          class="filter-item"
                           @keyup.enter.native="queryLiist(1)" />
             </el-form-item>
 
@@ -51,7 +27,7 @@
             </el-form-item>
 
             <el-form-item label="国家">
-                <el-select v-model="pageInfo.countryId"
+                <el-select v-model="pageInfo.country"
                            placeholder="请选择"
                            filterable
                            clearable
@@ -59,7 +35,7 @@
                            class="filter-item">
                     <el-option v-for="(item, index) in countryData"
                                :key="index"
-                               :value="item.id"
+                               :value="item.sddName"
                                :label="item.sddName" />
                 </el-select>
             </el-form-item>
@@ -69,6 +45,7 @@
                            @click="queryLiist(1)">查 询</el-button>&nbsp;
                 <el-button @click="handleResetForm('searchForm')">重 置</el-button>
             </el-form-item>
+            <br/>
         </el-form>
 
         <!-- 表格 -->
@@ -79,30 +56,30 @@
             <el-table-column type="index"
                              label="序号"
                              width="50"
+                             fixed="left"
+                             align="center"></el-table-column>
+
+            <el-table-column prop="orderName"
+                             label="拼团名称"
+                             min-width="160"
                              align="center"
                              fixed="left"></el-table-column>
 
             <el-table-column prop="orderNumber"
                              label="拼团订单号"
                              min-width="150"
-                             align="center"
-                             fixed="left"></el-table-column>
-
-            <el-table-column prop="pinName"
-                             label="拼团名称"
-                             min-width="150"
                              align="center"></el-table-column>
-
-            <el-table-column prop="loginName"
-                             label="团长会员id"
-                             min-width="120"
-                             align="center"></el-table-column>
-
-            <el-table-column prop="leaderName"
-                             label="团长名称"
-                             min-width="180"
-                             align="center"></el-table-column>
-
+            <el-table-column prop="pinType"
+                             label="状态"
+                             min-width="160"
+                             align="center">
+                                <template slot-scope="scope">
+                                    <el-tag type="success" v-if="scope.row.pinType == 1">装箱中</el-tag>
+                                    <el-tag type="primary" v-if="scope.row.pinType == 2">已打包</el-tag>
+                                    <el-tag type="danger" v-if="scope.row.pinType == 3">已发货</el-tag>
+                                    <el-tag type="danger" v-if="scope.row.pinType == 4">到站</el-tag>
+                                </template>
+                            </el-table-column>
             <el-table-column prop="createTime"
                              label="创建时间"
                              min-width="160"
@@ -118,47 +95,26 @@
                              min-width="160"
                              align="center"></el-table-column>
 
-            <el-table-column prop="targetWeight"
-                             label="目标重量"
-                             min-width="120"
-                             align="center"></el-table-column>
-
-            <el-table-column prop="targetUnitPrice"
-                             label="目标单价"
-                             min-width="120"
-                             align="center"></el-table-column>
-
-            <el-table-column prop="goodsSumKg"
+            <el-table-column prop="orderWeight"
                              label="当前重量"
                              min-width="120"
                              align="center"></el-table-column>
 
-            <el-table-column label="打包状态"
-                             min-width="120"
-                             align="center">
-                <template slot-scope="scope">
-                    <el-tag v-if="scope.row.isPacked == 0"
-                            type="info">待打包</el-tag>
-                    <el-tag v-if="scope.row.isPacked == 1"
-                            type="success">已打包</el-tag>
-                </template>
-            </el-table-column>
-
             <el-table-column label="操作"
                              fixed="right"
-                             width="300"
+                             width="260"
                              align="center">
                 <template slot-scope="scope">
-                    <el-button type="warning"
+                    <el-button type="primary"
                                icon="el-icon-upload"
                                size="mini"
                                plain
-                               @click="printGoods(scope.row.id)">打印货物清单</el-button>
+                               @click="checkDetails(scope.row.id)">查看详情</el-button>
+
                     <el-button type="success"
-                               icon="el-icon-upload"
                                size="mini"
                                plain
-                               @click="packingOpen(scope.row.id)">开始打包</el-button>
+                               @click="deliverPin(scope.row.id)">发 货</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -169,21 +125,16 @@
                     :current.sync="pageInfo.pageNumber"
                     :pageSize.sync="pageInfo.pageSize"
                     @pagination="pagination" />
-        <!-- 弹窗信息 -->
-        <!-- <pin-detail-view ref="modelView"
-                    @updateList="queryLiist" /> -->
+        
     </div>
 </template>
 
 <script>
 import Pagination from "@/components/Pagination";
-// import PinDetailView from './pin-detail';
-import { getPinList, getCountryList, printAllGoods } from "@/api/pin-management/pin-main";
-
+import { getPinSpellMailList, getCountryList, deliver } from "@/api/pin-management/pin-spell-mail";
 export default {
     components: {
-        Pagination,
-        // PinDetailView
+        Pagination
     },
     data () {
         return {
@@ -194,13 +145,12 @@ export default {
                 total: 0,
                 pageNumber: 1, // 当前页码
                 pageSize: 10, // 每页条数
+
                 orderNumber: "",
-                loginName: "",
-                leaderName: "",
+                orderName: "",
                 routeName: "",
-                countryId: "",
-                pingType: "2",
-                isPacked: 0,
+                country: "",
+                pinType: 2,
             }, // 页码传参数
         };
     },
@@ -227,6 +177,29 @@ export default {
                 this.queryLiist(1);
             }
         },
+        openPinDialog(){
+            this.$refs['pingInfoView'].openDialog();
+        },
+
+        /**
+         * 拼邮订单发货
+         */
+        deliverPin(id){
+            deliver(id).then((res) => {
+                if(res.code == 100){
+                    this.$message({
+                        message: "拼邮订单发货操作成功",
+                        type: "success"
+                    })
+                    this.queryLiist(1);
+                }else{
+                    this.$message({
+                        message: res.message,
+                        type: "error"
+                    })
+                }
+            })
+        },
 
         /**
          * 获取列表
@@ -238,8 +211,7 @@ export default {
                 this.pageInfo.pageNumber = pageNumber;
             }
             this.loading = true;
-            getPinList(this.pageInfo)
-                .then((res) => {
+            getPinSpellMailList(this.pageInfo).then((res) => {
                     if (res.content) {
                         this.pinData = res.content;
                     } else {
@@ -252,7 +224,7 @@ export default {
                 .finally(() => {
                     setTimeout(() => {
                         this.loading = false;
-                    }, 1000);
+                    }, 400);
                 });
         },
 
@@ -271,25 +243,13 @@ export default {
         },
 
         /**
-        * 子订单开始打包
-        */
-        printGoods(pid) {
-            console.log("pid:" , pid);
-            printAllGoods({ pid }).then((res) => {
-                if (res.code === 100) {
-                // window.location = 'http://' + res.content.url
-                window.open("http://" + res.content.url);
-                }
-            });
-        },
-
-        /**
-         * 审核开始
+         * 查看拼团详情
          * @return {type} {description}
          */
-        packingOpen (pinId) {
+        checkDetails (pinId) {
             this.$router.push({ name: "CompletePinDetail", query: { id: pinId } });
         },
+
 
         // 修改table tr行的背景色
         tableRowStyle ({ row, rowIndex }) {

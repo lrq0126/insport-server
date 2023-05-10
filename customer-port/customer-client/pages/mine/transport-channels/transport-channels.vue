@@ -10,7 +10,6 @@
                         v-model="pageInfo.countryId"
                         style="width: 35%;margin: 0 10upx"
                         class="package_stock_se"
-						:disabled="true"
 						@change="handleQuerying(1)">
                     <option v-for="(item,index) in countriesData"
                             :key="index"

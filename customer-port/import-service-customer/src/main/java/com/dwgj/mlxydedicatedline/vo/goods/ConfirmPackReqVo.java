@@ -29,4 +29,6 @@ public class ConfirmPackReqVo {
 
     private Integer commercialAreaId;
 
+    private Integer customerIdentityId;
+
 }

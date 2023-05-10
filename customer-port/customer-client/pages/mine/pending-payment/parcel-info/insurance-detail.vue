@@ -1,7 +1,7 @@
 <template>
 
 	<view class="base-info">
-		<uni-nav-bar left-icon="back" left-text="" right-text="" title="保险信息" backgroundColor="#fbc04a" color="#fff"
+		<uni-nav-bar left-icon="back" left-text="" right-text="" title="保险信息" backgroundColor="#52c3ff" color="#fff"
 			@clickLeft="handleBack"></uni-nav-bar>
 		<view>保险名称：{{pageInfo.insuranceName}}</view>
 		<view>理赔详情：{{pageInfo.claimsDetail}}</view>

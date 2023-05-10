@@ -440,18 +440,7 @@
 					code: '',
 				}, // 默认地址
 				
-				customerIdentityData:{
-					identityName: "梁榕清",
-					identityCode: "441323199701266317",
-					images: [
-						{
-							picUrl: "https://flycloud-1253561272.cos.ap-guangzhou.myqcloud.com/CustomerIdentityPicture/2022-09/4320_1664420139953.jpg",
-						},
-						{
-							picUrl: "https://flycloud-1253561272.cos.ap-guangzhou.myqcloud.com/CustomerIdentityPicture/2022-09/4320_1664420141542.jpeg",
-						}
-					]
-				},
+				customerIdentityData:{},
 				
 				actualPrice: "",
 				transportChannelsInfo: {
@@ -516,6 +505,7 @@
 		onShow(option) {
 			let transportValue = uni.getStorageSync('transportChannels')
 			let addressValue = uni.getStorageSync('addressInfoData')
+			let identityData = uni.getStorageSync('identityData')
 			if (uni.getStorageSync('tariffs')) {
 				this.tariffs = uni.getStorageSync('tariffs');
 			} else {
@@ -532,6 +522,9 @@
 
 			if (uni.getStorageSync('tariffsPrice')) {
 				this.tariffsPrice = uni.getStorageSync('tariffsPrice');
+			}
+			if(identityData){
+				this.customerIdentityData = identityData
 			}
 			if (addressValue) {
 				this.addressInfo.id = addressValue.id
@@ -719,6 +712,7 @@
 				uni.removeStorageSync('orderArray');
 				uni.removeStorageSync('tariffs');
 				uni.removeStorageSync('tariffsPrice');
+				uni.removeStorageSync('identityData');
 			},
 
 			lookClaimsDetail(claimsDetail) {
@@ -832,6 +826,7 @@
 				
 				this.formItem.insuranceId = this.transportChannelsInfo.insuranceId ? this.transportChannelsInfo.insuranceId : ""
 				this.formItem.insurancePriceId = this.selectedId ? this.selectedId : ""
+				this.formItem.customerIdentityId = this.customerIdentityData.id ? this.customerIdentityData.id : ""
 				let _this = this
 				if (_this.transportChannelsInfo.bool) {
 					let isSubmit = true;
@@ -841,6 +836,14 @@
 							uni.showModal({
 								title: "温馨提示",
 								content: "当前渠道需要预付关税，请先添加产品货值",
+								success: function(res) {},
+							})
+							isSubmit = false;
+						}
+						if (!this.customerIdentityData.id) {
+							uni.showModal({
+								title: "温馨提示",
+								content: "请选择您当前订单的身份证信息",
 								success: function(res) {},
 							})
 							isSubmit = false;

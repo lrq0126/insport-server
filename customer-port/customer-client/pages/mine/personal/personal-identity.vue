@@ -6,11 +6,10 @@
                        cellpadding="5"
                        cellspacing="0"
 					   class="identity-table-class" 
-					   v-for="(identity, index) in identityData"
-					   @click="selectThisIdentity(identity)">
+					   v-for="(identity, index) in identityData">
 				<tbody>
 					<tr>
-						<td style="padding:0px; margin:0px; height:5px;">
+						<td style="padding:0px; margin:0px; height:5px;"  v-if="isSelect" @click="selectThisIdentity(identity)">
 							<uni-icons v-if="selectIdentityId == identity.id" type="checkbox-filled"></uni-icons>
 							<uni-icons v-else type="circle"></uni-icons>
 						</td>
@@ -33,9 +32,29 @@
 					</tr>
 				</tbody>
 			</table>
+			
+			
+			<!-- 页码模块 -->
+			<view class="example-body"
+			      style="margin-top: 10upx;background: #fff;padding-top: 10upx;"
+				  v-if="identityData.length > 0">
+			    <uni-pagination :current="pageInfo.page"
+			                    :total="pageInfo.total"
+			                    title="标题文字"
+			                    :show-icon="true"
+			                    @change="pageChange" />
+			</view>
+			<view class="btn-view"
+			      style="text-align: center;padding: 10upx 0;background: #fff;"
+				  v-if="identityData.length > 0">
+			    <view>
+			        <text class="example-info">当前第：{{ pageInfo.page }}页，总数量：{{ pageInfo.total }}条，每页展示：{{ pageInfo.limit }}条</text>
+			    </view>
+			</view>
+			
 		</view>
 		<view class="confirm-select-class" v-if="isSelect">
-			<view class="button-class" v-if="selectData.id">
+			<view class="button-class" v-if="selectData.id" @click="confirmIdentity">
 				<text >确认选择</text>
 			</view>
 			<view class="button-class" style="background-color: #a3a3a3;" v-else>
@@ -49,10 +68,11 @@
 </template>
 
 <script>
+	import {getIdentityList} from '@/api/mine/personal.js';
 	export default {
 		data() {
 			return {
-				isSelect: 1,
+				isSelect: 0,
 				selectIdentityId: "",
 				selectData: {
 					id: "",
@@ -60,34 +80,17 @@
 					identityCode: "",
 					images: []
 				},
-				identityData:[
-					{
-						id: 1,
-						identityName: "梁榕清",
-						identityCode: "441323199701266317",
-						images: [
-							{
-								picUrl: "https://flycloud-1253561272.cos.ap-guangzhou.myqcloud.com/CustomerIdentityPicture/2022-09/4320_1664420139953.jpg",
-							},
-							{
-								picUrl: "https://flycloud-1253561272.cos.ap-guangzhou.myqcloud.com/CustomerIdentityPicture/2022-09/4320_1664420141542.jpeg",
-							}
-						]
-					},
-					{	
-						id: 2,
-						identityName: "LRQ",
-						identityCode: "441323199701266317",
-						images: [
-							{
-								picUrl: "https://flycloud-1253561272.cos.ap-guangzhou.myqcloud.com/CustomerIdentityPicture/2022-09/4320_1664420139953.jpg",
-							},
-							{
-								picUrl: "https://flycloud-1253561272.cos.ap-guangzhou.myqcloud.com/CustomerIdentityPicture/2022-09/4320_1664420141542.jpeg",
-							}
-						]
-					}
-				]
+				pageInfo:{
+					page: 1,
+					total: 0,
+					limit: 10
+				},
+				identityData:[]
+			}
+		},
+		onLoad(option) {
+			if(option.isSelect){
+				this.isSelect = option.isSelect
 			}
 		},
 		methods: {
@@ -113,7 +116,17 @@
 				    url: url
 				});
 			},
-			
+			confirmIdentity(){
+				uni.setStorage({
+				    key: 'identityData',
+				    data: this.selectData,
+				    success: function () {
+				        uni.navigateBack({
+				            delta: 1  // 上一页
+				        })
+				    }
+				});
+			},
 			/**
 			 * 图片预览
 			 * @param {Object} index
@@ -133,6 +146,20 @@
 			        }
 			    });
 			},
+			
+			getIdentityList(){
+				let customerInfo = uni.getStorageSync('info')
+				this.pageInfo.customerId = customerInfo.id;
+				getIdentityList(this.pageInfo).then((res) =>{
+					console.log(res[1].data.content);
+					this.identityData = res[1].data.content;
+					this.pageInfo.total = res[1].data.map.total;
+				})
+			}
+		},
+		
+		mounted() {
+			this.getIdentityList();
 		}
 	}
 </script>

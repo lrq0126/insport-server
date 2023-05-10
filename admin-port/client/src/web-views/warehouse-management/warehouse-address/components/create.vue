@@ -1,7 +1,11 @@
 <template>
   <div>
     <el-form ref="form" :model="formItem" label-width="130px" :rules="formItemRules">
-        
+        <el-form-item label="区域" prop="commercialAreaId">
+            <el-select v-model="formItem.commercialAreaId" filterable clearable>
+                <el-option v-for="item in commercialAreaData" :key="item.id" :label="item.commercialAreaName" :value="item.id"/>
+            </el-select>
+        </el-form-item>
         <el-form-item label="公司名称:" prop="companyName">
             <el-input v-model="formItem.companyName" style="width: 300px"/>
         </el-form-item>
@@ -44,6 +48,7 @@
 
 <script>
 import {saveWarehouseAddress} from '@/api/warehouse-management/warehouse-address'
+import {getCommercialAreaSelectList} from '@/api/rights-manage/commercial-area'
 export default {
     components:{
 
@@ -51,6 +56,7 @@ export default {
     data(){
         return{
             formItem:{
+                commercialAreaId: "",
                 companyName: "",
                 addressee:"",
                 phoneNumber:"",
@@ -58,8 +64,12 @@ export default {
                 address:"",
                 isEnable:"1",
             },
-
+            commercialAreaData: [],
             formItemRules: {
+                
+                commercialAreaId: [
+                    { required: true, message: '请选择仓库的所在区域', trigger: 'blur' },
+                ],
                 companyName: [
                     { required: true, message: '公司名不能为空', trigger: 'blur' },
                 ],
@@ -82,6 +92,11 @@ export default {
         }
     },
     methods:{
+        getCommercialAreaList(){
+            getCommercialAreaSelectList().then((res) => {
+                this.commercialAreaData = res.content
+            });
+        },
         confirm(form){
             this.$refs[form].validate((valid) => {
                 if (valid) {
@@ -98,6 +113,7 @@ export default {
             })
 
         },
+
         resetForm(){
             this.formItem = {
                 companyName:"",
@@ -108,6 +124,10 @@ export default {
                 isEnable:"1",
             }
         }
+    },
+
+    mounted() {
+        this.getCommercialAreaList();
     }
 }
 </script>

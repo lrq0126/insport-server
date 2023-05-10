@@ -281,7 +281,7 @@ export default {
             // console.log(res, this.pinList)
         })
         uni.setNavigationBarTitle({
-            title: '飞轮国际云仓'
+            title: '小挎兜'
         })
     },
 	

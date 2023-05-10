@@ -75,7 +75,7 @@ public class CustomerIdentityServiceImpl implements CustomerIdentityService {
             List<Images> imagesList = new ArrayList<>(4);
             File file = null;
             for (String fileStr : customerIdentity.getFiles()) {
-                String path = ImgUtil.imageProcess(fileStr, customerIdentity.getCustomerId() + "_"+ new Date().getTime());
+                String path = ImgUtil.imageProcess(fileStr, customerIdentity.getCustomerId() + "_"+ new Date().getTime(), "identity");
                 file = new File(path);
                 Images images = TencentObjectMemory.uploadObject("flycloud", CustomerIdentityPicture.toString(), file);
                 images.setStatus(1);

@@ -1,8 +1,12 @@
 package com.example.warehouse.mapper.wx;
 
+import com.example.warehouse.entity.wx.WechatReply;
 import com.example.warehouse.entity.wx.WechatReplyLog;
 import com.example.warehouse.mapper.MyBatisBaseDao;
+import com.example.warehouse.vo.wechat.WechatReplyReqVo;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
 * 微信公众号自动回复日志记录(WechatReplyLog)表Mapper类
@@ -34,4 +38,7 @@ public interface WechatReplyLogMapper extends MyBatisBaseDao<WechatReplyLog, Int
 	
 	int removeByPrimaryKey(Integer id);
 
+    int getReplyLogListCount(WechatReplyReqVo wechatReplyReqVo);
+
+    List<WechatReply> getReplyLogList(WechatReplyReqVo wechatReplyReqVo);
 }

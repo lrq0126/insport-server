@@ -97,6 +97,36 @@ public class ShelvesAreaServiceImpl implements ShelvesAreaService {
     }
 
     @Override
+    public ResponseEntity<ResultModel> getShelvesAreaDropdownList() {
+        User user = (User) SecurityUtils.getSubject().getPrincipal();
+        if(user == null){
+            return new ResponseEntity<>(PageResultModel.error(USER_NOT_LOGIN, null), HttpStatus.OK);
+        }
+        if(user.getCommercialAreaId() == null){
+            return new ResponseEntity<>(PageResultModel.error(USER_NOT_COMMERCIAL_AREA, null), HttpStatus.OK);
+        }
+        Integer commercialAreaId = null;
+        // 当用户所在的区域是中国总部，则不限制查看
+        if(user.getCommercialAreaId() != 1){
+            commercialAreaId = user.getCommercialAreaId();
+        }
+        List<ShelvesRespVo> shelvesRespVoList = shelvesAreaMapper.getShelvesAreaDropdownList(commercialAreaId);
+
+        List<Map<String, Object>> newStorage = new ArrayList<>();
+        for (ShelvesRespVo storage : shelvesRespVoList) {
+            Map<String, Object> map = new HashMap<>();
+            map.put("storageName",storage.getShelvesArea());
+            map.put("storageCode",storage.getId());
+            map.put("storageArea",storage.getShelvesArea());
+            map.put("storageRow",storage.getShelvesRowList());
+            newStorage.add(map);
+        }
+        Map<String, Object> storageMap = new HashMap();
+        storageMap.put("storage",newStorage);
+        return new ResponseEntity<>(ResultModel.ok(storageMap), HttpStatus.OK);
+    }
+
+    @Override
     @Transactional(rollbackFor = Exception.class)
     public ResponseEntity<ResultModel> saveShelves(ShelvesRespVo shelves) {
 

@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dwgj.mlxydedicatedline.mapper.customerPack.CustomerPackPriceDetailMapper">
+    <resultMap id="BaseResultMap" type="com.dwgj.mlxydedicatedline.entity.customerPack.CustomerPackPriceDetail">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+    	
+	    <result column="create_id" jdbcType="INTEGER" property="createId"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_id" jdbcType="INTEGER" property="updateId"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="version" jdbcType="INTEGER" property="version"/>
+        <result column="remarks" jdbcType="VARCHAR" property="remarks"/>
+        <result column="pack_id" jdbcType="INTEGER" property="packId"/>
+        <result column="order_number" jdbcType="VARCHAR" property="orderNumber"/>
+        <result column="freight" jdbcType="DECIMAL" property="freight"/>
+        <result column="freight_discount" jdbcType="DOUBLE" property="freightDiscount"/>
+        <result column="discount" jdbcType="DECIMAL" property="discount"/>
+        <result column="incidental" jdbcType="DECIMAL" property="incidental"/>
+        <result column="remote_fee" jdbcType="DECIMAL" property="remoteFee"/>
+        <result column="forklift_fee" jdbcType="DECIMAL" property="forkliftFee"/>
+        <result column="sensitive_price" jdbcType="DECIMAL" property="sensitivePrice"/>
+        <result column="tariffs_price" jdbcType="DECIMAL" property="tariffsPrice"/>
+        <result column="insurance_price" jdbcType="DECIMAL" property="insurancePrice"/>
+        <result column="coupons_price" jdbcType="DECIMAL" property="couponsPrice"/>
+        <result column="deduction_amount" jdbcType="DECIMAL" property="deductionAmount"/>
+
+    </resultMap>
+	
+	<!-- 字段 -->
+	<sql id="Base_Column_List">
+		id, create_id, create_time, update_id, update_time,
+		status, version, remarks, pack_id, order_number,
+		freight, freight_discount, discount, incidental, remote_fee,
+		forklift_fee, sensitive_price, tariffs_price, insurance_price,
+		coupons_price, deduction_amount
+	</sql>
+	
+	<!-- 插入字段实际数值 -->
+	<sql id="Insert_Column_Values">
+		#{createId},#{createTime},#{updateId},#{updateTime},
+		#{status},#{version},#{remarks},#{packId},#{orderNumber},
+		#{freight},#{freightDiscount},#{discount},#{incidental},#{remoteFee},
+		#{forkliftFee},#{sensitivePrice},#{tariffsPrice},#{insurancePrice},
+		#{couponsPrice}, #{deductionAmount}
+	</sql>
+	
+	<!-- 插入字段（判空） -->
+	<sql id="Base_Column_List_NotNull">
+		<if test="createId != null and createId != ''">
+			create_id, 
+		</if>
+    	<if test="createTime != null and createTime != ''">
+			create_time, 
+		</if>
+    	<if test="updateId != null and updateId != ''">
+			update_id, 
+		</if>
+    	<if test="updateTime != null and updateTime != ''">
+			update_time, 
+		</if>
+    	<if test="status != null and status != ''">
+			status, 
+		</if>
+    	<if test="version != null and version != ''">
+			version, 
+		</if>
+    	<if test="remarks != null and remarks != ''">
+			remarks, 
+		</if>
+    	<if test="packId != null and packId != ''">
+			pack_id, 
+		</if>
+    	<if test="orderNumber != null and orderNumber != ''">
+			order_number, 
+		</if>
+    	<if test="freight != null and freight != ''">
+			freight, 
+		</if>
+    	<if test="freightDiscount != null and freightDiscount != ''">
+			freight_discount, 
+		</if>
+    	<if test="discount != null and discount != ''">
+			discount, 
+		</if>
+    	<if test="incidental != null and incidental != ''">
+			incidental, 
+		</if>
+    	<if test="remoteFee != null and remoteFee != ''">
+			remote_fee, 
+		</if>
+    	<if test="forkliftFee != null and forkliftFee != ''">
+			forklift_fee, 
+		</if>
+    	<if test="sensitivePrice != null and sensitivePrice != ''">
+			sensitive_price, 
+		</if>
+    	<if test="tariffsPrice != null and tariffsPrice != ''">
+			tariffs_price, 
+		</if>
+    	<if test="insurancePrice != null and insurancePrice != ''">
+			insurance_price, 
+		</if>
+    	<if test="couponsPrice != null and couponsPrice != ''">
+			coupons_price, 
+		</if>
+    	<if test="deductionAmount != null and deductionAmount != ''">
+			deduction_amount,
+		</if>
+    	
+	</sql>
+	
+	<!-- 插入字段实际数值(判空) -->
+	<sql id="Insert_Column_Values_NotNull">
+		<if test="createId != null and createId != ''">
+			#{createId},
+		</if>
+    	<if test="createTime != null and createTime != ''">
+			#{createTime},
+		</if>
+    	<if test="updateId != null and updateId != ''">
+			#{updateId},
+		</if>
+    	<if test="updateTime != null and updateTime != ''">
+			#{updateTime},
+		</if>
+    	<if test="status != null and status != ''">
+			#{status},
+		</if>
+    	<if test="version != null and version != ''">
+			#{version},
+		</if>
+    	<if test="remarks != null and remarks != ''">
+			#{remarks},
+		</if>
+    	<if test="packId != null and packId != ''">
+			#{packId},
+		</if>
+    	<if test="orderNumber != null and orderNumber != ''">
+			#{orderNumber},
+		</if>
+    	<if test="freight != null and freight != ''">
+			#{freight},
+		</if>
+    	<if test="freightDiscount != null and freightDiscount != ''">
+			#{freightDiscount},
+		</if>
+    	<if test="discount != null and discount != ''">
+			#{discount},
+		</if>
+    	<if test="incidental != null and incidental != ''">
+			#{incidental},
+		</if>
+    	<if test="remoteFee != null and remoteFee != ''">
+			#{remoteFee},
+		</if>
+    	<if test="forkliftFee != null and forkliftFee != ''">
+			#{forkliftFee},
+		</if>
+    	<if test="sensitivePrice != null and sensitivePrice != ''">
+			#{sensitivePrice},
+		</if>
+    	<if test="tariffsPrice != null and tariffsPrice != ''">
+			#{tariffsPrice},
+		</if>
+    	<if test="insurancePrice != null and insurancePrice != ''">
+			#{insurancePrice},
+		</if>
+    	<if test="couponsPrice != null and couponsPrice != ''">
+			#{couponsPrice},
+		</if>
+    	<if test="deductionAmount != null and deductionAmount != ''">
+			#{deductionAmount},
+		</if>
+    	
+	</sql>
+	
+	<!-- 更新字段 -->
+	<sql id="Update_Column">
+		create_id = #{createId},
+    	create_time = #{createTime},
+    	update_id = #{updateId},
+    	update_time = #{updateTime},
+    	status = #{status},
+    	version = #{version},
+    	remarks = #{remarks},
+    	pack_id = #{packId},
+    	order_number = #{orderNumber},
+    	freight = #{freight},
+    	freight_discount = #{freightDiscount},
+    	discount = #{discount},
+    	incidental = #{incidental},
+    	remote_fee = #{remoteFee},
+    	forklift_fee = #{forkliftFee},
+    	sensitive_price = #{sensitivePrice},
+    	tariffs_price = #{tariffsPrice},
+    	insurance_price = #{insurancePrice},
+    	coupons_price = #{couponsPrice},
+    	deduction_amount = #{deductionAmount}
+	</sql>
+	
+	<!-- 更新字段（判空） -->
+	<sql id="Update_Column_NotNull">
+    	<if test="updateId != null and updateId != ''">
+			update_id = #{updateId},
+		</if>
+			update_time = now(),
+    	<if test="status != null and status != ''">
+			status = #{status},
+		</if>
+    	<if test="version != null and version != ''">
+			version = #{version},
+		</if>
+    	<if test="remarks != null and remarks != ''">
+			remarks = #{remarks},
+		</if>
+    	<if test="packId != null and packId != ''">
+			pack_id = #{packId},
+		</if>
+    	<if test="orderNumber != null and orderNumber != ''">
+			order_number = #{orderNumber},
+		</if>
+    	<if test="freight != null and freight != ''">
+			freight = #{freight},
+		</if>
+    	<if test="freightDiscount != null and freightDiscount != ''">
+			freight_discount = #{freightDiscount},
+		</if>
+    	<if test="discount != null and discount != ''">
+			discount = #{discount},
+		</if>
+    	<if test="incidental != null and incidental != ''">
+			incidental = #{incidental},
+		</if>
+    	<if test="remoteFee != null and remoteFee != ''">
+			remote_fee = #{remoteFee},
+		</if>
+    	<if test="forkliftFee != null and forkliftFee != ''">
+			forklift_fee = #{forkliftFee},
+		</if>
+    	<if test="sensitivePrice != null and sensitivePrice != ''">
+			sensitive_price = #{sensitivePrice},
+		</if>
+    	<if test="tariffsPrice != null and tariffsPrice != ''">
+			tariffs_price = #{tariffsPrice},
+		</if>
+    	<if test="insurancePrice != null and insurancePrice != ''">
+			insurance_price = #{insurancePrice},
+		</if>
+    	<if test="couponsPrice != null and couponsPrice != ''">
+			coupons_price = #{couponsPrice},
+		</if>
+    	<if test="deductionAmount != null and deductionAmount != ''">
+			deduction_amount = #{deductionAmount},
+		</if>
+    	
+	</sql>
+	
+	<select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <trim suffixOverrides=",">
+        <include refid="Base_Column_List"/>
+        </trim>
+        from customer_pack_price_detail
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+	
+	<insert id="insert" parameterType="com.dwgj.mlxydedicatedline.entity.customerPack.CustomerPackPriceDetail">
+		insert into customer_pack_price_detail
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			create_id, 
+			create_time, 
+			update_id, 
+			update_time, 
+			status, 
+			version, 
+			remarks, 
+			pack_id, 
+			order_number, 
+			freight, 
+			freight_discount, 
+			discount, 
+			incidental, 
+			remote_fee, 
+			forklift_fee, 
+			sensitive_price, 
+			tariffs_price, 
+			insurance_price, 
+			coupons_price,
+			deduction_amount,
+		</trim>
+		values
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<include refid="Insert_Column_Values"/>
+		</trim>
+	</insert>
+	
+	<insert id="insertSelective" parameterType="com.dwgj.mlxydedicatedline.entity.customerPack.CustomerPackPriceDetail">
+		insert into customer_pack_price_detail
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<include refid="Base_Column_List_NotNull"/>
+		</trim>
+		values
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<include refid="Insert_Column_Values_NotNull"/>
+		</trim>
+	</insert>
+	
+	<update id="updateByPrimaryKey" parameterType="com.dwgj.mlxydedicatedline.entity.customerPack.CustomerPackPriceDetail">
+		update customer_pack_price_detail
+		<set>
+			<include refid="Update_Column"/>
+		</set>
+		
+		<where>
+		id = #{id} and status = 1
+		</where>
+		
+	</update>
+	
+	<update id="updateByPrimaryKeySelective" parameterType="com.dwgj.mlxydedicatedline.entity.customerPack.CustomerPackPriceDetail">
+		update customer_pack_price_detail
+		<set>
+			<include refid="Update_Column_NotNull"/>
+		</set>
+		<where>
+		id = #{id} and status = 1
+		</where>
+	</update>
+	
+	<!-- 删除数据（逻辑删除） -->
+	<update id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		update  customer_pack_price_detail
+		set `status` = 0
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	
+	<!-- 移除数据（物理删除） -->
+	<delete id="removeByPrimaryKey" parameterType="java.lang.Integer">
+		delete from customer_pack_price_detail
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+
+	<select id="selectPackPriceDetailByPackId" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"/>
+		from customer_pack_price_detail
+		<where>
+			`status` = 1
+			and pack_id = #{packId}
+		</where>
+	</select>
+	
+</mapper>

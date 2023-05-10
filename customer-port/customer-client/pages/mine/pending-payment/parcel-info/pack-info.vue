@@ -1,6 +1,6 @@
 <template>
 	<view class="pack-info">
-		<uni-nav-bar left-icon="back" left-text="" right-text="" title="订单详情" backgroundColor="#fbc04a" color="#fff"
+		<uni-nav-bar left-icon="back" left-text="" right-text="" title="订单详情" backgroundColor="#52c3ff" color="#fff"
 			style="width: 100%; position: fixed; top: 0; z-index: 9;" @clickLeft="handleBack"></uni-nav-bar>
 
 		<scroll-view class="baseInfo">
@@ -123,7 +123,37 @@
 					</view>
 				</view>
 			</view>
-
+			
+			<view class="base-info-two">
+				<!-- 客户身份证信息 -->
+				<view class="" style="margin-bottom: 20upx;">
+					<view style="width: 80%; float: left;">
+						<p>
+							<text class="package_C_C_T">姓名：</text> {{customerIdentityData.identityName}}
+						</p>
+						<p>
+							<text class="package_C_C_T">身份证号：</text> {{customerIdentityData.identityCode}}
+						</p>
+					</view>
+					<view >
+						<view class="identity-select-class" @click="handleGoIdentity('../../personal/personal-identity?isSelect=1')">
+							选择
+						</view>
+					</view>
+				</view>
+				
+				<view class="img-class" style="display: flex;">
+					<view class="image-content"
+						  v-for="(item,index) in customerIdentityData.images"
+						  :key="index"
+						  @longpress="longpress">
+						<image mode='scaleToFill'
+							   :src="item.picUrl"
+							   @click="previewImg(index)"></image>
+					</view>
+				</view>
+				
+			</view>
 
 
 			<view class="base-info-three" v-if="tariffs.packValuations.length > 0">
@@ -471,6 +501,8 @@
 					}]
 				},
 
+				customerIdentityData:{},
+				
 				tariffs: {
 					packValuations: [],
 					packValuationPrice: 0,
@@ -554,6 +586,12 @@
 		onShow() {
 			// this.reSetCoupons();
 			this.handleSearch();
+			
+			let identityData = uni.getStorageSync('identityData')
+			
+			if(identityData){
+				this.customerIdentityData = identityData
+			}
 		},
 
 
@@ -778,7 +816,8 @@
 						this.pageInfo = res[1].data.content;
 						this.goodsData = res[1].data.content.goods;
 						this.sanPackData = res[1].data.content.customerPackNumberVos;
-						this.currencyData = res[1].data.content.currencyData
+						this.currencyData = res[1].data.content.currencyData;
+						this.customerIdentityData = res[1].data.content.customerIdentity;
 						if(res[1].data.content.priceDetail){
 							this.priceDetail = res[1].data.content.priceDetail;
 						}else{
@@ -793,7 +832,7 @@
 						if(res[1].data.content.packInsurancePrice){
 							this.selectedId = res[1].data.content.packInsurancePrice.insurancePriceId
 						}
-
+						
 						if (res[1].data.content.packValuations) {
 							if (!uni.getStorageSync('tariffs')) {
 								let valuations = res[1].data.content.packValuations;
@@ -858,6 +897,13 @@
 						console.log('isSelectDeduction缓存删除成功');
 					}
 				});
+				
+				uni.removeStorage({
+					key: 'identityData',
+					success: function(res) {
+						console.log('identityData缓存删除成功');
+					}
+				});
 
 			},
 
@@ -919,7 +965,8 @@
 						packValuations: JSON.stringify(this.tariffs.packValuations),
 						isTariffs: this.pageInfo.isTariffs,
 						tariffsPrice: this.tariffsPrice ? this.tariffsPrice : 0,
-						deductionAmount: this.deductionAmount ? this.deductionAmount : 0
+						deductionAmount: this.deductionAmount ? this.deductionAmount : 0,
+						customerIdentityId: this.customerIdentityData.id ? this.customerIdentityData.id : ''
 					}
 					let _this = this;
 					uni.showModal({
@@ -941,8 +988,7 @@
 													success() {
 														setTimeout(() => {
 															// _this.handleBack();
-															_this
-															.clearStorage();
+															_this.clearStorage();
 															uni.navigateTo({
 																url: '../../waiting-to-receive/waiting-to-receive'
 															})
@@ -991,7 +1037,11 @@
 					url: url + "?businessNumber=" + data.businessNumber,
 				});
 			},
-
+			handleGoIdentity(url){
+				uni.navigateTo({
+					url: url,
+				});
+			},
 			/**
 			 * 修改收货地址(打开popup)
 			 * @return {type} {description}
@@ -1040,6 +1090,51 @@
 				background-color: #FFFFFF;
 
 				margin-bottom: 5%;
+				
+				.identity-select-class{
+					background-color: #1b73e7;
+					color: #FFFFFF;
+					height: 60upx;
+					line-height: 60upx;
+					margin-top: 20upx; 
+					border-radius: 15upx;
+					text-align: 
+					center; width: 20%; 
+					float: left;
+				}
+				
+				.img-class {
+					background-color: #fff;
+					padding-left: 5%;
+					width: 95%;
+					
+					.image-content {
+						margin-left: 10rpx;
+						position: relative;
+						.icon-bg {
+						    position: absolute;
+						    bottom: 18rpx;
+						    width: 100%;
+						    background: rgba(53, 53, 53, 0.6);
+						    z-index: 2;
+						    text-align: center;
+						    text {
+						        color: #fff;
+						        position: relative;
+						        z-index: 1;
+						    }
+						}
+						image {
+						    touch-callout: none;
+						    -webkit-touch-callout: none;
+						    -ms-touch-callout: none;
+						    -moz-touch-callout: none;
+						    width: 200rpx;
+						    height: 200rpx;
+						    border: 2rpx solid rgba(53, 53, 53, 0.6);
+						}
+					}
+				}
 			}
 
 			.base-info-three {
@@ -1457,7 +1552,7 @@
 					border-radius: 20upx;
 					height: 94upx;
 					line-height: 94upx;
-					background: #fbc04a;
+					background: #52c3ff;
 					color: #F0F8FF;
 				}
 			}

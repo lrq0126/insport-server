@@ -60,6 +60,8 @@ const actions = {
             // Cookies.set("permissionVos", JSON.stringify(content.permissionVos));
             Cookies.set("userId", content.id);
             Cookies.set("userName", content.username);
+            Cookies.set("commercialAreaId", content.commercialAreaId);
+            Cookies.set("commercialAreaName", content.commercialAreaName);
             // Cookies.set("userAllInfo", content);
             Cookies.set("usercode", content.usercode);
             localStorage.setItem(

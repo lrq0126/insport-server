@@ -20,7 +20,7 @@ import com.example.warehouse.model.ResultModel;
 import com.example.warehouse.service.sys.StatisticService;
 import com.example.warehouse.service.wechat.SendMessageServer;
 import com.example.warehouse.vo.GoodsVo;
-import com.example.warehouse.vo.customer.CustomerPackVo;
+import com.example.warehouse.vo.customerPack.CustomerPackVo;
 import com.example.warehouse.vo.sys.SysStatisticalReqVo;
 
 import lombok.extern.slf4j.Slf4j;
@@ -36,7 +36,6 @@ import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 import static com.example.warehouse.enums.ResultStatus.USER_NOT_COMMERCIAL_AREA;
 import static com.example.warehouse.enums.ResultStatus.USER_NOT_LOGIN;

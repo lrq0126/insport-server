@@ -199,3 +199,20 @@ export function deleteReply (id) {
         }
     });
 }
+
+
+export function getReplyLogList ({
+    page,
+    limit,
+    keyWord
+}) {
+    return request({
+        url: "/wechatReply/getReplyLogList",
+        method: "post",
+        data: {
+            pageNumber: page, // 当前页码
+            pageSize: limit, //每页条数
+            keyWord: keyWord
+        }
+    });
+}

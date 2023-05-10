@@ -1,7 +1,7 @@
 {
-    "name" : "飞轮国际云仓",
+    "name" : "小挎兜",
     "appid" : "__UNI__045BD26",
-    "description" : "飞轮国际云仓",
+    "description" : "小挎兜",
     "versionName" : "1.0.1",
     "versionCode" : "100",
     "transformPx" : false,
@@ -102,13 +102,13 @@
     "h5" : {
         "router" : {
             "mode" : "hash",
-            "base" : "/test-client/jiyun/"
+            "base" : "/client/jiyun/"
         },
         "devServer" : {
             "port" : 8623
         },
-        "title" : "飞轮国际云仓",
-        "domain" : "http://jiyun.flycloudstorage.com",
+        "title" : "小挎兜",
+        "domain" : "http://jiyun.bainligou.com",
         "sdkConfigs" : {
             "maps" : {}
         }

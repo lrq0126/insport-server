@@ -86,7 +86,7 @@ public class ActivityPosterServiceImpl implements ActivityPosterService {
 
             if(activityPoster.getIsChangImg() == 1){
                 // 图片上传处理，并返回相关路径
-                String posterPath = ImgUtil.imageProcess(activityPoster.getFiles(), activityPoster.getPosterName());
+                String posterPath = ImgUtil.imageProcess(activityPoster.getFiles(), activityPoster.getPosterName(), "poster/basePoster");
                 activityPoster.setLocationPath(posterPath);
                 posterPath = "http://" + DOMAIN + posterPath.substring(4, posterPath.length());
                 activityPoster.setPosterUrl(posterPath);

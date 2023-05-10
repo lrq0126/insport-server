@@ -24,7 +24,7 @@
 					<view class="center_02_t_01" @click="handleGo('../login/login')">
 						<img src="../../static/user.jpg" alt="">
 					</view>
-					<view v-if="!is_weixin()" class="center_02_t_02" @click="handleGo('../login/login')">
+					<view class="center_02_t_02" @click="handleGo('../login/login')">
 						<p class="center_02_t_03">立即登录</p>
 					</view>
 					<view class="center_02_t_04" @click="handleGo('../login/login')">
@@ -296,11 +296,13 @@
 						name: "消息中心",
 						url: "../mine/message-center/message-center",
 						img: require("../../static/icon/icon-24.png")
-					}, {
+					}, 
+					{
 						name: "全部订单",
 						url: "../mine/cargo-list/cargo-list",
 						img: require("../../static/icon/icon-16.png")
-					}, {
+					}, 
+					{
 						name: "我的钱包",
 						url: "../mine/my-wallet/my-wallet",
 						img: require("../../static/icon/icon-9.png")
@@ -315,6 +317,11 @@
 						url: "../mine/shipping-address/shipping-address",
 						img: require("../../static/icon/icon-13.png")
 					},
+					{
+						name: "身份证信息",
+						url: "../mine/personal/personal-identity",
+						img: require("../../static/icon/identity.png")
+					}, 
 				],
 
 				myMessage: [],
@@ -362,7 +369,7 @@
 		},
 		onShow() {
 			uni.setNavigationBarTitle({
-				title: '飞轮国际云仓'
+				title: '小挎兜'
 			})
 
 		},
@@ -598,7 +605,7 @@
 				setTimeout(() => {
 					let url = 'https://open.weixin.qq.com/connect/oauth2/authorize';
 					let appid = 'wxfe820ab4d2e99546';
-					let redirect_uri = 'http://jiyun.flycloudstorage.com/client/jiyun/#/pages/mine/index';
+					let redirect_uri = 'http://jiyun.bainligou.com/client/jiyun/#/pages/mine/index';
 					let scope = 'snsapi_userinfo';
 					let state = 'WeChat';
 					redirect_uri = encodeURIComponent(redirect_uri);

@@ -100,4 +100,12 @@ public class CommercialAreaServiceImpl implements CommercialAreaService {
         return new ResponseEntity<>(ResultModel.ok(), HttpStatus.OK);
     }
 
+    @Override
+    public ResponseEntity<ResultModel> getCommercialAreaSelectList() {
+
+        List<CommercialArea> commercialAreaList = commercialAreaMapper.getCommercialAreaSelectList();
+
+        return new ResponseEntity<>(ResultModel.ok(commercialAreaList), HttpStatus.OK);
+    }
+
 }

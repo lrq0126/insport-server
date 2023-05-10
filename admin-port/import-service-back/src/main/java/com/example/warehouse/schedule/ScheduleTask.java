@@ -1,6 +1,8 @@
 package com.example.warehouse.schedule;
 
 import com.example.warehouse.common.TencentObjectMemory;
+import com.example.warehouse.controller.weChat.WechatMenuController;
+import com.example.warehouse.entity.coupons.SysCoupons;
 import com.example.warehouse.entity.sys.SysScheduleTask;
 import com.example.warehouse.mapper.sys.SysScheduleTaskMapper;
 import com.example.warehouse.service.activityReward.ActivityPosterService;
@@ -11,8 +13,11 @@ import com.example.warehouse.service.sys.SysTokenService;
 import com.example.warehouse.service.wechat.SendMessageServer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+
+import javax.annotation.Resource;
 
 
 @Slf4j
@@ -40,6 +45,8 @@ public class ScheduleTask {
     @Autowired
     private SysScheduleTaskMapper sysScheduleTaskMapper;
 
+    @Resource
+    private WechatMenuController wechatMenuController;
     /**
      * 每日凌晨0点0分10秒统计仓库数据
      * “10 0 0 * * ?” 每日凌晨0点00分10秒触发任务
@@ -118,15 +125,25 @@ public class ScheduleTask {
     }
 
     /**
+     * 更新微信AccessToken信息
+     * 每1个小时更新一次
+     */
+    @Scheduled(cron="0 0 * * * ?")
+    public void getAccessToken(){
+        log.info("--------------更新微信AccessToken信息-----------");
+        wechatMenuController.getAccessToken();
+    }
+
+    /**
      * 统计最优货架
      * 每20分钟更新一次
      */
-    @Scheduled(cron="0 0/20 7-22 * * ?")
-    public void updateOptimalShelves(){
-        if(getTaskIsEnable("updateOptimalShelves")){
-            shelvesAreaService.updateOptimalShelves();
-        }
-    }
+//    @Scheduled(cron="0 0/20 7-22 * * ?")
+//    public void updateOptimalShelves(){
+//        if(getTaskIsEnable("updateOptimalShelves")){
+//            shelvesAreaService.updateOptimalShelves();
+//        }
+//    }
 
     private Boolean getTaskIsEnable(String taskCode){
         SysScheduleTask sysScheduleTask = sysScheduleTaskMapper.selectTaskByTaskCode(taskCode);

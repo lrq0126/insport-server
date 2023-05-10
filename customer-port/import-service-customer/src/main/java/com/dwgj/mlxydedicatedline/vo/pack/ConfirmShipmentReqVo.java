@@ -16,6 +16,9 @@ public class ConfirmShipmentReqVo {
     @ApiModelProperty(value = "客户优惠券id")
     private Integer couponsId;
 
+    @ApiModelProperty(value = "客户身份证信息")
+    private Integer customerIdentityId;
+
     @ApiModelProperty(value = "优惠券金额")
     private BigDecimal couponsPrice;
 

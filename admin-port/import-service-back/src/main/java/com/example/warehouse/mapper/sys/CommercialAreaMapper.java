@@ -53,4 +53,10 @@ public interface CommercialAreaMapper extends MyBatisBaseDao<CommercialArea, Int
      */
     List<SysStatisticalDo> getSysStatisticalDoList();
 
+    /**
+     * 查询区域下拉列表
+     * @return
+     */
+    List<CommercialArea> getCommercialAreaSelectList();
+
 }

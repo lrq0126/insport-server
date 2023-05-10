@@ -4,10 +4,13 @@ import com.dwgj.mlxydedicatedline.entity.CustomerPack;
 import com.dwgj.mlxydedicatedline.entity.Goods;
 import com.dwgj.mlxydedicatedline.entity.SysDictDetail;
 import com.dwgj.mlxydedicatedline.entity.coupons.CustomerCoupons;
+import com.dwgj.mlxydedicatedline.entity.customer.CustomerIdentity;
+import com.dwgj.mlxydedicatedline.entity.customerPack.CustomerPackIdentity;
 import com.dwgj.mlxydedicatedline.entity.customerPack.CustomerPackPriceDetail;
 import com.dwgj.mlxydedicatedline.entity.customerPack.PackInsurancePrice;
 import com.dwgj.mlxydedicatedline.entity.customerPack.PackValuation;
 import com.dwgj.mlxydedicatedline.entity.insurance.Insurance;
+import com.dwgj.mlxydedicatedline.vo.customer.CustomerIdentityRespVo;
 import com.dwgj.mlxydedicatedline.vo.insurance.InsuranceRespVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModelProperty;
@@ -61,6 +64,12 @@ public class CustomerPackRespVo extends CustomerPack {
 
     @ApiModelProperty(value = "价格详情")
     private CustomerPackPriceDetail priceDetail;
+
+    @ApiModelProperty(value = "身份证明细")
+    private CustomerPackIdentity customerPackIdentity;
+
+    @ApiModelProperty(value = "身份证信息")
+    private CustomerIdentityRespVo customerIdentity;
 
     @ApiModelProperty(value = "当前积分")
     private Double integrals;

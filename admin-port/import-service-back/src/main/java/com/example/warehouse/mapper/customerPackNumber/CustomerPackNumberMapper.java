@@ -2,7 +2,7 @@ package com.example.warehouse.mapper.customerPackNumber;
 
 import com.example.warehouse.entity.CustomerPackNumber;
 import com.example.warehouse.mapper.MyBatisBaseDao;
-import com.example.warehouse.vo.customer.CustomerPackNumberVo;
+import com.example.warehouse.vo.customerPack.CustomerPackNumberVo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 

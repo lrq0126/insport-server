@@ -183,6 +183,24 @@
                         </el-col>
                     </el-col>
 
+                    <el-col :span="24">
+                        <el-col :span="5" style="width: 365px">
+                            <el-form-item label="国家/地区：" prop="commercialAreaId" v-if="cookiesAreaId == 1">
+                                <el-select v-model="formItem.commercialAreaName"
+                                placeholder="请选择国家/地区"
+                                @change="changeCommercialArea(formItem.commercialAreaName)"
+                                style="width: 420px">
+                                <el-option
+                                    v-for="item in commercialAreaData"
+                                    :key="item.commercialAreaName"
+                                    :value="item.commercialAreaName"
+                                    :label="item.commercialAreaName"
+                                />
+                                </el-select>
+                            </el-form-item>
+                        </el-col>
+                    </el-col>
+
                     <!-- 入库 -->
                     <el-col :span="24"
                             v-if="marking == 'warehousing'">
@@ -209,42 +227,47 @@
                                            clearable
                                            placeholder="请选择排号"
                                            style="width: 170px;">
-                                    <el-option v-for="item in storageRowData"
-                                               :key="item"
-                                               :value="item"
-                                               :label="item" />
+                                           <el-option v-for="item in storageRowData"
+                                                :key="item.id"
+                                                :value="item.shelvesRow"
+                                                :label="item.shelvesRow"
+                                            />
                                 </el-select>
                             </el-form-item>
                         </el-col>
                     </el-col>
                     <!-- 预录入 -->
-                    <el-col :span="24"
-                            v-if="marking == 'inAdvance'">
-                        <el-col :span="11">
-                            <el-form-item label="区：">
-                                <el-select v-model="formItem.storageArea"
-                                           clearable
-                                           placeholder="请选择区号"
-                                           @change="changeSelect"
-                                           style="width: 170px;">
-                                    <el-option v-for="(item,index) in storageAreaData"
-                                               :key="index"
-                                               :value="item.storageArea"
-                                               :label="item.storageArea" />
+                    <el-col :span="24" v-if="marking == 'inAdvance'">
+                        <el-col :span="5" style="width: 365px">
+                            <el-form-item label="区：" prop="storageArea" >
+                                <el-select filterable
+                                v-model="formItem.storageArea"
+                                placeholder="请选择区号"
+                                @change="changeSelect"
+                                style="width: 180px"
+                                >
+                                <el-option
+                                    v-for="(item, index) in storageAreaData"
+                                    :key="index"
+                                    :value="item.storageArea"
+                                    :label="item.storageArea"
+                                />
                                 </el-select>
                             </el-form-item>
                         </el-col>
-                        <el-col :span="11">
-                            <el-form-item label="排："
-                                          label-width="95px">
-                                <el-select v-model="formItem.storageRow"
-                                           clearable
-                                           placeholder="请选择排号"
-                                           style="width: 170px;">
-                                    <el-option v-for="item in storageRowData"
-                                               :key="item"
-                                               :value="item"
-                                               :label="item" />
+                        <el-col :span="6">
+                            <el-form-item label="排：" label-width="75px" prop="storageRow">
+                                <el-select
+                                v-model="formItem.storageRow"
+                                placeholder="请选择排号"
+                                style="width: 180px"
+                                >
+                                <el-option
+                                    v-for="item in storageRowData"
+                                    :key="item.id"
+                                    :value="item.shelvesRow"
+                                    :label="item.shelvesRow"
+                                />
                                 </el-select>
                             </el-form-item>
                         </el-col>
@@ -316,6 +339,7 @@ export default {
             this.customerData = this.selectData.customer
             this.deliveryCompanyData = this.selectData.deliveryCompany
             this.storageAreaData = this.selectData.storage
+            this.commercialAreaData = this.selectData.commercialAreaData
         }
     },
     data () {
@@ -374,6 +398,8 @@ export default {
             storageRowData: [],  // 排号
             saving: false,
             noticeType: [],  // 通知公告
+            commercialAreaData: [],
+            cookiesAreaId : Cookies.get("commercialAreaId"),
             formItem: {
                 goodsNo: '',
                 goodsName: '',
@@ -392,6 +418,8 @@ export default {
                 operatorCode: Cookies.get('usercode'),
                 packageType: '',
                 message: '',
+                commercialAreaId: '',
+                commercialAreaName: "",
                 operatorName: Cookies.get('userName')
             },
             formItemRules: {
@@ -416,6 +444,9 @@ export default {
                 // storageRow: [
                 //     { required: true, message: '请选择排号', trigger: 'change' },
                 // ],
+                commercialAreaId: [
+                    { required: true, message: '请选择国家/地区', trigger: 'change' },
+                ],
                 length: [
                     { validator: validateLength, trigger: 'blur' },
                 ],
@@ -448,6 +479,7 @@ export default {
          * @return {type} {description}
          */
         handEditInfoModel (data, marking) {
+
             this.marking = marking
             let location = data.location ? data.location.split(',') : ''
             if (location) {
@@ -477,10 +509,14 @@ export default {
             this.formItem.packageType = data.packageType;
             this.formItem.message = data.message;
             this.formItem.operatorName = Cookies.get('userName');
+            this.formItem.commercialAreaId = data.commercialAreaId
+            this.formItem.commercialAreaName = data.commercialAreaName
+            
+            console.log(location);
             if (location) {
                 if (location[1]) {
                     this.formItem.storageArea = location[0];
-                    this.formItem.storageRow = Number(location[1]);
+                    this.formItem.storageRow = location[1];
                 }
             }
 
@@ -533,11 +569,19 @@ export default {
             this.formItem.storageRow = ''
             this.storageAreaData.forEach(ele => {
                 if (ele.storageArea == value) {
-                    this.storageRowData = Number(ele.storageRow)
+                    this.storageRowData = ele.storageRow
                 }
             });
         },
-
+        changeCommercialArea(value){
+            this.formItem.commercialAreaName = ""
+            this.commercialAreaData.forEach((ele) => {
+                if (ele.commercialAreaName == value) {
+                this.formItem.commercialAreaId = ele.id;
+                this.formItem.commercialAreaName = ele.commercialAreaName;
+                }
+            });
+        },
         /**
          * 重置
          * @param  {string} from

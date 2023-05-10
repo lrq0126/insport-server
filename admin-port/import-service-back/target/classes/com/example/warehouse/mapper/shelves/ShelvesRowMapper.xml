@@ -1,0 +1,406 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.warehouse.mapper.shelves.ShelvesRowMapper">
+    <resultMap id="BaseResultMap" type="com.example.warehouse.entity.shelves.ShelvesRow">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+    	
+	    <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="create_id" jdbcType="INTEGER" property="createId"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="update_id" jdbcType="INTEGER" property="updateId"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="version" jdbcType="INTEGER" property="version"/>
+        <result column="remarks" jdbcType="VARCHAR" property="remarks"/>
+        <result column="shelves_row" jdbcType="VARCHAR" property="shelvesRow"/>
+        <result column="shelves_limit" jdbcType="INTEGER" property="shelvesLimit"/>
+        <result column="parent_id" jdbcType="INTEGER" property="parentId"/>
+        <result column="is_full" jdbcType="INTEGER" property="isFull"/>
+    </resultMap>
+	
+	<!-- 字段 -->
+	<sql id="Base_Column_List">
+		id, create_time, create_id, update_time, update_id, status, version, remarks,
+		shelves_row, shelves_limit, parent_id, is_full
+	</sql>
+	
+	<!-- 插入字段实际数值 -->
+	<sql id="Insert_Column_Values">
+		#{createTime},#{createId},#{updateTime},#{updateId},#{status},#{version},#{remarks},
+		#{shelvesRow},#{shelvesLimit},#{parentId},#{isFull}
+	</sql>
+	
+	<!-- 插入字段（判空） -->
+	<sql id="Base_Column_List_NotNull">
+		<if test="createTime != null and createTime != ''">
+			create_time, 
+		</if>
+    	<if test="createId != null and createId != ''">
+			create_id, 
+		</if>
+    	<if test="updateTime != null and updateTime != ''">
+			update_time, 
+		</if>
+    	<if test="updateId != null and updateId != ''">
+			update_id, 
+		</if>
+    	<if test="status != null and status != ''">
+			status, 
+		</if>
+    	<if test="version != null and version != ''">
+			version, 
+		</if>
+    	<if test="remarks != null and remarks != ''">
+			remarks, 
+		</if>
+    	<if test="shelvesRow != null and shelvesRow != ''">
+			shelves_row, 
+		</if>
+    	<if test="shelvesLimit != null and shelvesLimit != ''">
+			shelves_limit, 
+		</if>
+    	<if test="parentId != null and parentId != ''">
+			parent_id, 
+		</if>
+    	<if test="isFull != null and isFull != ''">
+			is_full,
+		</if>
+    	
+	</sql>
+	
+	<!-- 插入字段实际数值(判空) -->
+	<sql id="Insert_Column_Values_NotNull">
+		<if test="createTime != null and createTime != ''">
+			#{createTime},
+		</if>
+    	<if test="createId != null and createId != ''">
+			#{createId},
+		</if>
+    	<if test="updateTime != null and updateTime != ''">
+			#{updateTime},
+		</if>
+    	<if test="updateId != null and updateId != ''">
+			#{updateId},
+		</if>
+    	<if test="status != null and status != ''">
+			#{status},
+		</if>
+    	<if test="version != null and version != ''">
+			#{version},
+		</if>
+    	<if test="remarks != null and remarks != ''">
+			#{remarks},
+		</if>
+    	<if test="shelvesRow != null and shelvesRow != ''">
+			#{shelvesRow},
+		</if>
+    	<if test="shelvesLimit != null and shelvesLimit != ''">
+			#{shelvesLimit},
+		</if>
+    	<if test="parentId != null">
+			#{parentId},
+		</if>
+    	<if test="isFull != null">
+			#{isFull},
+		</if>
+    	
+	</sql>
+	
+	<!-- 更新字段 -->
+	<sql id="Update_Column">
+		create_time = #{createTime},
+    	create_id = #{createId},
+    	update_time = #{updateTime},
+    	update_id = #{updateId},
+    	status = #{status},
+    	version = #{version},
+    	remarks = #{remarks},
+    	shelves_row = #{shelvesRow},
+    	shelves_limit = #{shelvesLimit},
+    	parent_id = #{parentId},
+    	is_full = #{isFull},
+
+	</sql>
+	
+	<!-- 更新字段（判空） -->
+	<sql id="Update_Column_NotNull">
+		<if test="createTime != null and createTime != ''">
+			create_time = #{createTime},
+		</if>
+    	<if test="createId != null and createId != ''">
+			create_id = #{createId},
+		</if>
+    	<if test="updateTime != null and updateTime != ''">
+			update_time = #{updateTime},
+		</if>
+    	<if test="updateId != null and updateId != ''">
+			update_id = #{updateId},
+		</if>
+    	<if test="status != null and status != ''">
+			status = #{status},
+		</if>
+    	<if test="version != null and version != ''">
+			version = #{version},
+		</if>
+    	<if test="remarks != null and remarks != ''">
+			remarks = #{remarks},
+		</if>
+    	<if test="shelvesRow != null and shelvesRow != ''">
+			shelves_row = #{shelvesRow},
+		</if>
+    	<if test="shelvesLimit != null and shelvesLimit != ''">
+			shelves_limit = #{shelvesLimit},
+		</if>
+    	<if test="parentId != null">
+			parent_id = #{parentId},
+		</if>
+    	<if test="isFull != null">
+			is_full = #{isFull},
+		</if>
+    	
+	</sql>
+	
+	<select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <trim suffixOverrides=",">
+        <include refid="Base_Column_List"/>
+        </trim>
+        from shelves_row
+        where status = 1 and id = #{id,jdbcType=INTEGER}
+    </select>
+
+	<select id="selectByParentId" resultMap="EntityResultMap">
+		select <include refid="Base_Column_List"/>
+		from shelves_row
+		<where>
+			status = 1
+			and parent_id = #{parentId}
+		</where>
+
+	</select>
+
+	<select id="selectShelvesRowGoodsSum" resultType="java.lang.Integer">
+		select count(1) from goods_shelves_row
+		where status = 1 and is_picking = 2 and shelves_row_id = #{shelvesRowId}
+	</select>
+
+	<select id="selectFreeShelvesRow" resultMap="ShelvesGoodsCapacityEntityResultMap">
+		select sa.id as shelves_area_id, sa.shelves_area as shelves_area, sa.sorting_export as sorting_export,
+			t.id as shelves_row_id, t.shelves_row as shelves_row, t.shelves_limit as shelves_limit,
+            sa.shelves_type as shelves_type
+		from shelves_row t
+		left join shelves_area sa on sa.id = t.parent_id
+		<where>
+			t.status = 1
+			and sa.shelves_type = 'general'
+			and sa.status = 1
+		</where>
+	</select>
+
+	<select id="selectGoodsShelvesRow" resultType="com.example.warehouse.entity.shelves.ShelvesGoodsCapacity">
+		select sa.id as shelvesAreaId, sa.shelves_area as shelvesArea, sa.sorting_export as sortingExport,
+		t.id as shelvesRowId,t.shelves_row as shelvesRow, t.shelves_limit as shelvesLimit,
+		(select count(1) from goods_shelves_row where status = 1 and is_picking = 2) as goodsSum
+		from shelves_row t
+		left join shelves_area sa on sa.id = t.parent_id and sa.status = 1
+		left join goods_shelves_row gsr on gsr.shelves_row_id = t.id and gsr.status = 1 and gsr.is_picking = 2
+		<where>
+			t.status = 1
+			and t.is_full != 1
+			and sa.shelves_type = 'general'
+			and gsr.goods_id = #{goodsId}
+		</where>
+	</select>
+	<select id="selectByAreaRowId" resultType="com.example.warehouse.entity.shelves.ShelvesRow">
+		select t.id, t.shelves_row as shelvesRow, t.parent_id as parentId, sa.shelves_area as shelvesArea
+		from shelves_row t
+		left join shelves_area sa on t.parent_id = sa.id and sa.status = 1
+		<where>
+			t.status = 1
+			and t.id = #{areaRowId}
+		</where>
+	</select>
+
+	<select id="selectAreaRow" resultType="com.example.warehouse.entity.shelves.ShelvesRow">
+		select t.id, t.shelves_row as shelvesRow, t.parent_id as parentId, sa.shelves_area as shelvesArea
+		from shelves_row t
+		left join shelves_area sa on t.parent_id = sa.id and sa.status = 1
+		<where>
+			t.status = 1
+			and sa.shelves_area = #{storageArea}
+			and t.shelves_row = #{storageRow}
+		</where>
+	</select>
+	<select id="selectCountShelvesAreaRowByRow" resultType="java.lang.Integer">
+		select count(1)
+		from shelves_row
+		<where>
+			status = 1
+			and parent_id = #{parentId}
+			and shelves_row = #{shelvesRow}
+			and id != #{id}
+		</where>
+	</select>
+
+
+	<insert id="insert" parameterType="com.example.warehouse.entity.shelves.ShelvesRow">
+		insert into shelves_row
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			create_time, 
+			create_id, 
+			update_time, 
+			update_id, 
+			status, 
+			version, 
+			remarks, 
+			shelves_row, 
+			shelves_limit, 
+			parent_id,
+			is_full,
+		</trim>
+		values
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<include refid="Insert_Column_Values"/>
+		</trim>
+	</insert>
+	
+	<insert id="insertSelective" parameterType="com.example.warehouse.entity.shelves.ShelvesRow">
+		insert into shelves_row
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<include refid="Base_Column_List_NotNull"/>
+		</trim>
+		values
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<include refid="Insert_Column_Values_NotNull"/>
+		</trim>
+	</insert>
+
+	<insert id="insertList">
+		insert into shelves_row
+		(create_time, create_id, status, version, remarks,
+		 shelves_row, shelves_limit, parent_id)
+		values
+		<foreach collection="shelvesRowList" item="item" separator=",">
+			(now(), #{item.createId}, 1, 1, #{item.remarks},
+			#{item.shelvesRow}, #{item.shelvesLimit}, #{item.parentId})
+		</foreach>
+	</insert>
+
+	<update id="updateByPrimaryKey" parameterType="com.example.warehouse.entity.shelves.ShelvesRow">
+		update shelves_row
+		<set>
+			<include refid="Update_Column"/>
+		</set>
+		
+		<where>
+			id = #{id} and status = 1
+		</where>
+		
+	</update>
+	
+	<update id="updateByPrimaryKeySelective" parameterType="com.example.warehouse.entity.shelves.ShelvesRow">
+		update shelves_row
+		<set>
+			<include refid="Update_Column_NotNull"/>
+		</set>
+		<where>
+		id = #{id} and status = 1
+		</where>
+	</update>
+
+	<!-- 删除数据（逻辑删除） -->
+	<update id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		update  shelves_row
+		set `status` = 0
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+
+	<update id="updateList">
+		<foreach collection="shelvesRowList" item="item" separator=";">
+			update shelves_row
+			<set>
+				create_time = #{item.createTime},
+				create_id = #{item.createId},
+				update_time = #{item.updateTime},
+				update_id = #{item.updateId},
+				status = #{item.status},
+				version = #{item.version},
+				remarks = #{item.remarks},
+				shelves_row = #{item.shelvesRow},
+				shelves_limit = #{item.shelvesLimit},
+				parent_id = #{item.parentId}
+			</set>
+			<where>
+				id = #{item.id} and status = 1
+			</where>
+		</foreach>
+	</update>
+	<update id="updateRowFull">
+		update shelves_row
+	  	<set>
+			is_full = 1
+		</set>
+		<where>
+			id = #{id}
+		</where>
+	</update>
+
+	<update id="updateRowNotFull">
+		update shelves_row
+		<set>
+			is_full = -1
+		</set>
+		<where>
+			id = (
+				select shelves_row_id from goods_shelves_row where goods_id = #{goodsId}
+			)
+		</where>
+	</update>
+	<update id="batchUpdateRowNotFull">
+		update shelves_row
+		<set>
+			is_full = -1
+		</set>
+		<where>
+			id in (
+				select shelves_row_id
+				from goods_shelves_row
+				where goods_id in
+				<foreach collection="goodsIdList" item="goodsId" open="(" close=")" separator=",">
+					#{goodsId}
+				</foreach>
+			)
+		</where>
+	</update>
+
+	<!-- 移除数据（物理删除） -->
+	<delete id="removeByPrimaryKey" parameterType="java.lang.Integer">
+		delete from shelves_row
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+
+	<delete id="deleteByParentId">
+		update  shelves_row
+		set `status` = 0
+		where parent_id = #{shelvesAreaId,jdbcType=INTEGER}
+	</delete>
+
+    <resultMap id="EntityResultMap" extends="BaseResultMap" type="com.example.warehouse.entity.shelves.ShelvesRow">
+        <collection property="goodsSum" column="id"
+                    select="com.example.warehouse.mapper.shelves.ShelvesRowMapper.selectShelvesRowGoodsSum"/>
+    </resultMap>
+
+	<resultMap id="ShelvesGoodsCapacityEntityResultMap" type="com.example.warehouse.entity.shelves.ShelvesGoodsCapacity">
+
+		<result column="shelves_area_id" jdbcType="INTEGER" property="shelvesAreaId"/>
+		<result column="shelves_area" jdbcType="VARCHAR" property="shelvesArea"/>
+		<result column="shelves_row_id" jdbcType="INTEGER" property="shelvesRowId"/>
+		<result column="shelves_row" jdbcType="VARCHAR" property="shelvesRow"/>
+		<result column="shelves_limit" jdbcType="INTEGER" property="shelvesLimit"/>
+		<result column="goods_sum" jdbcType="INTEGER" property="goodsSum"/>
+		<result column="capacity" jdbcType="DOUBLE" property="capacity"/>
+		<result column="sorting_export" jdbcType="VARCHAR" property="sortingExport"/>
+		<result column="shelves_type" jdbcType="VARCHAR" property="shelvesType"/>
+		<collection property="goodsSum" column="shelves_row_id"
+					select="com.example.warehouse.mapper.shelves.ShelvesRowMapper.selectShelvesRowGoodsSum"/>
+	</resultMap>
+</mapper>

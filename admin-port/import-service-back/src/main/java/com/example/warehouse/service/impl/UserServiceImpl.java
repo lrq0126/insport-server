@@ -226,6 +226,8 @@ public class UserServiceImpl implements UserService {
         userVo.setPassword(user.getPassword());
         userVo.setUsername(user.getUsername());
         userVo.setUsercode(user.getUsercode());
+        userVo.setCommercialAreaId(user.getCommercialAreaId());
+        userVo.setCommercialAreaName(user.getCommercialAreaName());
         userVo.setRoleId(user.getRoleId());
         userVo.setCommercialAreaId(user.getCommercialAreaId());
         userVo.setCommercialAreaName(user.getCommercialAreaName());

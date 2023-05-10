@@ -13,7 +13,7 @@ import com.example.warehouse.mapper.ping.PingMainOrderMapper;
 import com.example.warehouse.model.ResultModel;
 import com.example.warehouse.service.ping.PinListingService;
 import com.example.warehouse.vo.GoodsVo;
-import com.example.warehouse.vo.customer.CustomerPackVo;
+import com.example.warehouse.vo.customerPack.CustomerPackVo;
 import com.example.warehouse.vo.detailedListVo.GoodsDetailedListVo;
 import com.example.warehouse.vo.ping.responseVo.PingMainOrderRespVo;
 import com.example.warehouse.vo.ping.responseVo.PingMainRespVo;

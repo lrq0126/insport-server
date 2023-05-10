@@ -16,7 +16,7 @@ import com.example.warehouse.model.ResultModel;
 import com.example.warehouse.service.account.AgentChannelService;
 import com.example.warehouse.vo.account.AgentChannelReqVo;
 import com.example.warehouse.vo.account.AgentOrderReqVo;
-import com.example.warehouse.vo.customer.CustomerPackVo;
+import com.example.warehouse.vo.customerPack.CustomerPackVo;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;

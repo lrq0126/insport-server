@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dwgj.mlxydedicatedline.mapper.customer.CustomerIntegralRuleMapper">
+    <resultMap id="BaseResultMap" type="com.dwgj.mlxydedicatedline.entity.customer.CustomerIntegralRule">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+    	
+	    <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="create_id" jdbcType="INTEGER" property="createId"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="update_id" jdbcType="INTEGER" property="updateId"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="version" jdbcType="INTEGER" property="version"/>
+        <result column="remarks" jdbcType="VARCHAR" property="remarks"/>
+        <result column="integral_type" jdbcType="VARCHAR" property="integralType"/>
+        <result column="integrals" jdbcType="DOUBLE" property="integrals"/>
+        <result column="deductible_amount" jdbcType="INTEGER" property="deductibleAmount"/>
+        <result column="order_amount" jdbcType="INTEGER" property="orderAmount"/>
+
+    </resultMap>
+	
+	<!-- 字段 -->
+	<sql id="Base_Column_List">
+		id, create_time, create_id, update_time, update_id, status, version,
+		remarks, integral_type, integrals, deductible_amount, order_amount
+	</sql>
+	
+	<!-- 插入字段实际数值 -->
+	<sql id="Insert_Column_Values">
+		#{createTime},#{createId},#{updateTime},#{updateId},#{status},#{version},
+		#{remarks},#{integralType},#{integrals},#{deductibleAmount},#{orderAmount}
+	</sql>
+	
+	<!-- 插入字段（判空） -->
+	<sql id="Base_Column_List_NotNull">
+		<if test="createTime != null and createTime != ''">
+			create_time, 
+		</if>
+    	<if test="createId != null and createId != ''">
+			create_id, 
+		</if>
+    	<if test="updateTime != null and updateTime != ''">
+			update_time, 
+		</if>
+    	<if test="updateId != null and updateId != ''">
+			update_id, 
+		</if>
+    	<if test="status != null and status != ''">
+			status, 
+		</if>
+    	<if test="version != null and version != ''">
+			version, 
+		</if>
+    	<if test="remarks != null and remarks != ''">
+			remarks, 
+		</if>
+    	<if test="integralType != null and integralType != ''">
+			integral_type, 
+		</if>
+    	<if test="integrals != null and integrals != ''">
+			integrals, 
+		</if>
+    	<if test="deductibleAmount != null and deductibleAmount != ''">
+			deductible_amount, 
+		</if>
+    	<if test="orderAmount != null and orderAmount != ''">
+			order_amount,
+		</if>
+    	
+	</sql>
+	
+	<!-- 插入字段实际数值(判空) -->
+	<sql id="Insert_Column_Values_NotNull">
+		<if test="createTime != null and createTime != ''">
+			#{createTime},
+		</if>
+    	<if test="createId != null and createId != ''">
+			#{createId},
+		</if>
+    	<if test="updateTime != null and updateTime != ''">
+			#{updateTime},
+		</if>
+    	<if test="updateId != null and updateId != ''">
+			#{updateId},
+		</if>
+    	<if test="status != null and status != ''">
+			#{status},
+		</if>
+    	<if test="version != null and version != ''">
+			#{version},
+		</if>
+    	<if test="remarks != null and remarks != ''">
+			#{remarks},
+		</if>
+    	<if test="integralType != null and integralType != ''">
+			#{integralType},
+		</if>
+    	<if test="integrals != null and integrals != ''">
+			#{integrals},
+		</if>
+    	<if test="deductibleAmount != null and deductibleAmount != ''">
+			#{deductibleAmount},
+		</if>
+    	<if test="orderAmount != null and orderAmount != ''">
+			#{orderAmount},
+		</if>
+    	
+	</sql>
+	
+	<!-- 更新字段 -->
+	<sql id="Update_Column">
+		create_time = #{createTime},
+    	create_id = #{createId},
+    	update_time = #{updateTime},
+    	update_id = #{updateId},
+    	status = #{status},
+    	version = #{version},
+    	remarks = #{remarks},
+    	integral_type = #{integralType},
+    	integrals = #{integrals},
+    	deductible_amount = #{deductibleAmount},
+    	order_amount = #{orderAmount},
+
+	</sql>
+	
+	<!-- 更新字段（判空） -->
+	<sql id="Update_Column_NotNull">
+		<if test="createTime != null and createTime != ''">
+			create_time = #{createTime},
+		</if>
+    	<if test="createId != null and createId != ''">
+			create_id = #{createId},
+		</if>
+    	<if test="updateTime != null and updateTime != ''">
+			update_time = #{updateTime},
+		</if>
+    	<if test="updateId != null and updateId != ''">
+			update_id = #{updateId},
+		</if>
+    	<if test="status != null and status != ''">
+			status = #{status},
+		</if>
+    	<if test="version != null and version != ''">
+			version = #{version},
+		</if>
+    	<if test="remarks != null and remarks != ''">
+			remarks = #{remarks},
+		</if>
+    	<if test="integralType != null and integralType != ''">
+			integral_type = #{integralType},
+		</if>
+    	<if test="integrals != null and integrals != ''">
+			integrals = #{integrals},
+		</if>
+    	<if test="deductibleAmount != null and deductibleAmount != ''">
+			deductible_amount = #{deductibleAmount},
+		</if>
+    	<if test="orderAmount != null and orderAmount != ''">
+			order_amount = #{orderAmount},
+		</if>
+    	
+	</sql>
+	
+	<select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <trim suffixOverrides=",">
+        <include refid="Base_Column_List"/>
+        </trim>
+        from customer_integral_rule
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+	
+	<insert id="insert" parameterType="com.dwgj.mlxydedicatedline.entity.customer.CustomerIntegralRule">
+		insert into customer_integral_rule
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			create_time, 
+			create_id, 
+			update_time, 
+			update_id, 
+			status, 
+			version, 
+			remarks, 
+			integral_type, 
+			integrals, 
+			deductible_amount,
+			order_amount,
+		</trim>
+		values
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<include refid="Insert_Column_Values"/>
+		</trim>
+	</insert>
+	
+	<insert id="insertSelective" parameterType="com.dwgj.mlxydedicatedline.entity.customer.CustomerIntegralRule">
+		insert into customer_integral_rule
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<include refid="Base_Column_List_NotNull"/>
+		</trim>
+		values
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<include refid="Insert_Column_Values_NotNull"/>
+		</trim>
+	</insert>
+	
+	<update id="updateByPrimaryKey" parameterType="com.dwgj.mlxydedicatedline.entity.customer.CustomerIntegralRule">
+		update customer_integral_rule
+		<set>
+			<include refid="Update_Column"/>
+		</set>
+		
+		<where>
+		id = #{id} and status = 1
+		</where>
+		
+	</update>
+	
+	<update id="updateByPrimaryKeySelective" parameterType="com.dwgj.mlxydedicatedline.entity.customer.CustomerIntegralRule">
+		update customer_integral_rule
+		<set>
+			<include refid="Update_Column_NotNull"/>
+		</set>
+		<where>
+		id = #{id} and status = 1
+		</where>
+	</update>
+
+	<!-- 删除数据（逻辑删除） -->
+	<update id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		update  customer_integral_rule
+		set `status` = 0
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	
+	<!-- 移除数据（物理删除） -->
+	<delete id="removeByPrimaryKey" parameterType="java.lang.Integer">
+		delete from customer_integral_rule
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+
+	<select id="getIntegralRuleList" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"/>
+		from customer_integral
+		<where>
+			status = 1
+			<if test="integralType != null and integralType != ''">
+				and integral_type = #{integralType}
+			</if>
+		</where>
+	</select>
+
+    <select id="selectEnableListByIntegralRuleIds" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"/>
+		from customer_integral_rule
+		<where>
+			status = 1
+			and id in
+			<foreach collection="integralIdList" item="id" open="(" close=")" separator=",">
+				#{id}
+			</foreach>
+		</where>
+	</select>
+
+</mapper>

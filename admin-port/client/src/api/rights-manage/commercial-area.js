@@ -68,3 +68,9 @@ export function enableCommercialArea ({
     });
 }
 
+export function getCommercialAreaSelectList () {
+    return request({
+        url: "/commercialArea/getCommercialAreaSelectList",
+        method: "get",
+    });
+}

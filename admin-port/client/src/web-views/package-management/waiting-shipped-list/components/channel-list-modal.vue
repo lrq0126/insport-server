@@ -269,6 +269,16 @@ export default {
             }
         },
 
+        checkIdentity(customerPackId){
+            getCustomerPackIdentity(customerPackId).then(res => {
+                this.identityDialog = true;
+                this.customerIdentityData = res.content;
+                res.content.images.forEach((ele) => {
+                    this.identityImages.push(ele.picUrl)
+                })
+            });
+        },
+
         handleSearch (page) {
             if (page) {
                 this.pageInfo.page = page

@@ -250,7 +250,14 @@
                              label="联系方式"
                              min-width="120"
                              align="center"></el-table-column>
-
+            <el-table-column prop="phoneNumber"
+                             label="身份证信息"
+                             min-width="150"
+                             align="center">
+                             <template slot-scope="scope">
+                                <el-button type="primary" plain @click="checkIdentity(scope.row.id)">查 看</el-button>
+                             </template>
+                            </el-table-column>
 
             <el-table-column label="操作"
                              fixed="right"
@@ -296,6 +303,31 @@
                     :current.sync="pageInfo.page"
                     :limit.sync="pageInfo.limit"
                     @pagination="pagination" />
+
+
+        <el-dialog :visible.sync="identityDialog" width="50%" title="身份证信息">
+            <el-form label-width="120px">
+                <el-form-item label="姓名：">
+                    <span>{{customerIdentityData.identityName}}</span>
+                </el-form-item>
+                <el-form-item label="身份证号：">
+                    <span>{{customerIdentityData.identityCode}}</span>
+                </el-form-item>
+                <el-form-item label="">
+                    <div style="dispaly: flex;">
+                        <div  v-for="item in customerIdentityData.images" :key="item.picUrl" :value="item.picUrl">
+                            <el-image 
+                                style="width: 100px; height: 100px"
+                                :src="item.picUrl" 
+                                :preview-src-list="identityImages">
+                            </el-image>
+                        </div>
+                    </div>
+                    
+                </el-form-item>
+            </el-form>
+        </el-dialog>
+
         <!-- 弹窗信息 -->
         <model-view ref="modelView"
                     @updateList="handleSearch" />
@@ -305,7 +337,7 @@
 <script>
 import Pagination from "@/components/Pagination";
 import ModelView from './model';
-import { getUnpackagedTask, completeCustomerPack, startCustomerPack, removePostManage,printCustomerPackListing,cancelApply } from '@/api/package-management/unpackaged-task'
+import { getCustomerPackIdentity, getUnpackagedTask, completeCustomerPack, startCustomerPack, removePostManage, printCustomerPackListing, cancelApply } from '@/api/package-management/unpackaged-task'
 import CustomerAddressListView from '../../customer-address-list';
 
 export default {
@@ -318,6 +350,13 @@ export default {
         return {
             loading: false,
             tableData: [],
+            identityDialog: false,
+            customerIdentityData: {
+                identityName: "",
+                identityCode: "",
+                images: []
+            },
+            identityImages: [],
             pageInfo: {
                 total: 0,
                 page: 1,    // 当前页码
@@ -386,6 +425,16 @@ export default {
                 }
                 return style;
             },
+
+        checkIdentity(customerPackId){
+            getCustomerPackIdentity(customerPackId).then(res => {
+                this.identityDialog = true;
+                this.customerIdentityData = res.content;
+                res.content.images.forEach((ele) => {
+                    this.identityImages.push(ele.picUrl)
+                })
+            });
+        },
         /**
        * 获取列表
        * @param  {number} page {初始化页码}

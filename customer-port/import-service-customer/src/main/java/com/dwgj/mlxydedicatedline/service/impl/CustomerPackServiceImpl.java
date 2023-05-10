@@ -1,6 +1,7 @@
 package com.dwgj.mlxydedicatedline.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.dwgj.mlxydedicatedline.commons.DateUtil;
 import com.dwgj.mlxydedicatedline.config.UserThreadContext;
 import com.dwgj.mlxydedicatedline.entity.*;
@@ -9,9 +10,12 @@ import com.dwgj.mlxydedicatedline.entity.coupons.CustomerCoupons;
 import com.dwgj.mlxydedicatedline.entity.coupons.CustomerCouponsCenter;
 import com.dwgj.mlxydedicatedline.entity.CustomerPack;
 import com.dwgj.mlxydedicatedline.entity.CustomerPackReceiverAddress;
+import com.dwgj.mlxydedicatedline.entity.customer.CustomerIdentity;
 import com.dwgj.mlxydedicatedline.entity.customer.CustomerIntegral;
+import com.dwgj.mlxydedicatedline.entity.customerPack.CustomerPackIdentity;
 import com.dwgj.mlxydedicatedline.entity.customerPack.CustomerPackPriceDetail;
 import com.dwgj.mlxydedicatedline.entity.customerPack.PackValuation;
+import com.dwgj.mlxydedicatedline.entity.image.Images;
 import com.dwgj.mlxydedicatedline.entity.insurance.Insurance;
 import com.dwgj.mlxydedicatedline.entity.insurance.InsurancePrice;
 import com.dwgj.mlxydedicatedline.entity.customerPack.PackInsurancePrice;
@@ -24,15 +28,18 @@ import com.dwgj.mlxydedicatedline.mapper.*;
 import com.dwgj.mlxydedicatedline.mapper.activityReward.ActivityPosterMapper;
 import com.dwgj.mlxydedicatedline.mapper.coupons.CustomerCouponsCenterMapper;
 import com.dwgj.mlxydedicatedline.mapper.coupons.CustomerCouponsMapper;
+import com.dwgj.mlxydedicatedline.mapper.customer.CustomerIdentityMapper;
 import com.dwgj.mlxydedicatedline.mapper.customer.CustomerIntegralMapper;
 import com.dwgj.mlxydedicatedline.mapper.customer2address.Customer2addressMapper;
 import com.dwgj.mlxydedicatedline.mapper.customerMoney.CustomerMoneyMapper;
 import com.dwgj.mlxydedicatedline.mapper.CustomerPackMapper;
+import com.dwgj.mlxydedicatedline.mapper.customerPack.CustomerPackIdentityMapper;
 import com.dwgj.mlxydedicatedline.mapper.customerPack.CustomerPackPriceDetailMapper;
 import com.dwgj.mlxydedicatedline.mapper.customerPack.PackValuationMapper;
 import com.dwgj.mlxydedicatedline.mapper.customerPackReceiverAddress.CustomerPackReceiverAddressDao;
 import com.dwgj.mlxydedicatedline.mapper.goods2address.Goods2addressMapper;
 import com.dwgj.mlxydedicatedline.mapper.goods2pack.Goods2packMapper;
+import com.dwgj.mlxydedicatedline.mapper.image.ImagesMapper;
 import com.dwgj.mlxydedicatedline.mapper.insurance.InsuranceMapper;
 import com.dwgj.mlxydedicatedline.mapper.insurance.InsurancePriceMapper;
 import com.dwgj.mlxydedicatedline.mapper.customerPack.PackInsurancePriceMapper;
@@ -45,6 +52,7 @@ import com.dwgj.mlxydedicatedline.service.CustomerPackService;
 import com.dwgj.mlxydedicatedline.utils.CustomerPackUtil;
 import com.dwgj.mlxydedicatedline.vo.GoodsPackVo;
 import com.dwgj.mlxydedicatedline.vo.GoodsVo;
+import com.dwgj.mlxydedicatedline.vo.customer.CustomerIdentityRespVo;
 import com.dwgj.mlxydedicatedline.vo.pack.ConfirmShipmentReqVo;
 import com.dwgj.mlxydedicatedline.vo.pack.CustomerPackRespVo;
 import com.dwgj.mlxydedicatedline.vo.pin.PingMainRespVo;
@@ -106,7 +114,10 @@ public class CustomerPackServiceImpl implements CustomerPackService {
     private CustomerPackPriceDetailMapper customerPackPriceDetailMapper;
     @Resource
     private TimeLimitActivityDao timeLimitActivityDao;
-
+    @Autowired
+    private CustomerIdentityMapper customerIdentityMapper;
+    @Autowired
+    private CustomerPackIdentityMapper customerPackIdentityMapper;
     @Autowired
     private CustomerCouponsMapper customerCouponsMapper;
     @Autowired
@@ -132,6 +143,8 @@ public class CustomerPackServiceImpl implements CustomerPackService {
 
     @Autowired
     private ActivityPosterMapper activityPosterMapper;
+    @Autowired
+    private ImagesMapper imagesMapper;
 
     /**
      * 查询待打包和已打包
@@ -153,6 +166,7 @@ public class CustomerPackServiceImpl implements CustomerPackService {
         } else {
             packTypes.add(1);
             packTypes.add(2);
+            packTypes.add(5);
             paramMap.put("packTypes", packTypes);
         }
         goodsPackVoList = customerPackMapper.findToBeShipped(paramMap);
@@ -193,22 +207,21 @@ public class CustomerPackServiceImpl implements CustomerPackService {
             if (customerPack == null) {
                 return new ResponseEntity<>(ResultModel.error(ORDERNUMBER_NOT_EXSIT), HttpStatus.OK);
             }
-            // 检验是否为拼团订单并判断当前拼团订单是否已全部打包完
-            PingMainOrder pingMainOrder = pingMainOrderMapper.selectOrderByOrderNumber(customerPack.getOrderNumber());
-            if (pingMainOrder != null) {
-//                // 检验拼团订单是否已经完全打包完成
-//                PingMain pingMain = pingMainMapper.selectById(pingMainOrder.getPId());
-                // 获取当前拼团订单的所有成员
-                List<PingMember> pingMemberList = pingMemberMapper.getMembersByPinId(String.valueOf(pingMainOrder.getPId()));
-                List<Integer> customerIdList = pingMemberList.stream().map(PingMember::getCustomerId).distinct().collect(Collectors.toList());
-                // 检查所有成员的包裹是否已打包完成
-                // 1、获取所有已经打包好的拼团成员的数量
-                int packedPinMainOrderNum = pingMainOrderMapper.selectPackedOrderByPid(pingMainOrder.getPId());
-                // 2、对比成员数量和已打包订单数量
-                if (customerIdList.size() != packedPinMainOrderNum) {
-                    return new ResponseEntity<>(ResultModel.error(PIN_MAIN_IS_NOTP_ACKED_ERROR), HttpStatus.OK);
-                }
-            }
+            /**屏蔽拼团订单代码*/
+//            // 检验是否为拼团订单并判断当前拼团订单是否已全部打包完
+//            PingMainOrder pingMainOrder = pingMainOrderMapper.selectOrderByOrderNumber(customerPack.getOrderNumber());
+//            if (pingMainOrder != null) {
+//                // 获取当前拼团订单的所有成员
+//                List<PingMember> pingMemberList = pingMemberMapper.getMembersByPinId(String.valueOf(pingMainOrder.getPId()));
+//                List<Integer> customerIdList = pingMemberList.stream().map(PingMember::getCustomerId).distinct().collect(Collectors.toList());
+//                // 检查所有成员的包裹是否已打包完成
+//                // 1、获取所有已经打包好的拼团成员的数量
+//                int packedPinMainOrderNum = pingMainOrderMapper.selectPackedOrderByPid(pingMainOrder.getPId());
+//                // 2、对比成员数量和已打包订单数量
+//                if (customerIdList.size() != packedPinMainOrderNum) {
+//                    return new ResponseEntity<>(ResultModel.error(PIN_MAIN_IS_NOTP_ACKED_ERROR), HttpStatus.OK);
+//                }
+//            }
 
             if (customerPack.getPackType() != 2) {
                 return new ResponseEntity<>(ResultModel.error(GOODS_CONFIRM_ERROR), HttpStatus.OK);
@@ -221,17 +234,18 @@ public class CustomerPackServiceImpl implements CustomerPackService {
             }
 
             Customer customer = UserThreadContext.getUser();
-//            paramMap.put("id",customer.getId());
             if (customer == null) {
                 return new ResponseEntity<>(ResultModel.error(NOT_LOGIN_ERROR), HttpStatus.OK);
             }
-//            int customerId = (Integer) paramMap.get("id");
-//            Customer customer = customerMapper.selectByPrimaryKey(customerId);
             CustomerMoney customerMoney = customerMoneyMapper.selectByCustomerNo(customer.getCustomerNo());
             if (customerMoney == null) {
                 return new ResponseEntity<>(ResultModel.error(BALANCE_INSUFFICIENT_ERROR), HttpStatus.OK);
             }
-
+            // 查询渠道
+            RouteVo route = routeMapper.findByRouteIdNotStatus(customerPack.getTransportationRouteId());
+            if(route.getIsPin() != 1 && confirmShipmentReqVo.getCustomerIdentityId() == null){
+                return new ResponseEntity<>(ResultModel.error(PLEASE_SELECTED_IDENTITY), HttpStatus.OK);
+            }
             // 最后总费用 allActualPricesCalculate()
             BigDecimal allActualPrices;
 
@@ -375,12 +389,30 @@ public class CustomerPackServiceImpl implements CustomerPackService {
                 return new ResponseEntity<>(ResultModel.error(BALANCE_INSUFFICIENT_ERROR), HttpStatus.OK);
             }
 
-            // 查询渠道名称
-            RouteVo route = routeMapper.findByRouteIdNotStatus(customerPack.getTransportationRouteId());
+
             String routeName = null;
             if (route != null) {
                 routeName = route.getRouteName();
             }
+            if(confirmShipmentReqVo.getCustomerIdentityId() != null){
+                // 防止重复，删除身份证信息
+                customerPackIdentityMapper.deleteByCustomerPackId(customerPack.getId());
+
+                // 插入身份证信息表
+                CustomerIdentityRespVo customerIdentity = customerIdentityMapper.getIdentityInfo(confirmShipmentReqVo.getCustomerIdentityId());
+                List<Integer> imagesList = customerIdentity.getImages().stream().map(Images::getId).collect(Collectors.toList());
+
+                CustomerPackIdentity customerPackIdentity = new CustomerPackIdentity();
+                customerPackIdentity.setImagesId(imagesList.toString());
+                customerPackIdentity.setCustomerPackId(customerPack.getId());
+                customerPackIdentity.setIdentityName(customerIdentity.getIdentityName());
+                customerPackIdentity.setIdentityCode(customerIdentity.getIdentityCode());
+                customerPackIdentity.setCreateTime(DateUtil.dateToString(new Date(), DateUtil.DEFAULT_TIMESTAMP_FORMAT));
+                customerPackIdentity.setCreateId(customer.getId());
+                customerPackIdentity.setCreateName(customer.getCustomerName());
+                customerPackIdentityMapper.insertSelective(customerPackIdentity);
+            }
+
             // 插入消费记录表 start
             CustomerAccount account = new CustomerAccount();
             account.setCustomerNo(customerPack.getCustomerId().toString());
@@ -634,6 +666,7 @@ public class CustomerPackServiceImpl implements CustomerPackService {
             } else {
                 packTypes.add(1);
                 packTypes.add(2);
+                packTypes.add(5);
             }
             paramMap.put("packTypes", packTypes);
             return customerPackMapper.countFindToBeShipped(paramMap);
@@ -716,6 +749,7 @@ public class CustomerPackServiceImpl implements CustomerPackService {
             customerPackReceiverAddressDao.deleteByCustomerPackId(customerPack.getId());
             CustomerPackReceiverAddress customerPackReceiverAddress = new CustomerPackReceiverAddress();
             customerPackReceiverAddress.setReceiverAddress(customerAddress.getReceiverAddress());
+            customerPackReceiverAddress.setAddressId(customerAddress.getId());
             customerPackReceiverAddress.setCustomerPackId(customerPack.getId());
             customerPackReceiverAddress.setPhoneNumber(customerAddress.getPhoneNumber());
             customerPackReceiverAddress.setAddressee(customerAddress.getAddressee());
@@ -764,6 +798,25 @@ public class CustomerPackServiceImpl implements CustomerPackService {
     public ResponseEntity<ResultModel> getPackDetail(String businessNumber) {
 //        GoodsPackVo goodsPackVo = customerPackMapper.findVoByBusinessNumber(businessNumber);
         CustomerPackRespVo customerPackRespVo = customerPackMapper.findVoByBusinessNumber(businessNumber);
+        CustomerPackIdentity customerPackIdentity = customerPackRespVo.getCustomerPackIdentity();
+        CustomerIdentityRespVo customerIdentity = new CustomerIdentityRespVo();
+
+        // 如果身份证信息不为空
+        if(customerPackIdentity != null)  {
+
+            customerIdentity.setId(customerPackIdentity.getCustomerIdentityId());
+            customerIdentity.setIdentityName(customerPackIdentity.getIdentityName());
+            customerIdentity.setIdentityCode(customerPackIdentity.getIdentityCode());
+            // 如果身份证照片不为空
+            if(customerPackIdentity.getImagesId() != null){
+                List<Integer> imagesIdList = JSONObject.parseObject(customerPackIdentity.getImagesId(), List.class);
+                List<Images> imagesList = imagesMapper.getImagesByIdList(imagesIdList);
+                customerIdentity.setImages(imagesList);
+            }
+
+        }
+        customerPackRespVo.setCustomerIdentity(customerIdentity);
+
         return new ResponseEntity<>(ResultModel.ok(customerPackRespVo), HttpStatus.OK);
     }
 
