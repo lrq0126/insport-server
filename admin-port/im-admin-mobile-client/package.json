@@ -1,0 +1,18 @@
+{
+    "id": "f-progress",
+    "name": "进度条-渐变颜色",
+    "version": "0.0.1",
+    "description": "静态进度条-渐变颜色",
+    "keywords": [
+        "uni-app",
+        "vue"
+    ],
+    "dependencies": {
+        "@vue/cli-shared-utils": "^4.5.13",
+        "@zxing/library": "^0.20.0",
+        "vue-qrcode-reader": "^3.1.6",
+        "vxe-table": "^3.4.12",
+        "xe-utils": "^3.5.1",
+        "zxing": "^0.1.2"
+    }
+}
